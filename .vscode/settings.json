@@ -16,7 +16,7 @@
     "python.linting.pycodestyleEnabled": false,
     "python.linting.flake8Args": [
         "--ignore=W293, W504",
-        "--max-line-length=99",
+        "--max-line-length=100",
         "--max-complexity=20"
     ],
     "python.formatting.provider": "autopep8",
