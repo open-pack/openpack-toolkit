@@ -2,7 +2,7 @@
 
 "OpenPack Dataset" is a new large-scale multi modal dataset of manual packing process.
 OpenPack is an open access logistics-dataset for human activity recognition, which contains human movement and package information from 17 distinct subjects.
-This repository provide utilities and example code to explore our exciting dataset.
+This repository provide utilities to explore our exciting dataset.
 
 ## Setup
 
@@ -23,10 +23,5 @@ poetry add  openpack-toolkit
 
 ## Examples
 
-### ST-GCN with Keypoints Data
-
-TBA
-
-### U-Net with Accelration Data
-
-TBA
+- ST-GCN with Keypoints Data (TBA)
+- U-Net with Accelration Data
