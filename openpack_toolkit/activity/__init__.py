@@ -21,17 +21,40 @@ class ActSet():
     def __len__(self) -> int:
         return len(self.classes)
 
-    def to_tuple(self, keep_actclass: bool = False):
+    def to_tuple(
+        self, keep_actclass: bool = False,
+    ) -> Union[Tuple[Tuple[int, str], ...], Tuple[ActClass, ...]]:
+        """Returns a activity classes as a tuple.
+
+        Args:
+            keep_actclass (bool, optional): If True, return a tuple of ActClass.
+                Otherwise, return a pure tuple, i.e., ``Tuple[Tuple[id:int, name:str], ...]``.
+                Defaults to False.
+
+        Returns:
+            Union[Tuple[Tuple[int, str], ...], Tuple[ActClass, ...]]
+        """
         if keep_actclass:
             return self.classes
 
         classes = [(cls.id, cls.name) for cls in self.classes]
         return tuple(classes)
 
-    def get_ids(self) -> Tuple:
+    def get_ids(self) -> Tuple[int]:
+        """Returns a tuple of class IDs.
+
+        Returns:
+            Tuple[int]
+        """
         return tuple([act.id for act in self.classes])
 
     def get_ignore_class_index(self) -> Union[int, Tuple]:
+        """Return the index of ignore classes, i.e., ``is_ignore=True``.
+        If there are only one ignore class, return the index as int.
+
+        Returns:
+            Union[int, Tuple]
+        """
         index = tuple([i for i, act in enumerate(
             self.classes) if act.is_ignore])
         if len(index) == 1:
@@ -39,6 +62,12 @@ class ActSet():
         return index
 
     def get_ignore_class_id(self) -> Union[int, Tuple]:
+        """Return the ID of ignore classes, i.e., ``is_ignore=True``.
+        If there are only one ignore class, return the ID as int.
+
+        Returns:
+            Union[int, Tuple]
+        """
         ids = tuple([act.id for act in self.classes if act.is_ignore])
         if len(ids) == 1:
             return ids[0]
