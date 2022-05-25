@@ -57,6 +57,14 @@ def test_ActSet__get_ignore_class_id__01(act_set):
     assert actual == expect
 
 
+def test_ActSet__convert_id_to_index(act_set):
+    index = np.array([100, 200, 300, 400, 1000, 100, 100])
+    expect = np.array([0, 1, 2, 3, 4, 0, 0])
+
+    actual = act_set.convert_id_to_index(index)
+    np.testing.assert_array_equal(actual, expect)
+
+
 """ Activity Set Definition
 """
 

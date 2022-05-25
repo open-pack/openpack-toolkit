@@ -4,7 +4,12 @@
 
 """
 from dataclasses import dataclass
+from logging import getLogger
 from typing import Tuple, Union
+
+import numpy as np
+
+logger = getLogger(__name__)
 
 
 @dataclass
@@ -72,6 +77,18 @@ class ActSet():
         if len(ids) == 1:
             return ids[0]
         return ids
+
+    def convert_id_to_index(self, index: np.ndarray) -> np.ndarray:
+        assert index.ndim == 1
+
+        translator = {act.id: i for i, act in enumerate(self.classes)}
+        logger.debug(f"convert activity IDs into index by {translator}.")
+        assert set(index) <= set(translator.keys()), (
+            f"index have unexpected class ID. {set(index) - set(translator.keys())}"
+        )
+
+        ids = np.array([translator[val] for val in index])
+        return ids.astype(index.dtype)
 
 
 """ Activity Set Definitions
