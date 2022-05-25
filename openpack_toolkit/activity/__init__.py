@@ -18,7 +18,10 @@ class ActClass():
 class ActSet():
     classes: Tuple[ActClass, ...]
 
-    def to_tuple(self):
+    def to_tuple(self, keep_actclass: bool = False):
+        if keep_actclass:
+            return self.classes
+
         classes = [(cls.id, cls.name) for cls in self.classes]
         return tuple(classes)
 
@@ -38,6 +41,9 @@ class ActSet():
             return ids[0]
         return ids
 
+
+""" Activity Set Definitions
+"""
 
 OPENPACK_WORKPROCESS_CLASSES = ActSet((
     ActClass(100, "Picking"),
