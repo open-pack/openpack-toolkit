@@ -18,6 +18,9 @@ class ActClass():
 class ActSet():
     classes: Tuple[ActClass, ...]
 
+    def __len__(self) -> int:
+        return len(self.classes)
+
     def to_tuple(self, keep_actclass: bool = False):
         if keep_actclass:
             return self.classes

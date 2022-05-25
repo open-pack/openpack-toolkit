@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from openpack_toolkit.activity import ActClass, ActSet
+from openpack_toolkit.activity import OPENPACK_WORKPROCESS_CLASSES, ActClass, ActSet
 
 
 @pytest.fixture
@@ -55,3 +55,19 @@ def test_ActSet__get_ignore_class_id__01(act_set):
     actual = act_set.get_ignore_class_id()
 
     assert actual == expect
+
+
+""" Activity Set Definition
+"""
+
+
+def test_OPENPACK_WORKPROCESS_CLASSES__01():
+    act_set = OPENPACK_WORKPROCESS_CLASSES
+
+    # check datatype
+    assert isinstance(act_set, ActSet)
+    for act in act_set.classes:
+        assert isinstance(act, ActClass), f"act={act}"
+
+    # the number of activities
+    assert len(act_set) == 10
