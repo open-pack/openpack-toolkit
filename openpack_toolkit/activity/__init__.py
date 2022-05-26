@@ -26,6 +26,17 @@ class ActSet():
     def __len__(self) -> int:
         return len(self.classes)
 
+    def __iter__(self):
+        self._current = 0
+        return self
+
+    def __next__(self):
+        if self._current == len(self.classes):
+            raise StopIteration
+        cls = self.classes[self._current]
+        self._current += 1
+        return cls
+
     def to_tuple(
         self, keep_actclass: bool = False,
     ) -> Union[Tuple[Tuple[int, str], ...], Tuple[ActClass, ...]]:
