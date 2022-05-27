@@ -206,7 +206,6 @@ def test_resample_prediction_1Hz__02():
 def test_eval_workprocess_segmentation_wrapper__01():
     T = int(30 * 60 * 50)
     W = 30 * 60
-    # class_ids = (100, 200, 300, 400, 500, 600, 700, 800, 900)
     classes = OPENPACK_WORKPROCESS_CLASSES
     print(classes)
     class_ids = OPENPACK_WORKPROCESS_CLASSES.get_ids()

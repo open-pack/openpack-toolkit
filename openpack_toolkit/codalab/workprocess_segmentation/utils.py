@@ -13,25 +13,12 @@ from typing import Dict, Tuple
 import numpy as np
 import pandas as pd
 
-from ...activity import OPENPACK_WORKPROCESS_CLASSES, ActClass, ActSet
+from ...activity import OPENPACK_WORKPROCESS_CLASSES, ActSet
 from .eval import eval_workprocess_segmentation
 
 logger = getLogger(__name__)
 
 # -----------------------------------------------------------------------------
-
-
-def to_class_id(arr: np.ndarray, classes: Tuple[ActClass]) -> np.ndarray:
-    if arr.ndim == 3:
-        arr_idx = np.argmax(arr, axis=1)
-    else:
-        arr_idx = arr.copy()
-
-    for cls_idx, cls in enumerate(classes):
-        arr_idx[arr_idx == cls_idx] = cls.id
-    arr_id = arr_idx
-
-    return arr_id
 
 
 def resample_prediction_1Hz(
@@ -70,12 +57,12 @@ def resample_prediction_1Hz(
 
 
 def construct_submission_dict(
-        outputs: Dict[str, Dict[str, np.ndarray]], classes: Tuple[ActClass]) -> Dict:
+        outputs: Dict[str, Dict[str, np.ndarray]], act_set: ActSet) -> Dict:
     """Make dict that can be used for submission and `eval_workprocess_segmentation()` func.
 
     Args:
         outputs (Dict[str, Dict[str, np.ndarray]]): _description_
-        classes (Tuple[ActClass]): _description_
+        act_set (ActSet): _description_
 
     Returns:
         Dict: _description_
@@ -85,7 +72,7 @@ def construct_submission_dict(
         record = dict()
 
         assert d["y"].ndim == 3
-        y_id = to_class_id(d["y"], classes).ravel()
+        y_id = act_set.convert_index_to_id(np.argmax(d["y"], axis=1).ravel())
         ts_unix_out, y_id_out = resample_prediction_1Hz(
             ts_unix=d["unixtime"].ravel(), arr=y_id)
 
@@ -94,7 +81,7 @@ def construct_submission_dict(
 
         if "t_idx" in d.keys():
             assert d["t_idx"].ndim == 2
-            t_id = to_class_id(d["t_idx"], classes).ravel()
+            t_id = act_set.convert_index_to_id(d["t_idx"]).ravel()
             ts_unix_out2, t_id_out = resample_prediction_1Hz(
                 ts_unix=d["unixtime"].ravel(), arr=t_id)
             np.testing.assert_array_equal(ts_unix_out, ts_unix_out2)
@@ -150,7 +137,7 @@ def make_submission_zipfile(submission: Dict, logdir: Path) -> None:
 
 def eval_workprocess_segmentation_wrapper(
     outputs: Dict[str, Dict[str, np.ndarray]],
-    activity_set: ActSet = OPENPACK_WORKPROCESS_CLASSES,
+    act_set: ActSet = OPENPACK_WORKPROCESS_CLASSES,
 ) -> pd.DataFrame:
     """ Compute evaluation metrics from model outputs (predicted probability).
 
@@ -162,8 +149,8 @@ def eval_workprocess_segmentation_wrapper(
     Returns:
         pd.DataFrame
     """
-    submission = construct_submission_dict(outputs, activity_set.classes)
-    classes_tuple = activity_set.to_tuple()
+    submission = construct_submission_dict(outputs, act_set)
+    classes = act_set.to_tuple()
 
     # Evaluate
     df_scores = []
@@ -176,7 +163,7 @@ def eval_workprocess_segmentation_wrapper(
         y_id_concat.append(y_id.copy())
 
         df_tmp = eval_workprocess_segmentation(
-            t_id, y_id, classes=classes_tuple, mode=None)
+            t_id, y_id, classes=classes, mode=None)
         df_tmp["key"] = key
         df_scores.append(df_tmp.reset_index(drop=False))
 
@@ -184,7 +171,7 @@ def eval_workprocess_segmentation_wrapper(
     df_tmp = eval_workprocess_segmentation(
         np.concatenate(t_id_concat, axis=0),
         np.concatenate(y_id_concat, axis=0),
-        classes=classes_tuple,
+        classes=classes,
         mode=None,
     )
     df_tmp["key"] = "all"
