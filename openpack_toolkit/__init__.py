@@ -4,8 +4,8 @@
 
 __version__ = '0.1.0'
 from . import data
-from .activity import OPENPACK_WORKPROCESS_CLASSES, ActClass, ActSet
+from .activity import OPENPACK_OPERATIONS, ActClass, ActSet
 
 __all__ = [
-    "OPENPACK_WORKPROCESS_CLASSES", "ActClass", "ActSet", "data"
+    "OPENPACK_OPERATIONS", "ActClass", "ActSet", "data"
 ]

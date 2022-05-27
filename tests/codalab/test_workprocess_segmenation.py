@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from openpack_toolkit.activity import OPENPACK_WORKPROCESS_CLASSES
+from openpack_toolkit.activity import OPENPACK_OPERATIONS
 from openpack_toolkit.codalab.workprocess_segmentation.eval import (
     calc_avg_metrics,
     calc_class_metrics,
@@ -14,9 +14,6 @@ from openpack_toolkit.codalab.workprocess_segmentation.utils import (
     eval_workprocess_segmentation_wrapper,
     resample_prediction_1Hz,
 )
-
-# from sklearn.metrics import precision_recall_fscore_support
-
 
 """
 Note:
@@ -206,9 +203,9 @@ def test_resample_prediction_1Hz__02():
 def test_eval_workprocess_segmentation_wrapper__01():
     T = int(30 * 60 * 50)
     W = 30 * 60
-    classes = OPENPACK_WORKPROCESS_CLASSES
+    classes = OPENPACK_OPERATIONS
     print(classes)
-    class_ids = OPENPACK_WORKPROCESS_CLASSES.get_ids()
+    class_ids = OPENPACK_OPERATIONS.get_ids()
     print(class_ids)
 
     t_idx = np.random.choice(len(class_ids), size=T).reshape(T // W, W)

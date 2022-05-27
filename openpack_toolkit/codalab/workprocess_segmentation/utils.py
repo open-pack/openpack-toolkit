@@ -13,7 +13,7 @@ from typing import Dict, Tuple
 import numpy as np
 import pandas as pd
 
-from ...activity import OPENPACK_WORKPROCESS_CLASSES, ActSet
+from ...activity import OPENPACK_OPERATIONS, ActSet
 from .eval import eval_workprocess_segmentation
 
 logger = getLogger(__name__)
@@ -137,7 +137,7 @@ def make_submission_zipfile(submission: Dict, logdir: Path) -> None:
 
 def eval_workprocess_segmentation_wrapper(
     outputs: Dict[str, Dict[str, np.ndarray]],
-    act_set: ActSet = OPENPACK_WORKPROCESS_CLASSES,
+    act_set: ActSet = OPENPACK_OPERATIONS,
 ) -> pd.DataFrame:
     """ Compute evaluation metrics from model outputs (predicted probability).
 

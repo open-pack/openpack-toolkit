@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from openpack_toolkit.activity import OPENPACK_WORKPROCESS_CLASSES, ActClass, ActSet
+from openpack_toolkit.activity import OPENPACK_OPERATIONS, ActClass, ActSet
 
 
 @pytest.fixture
@@ -140,8 +140,8 @@ def test_ActSet__convert__01(act_set):
 """
 
 
-def test_OPENPACK_WORKPROCESS_CLASSES__01():
-    act_set = OPENPACK_WORKPROCESS_CLASSES
+def test_OPENPACK_OPERATIONS__01():
+    act_set = OPENPACK_OPERATIONS
 
     # check datatype
     assert isinstance(act_set, ActSet)

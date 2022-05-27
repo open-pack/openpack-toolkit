@@ -132,7 +132,7 @@ class ActSet():
 """ Activity Set Definitions
 """
 
-OPENPACK_WORKPROCESS_CLASSES = ActSet((
+OPENPACK_OPERATIONS = ActSet((
     ActClass(100, "Picking"),
     ActClass(200, "MoveItemLabel"),
     ActClass(300, "AssembleBox"),
