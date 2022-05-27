@@ -88,15 +88,43 @@ def test_ActSet__convert_id_to_index__01(act_set):
     np.testing.assert_array_equal(actual, expect)
 
 
-def test_ActSet__convert_index_to_id__01(act_set):
-    index = np.array([100, 200, 300, 400, 1000, 100, 100])
-    expect = np.array([0, 1, 2, 3, 4, 0, 0])
+def test_ActSet__convert_id_to_index__02(act_set):
+    ids = np.array([
+        [100, 200, 300, 400, 1000, 100, 100],
+        [200, 300, 400, 1000, 100, 100, 100],
+    ])
+    expect = np.array([
+        [0, 1, 2, 3, 4, 0, 0],
+        [1, 2, 3, 4, 0, 0, 0],
+    ])
 
-    actual = act_set.convert_id_to_index(index)
+    actual = act_set.convert_id_to_index(ids)
+    np.testing.assert_array_equal(actual, expect)
+
+
+def test_ActSet__convert_index_to_id__01(act_set):
+    index = np.array([0, 1, 2, 3, 4, 0, 0])
+    expect = np.array([100, 200, 300, 400, 1000, 100, 100])
+
+    actual = act_set.convert_index_to_id(index)
     np.testing.assert_array_equal(actual, expect)
 
 
 def test_ActSet__convert_index_to_id__02(act_set):
+    index = np.array([
+        [0, 1, 2, 3, 4, 0, 0],
+        [1, 2, 3, 4, 0, 0, 0],
+    ])
+    expect = np.array([
+        [100, 200, 300, 400, 1000, 100, 100],
+        [200, 300, 400, 1000, 100, 100, 100],
+    ])
+
+    actual = act_set.convert_index_to_id(index)
+    np.testing.assert_array_equal(actual, expect)
+
+
+def test_ActSet__convert__01(act_set):
     n = 1000
     index = np.random.choice([0, 1, 2, 3, 4], size=n)
 

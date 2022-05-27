@@ -98,15 +98,13 @@ class ActSet():
         Returns:
             np.ndarray: 1d array of activity index.
         """
-        assert ids.ndim == 1
+        assert set(ids.ravel()) <= set(self.get_ids())
 
-        translator = {act.id: i for i, act in enumerate(self.classes)}
-        logger.debug(f"convert activity IDs into index by {translator}.")
-        assert set(ids) <= set(translator.keys()), (
-            f"index have unexpected class ID. {set(ids) - set(translator.keys())}"
-        )
+        index = np.full(ids.shape, -1)
+        for i, cls in enumerate(self.classes):
+            index[ids == cls.id] = i
+        assert index.min() >= 0
 
-        index = np.array([translator[val] for val in ids])
         return index.astype(np.int64)
 
     def convert_index_to_id(self, index: np.ndarray) -> np.ndarray:
@@ -118,15 +116,16 @@ class ActSet():
         Returns:
             np.ndarray: 1d array of activity IDs.
         """
-        assert index.ndim == 1
-
-        translator = {i: act.id for i, act in enumerate(self.classes)}
-        logger.debug(f"convert activity IDs into index by {translator}.")
-        assert set(index) <= set(translator.keys()), (
-            f"index have unexpected class ID. {set(index) - set(translator.keys())}"
+        assert min(self.get_ids()) >= 0
+        assert (index.min() >= 0) and (index.max() < len(self.classes)), (
+            "given index have out of range value(s)."
         )
 
-        ids = np.array([translator[val] for val in index])
+        ids = np.full(index.shape, -1)
+        for i, cls in enumerate(self.classes):
+            ids[index == i] = cls.id
+        assert ids.min() >= 0
+
         return ids.astype(np.int64)
 
 
