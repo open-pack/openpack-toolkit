@@ -37,6 +37,17 @@ class ActSet():
         self._current += 1
         return cls
 
+    def __call__(self, cls_idx: int) -> ActClass:
+        """Return ActClass object at index=``cls_idx``.
+
+        Args:
+            cls_idx (int): ckass index
+
+        Returns:
+            ActClass
+        """
+        return self.classes[cls_idx]
+
     def to_tuple(
         self, keep_actclass: bool = False,
     ) -> Union[Tuple[Tuple[int, str], ...], Tuple[ActClass, ...]]:

@@ -39,6 +39,11 @@ def test_ActSet__iterator__02(act_set):
         act_iter.__next__()  # 6
 
 
+def test_ActSet__call__01(act_set):
+    for i in range(5):
+        assert act_set.classes[i] == act_set(i)
+
+
 def test_ActSet__to_tuple__01(act_set):
     expect = (
         (100, "Act100"),
