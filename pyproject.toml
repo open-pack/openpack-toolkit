@@ -3,9 +3,10 @@ name = "openpack-toolkit"
 version = "0.1.0"
 description = "Toolkit for OpenPack Dataset"
 authors = ["Yoshimura Naoya"]
-homepage = "https://open-pack.github.io/home"
+homepage = "https://open-pack.github.io"
 repository = "https://github.com/open-pack/open-pack-toolkit-dev"
 readme = "README.md" 
+license = "MIT"
 
 [tool.poetry.dependencies]
 python = ">=3.7.11,<3.10"
