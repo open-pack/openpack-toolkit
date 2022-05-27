@@ -96,7 +96,7 @@ def calc_avg_metrics(t_id: np.ndarray, y_id: np.ndarray,
     return df
 
 
-def eval_workprocess_segmentation(
+def eval_operation_segmentation(
     t_id: np.ndarray = None,
     y_id: np.ndarray = None,
     classes: Tuple[Tuple[int, str], ...] = None,

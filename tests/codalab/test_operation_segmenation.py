@@ -5,13 +5,13 @@ import pandas as pd
 import pytest
 
 from openpack_toolkit.activity import OPENPACK_OPERATIONS
-from openpack_toolkit.codalab.workprocess_segmentation.eval import (
+from openpack_toolkit.codalab.operation_segmentation.eval import (
     calc_avg_metrics,
     calc_class_metrics,
-    eval_workprocess_segmentation,
+    eval_operation_segmentation,
 )
-from openpack_toolkit.codalab.workprocess_segmentation.utils import (
-    eval_workprocess_segmentation_wrapper,
+from openpack_toolkit.codalab.operation_segmentation.utils import (
+    eval_operation_segmentation_wrapper,
     resample_prediction_1Hz,
 )
 
@@ -111,7 +111,7 @@ def test_calc_avg_metrics__02(example_01):
     pd.testing.assert_frame_equal(df, expect)
 
 
-def test_eval_workprocess_segmentation__01(example_01):
+def test_eval_operation_segmentation__01(example_01):
     classes = example_01["classes"]
     t = example_01["t"]
     y = example_01["y"]
@@ -125,14 +125,14 @@ def test_eval_workprocess_segmentation__01(example_01):
         "support": [None, None]
     }).set_index("name")
 
-    df_scores = eval_workprocess_segmentation(t, y, classes, mode="final")
+    df_scores = eval_operation_segmentation(t, y, classes, mode="final")
     print(f"df_scores[final] = {df_scores.shape}")
     print(df_scores)
 
     pd.testing.assert_frame_equal(df_scores, expect)
 
 
-def test_eval_workprocess_segmentation__02(example_01):
+def test_eval_operation_segmentation__02(example_01):
     classes = example_01["classes"]
     t = example_01["t"]
     y = example_01["y"]
@@ -146,7 +146,7 @@ def test_eval_workprocess_segmentation__02(example_01):
         "support": [None, None, 2, 2, 2]
     }).set_index("name")
 
-    df_scores = eval_workprocess_segmentation(t, y, classes, mode="feedback")
+    df_scores = eval_operation_segmentation(t, y, classes, mode="feedback")
     print(f"df_scores[feedback] = {df_scores.shape}")
     print(df_scores)
 
@@ -200,7 +200,7 @@ def test_resample_prediction_1Hz__02():
     assert elapsed_time < 1.0
 
 
-def test_eval_workprocess_segmentation_wrapper__01():
+def test_eval_operation_segmentation_wrapper__01():
     T = int(30 * 60 * 50)
     W = 30 * 60
     classes = OPENPACK_OPERATIONS
@@ -219,7 +219,7 @@ def test_eval_workprocess_segmentation_wrapper__01():
             "t_idx": t_idx, "y": y, "unixtime": ts_unix,
         }
     }
-    df_score = eval_workprocess_segmentation_wrapper(outputs, classes)
+    df_score = eval_operation_segmentation_wrapper(outputs, classes)
     print(df_score)
 
     np.testing.assert_array_equal(df_score.shape, (24, 7))

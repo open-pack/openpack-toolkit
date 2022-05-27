@@ -1,9 +1,6 @@
-from .workprocess_segmentation import (
-    eval_workprocess_segmentation,
-    eval_workprocess_segmentation_wrapper,
-)
+from .operation_segmentation import eval_operation_segmentation, eval_operation_segmentation_wrapper
 
 __all__ = [
-    "eval_workprocess_segmentation",
-    "eval_workprocess_segmentation_wrapper"
+    "eval_operation_segmentation",
+    "eval_operation_segmentation_wrapper"
 ]

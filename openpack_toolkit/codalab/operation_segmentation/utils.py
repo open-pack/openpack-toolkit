@@ -14,7 +14,7 @@ import numpy as np
 import pandas as pd
 
 from ...activity import OPENPACK_OPERATIONS, ActSet
-from .eval import eval_workprocess_segmentation
+from .eval import eval_operation_segmentation
 
 logger = getLogger(__name__)
 
@@ -135,7 +135,7 @@ def make_submission_zipfile(submission: Dict, logdir: Path) -> None:
 
 # -----------------------------------------------------------------------------
 
-def eval_workprocess_segmentation_wrapper(
+def eval_operation_segmentation_wrapper(
     outputs: Dict[str, Dict[str, np.ndarray]],
     act_set: ActSet = OPENPACK_OPERATIONS,
 ) -> pd.DataFrame:
@@ -162,13 +162,13 @@ def eval_workprocess_segmentation_wrapper(
         t_id_concat.append(t_id.copy())
         y_id_concat.append(y_id.copy())
 
-        df_tmp = eval_workprocess_segmentation(
+        df_tmp = eval_operation_segmentation(
             t_id, y_id, classes=classes, mode=None)
         df_tmp["key"] = key
         df_scores.append(df_tmp.reset_index(drop=False))
 
     # Overall Score
-    df_tmp = eval_workprocess_segmentation(
+    df_tmp = eval_operation_segmentation(
         np.concatenate(t_id_concat, axis=0),
         np.concatenate(y_id_concat, axis=0),
         classes=classes,

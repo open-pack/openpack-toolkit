@@ -3,7 +3,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from openpack_toolkit.activity import OPENPACK_WORKPROCESS_CLASSES
+from openpack_toolkit.activity import OPENPACK_OPERATIONS
 from openpack_toolkit.data.dataloader import load_annotation, load_imu, load_keypoints
 
 
@@ -26,7 +26,7 @@ def test_load_annotatation__01():
     ], columns=["unixtime", "annot_time", "user", "session", "box", "act_id", "act_idx"])
 
     df_annot = load_annotation(
-        path, unixtimes, classes=OPENPACK_WORKPROCESS_CLASSES)
+        path, unixtimes, classes=OPENPACK_OPERATIONS)
     pd.testing.assert_frame_equal(df_annot, expect)
 
 
