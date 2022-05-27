@@ -1,3 +1,7 @@
+"""
+Note:
+    This example is from https://scikit-learn.org/stable/modules/generated/sklearn.metrics.precision_recall_fscore_support.html
+"""
 import time
 
 import numpy as np
@@ -14,11 +18,6 @@ from openpack_toolkit.codalab.operation_segmentation.utils import (
     eval_operation_segmentation_wrapper,
     resample_prediction_1Hz,
 )
-
-"""
-Note:
-    This example is from https://scikit-learn.org/stable/modules/generated/sklearn.metrics.precision_recall_fscore_support.html
-"""
 
 
 @pytest.fixture
