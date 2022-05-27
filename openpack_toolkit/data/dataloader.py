@@ -5,7 +5,7 @@ import json
 # import re
 from logging import getLogger
 from pathlib import Path
-from typing import Tuple
+from typing import List, Tuple, Union
 
 import numpy as np
 import pandas as pd
@@ -97,7 +97,7 @@ def load_keypoints(path: Path) -> Tuple[np.ndarray, np.ndarray]:
 
 
 def load_imu(
-    paths: Tuple[Path, ...],
+    paths: Union[Tuple[Path, ...], List[Path]],
     use_acc: bool = True,
     use_gyro: bool = False,
     use_quat: bool = False,
@@ -105,7 +105,8 @@ def load_imu(
     """Load IMU data from CSVs.
 
     Args:
-        paths (Tuple[Path, ...]): list of paths to target CSV. (e.g., **/atr01/S0100.csv)
+        paths (Union[Tuple[Path, ...], List[Path]]): list of paths to target CSV.
+            (e.g., [**/atr01/S0100.csv])
         use_acc (bool, optional): include acceleration signal (e.g., ``acc_x, acc_y, acc_z``).
             Defaults to True.
         use_gyro (bool, optional): include gyro scope signal (e.g., ``gyro_x, gyro_y, gyro_z``).
@@ -115,7 +116,7 @@ def load_imu(
     Returns:
         Tuple[np.ndarray, np.ndarray]: unixtime and loaded sensor data.
     """
-    assert isinstance(paths, tuple), (
+    assert isinstance(paths, (tuple, list)), (
         f"the first argument `paths` expects tuple of Path, not {type(paths)}."
     )
 
