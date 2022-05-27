@@ -128,6 +128,40 @@ class ActSet():
 
         return ids.astype(np.int64)
 
+    def id_to_name(self, cls_id: int) -> str:
+        """Returns class name of the given class ID.
+
+        Args:
+            cls_id (int): class ID.
+
+        Raises:
+            ValueError: ``class_id`` does not exists in the activity set.
+
+        Returns:
+            str: class name
+        """
+        for cls in self.classes:
+            if cls.id == cls_id:
+                return cls.name
+        raise ValueError(f"got unexpected class id. cls_id={cls_id}")
+
+    def name_to_id(self, cls_name: str) -> int:
+        """Returns class ID of the given class ID.
+
+        Args:
+            cls_name (str): class name.
+
+        Raises:
+            ValueError: ``class_name`` does not exists in the activity set.
+
+        Returns:
+            int: class id
+        """
+        for cls in self.classes:
+            if cls.name == cls_name:
+                return cls.id
+        raise ValueError(f"got unexpected class name. cls_name={cls_name}")
+
 
 """ Activity Set Definitions
 """

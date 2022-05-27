@@ -136,6 +136,34 @@ def test_ActSet__convert__01(act_set):
     np.testing.assert_array_equal(index_out, index)
 
 
+def test_ActSet__id_to_name__01(act_set):
+    id_and_expect = (
+        (100, "Act100"),
+        (200, "Act200"),
+        (300, "Act300"),
+        (400, "Act400"),
+        (1000, "Null"),
+    )
+
+    for cls_id, expect in id_and_expect:
+        actual = act_set.id_to_name(cls_id)
+        assert actual == expect
+
+
+def test_ActSet__name_to_id__01(act_set):
+    id_and_expect = (
+        ("Act100", 100),
+        ("Act200", 200),
+        ("Act300", 300),
+        ("Act400", 400),
+        ("Null", 1000),
+    )
+
+    for cls_name, expect in id_and_expect:
+        actual = act_set.name_to_id(cls_name)
+        assert actual == expect
+
+
 """ Activity Set Definition
 """
 
