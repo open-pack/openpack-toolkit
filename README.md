@@ -25,3 +25,7 @@ poetry add  openpack-toolkit
 
 - ST-GCN with Keypoints Data (TBA)
 - U-Net with Accelration Data
+
+## License
+
+openpack-toolkit has a MIT license, as found in the [LICENSE](./LICENCE) file.
