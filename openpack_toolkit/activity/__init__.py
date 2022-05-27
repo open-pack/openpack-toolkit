@@ -89,17 +89,45 @@ class ActSet():
             return ids[0]
         return ids
 
-    def convert_id_to_index(self, index: np.ndarray) -> np.ndarray:
-        assert index.ndim == 1
+    def convert_id_to_index(self, ids: np.ndarray) -> np.ndarray:
+        """Translate activity ID into activity index.
+
+        Args:
+            ids (np.ndarray): 1d array of activity IDs.
+
+        Returns:
+            np.ndarray: 1d array of activity index.
+        """
+        assert ids.ndim == 1
 
         translator = {act.id: i for i, act in enumerate(self.classes)}
+        logger.debug(f"convert activity IDs into index by {translator}.")
+        assert set(ids) <= set(translator.keys()), (
+            f"index have unexpected class ID. {set(ids) - set(translator.keys())}"
+        )
+
+        index = np.array([translator[val] for val in ids])
+        return index.astype(np.int64)
+
+    def convert_index_to_id(self, index: np.ndarray) -> np.ndarray:
+        """Translate activity index into activity ID.
+
+        Args:
+            index (np.ndarray): 1d array of activity index.
+
+        Returns:
+            np.ndarray: 1d array of activity IDs.
+        """
+        assert index.ndim == 1
+
+        translator = {i: act.id for i, act in enumerate(self.classes)}
         logger.debug(f"convert activity IDs into index by {translator}.")
         assert set(index) <= set(translator.keys()), (
             f"index have unexpected class ID. {set(index) - set(translator.keys())}"
         )
 
         ids = np.array([translator[val] for val in index])
-        return ids.astype(index.dtype)
+        return ids.astype(np.int64)
 
 
 """ Activity Set Definitions

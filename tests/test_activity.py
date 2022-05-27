@@ -16,6 +16,29 @@ def act_set():
     return dummy_activity_set
 
 
+def test_ActSet__iterator__01(act_set):
+    cnt = 0
+    for cls in act_set:
+        print(cnt, cls)
+        assert isinstance(cls, ActClass)
+        cnt += 1
+
+    assert cnt == 5
+    assert cnt == len(act_set)
+
+
+def test_ActSet__iterator__02(act_set):
+    act_iter = iter(act_set)
+    act_iter.__next__()  # 1
+    act_iter.__next__()  # 2
+    act_iter.__next__()  # 3
+    act_iter.__next__()  # 4
+    act_iter.__next__()  # 5
+
+    with pytest.raises(StopIteration):
+        act_iter.__next__()  # 6
+
+
 def test_ActSet__to_tuple__01(act_set):
     expect = (
         (100, "Act100"),
@@ -57,12 +80,32 @@ def test_ActSet__get_ignore_class_id__01(act_set):
     assert actual == expect
 
 
-def test_ActSet__convert_id_to_index(act_set):
+def test_ActSet__convert_id_to_index__01(act_set):
+    ids = np.array([100, 200, 300, 400, 1000, 100, 100])
+    expect = np.array([0, 1, 2, 3, 4, 0, 0])
+
+    actual = act_set.convert_id_to_index(ids)
+    np.testing.assert_array_equal(actual, expect)
+
+
+def test_ActSet__convert_index_to_id__01(act_set):
     index = np.array([100, 200, 300, 400, 1000, 100, 100])
     expect = np.array([0, 1, 2, 3, 4, 0, 0])
 
     actual = act_set.convert_id_to_index(index)
     np.testing.assert_array_equal(actual, expect)
+
+
+def test_ActSet__convert_index_to_id__02(act_set):
+    n = 1000
+    index = np.random.choice([0, 1, 2, 3, 4], size=n)
+
+    # Index to ID
+    ids = act_set.convert_index_to_id(index)
+    # ID to Index
+    index_out = act_set.convert_id_to_index(ids)
+
+    np.testing.assert_array_equal(index_out, index)
 
 
 """ Activity Set Definition
