@@ -25,7 +25,7 @@ jobs:
       
       # install dependencies
       - name: Install Dependencies
-        run: poetry install --no-interaction --no-dev
+        run: poetry install --no-interaction
 
       # pdocでドキュメントを生成
       - name: Pdoc
