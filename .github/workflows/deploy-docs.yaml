@@ -18,7 +18,7 @@ jobs:
       - name: Build
         run: |
           pip install pdoc3
-          pdoc --html --output-dir docs --force openpack_toolkit
+          pdoc --html--output-dir docs --force openpack_toolkit
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
