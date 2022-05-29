@@ -6,7 +6,7 @@ on:
       - main
       - main-dev
 jobs:
-  deploy:
+  deploy-docs:
     runs-on: ubuntu-20.04
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
