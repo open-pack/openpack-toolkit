@@ -3,10 +3,28 @@ Reference:
     * https://github.com/K-PTL/noglobal-python
 """
 import inspect
+import logging
 from functools import partial
 from types import FunctionType
 from typing import Any, Callable, Dict, List, Optional
 
+
+def setup_root_logger(log_level=logging.INFO):
+    log_format = "%(asctime)s | %(levelname)s | %(name)s | %(message)s"
+    logger = logging.getLogger()
+
+    # add the handlers to the logger
+    sh = logging.StreamHandler()
+    sh.setLevel(log_level)
+    sh_formatter = logging.Formatter(log_format, "%Y-%m-%d %H:%M:%S")
+    sh.setFormatter(sh_formatter)
+    logger.addHandler(sh)
+
+    logger.setLevel(log_level)
+    return logger
+
+
+# -----------------------------------------------------------------------------
 # Function prototype
 # this is not necessary, just my pray for.
 global noglobal

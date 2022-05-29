@@ -1,6 +1,10 @@
 import pytest
 
-from openpack_toolkit.utils.notebook import noglobal
+from openpack_toolkit.utils.notebook import noglobal, setup_root_logger
+
+
+def test_setup_root_logger__01():
+    _ = setup_root_logger()
 
 
 def test_noglobal__01():
