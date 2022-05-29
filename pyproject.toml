@@ -1,10 +1,10 @@
 [tool.poetry]
 name = "openpack-toolkit"
-version = "0.1.0"
+version = "0.2.0"
 description = "Toolkit for OpenPack Dataset"
 authors = ["Yoshimura Naoya"]
 homepage = "https://open-pack.github.io"
-repository = "https://github.com/open-pack/open-pack-toolkit-dev"
+repository = "https://github.com/open-pack/open-pack-toolkit"
 readme = "README.md" 
 license = "MIT"
 
@@ -17,6 +17,7 @@ sklearn = ">=0.0"
 [tool.poetry.dev-dependencies]
 pytest = ">=6.2.4"
 pytest-cov = "^3.0.0"
+pdoc3 = "^0.10.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

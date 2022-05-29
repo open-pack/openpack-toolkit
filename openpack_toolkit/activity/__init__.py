@@ -1,7 +1,4 @@
-"""Activity Set in Open Pack
-
-* Work-process level annotation
-
+"""Activity set definitions for OpenPack dataset.
 """
 from dataclasses import dataclass
 from logging import getLogger
@@ -14,6 +11,8 @@ logger = getLogger(__name__)
 
 @dataclass
 class ActClass():
+    """dataclass that represent a single activity class.
+    """
     id: int
     name: str
     is_ignore: bool = False
@@ -21,6 +20,10 @@ class ActClass():
 
 @dataclass
 class ActSet():
+    """ActSet binds activity classes and proved methods that can be useful when you apply machine
+    learning approach. Activity class definition of OpenPack dataset will be provided in this
+    format.
+    """
     classes: Tuple[ActClass, ...]
 
     def __len__(self) -> int:
