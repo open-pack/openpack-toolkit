@@ -2,9 +2,8 @@ name: Test
 on:
   push:
     branches:
-      - main      
-      - main-dev
-      - dev
+      - main
+      - openpack-team-dev
 jobs:
   ci:
     runs-on: ${{ matrix.os }}
@@ -23,7 +22,8 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - uses: atu4403/poetry-setup-multi-platform@v1
-      - run: |
+      - name: Install Dependencis and Run Tests
+        run: |
           poetry install
           poetry run pytest --cov
         shell: bash
