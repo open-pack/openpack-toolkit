@@ -31,7 +31,7 @@ global noglobal
 
 
 # https://gist.github.com/momijiame/bebf8d4c16fc0916fd80530ebe961525
-def globals_with_module_and_callable(
+def _globals_with_module_and_callable(
     globals_: Optional[Dict[str, Any]] = None, excepts: Optional[List[str]] = None
 ) -> Dict[str, Any]:
     """
@@ -75,7 +75,7 @@ def globals_with_module_and_callable(
     return filtered_globals
 
 
-def bind_globals(globals_: Dict[str, Any]) -> Callable:
+def _bind_globals(globals_: Dict[str, Any]) -> Callable:
     """decorator returning functional object for wrapping, which run the callable object on the
     specified global symbol table.
 
@@ -86,7 +86,7 @@ def bind_globals(globals_: Dict[str, Any]) -> Callable:
         functional object for wrapping
     """
 
-    def _bind_globals(func: FunctionType) -> FunctionType:
+    def _bind_globals_func(func: FunctionType) -> FunctionType:
         bound_func = FunctionType(
             code=func.__code__,
             globals=globals_,
@@ -96,16 +96,16 @@ def bind_globals(globals_: Dict[str, Any]) -> Callable:
         )
         return bound_func
 
-    return _bind_globals
+    return _bind_globals_func
 
 
-def no_global_variable_decorator(globals_: Optional[Dict[str, Any]] = None):
+def _no_global_variable_decorator(globals_: Optional[Dict[str, Any]] = None):
     """ Providing the decorator of inhibiting the use of global variables """
-    partialled = partial(globals_with_module_and_callable, globals_=globals_)
+    partialled = partial(_globals_with_module_and_callable, globals_=globals_)
 
     def _no_global_variable(excepts: Optional[List[str]] = None):
         partialled_globals_ = partialled(excepts=excepts)
-        bound_func = bind_globals(globals_=partialled_globals_)
+        bound_func = _bind_globals(globals_=partialled_globals_)
         return bound_func
 
     return _no_global_variable
@@ -117,7 +117,7 @@ class noglobal:
         self.excepts = excepts
 
     def __call__(self, _func):
-        return no_global_variable_decorator(globals_=_func.__globals__)(
+        return _no_global_variable_decorator(globals_=_func.__globals__)(
             excepts=self.excepts  # arg of _no_global_variable
         )(
             func=_func
