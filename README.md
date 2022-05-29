@@ -3,6 +3,7 @@
 ![OpenPack Challenge Logo](./img/OpenPackCHALLENG-black.png)
 
 [![Test](https://github.com/open-pack/openpack-toolkit/actions/workflows/test.yaml/badge.svg)](https://github.com/open-pack/openpack-toolkit/actions/workflows/test.yaml)
+[![API Docs - GitHub Pages](https://github.com/open-pack/openpack-toolkit/actions/workflows/deploy-docs.yaml/badge.svg)](https://github.com/open-pack/openpack-toolkit/actions/workflows/deploy-docs.yaml)
 
 "OpenPack Dataset" is a new large-scale multi modal dataset of manual packing process.
 OpenPack is an open access logistics-dataset for human activity recognition, which contains human movement and package information from 17 distinct subjects.
