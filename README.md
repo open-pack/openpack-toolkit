@@ -33,3 +33,11 @@ See [openpack-torch](https://github.com/open-pack/openpack-torch) for more dieta
 ## License
 
 openpack-toolkit has a MIT license, as found in the [LICENSE](./LICENCE) file.
+
+----
+
+## Generate Document
+
+```bash
+pdoc --html --output-dir docs --force openpack_toolkit/
+```
