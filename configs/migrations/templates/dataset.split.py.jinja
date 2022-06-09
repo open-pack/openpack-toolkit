@@ -1,0 +1,27 @@
+from .._schema import DataSplitConfig
+
+{% for key, split in splits.items() %}
+{{key|replace("-", "_")|upper}}_SPLIT = DataSplitConfig(
+    train=[
+{% for item in split.train %}
+        {{item}},
+{% endfor %}
+    ],
+    val=[
+{% for item in split.val %}
+        {{item}},
+{% endfor %}
+    ],
+    test=[
+{% for item in split.test %}
+        {{item}},
+{% endfor %}
+    ],
+    submission=[
+{% for item in split.submission %}
+        {{item}},
+{% endfor %}
+    ],
+)
+
+{% endfor %}

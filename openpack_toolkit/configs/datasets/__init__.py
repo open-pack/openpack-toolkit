@@ -1,3 +1,3 @@
-from . import streams
+from . import splits, streams
 
-__all__ = ["streams"]
+__all__ = ["splits", "streams"]
