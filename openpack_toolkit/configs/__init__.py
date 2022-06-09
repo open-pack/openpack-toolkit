@@ -1,7 +1,10 @@
-from . import users
-from ._schema import SessionConfig, UserConfig
+from . import datasets, users
+from ._schema import DataStreamConfig, ImuConfig, KeypointConfig, SessionConfig, UserConfig
 
 __all__ = [
-    "users",
+    "datasets", "users",
+    # user
     "SessionConfig", "UserConfig",
+    # dataset
+    "DataStreamConfig", "ImuConfig", "KeypointConfig"
 ]
