@@ -1,0 +1,26 @@
+schema: KeypointConfig
+name: openpack-kinect-2d-kpt
+description: 2D keypoint extracted by mmpose/hrnet
+path:
+  template: ${datarootdir}/dataset/openpack/{user}/2d-kpt/${model}/{session}.csv
+frame_rate: 15
+category: 2d-kpt
+model: mmpose-hrnet-w48-posetrack18-384x288-posewarper-stage2
+nodes:
+  0: nose
+  1: left_eye
+  2: right_eye
+  3: left_ear
+  4: right_ear
+  5: left_shoulder
+  6: right_shoulder
+  7: left_elbow
+  8: right_elbow
+  9: left_wrist
+  10: right_wrist
+  11: left_hip
+  12: right_hip
+  13: left_knee
+  14: right_knee
+  15: left_ankle
+  16: right_ankle

@@ -1,0 +1,14 @@
+schema: ImuConfig
+name: openpack-atr-acc
+description: Accelerations from ATR IMU sensors
+path:
+  template: ${datarootdir}/dataset/openpack/{user}/{node}/{session}.csv
+frame_rate: 30
+nodes:
+- atr01
+- atr02
+- atr03
+- atr04
+acc: true
+gyro: false
+quat: false

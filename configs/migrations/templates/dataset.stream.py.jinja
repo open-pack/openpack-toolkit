@@ -1,0 +1,37 @@
+from .._schema import DataStreamConfig, ImuConfig, KeypointConfig
+
+{% for stream in streams %}
+{% if stream.schema == "ImuConfig" %}
+{{stream.name|replace("-", "_")|upper}}_STREAM = ImuConfig(
+    schema="ImuConfig",
+    name="{{stream.name}}",
+    description="{{stream.description}}",
+    path=DataStreamConfig.Paths(
+        template="{{stream.path.template}}",
+    ),
+    frame_rate={{stream.frame_rate}},
+    nodes={{stream.nodes}},
+    acc={{stream.acc}},
+    gyro={{stream.gyro}},
+    quat={{stream.quat}},
+)
+{% elif stream.schema == "KeypointConfig" %}
+{{stream.name|replace("-", "_")|upper}}_STREAM = KeypointConfig(
+    schema="KeypointConfig",
+    name="{{stream.name}}",
+    description="{{stream.description}}",
+    path=DataStreamConfig.Paths(
+        template="{{stream.path.template}}",
+    ),
+    frame_rate={{stream.frame_rate}},
+    category="{{stream.category}}",
+    model="{{stream.model}}",
+    nodes={
+{% for key, val in stream.nodes.items() %}
+        {{key}}: "{{val}}",
+{% endfor %}
+    },
+)
+{% endif %}
+
+{% endfor %}
