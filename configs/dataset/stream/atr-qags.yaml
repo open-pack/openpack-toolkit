@@ -1,0 +1,14 @@
+schema: ImuConfig
+name: openpack-atr-qags
+description: Acceleration, gyro, and quaternion from ATR IMU sensors
+path:
+  template: ${datarootdir}/dataset/openpack/{user}/{node}/{session}.csv
+frame_rate: 30
+nodes:
+- atr01
+- atr02
+- atr03
+- atr04
+acc: true
+gyro: true
+quat: true
