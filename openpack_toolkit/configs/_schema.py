@@ -81,3 +81,4 @@ class DatasetConfig:
     name: str = MISSING
     streams: List[DataStreamConfig] = MISSING
     split: DataSplitConfig = MISSING
+    annot: AnnotConfig = MISSING
