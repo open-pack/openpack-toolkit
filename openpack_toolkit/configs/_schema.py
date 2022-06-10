@@ -72,7 +72,7 @@ class KeypointConfig(DataStreamConfig):
 @dataclass
 class AnnotConfig:
     name: str = MISSING
-    versions: str = MISSING
+    version: str = MISSING
     classes: ActSet = MISSING
 
 
