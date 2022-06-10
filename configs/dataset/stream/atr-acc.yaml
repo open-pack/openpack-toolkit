@@ -1,8 +1,8 @@
 schema: ImuConfig
-name: openpack-atr-acc
+name: atr-acc
 description: Accelerations from ATR IMU sensors
 path:
-  template: ${datarootdir}/dataset/openpack/{user}/{node}/{session}.csv
+  template: ${path.datasets.openpack}/{user}/{node}/{session}.csv
 frame_rate: 30
 nodes:
 - atr01
