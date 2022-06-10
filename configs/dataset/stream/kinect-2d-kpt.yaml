@@ -1,8 +1,8 @@
 schema: KeypointConfig
-name: openpack-kinect-2d-kpt
+name: kinect-2d-kpt
 description: 2D keypoint extracted by mmpose/hrnet
 path:
-  template: ${datarootdir}/dataset/openpack/{user}/2d-kpt/${model}/{session}.csv
+  template: ${path.datasets.openpack}/{user}/2d-kpt/${.model}/{session}.csv
 frame_rate: 15
 category: 2d-kpt
 model: mmpose-hrnet-w48-posetrack18-384x288-posewarper-stage2

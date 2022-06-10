@@ -1,11 +1,11 @@
 from .._schema import DataStreamConfig, ImuConfig, KeypointConfig
 
-OPENPACK_ATR_ACC_STREAM = ImuConfig(
+ATR_ACC_STREAM = ImuConfig(
     schema="ImuConfig",
-    name="openpack-atr-acc",
+    name="atr-acc",
     description="Accelerations from ATR IMU sensors",
     path=DataStreamConfig.Paths(
-        template="${datarootdir}/dataset/openpack/{user}/{node}/{session}.csv",
+        template="${path.datasets.openpack}/{user}/{node}/{session}.csv",
     ),
     frame_rate=30,
     nodes=['atr01', 'atr02', 'atr03', 'atr04'],
@@ -14,12 +14,12 @@ OPENPACK_ATR_ACC_STREAM = ImuConfig(
     quat=False,
 )
 
-OPENPACK_ATR_QAGS_STREAM = ImuConfig(
+ATR_QAGS_STREAM = ImuConfig(
     schema="ImuConfig",
-    name="openpack-atr-qags",
+    name="atr-qags",
     description="Acceleration, gyro, and quaternion from ATR IMU sensors",
     path=DataStreamConfig.Paths(
-        template="${datarootdir}/dataset/openpack/{user}/{node}/{session}.csv",
+        template="${path.datasets.openpack}/{user}/{node}/{session}.csv",
     ),
     frame_rate=30,
     nodes=['atr01', 'atr02', 'atr03', 'atr04'],
@@ -28,12 +28,12 @@ OPENPACK_ATR_QAGS_STREAM = ImuConfig(
     quat=True,
 )
 
-OPENPACK_KINECT_2D_KPT_STREAM = KeypointConfig(
+KINECT_2D_KPT_STREAM = KeypointConfig(
     schema="KeypointConfig",
-    name="openpack-kinect-2d-kpt",
+    name="kinect-2d-kpt",
     description="2D keypoint extracted by mmpose/hrnet",
     path=DataStreamConfig.Paths(
-        template="${datarootdir}/dataset/openpack/{user}/2d-kpt/${model}/{session}.csv",
+        template="${path.datasets.openpack}/{user}/2d-kpt/${.model}/{session}.csv",
     ),
     frame_rate=15,
     category="2d-kpt",
