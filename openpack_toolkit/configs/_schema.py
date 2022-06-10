@@ -3,6 +3,8 @@ from typing import Dict, List, Optional
 
 from omegaconf import MISSING
 
+from ..activity import ActSet
+
 # ======
 #  User
 # ======
@@ -65,3 +67,17 @@ class KeypointConfig(DataStreamConfig):
     category: str = MISSING
     model: str = MISSING
     nodes: Dict[int, str] = MISSING
+
+
+@dataclass
+class AnnotConfig:
+    name: str = MISSING
+    versions: str = MISSING
+    classes: ActSet = MISSING
+
+
+@dataclass
+class DatasetConfig:
+    name: str = MISSING
+    streams: List[DataStreamConfig] = MISSING
+    split: DataSplitConfig = MISSING
