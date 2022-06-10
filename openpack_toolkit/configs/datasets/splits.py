@@ -1,6 +1,7 @@
 from .._schema import DataSplitConfig
 
 DEBUG_SPLIT = DataSplitConfig(
+    name="debug",
     train=[
         ['U0102', 'S0100'],
         ['U0102', 'S0200'],
@@ -18,6 +19,7 @@ DEBUG_SPLIT = DataSplitConfig(
 )
 
 PILOT_CHALLENGE_SPLIT = DataSplitConfig(
+    name="pilot-challenge",
     train=[
         ['U0102', 'S0100'],
         ['U0102', 'S0200'],

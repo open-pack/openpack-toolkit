@@ -31,6 +31,7 @@ class UserConfig:
 
 @dataclass
 class DataSplitConfig:
+    name: str = MISSING
     train: Optional[List[List]] = None
     val: Optional[List[List]] = None
     test: Optional[List[List]] = None
