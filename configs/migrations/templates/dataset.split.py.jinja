@@ -2,6 +2,7 @@ from .._schema import DataSplitConfig
 
 {% for key, split in splits.items() %}
 {{key|replace("-", "_")|upper}}_SPLIT = DataSplitConfig(
+    name="{{key}}",
     train=[
 {% for item in split.train %}
         {{item}},
