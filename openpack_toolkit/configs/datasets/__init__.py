@@ -1,3 +1,3 @@
-from . import splits, streams
+from . import annotations, splits, streams
 
-__all__ = ["splits", "streams"]
+__all__ = ["annotations", "splits", "streams"]
