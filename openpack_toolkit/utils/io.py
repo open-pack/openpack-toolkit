@@ -19,7 +19,6 @@ def cleanup_dir(path: Path, exclude: str = None) -> None:
     logger.debug(f"clean up {path}")
 
     for p in path.iterdir():
-        print("check1", p, type(p), p.is_dir())
         if "hydra" in p.name:
             continue
         elif p.is_dir():
