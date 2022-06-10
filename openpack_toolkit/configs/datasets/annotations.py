@@ -1,7 +1,7 @@
-from ....activity import ActClass, ActSet
+from ...activity import ActClass, ActSet
 from .._schema import AnnotConfig
 
-OPENPACK_OPERATIONS = ActSet(
+OPENPACK_OPERATIONS = ActSet((
     ActClass(100, "Picking"),
     ActClass(200, "MoveItemLabel"),
     ActClass(300, "AssembleBox"),
@@ -12,7 +12,7 @@ OPENPACK_OPERATIONS = ActSet(
     ActClass(900, "PutOnCartRack"),
     ActClass(1000, "Pen"),
     ActClass(8000, "Others"),
-)
+))
 
 OPENPACK_OPERATIONS_ANNOTATION = AnnotConfig(
     name="openpack-operations",
@@ -21,7 +21,7 @@ OPENPACK_OPERATIONS_ANNOTATION = AnnotConfig(
 )
 
 
-OPENPACK_ACTIONS = ActSet(
+OPENPACK_ACTIONS = ActSet((
     ActClass(101, "PickUp-OrderSheet"),
     ActClass(102, "GoTo-Cart"),
     ActClass(103, "PickUp-Item"),
@@ -75,7 +75,7 @@ OPENPACK_ACTIONS = ActSet(
     ActClass(1003, "Release-Pen"),
     ActClass(1004, "PickUp-OrderSheet"),
     ActClass(1005, "Push-OrderSheet-IntoTray"),
-)
+))
 
 OPENPACK_ACTIONS_ANNOTATION = AnnotConfig(
     name="openpack-actions",
