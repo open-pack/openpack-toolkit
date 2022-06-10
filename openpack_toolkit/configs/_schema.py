@@ -80,6 +80,6 @@ class AnnotConfig:
 @dataclass
 class DatasetConfig:
     name: str = MISSING
-    streams: List[DataStreamConfig] = MISSING
+    streams: Dict[str, DataStreamConfig] = MISSING
     split: DataSplitConfig = MISSING
     annot: AnnotConfig = MISSING
