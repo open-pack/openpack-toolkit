@@ -16,9 +16,11 @@ logger = getLogger(__name__)
 
 
 def load_annotation(
-        path: Path,
-        unixtimes_ms: np.ndarray,
-        classes: ActSet) -> pd.DataFrame:
+    path: Path,
+    unixtimes_ms: np.ndarray,
+    classes: ActSet,
+    label_col: str ="operation_id",
+) -> pd.DataFrame:
     """Load annotation data and resample them according to unixtime sequence ``T``.
     If there are no annotation records for the given timestamp, that records is treated
     as NULL class.
@@ -39,7 +41,7 @@ def load_annotation(
     null_record = df.head(1).copy()
     null_record["unixtime"] = 0
     null_record["box"] = 0
-    null_record["act_id"] = null_class_id
+    null_record[label_col] = null_class_id
     df = pd.concat([df, null_record], axis=0, ignore_index=True)
 
     # unixtime with second precision.
@@ -52,6 +54,7 @@ def load_annotation(
     df = df.loc[unixtimes_sec, :].reset_index(drop=False)
     df["unixtime"] = unixtimes_ms
 
+    df["act_id"] = df[label_col]
     df["act_idx"] = classes.convert_id_to_index(df["act_id"].values)
 
     cols = [
@@ -101,6 +104,7 @@ def load_imu(
     use_acc: bool = True,
     use_gyro: bool = False,
     use_quat: bool = False,
+    th: int = 10,
 ) -> Tuple[np.ndarray, np.ndarray]:
     """Load IMU data from CSVs.
 
@@ -113,6 +117,7 @@ def load_imu(
             Defaults to False.
         use_quat (bool, optional): include quaternion data(e.g.,
             ``quat_w, quat_x, quat_y, quat_z``). Defaults to False.
+        th (int, optional): threshold of timestamp difference. [ms]
     Returns:
         Tuple[np.ndarray, np.ndarray]: unixtime and loaded sensor data.
     """
@@ -128,7 +133,7 @@ def load_imu(
     if use_quat:
         channels += ["quat_w", "quat_x", "quat_y", "quat_z"]
 
-    ts_ret, x_ret = None, []
+    ts_ret, x_ret, ts_list = None, [], []
     for path in paths:
         df = pd.read_csv(path)
         logger.debug(f"load IMU data from {path} -> df={df.shape}")
@@ -137,12 +142,20 @@ def load_imu(
         ts = df["unixtime"].values
         x = df[channels].values.T
 
-        if ts_ret is None:
-            ts_ret = ts
-        else:
-            # Check whether the timestamps are equal or not.
-            np.testing.assert_array_equal(ts, ts_ret)
+        ts_list.append(ts)
         x_ret.append(x)
 
+    min_len = min([len(ts) for ts in ts_list])
+    ts_ret = None
+    for i in range(len(paths)):
+        x_ret[i] = x_ret[i][:, :min_len]
+        ts_list[i] = ts_list[i][:min_len]
+        
+        if ts_ret is None:
+            ts_ret = ts_list[i]
+        else:
+            # Check whether the timestamps are equal or not.
+            assert np.abs(ts_list[i] - ts_ret).max() < th
+
     x_ret = np.concatenate(x_ret, axis=0)
-    return ts, x_ret
+    return ts_ret, x_ret
