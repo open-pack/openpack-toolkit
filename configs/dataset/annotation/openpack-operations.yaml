@@ -1,0 +1,33 @@
+name: openpack-operations
+version: v3.0.1
+classes:
+- id: 100
+  name: Picking
+  version: v3.0.0
+- id: 200
+  name: MoveItemLabel
+  version: v3.0.0
+- id: 300
+  name: AssembleBox
+  version: v3.0.0
+- id: 400
+  name: PackInBox
+  version: v3.0.0
+- id: 500
+  name: CloseBox
+  version: v3.0.0
+- id: 600
+  name: AttachLabel
+  version: v3.0.0
+- id: 700
+  name: ReadLabel
+  version: v3.0.0
+- id: 900
+  name: PutOnCartRack
+  version: v3.0.0
+- id: 1000
+  name: Pen
+  version: v3.0.0
+- id: 8000
+  name: Others
+  version: v3.0.0

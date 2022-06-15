@@ -3,9 +3,15 @@
 """
 
 __version__ = '0.2.0'
-from . import codalab, data, utils
+from . import codalab, configs, data, utils
 from .activity import OPENPACK_OPERATIONS, ActClass, ActSet
 
 __all__ = [
-    "ActClass", "ActSet", "codalab", "data", "OPENPACK_OPERATIONS", "utils",
+    "ActClass",
+    "ActSet",
+    "codalab",
+    "configs",
+    "data",
+    "OPENPACK_OPERATIONS",
+    "utils",
 ]

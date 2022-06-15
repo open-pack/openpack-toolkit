@@ -1,0 +1,19 @@
+from .._schema import AnnotConfig
+from ...activity import ActSet, ActClass
+
+{% for key, annot in annotations.items() %}
+{{key|replace("-", "_")|upper}} = ActSet((
+{% for act in annot.classes %}
+        ActClass({{act.id}}, "{{act.name}}"),
+{% endfor %}
+))
+
+{{key|replace("-", "_")|upper}}_ANNOTATION = AnnotConfig(
+    name="{{annot.name}}",
+    version="{{annot.version}}",
+    classes={{key|replace("-", "_")|upper}},
+)
+
+
+
+{% endfor %}
