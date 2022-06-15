@@ -19,7 +19,7 @@ def load_annotation(
     path: Path,
     unixtimes_ms: np.ndarray,
     classes: ActSet,
-    label_col: str ="operation_id",
+    label_col: str = "operation_id",
 ) -> pd.DataFrame:
     """Load annotation data and resample them according to unixtime sequence ``T``.
     If there are no annotation records for the given timestamp, that records is treated
@@ -150,7 +150,7 @@ def load_imu(
     for i in range(len(paths)):
         x_ret[i] = x_ret[i][:, :min_len]
         ts_list[i] = ts_list[i][:min_len]
-        
+
         if ts_ret is None:
             ts_ret = ts_list[i]
         else:
