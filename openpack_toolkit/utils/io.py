@@ -14,12 +14,17 @@ def cleanup_dir(path: Path, exclude: str = None) -> None:
         path (Path): path to the target directory.
         exclude (str): keep files and directories whose name contains the given string.
     """
+    if not path.exists():
+        path.mkdir(parents=True)
+        logger.info(f"create directory: {path}")
+        return
+
     if not path.is_dir():
         raise ValueError(f"path is expected to be a directory, but got {path}")
     logger.debug(f"clean up {path}")
 
     for p in path.iterdir():
-        if "hydra" in p.name:
+        if (exclude is not None) and (exclude in p.name):
             continue
         elif p.is_dir():
             shutil.rmtree(p)
