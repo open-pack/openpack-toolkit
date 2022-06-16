@@ -1,3 +1,4 @@
+from logging import getLogger
 from typing import Tuple
 
 import numpy as np
@@ -5,6 +6,7 @@ import pandas as pd
 from sklearn.metrics import precision_recall_fscore_support
 
 EVAL_METRICS = ("precision", "recall", "f1")
+logger = getLogger(__name__)
 
 
 def verify_class_ids(
@@ -22,6 +24,32 @@ def verify_class_ids(
     if set(y_id) <= set(class_ids):
         return True
     raise ValueError(f"y have invalid class ids[{set(class_ids) - set(y_id)}]")
+
+
+def drop_ignore_class(
+    t_id: np.ndarray,
+    y_id: np.ndarray,
+    ignore_class_id: int,
+) -> Tuple[np.ndarray, np.ndarray]:
+    """_summary_
+    Args:
+        t_id (np.ndarray): _description_
+        y_id (np.ndarray): _description_
+        classes (Tuple[Tuple[int, str], ...]): _description_
+    Returns:
+        bool: Tuple[np.ndarray, np.ndarray]
+    """
+    assert t_id.ndim == 1
+    assert y_id.ndim == 1
+    logger.debug(f"drop ignore classs samples (ID={ignore_class_id})")
+
+    ind = np.where(t_id != ignore_class_id)[0]
+    logger.debug(f"  Befoe: t={t_id.shape}, y={y_id.shape}")
+
+    t_id = t_id[ind]
+    y_id = y_id[ind]
+    logger.debug(f"  After: t={t_id.shape}, y={y_id.shape}")
+    return t_id, y_id
 
 
 def calc_class_metrics(t_id: np.ndarray, y_id: np.ndarray,
@@ -100,6 +128,7 @@ def eval_operation_segmentation(
     t_id: np.ndarray = None,
     y_id: np.ndarray = None,
     classes: Tuple[Tuple[int, str], ...] = None,
+    ignore_class_id: int = None,
     mode: str = "final",
 ) -> pd.DataFrame:
     """Compute metrics (i.e., precision, recall, f1, support) for the given sequence.
@@ -115,6 +144,9 @@ def eval_operation_segmentation(
     assert t_id.ndim == 1
     assert y_id.ndim == 1
     verify_class_ids(y_id, classes)
+
+    if ignore_class_id is not None:
+        t_id, y_id = drop_ignore_class(t_id, y_id, ignore_class_id)
 
     df_scores = [
         calc_avg_metrics(t_id, y_id, classes, average="macro"),
