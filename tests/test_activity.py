@@ -182,4 +182,4 @@ def test_OPENPACK_OPERATIONS__01():
         assert isinstance(act, ActClass), f"act={act}"
 
     # the number of activities
-    assert len(act_set) == 10
+    assert len(act_set) == 11
