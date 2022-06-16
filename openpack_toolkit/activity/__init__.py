@@ -112,7 +112,10 @@ class ActSet():
         Returns:
             np.ndarray: 1d array of activity index.
         """
-        assert set(ids.ravel()) <= set(self.get_ids())
+        assert set(ids.ravel()) <= set(self.get_ids()), (
+            f"expected ID set is {set(self.get_ids())}, "
+            f"but got ID set={set(ids.ravel())}."
+        )
 
         index = np.full(ids.shape, -1)
         for i, cls in enumerate(self.classes):
@@ -182,13 +185,14 @@ class ActSet():
 
 OPENPACK_OPERATIONS = ActSet((
     ActClass(100, "Picking"),
-    ActClass(200, "MoveItemLabel"),
+    ActClass(200, "RelocateItemLabel"),
     ActClass(300, "AssembleBox"),
-    ActClass(400, "PackInBox"),
+    ActClass(400, "InsertItems"),
     ActClass(500, "CloseBox"),
-    ActClass(600, "ReadLabel"),
-    ActClass(700, "AttachLabel"),
-    ActClass(800, "PutOnCartRack"),
-    ActClass(900, "Pen"),
-    ActClass(1000, "Null", is_ignore=True),
+    ActClass(600, "AttachBoxLabel"),
+    ActClass(700, "ScanLabel"),
+    ActClass(800, "AttachShippingLabel"),
+    ActClass(900, "PutOnRack"),
+    ActClass(1000, "Fill-outOrder"),
+    ActClass(8100, "Null", is_ignore=True),
 ))
