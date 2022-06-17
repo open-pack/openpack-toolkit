@@ -221,4 +221,5 @@ def test_eval_operation_segmentation_wrapper__01():
     df_score = eval_operation_segmentation_wrapper(outputs, classes)
     print(df_score)
 
-    np.testing.assert_array_equal(df_score.shape, (24, 7))
+    # NOTE: 26 = (len(classes) + 2) * (num_sessions + 1)
+    np.testing.assert_array_equal(df_score.shape, (26, 7))
