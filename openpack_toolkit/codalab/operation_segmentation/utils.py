@@ -13,7 +13,8 @@ from typing import Dict, Tuple
 import numpy as np
 import pandas as pd
 
-from ...activity import OPENPACK_OPERATIONS, ActSet
+from ...activity import ActSet
+from ...configs.datasets.annotations import OPENPACK_OPERATIONS
 from .eval import eval_operation_segmentation
 
 logger = getLogger(__name__)
