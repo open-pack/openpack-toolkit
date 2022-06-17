@@ -3,7 +3,7 @@ name: atr-acc
 description: Accelerations from ATR IMU sensors
 super_stream: atr-qags
 path:
-  dir: ${path.openpack.rootdir}/${user.name}/atr/${node}
+  dir: ${path.openpack.rootdir}/${user.name}/atr/${device}
   fname: ${session}.csv
 file_format:
   file_type: csv
