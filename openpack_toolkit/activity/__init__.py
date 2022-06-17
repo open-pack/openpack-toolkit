@@ -184,21 +184,3 @@ class ActSet():
             if cls.name == cls_name:
                 return cls.id
         raise ValueError(f"got unexpected class name. cls_name={cls_name}")
-
-
-""" Activity Set Definitions
-"""
-
-OPENPACK_OPERATIONS = ActSet((
-    ActClass(100, "Picking"),
-    ActClass(200, "RelocateItemLabel"),
-    ActClass(300, "AssembleBox"),
-    ActClass(400, "InsertItems"),
-    ActClass(500, "CloseBox"),
-    ActClass(600, "AttachBoxLabel"),
-    ActClass(700, "ScanLabel"),
-    ActClass(800, "AttachShippingLabel"),
-    ActClass(900, "PutOnRack"),
-    ActClass(1000, "Fill-outOrder"),
-    ActClass(8100, "Null", is_ignore=True),
-))

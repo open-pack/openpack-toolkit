@@ -4,7 +4,8 @@
 
 __version__ = '0.2.0'
 from . import codalab, configs, data, utils
-from .activity import OPENPACK_OPERATIONS, ActClass, ActSet
+from .activity import ActClass, ActSet
+from .configs.datasets.annotations import OPENPACK_OPERATIONS
 
 __all__ = [
     "ActClass",
