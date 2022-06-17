@@ -6,7 +6,7 @@ ATR_ACC_STREAM = ImuConfig(
     description="Accelerations from ATR IMU sensors",
     super_stream="atr-qags",
     path=DataStreamConfig.Paths(
-        dir="${path.openpack.rootdir}/${user.name}/atr/${node}",
+        dir="${path.openpack.rootdir}/${user.name}/atr/${device}",
         fname="${session}.csv",
     ),
     frame_rate=30,
