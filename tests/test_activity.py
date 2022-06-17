@@ -1,7 +1,8 @@
 import numpy as np
 import pytest
 
-from openpack_toolkit.activity import OPENPACK_OPERATIONS, ActClass, ActSet
+from openpack_toolkit import OPENPACK_OPERATIONS
+from openpack_toolkit.activity import ActClass, ActSet
 
 
 @pytest.fixture
@@ -12,6 +13,18 @@ def act_set():
         ActClass(300, "Act300"),
         ActClass(400, "Act400"),
         ActClass(1000, "Null", is_ignore=True),
+    ))
+    return dummy_activity_set
+
+
+@pytest.fixture
+def act_set_without_ignore():
+    dummy_activity_set = ActSet((
+        ActClass(100, "Act100"),
+        ActClass(200, "Act200"),
+        ActClass(300, "Act300"),
+        ActClass(400, "Act400"),
+        ActClass(1000, "Null", is_ignore=False),
     ))
     return dummy_activity_set
 
@@ -78,11 +91,26 @@ def test_ActSet__get_ignore_class_index__01(act_set):
     assert actual == expect
 
 
+def test_ActSet__get_ignore_class_index__02(act_set_without_ignore):
+    """ There is no ignore class. """
+    expect = None
+    actual = act_set_without_ignore.get_ignore_class_index()
+
+    assert actual is expect
+
+
 def test_ActSet__get_ignore_class_id__01(act_set):
     expect = 1000
     actual = act_set.get_ignore_class_id()
 
     assert actual == expect
+
+
+def test_ActSet__get_ignore_class_id__02(act_set_without_ignore):
+    expect = None
+    actual = act_set_without_ignore.get_ignore_class_id()
+
+    assert actual is expect
 
 
 def test_ActSet__convert_id_to_index__01(act_set):

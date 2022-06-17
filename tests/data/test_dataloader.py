@@ -6,7 +6,7 @@ import pytest
 from omegaconf import DictConfig, OmegaConf, open_dict
 
 import openpack_toolkit as optk
-from openpack_toolkit.activity import OPENPACK_OPERATIONS
+from openpack_toolkit import OPENPACK_OPERATIONS
 from openpack_toolkit.configs.datasets.streams import ATR_QAGS_STREAM, KINECT_2D_KPT_STREAM
 from openpack_toolkit.data.dataloader import (
     load_and_resample_operation_labels,
