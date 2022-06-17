@@ -4,13 +4,17 @@ from ...activity import ActSet, ActClass
 {% for key, annot in annotations.items() %}
 {{key|replace("-", "_")|upper}} = ActSet((
 {% for act in annot.classes %}
-        ActClass({{act.id}}, "{{act.name}}"),
+        ActClass({{act.id}}, "{{act.name}}", is_ignore={{act.ignore}}),
 {% endfor %}
 ))
 
 {{key|replace("-", "_")|upper}}_ANNOTATION = AnnotConfig(
     name="{{annot.name}}",
     version="{{annot.version}}",
+    path={
+        "dir": "{{annot.path.dir}}",
+        "fname": "{{annot.path.fname}}",
+    },
     classes={{key|replace("-", "_")|upper}},
 )
 
