@@ -201,7 +201,7 @@ def test_resample_prediction_1Hz__02():
 
 
 def test_crop_seq_with_user_config__01():
-    user, sesion = "U0102", "S0500"
+    user, session = "U0102", "S0500"
     ts_unix = np.array([
         # Margin
         1634885784000,
@@ -224,7 +224,7 @@ def test_crop_seq_with_user_config__01():
     seq_expect = np.arange(2, 8)
 
     ts_unix_actual, seq_actual = crop_seq_with_user_config(
-        ts_unix, seq, user, sesion)
+        ts_unix, seq, user, session)
 
     np.testing.assert_array_equal(ts_unix_actual, ts_unix_expect)
     np.testing.assert_array_equal(seq_actual, seq_expect)
