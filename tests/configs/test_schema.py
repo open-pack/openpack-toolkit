@@ -15,14 +15,14 @@ from openpack_toolkit.configs._schema import (
 def sessions():
     sessions = {
         "S0100": SessionConfig(
-            duration="51m2s",
-            end="2021-10-22 12:10:19.887000",
-            start="2021-10-22 11:19:17.749000"
+            duration="50m13s",
+            end="2021-10-22T12:10:07+09:00",
+            start="2021-10-22T11:19:54+09:00",
         ),
         "S0200": SessionConfig(
-            duration="39m30s",
-            end="2021-10-22 13:10:35.265000",
-            start="2021-10-22 12:31:04.594000",
+            duration="39m8s",
+            end="2021-10-22T13:10:22+09:00",
+            start="2021-10-22T12:31:14+09:00",
         )
     }
     return sessions
@@ -77,11 +77,14 @@ def test_DataSplitConfig__01():
 def test_ImuConfig__01():
     conf = ImuConfig(
         name="atr-acc",
+        description="hoge hoge hoge",
+        super_stream="atr-qags",
         path=DataStreamConfig.Paths(
-            template="/foo/huga.csv"
+            dir="/foo/subdir",
+            fname="huga.csv",
         ),
         frame_rate=30,
-        nodes=["atr01", "atr02", "atr03", "atr04"],
+        devices=["atr01", "atr02", "atr03", "atr04"],
         acc=True,
         gyro=False,
         quat=False,
@@ -95,8 +98,11 @@ def test_ImuConfig__01():
 def test_KeypointConfig__01():
     conf = KeypointConfig(
         name="atr-acc",
+        description="hoge hoge hoge",
+        super_stream=None,
         path=DataStreamConfig.Paths(
-            template="/foo/huga.csv"
+            dir="/foo/subdir",
+            fname="huga.csv",
         ),
         frame_rate=30,
         category="2d-kpt",
