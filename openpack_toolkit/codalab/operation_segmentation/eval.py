@@ -1,3 +1,4 @@
+import warnings
 from logging import getLogger
 from typing import Tuple
 
@@ -49,6 +50,10 @@ def drop_ignore_class(
     t_id = t_id[ind]
     y_id = y_id[ind]
     logger.debug(f"  After: t={t_id.shape}, y={y_id.shape}")
+
+    if ignore_class_id in set(y_id):
+        warnings.warn(
+            f"ignore_class_id (ID{ignore_class_id}) exists in y_id.")
     return t_id, y_id
 
 
@@ -63,8 +68,12 @@ def calc_class_metrics(t_id: np.ndarray, y_id: np.ndarray,
         pd.DataFrame
     """
     class_ids = tuple([t[0] for t in classes])
-    assert set(y_id) <= set(
-        class_ids), f"y have invalid class ids[{set(class_ids) - set(y_id)}]"
+    if not (set(y_id) <= set(class_ids)):
+        warnings.warn(
+            "y_id includes unknown class IDs. "
+            f"expected class IDs are {class_ids}, "
+            f"but got {set(y_id)}."
+        )
 
     precision, recall, f1, support = precision_recall_fscore_support(
         t_id,
@@ -135,7 +144,7 @@ def eval_operation_segmentation(
     Args:
         t_id (np.ndarray): unixtime and corresponding activity ID, shape=(T,)
         y_id (np.ndarray): unixtime and predicted activity ID, shape=(T,)
-        classes (Tuple): class definition.
+        classes (Tuple): class definition. pairs of class id and name.
         mode (str): If final, only the macro score will be calculated. Otherwise,
             macro avg., weighted avg., and score for each class will be calculated.
     Returns:
@@ -147,6 +156,7 @@ def eval_operation_segmentation(
 
     if ignore_class_id is not None:
         t_id, y_id = drop_ignore_class(t_id, y_id, ignore_class_id)
+        classes = tuple([t for t in classes if t[0] != ignore_class_id])
 
     df_scores = [
         calc_avg_metrics(t_id, y_id, classes, average="macro"),
