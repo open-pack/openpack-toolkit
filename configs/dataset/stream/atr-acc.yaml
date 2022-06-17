@@ -27,7 +27,7 @@ file_format:
   - name: quat_y
   - name: quat_z
 frame_rate: 30
-nodes:
+devices:
 - atr01
 - atr02
 - atr03
