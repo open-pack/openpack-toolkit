@@ -1,7 +1,8 @@
 import numpy as np
 import pytest
 
-from openpack_toolkit.activity import OPENPACK_OPERATIONS, ActClass, ActSet
+from openpack_toolkit import OPENPACK_OPERATIONS
+from openpack_toolkit.activity import ActClass, ActSet
 
 
 @pytest.fixture

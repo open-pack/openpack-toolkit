@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from openpack_toolkit.activity import OPENPACK_OPERATIONS
+from openpack_toolkit import OPENPACK_OPERATIONS
 from openpack_toolkit.codalab.operation_segmentation.eval import (
     calc_avg_metrics,
     calc_class_metrics,
