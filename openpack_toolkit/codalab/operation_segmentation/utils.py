@@ -43,6 +43,12 @@ def resample_prediction_1Hz(
     tmp = ts_unix - (ts_unix % 1000)
     ts_unix_1hz = np.append(tmp, tmp[-1] + 1000)  # FIXME: write in one line
 
+    delta = (ts_unix_1hz[1:] - ts_unix_1hz[:-1])
+    assert delta.min() >= 0, (
+        "values in array are expected to be monotonically increasing, "
+        f"but the minium step is {delta.min()}."
+    )
+
     arr_out, ts_unix_out = [], []
     cur_time = ts_unix_1hz[0]
     for r in range(len(ts_unix_1hz)):
