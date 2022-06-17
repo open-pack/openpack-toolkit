@@ -15,6 +15,7 @@ from openpack_toolkit.codalab.operation_segmentation.eval import (
     eval_operation_segmentation,
 )
 from openpack_toolkit.codalab.operation_segmentation.utils import (
+    crop_seq_with_user_config,
     eval_operation_segmentation_wrapper,
     resample_prediction_1Hz,
 )
@@ -197,6 +198,36 @@ def test_resample_prediction_1Hz__02():
     print(f"elapsed time: {elapsed_time:.5f} sec")
 
     assert elapsed_time < 1.0
+
+
+def test_crop_seq_with_user_config__01():
+    user, sesion = "U0102", "S0500"
+    ts_unix = np.array([
+        # Margin
+        1634885784000,
+        1634885785000,
+        # Body part,
+        1634885786000,  # CSV head
+        1634885787000,
+        1634885788000,
+        # ...
+        1634887604000,
+        1634887605000,
+        1634887606000,  # CSV tail
+        # Margin
+        1634887607000,
+        1634887608000,
+    ])
+    seq = np.arange(10)
+
+    ts_unix_expect = ts_unix[2:-2]
+    seq_expect = np.arange(2, 8)
+
+    ts_unix_actual, seq_actual = crop_seq_with_user_config(
+        ts_unix, seq, user, sesion)
+
+    np.testing.assert_array_equal(ts_unix_actual, ts_unix_expect)
+    np.testing.assert_array_equal(seq_actual, seq_expect)
 
 
 def test_eval_operation_segmentation_wrapper__01():
