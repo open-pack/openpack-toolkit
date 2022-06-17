@@ -1,33 +1,70 @@
 name: openpack-operations
-version: v3.0.1
+version: v3.0.0
+path:
+  dir: ${path.openpack.rootdir}/${user.name}/annotation/${..name}
+  fname: ${session}.csv
+file_format:
+  file_type: csv
+  columns:
+  - name: unixtime
+    unit: milli scond
+  - name: user
+  - name: session
+  - name: box
+  - name: operation
 classes:
 - id: 100
   name: Picking
+  description: item picking
   version: v3.0.0
+  ignore: false
 - id: 200
-  name: MoveItemLabel
+  name: RelocateItemLabel
+  description: relocate label
   version: v3.0.0
+  ignore: false
 - id: 300
   name: AssembleBox
+  description: assemble box
   version: v3.0.0
+  ignore: false
 - id: 400
-  name: PackInBox
+  name: InsertItems
+  description: insert item
   version: v3.0.0
+  ignore: false
 - id: 500
   name: CloseBox
+  description: close box
   version: v3.0.0
+  ignore: false
 - id: 600
-  name: AttachLabel
+  name: AttachBoxLabel
+  description: attach label
   version: v3.0.0
+  ignore: false
 - id: 700
-  name: ReadLabel
+  name: ScanLabel
+  description: scan label
   version: v3.0.0
+  ignore: false
+- id: 800
+  name: AttachShippingLabel
+  description: attach label
+  version: v3.0.0
+  ignore: false
 - id: 900
-  name: PutOnCartRack
+  name: PutOnRack
+  description: 'put on rack '
   version: v3.0.0
+  ignore: false
 - id: 1000
-  name: Pen
+  name: Fill-outOrder
+  description: fill-out ordersheet
   version: v3.0.0
-- id: 8000
-  name: Others
+  ignore: false
+- id: 8100
+  name: 'Null'
+  description: ''
   version: v3.0.0
+  ignore: true
