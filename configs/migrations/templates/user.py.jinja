@@ -8,7 +8,7 @@ from ._schema import SessionConfig, UserConfig
 {% for key, data in user.sessions.items() %}
         "{{key}}": SessionConfig(
             duration="{{data.duration}}",
-            end="{{data.duration}}",
+            end="{{data.end}}",
             start="{{data.start}}",
         ),
 {% endfor %}
