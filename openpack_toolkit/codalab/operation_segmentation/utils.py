@@ -189,6 +189,7 @@ def make_submission_zipfile(submission: Dict, logdir: Path) -> None:
 def eval_operation_segmentation_wrapper(
     outputs: Dict[str, Dict[str, np.ndarray]],
     act_set: ActSet = OPENPACK_OPERATIONS,
+    exclude_ignore_class=True,
 ) -> pd.DataFrame:
     """ Compute evaluation metrics from model outputs (predicted probability).
 
@@ -202,6 +203,9 @@ def eval_operation_segmentation_wrapper(
     """
     submission = construct_submission_dict(outputs, act_set)
     classes = act_set.to_tuple()
+    ignore_class_id = act_set.get_ignore_class_id()
+    if isinstance(ignore_class_id, tuple):
+        raise NotImplementedError()
 
     # Evaluate
     df_scores = []
@@ -214,7 +218,11 @@ def eval_operation_segmentation_wrapper(
         y_id_concat.append(y_id.copy())
 
         df_tmp = eval_operation_segmentation(
-            t_id, y_id, classes=classes, mode=None)
+            t_id,
+            y_id,
+            classes=classes,
+            ignore_class_id=ignore_class_id,
+            mode=None)
         df_tmp["key"] = key
         df_scores.append(df_tmp.reset_index(drop=False))
 
@@ -223,6 +231,7 @@ def eval_operation_segmentation_wrapper(
         np.concatenate(t_id_concat, axis=0),
         np.concatenate(y_id_concat, axis=0),
         classes=classes,
+        ignore_class_id=ignore_class_id,
         mode=None,
     )
     df_tmp["key"] = "all"

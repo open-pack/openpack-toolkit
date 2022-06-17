@@ -12,6 +12,7 @@ from openpack_toolkit.activity import OPENPACK_OPERATIONS
 from openpack_toolkit.codalab.operation_segmentation.eval import (
     calc_avg_metrics,
     calc_class_metrics,
+    drop_ignore_class,
     eval_operation_segmentation,
 )
 from openpack_toolkit.codalab.operation_segmentation.utils import (
@@ -63,6 +64,20 @@ def test_calc_metrics_for_each_class__01(example_01):
     print(df_scores)
 
     pd.testing.assert_frame_equal(df_scores, expect)
+
+
+def test_drop_ignore_class__01():
+    ignore_class_id = 500
+    t_id = np.array([100, 200, 300, 400, 500, 600, 700, 800, 900])
+    # NOTE: index 6 cause warning. (ignore_class exists in y_id)
+    y_id = np.array([100, 200, 300, 400, 500, 500, 700, 800, 900])
+
+    expect1 = np.array([100, 200, 300, 400, 600, 700, 800, 900])
+    expect2 = np.array([100, 200, 300, 400, 500, 700, 800, 900])
+
+    actual1, actual2 = drop_ignore_class(t_id, y_id, ignore_class_id)
+    np.testing.assert_array_equal(actual1, expect1)
+    np.testing.assert_array_equal(actual2, expect2)
 
 
 def test_calc_avg_metrics__01(example_01):
@@ -252,5 +267,5 @@ def test_eval_operation_segmentation_wrapper__01():
     df_score = eval_operation_segmentation_wrapper(outputs, classes)
     print(df_score)
 
-    # NOTE: 26 = (len(classes) + 2) * (num_sessions + 1)
-    np.testing.assert_array_equal(df_score.shape, (26, 7))
+    # NOTE: 26 = (len(classes) - ignore_class + 2) * (num_sessions + 1)
+    np.testing.assert_array_equal(df_score.shape, (24, 7))
