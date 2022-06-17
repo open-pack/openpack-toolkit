@@ -12,6 +12,12 @@ from ..activity import ActSet
 
 @dataclass
 class SessionConfig:
+    """
+    Attributes:
+        start (str): Timestamp of session start time (IOS format)
+        end (str): Timestamp of session end time (IOS format)
+        duration (str): length of session, i.e., end - start
+    """
     duration: str = MISSING
     end: str = MISSING
     start: str = MISSING
@@ -40,23 +46,35 @@ class DataSplitConfig:
 
 @dataclass
 class DataStreamConfig:
+    """
+    Attributes:
+        schema (str): -
+        name (str): -
+        description (str): -
+        super_stream (str): Parent Class. Inherited from.
+        path (DatasetStream.Path): -
+        frame_rate (int): -
+    """
+
     @dataclass
     class Paths:
         # path to the root directory of this stream.
-        rootdir: Optional[str] = None
-        template: Optional[str] = None
+        dir: Optional[str] = None
+        fname: Optional[str] = None
 
     schema: str = MISSING
     name: str = MISSING
     description: Optional[str] = None
+    super_stream: Optional[str] = None
     path: Paths = MISSING
+    file_format: Optional[Dict] = None
     frame_rate: int = MISSING  # [Hz, fps]
 
 
 @dataclass
 class ImuConfig(DataStreamConfig):
     schema: str = "ImuConfig"
-    nodes: List[str] = MISSING
+    devices: List[str] = MISSING
     acc: bool = True
     gyro: bool = True
     quat: bool = True
@@ -74,6 +92,8 @@ class KeypointConfig(DataStreamConfig):
 class AnnotConfig:
     name: str = MISSING
     version: str = MISSING
+    path: Dict[str, str] = MISSING
+    file_format: Optional[Dict[str, str]] = None
     classes: ActSet = MISSING
 
 

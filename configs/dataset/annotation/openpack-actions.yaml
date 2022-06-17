@@ -1,162 +1,346 @@
 name: openpack-actions
-version: v3.0.1
+version: v3.0.0
+path:
+  dir: ${path.openpack.rootdir}/${user.name}/annotation/${..name}
+  fname: ${session}.csv
+file_format:
+  file_type: csv
+  columns:
+  - name: unixtime
+    unit: milli scond
+  - name: user
+  - name: session
+  - name: box
+  - name: operation
+  - name: action
 classes:
 - id: 101
+  operation: Picking
   name: PickUp-OrderSheet
+  description: ''
   version: v3.0.0
+  ignore: false
 - id: 102
-  name: GoTo-Cart
+  operation: Picking
+  name: Walk-ToRack
+  description: ''
   version: v3.0.0
+  ignore: false
 - id: 103
-  name: PickUp-Item
-  version: v3.0.0
-- id: 104
-  name: BackTo-Table
-  version: v3.0.0
-- id: 105
-  name: Put-Items
-  version: v3.0.0
-- id: 106
-  name: PickUp-PackedBox
-  version: v3.0.0
-- id: 107
-  name: Put-PackedBox
-  version: v3.0.0
-- id: 108
+  operation: Picking
   name: PickUp-Item-FromBox
+  description: ''
   version: v3.0.0
+  ignore: false
+- id: 104
+  operation: Picking
+  name: Pick-UpOrderSheet&Walk-ToRack-v2
+  description: ''
+  version: v2.5.x
+  ignore: false
+- id: 105
+  operation: Picking
+  name: Walk-ToWorkBench-v2
+  description: ''
+  version: v2.5.x
+  ignore: false
+- id: 106
+  operation: Picking
+  name: Pick-UpOrderSheet&Walk-ToRack-with-PrevPackedBox-v2
+  description: ''
+  version: v2.5.x
+  ignore: false
 - id: 201
+  operation: RelocateItemLabel
   name: Remove-ItemLabel
+  description: ''
   version: v3.0.0
+  ignore: false
 - id: 202
+  operation: RelocateItemLabel
   name: AttachTo-OrderSheet
+  description: ''
   version: v3.0.0
+  ignore: false
 - id: 203
+  operation: RelocateItemLabel
   name: Hold-Pen
+  description: ''
   version: v3.0.0
+  ignore: false
 - id: 204
+  operation: RelocateItemLabel
   name: Write-CheckMark
+  description: ''
   version: v3.0.0
+  ignore: false
 - id: 205
-  name: Put/Release-Pen
-  version: v3.0.0
-- id: 206
-  name: Put-Iten-SmallBack
-  version: v3.0.0
-- id: 301
-  name: Pick-Cardboard
-  version: v3.0.0
-- id: 302
-  name: Assemble-Box
-  version: v3.0.0
-- id: 303
-  name: Attach-Tape
-  version: v3.0.0
-- id: 304
-  name: TurnOver-Box
-  version: v3.0.0
-- id: 305
-  name: PickUp-PremadeBox
-  version: v3.0.0
-- id: 401
-  name: Put-Item-into-Box
-  version: v3.0.0
-- id: 402
-  name: Lift-Item
-  version: v3.0.0
-- id: 403
-  name: Put-Item
-  version: v3.0.0
-- id: 404
-  name: Pick-AirCushion
-  version: v3.0.0
-- id: 405
-  name: Separate-AirCushion
-  version: v3.0.0
-- id: 406
-  name: Put-AirCushion
-  version: v3.0.0
-- id: 407
+  operation: RelocateItemLabel
   name: Put-Item-SmallBack
+  description: ''
   version: v3.0.0
-- id: 501
+  ignore: false
+- id: 206
+  operation: RelocateItemLabel
+  name: Relocate-ItemLabel-v2
+  description: ''
+  version: v2.5.x
+  ignore: false
+- id: 207
+  operation: RelocateItemLabel
+  name: Write-v2
+  description: ''
+  version: v2.5.x
+  ignore: false
+- id: 301
+  operation: AssembleBox
+  name: Pick-Cardboard
+  description: ''
+  version: v3.0.0
+  ignore: false
+- id: 302
+  operation: AssembleBox
   name: Bend-Flap
+  description: ''
   version: v3.0.0
-- id: 502
+  ignore: false
+- id: 303
+  operation: AssembleBox
   name: Attach-Tape
+  description: ''
   version: v3.0.0
+  ignore: false
+- id: 304
+  operation: AssembleBox
+  name: TurnOver-Box
+  description: ''
+  version: v3.0.0
+  ignore: false
+- id: 305
+  operation: AssembleBox
+  name: PickUp-AssembledBox
+  description: ''
+  version: v3.0.0
+  ignore: false
+- id: 306
+  operation: AssembleBox
+  name: AssembleBox-v2
+  description: ''
+  version: v2.5.x
+  ignore: false
+- id: 401
+  operation: InsertItems
+  name: Insert-Item-into-Box
+  description: ''
+  version: v3.0.0
+  ignore: false
+- id: 402
+  operation: InsertItems
+  name: AirCushion
+  description: ''
+  version: v3.0.0
+  ignore: false
+- id: 403
+  operation: InsertItems
+  name: Separate-AirCushion
+  description: ''
+  version: v3.0.0
+  ignore: false
+- id: 404
+  operation: InsertItems
+  name: Put-Item-SmallBack
+  description: ''
+  version: v3.0.0
+  ignore: false
+- id: 405
+  operation: InsertItems
+  name: Insert-Items-v2
+  description: ''
+  version: v2.5.x
+  ignore: false
+- id: 501
+  operation: CloseBox
+  name: Bend-Flap
+  description: ''
+  version: v3.0.0
+  ignore: false
+- id: 502
+  operation: CloseBox
+  name: Attach-Tape
+  description: ''
+  version: v3.0.0
+  ignore: false
+- id: 503
+  operation: CloseBox
+  name: CloseBox-v2
+  description: ''
+  version: v2.5.x
+  ignore: false
 - id: 601
-  name: Pick-BoxLabel
-  version: v3.0.0
-- id: 602
-  name: PickUp-BoxLabel
-  version: v3.0.0
-- id: 603
+  operation: AttachBoxLabel
   name: Attach-BoxLabel
+  description: ''
   version: v3.0.0
+  ignore: false
+- id: 602
+  operation: AttachBoxLabel
+  name: Attach-BoxLabel-v2
+  description: ''
+  version: v2.5.x
+  ignore: false
 - id: 701
+  operation: ScanLabel
   name: PickUp-HT
+  description: ''
   version: v3.0.0
+  ignore: false
 - id: 702
+  operation: ScanLabel
   name: Scan-OrderSheet
+  description: ''
   version: v3.0.0
+  ignore: false
 - id: 703
+  operation: ScanLabel
   name: Scan-Box
+  description: ''
   version: v3.0.0
+  ignore: false
 - id: 704
+  operation: ScanLabel
   name: Scan-Item
+  description: ''
   version: v3.0.0
+  ignore: false
 - id: 705
-  name: Push-Button
-  version: v3.0.0
-- id: 706
-  name: Release-HT
-  version: v3.0.0
-- id: 707
+  operation: ScanLabel
   name: Hold-Scanner
+  description: ''
   version: v3.0.0
-- id: 708
-  name: Scan-OrderSheet2
+  ignore: false
+- id: 704
+  operation: ScanLabel
+  name: Scan-OrderSheet
+  description: ''
   version: v3.0.0
-- id: 709
+  ignore: false
+- id: 706
+  operation: ScanLabel
   name: Scan-Printer
+  description: ''
   version: v3.0.0
-- id: 710
-  name: Release-Scanner
-  version: v3.0.0
+  ignore: false
+- id: 707
+  operation: ScanLabel
+  name: HT-v2
+  description: ''
+  version: v2.5.x
+  ignore: false
+- id: 708
+  operation: ScanLabel
+  name: Printer-v2
+  description: ''
+  version: v2.5.x
+  ignore: false
 - id: 801
+  operation: AttachShippingLabel
   name: PickUp-ShippingLabel
+  description: ''
   version: v3.0.0
+  ignore: false
 - id: 802
-  name: Remove-ShippingLabel
-  version: v3.0.0
-- id: 803
+  operation: AttachShippingLabel
   name: Attach-ShippingLabel
+  description: ''
   version: v3.0.0
+  ignore: false
+- id: 802
+  operation: AttachShippingLabel
+  name: Attach-ShippingLabel-v2
+  description: ''
+  version: v2.5.x
+  ignore: false
 - id: 901
+  operation: PutOnRack
   name: PickUp-PackedBox
+  description: ''
   version: v3.0.0
+  ignore: false
 - id: 902
-  name: GoTo-Cart
-  version: v3.0.0
-- id: 903
+  operation: PutOnRack
   name: Put-PackedBox
+  description: ''
   version: v3.0.0
-- id: 904
-  name: Goto-Table
-  version: v3.0.0
+  ignore: false
+- id: 903
+  operation: PutOnRack
+  name: Put-OnPack-v2
+  description: ''
+  version: v2.5.x
+  ignore: false
 - id: 1001
+  operation: Fill-outOrder
   name: PickUp-Pen
+  description: ''
   version: v3.0.0
+  ignore: false
 - id: 1002
+  operation: Fill-outOrder
   name: Write-Sign
+  description: ''
   version: v3.0.0
+  ignore: false
 - id: 1003
-  name: Release-Pen
-  version: v3.0.0
-- id: 1004
-  name: PickUp-OrderSheet
-  version: v3.0.0
-- id: 1005
+  operation: Fill-outOrder
   name: Push-OrderSheet-IntoTray
+  description: ''
   version: v3.0.0
+  ignore: false
+- id: 1004
+  operation: Fill-outOrder
+  name: FillOut-v2
+  description: ''
+  version: v2.5.x
+  ignore: false
+- id: 1005
+  operation: Fill-outOrder
+  name: Write-v2
+  description: ''
+  version: v2.5.x
+  ignore: false
+- id: 1006
+  operation: Fill-outOrder
+  name: Insert-v2
+  description: ''
+  version: v2.5.x
+  ignore: false
+- id: 8101
+  operation: 'Null'
+  name: Others
+  description: ''
+  version: v3.0.0
+  ignore: true
+- id: 8102
+  operation: 'Null'
+  name: SystemError
+  description: ''
+  version: v3.0.0
+  ignore: true
+- id: 8103
+  operation: 'Null'
+  name: Ignore
+  description: ''
+  version: v3.0.0
+  ignore: true
+- id: 8104
+  operation: 'Null'
+  name: Unknown
+  description: ''
+  version: v3.0.0
+  ignore: true
+- id: 8201
+  operation: SystemError
+  name: SystemError
+  description: ''
+  version: v3.0.0
+  ignore: true
