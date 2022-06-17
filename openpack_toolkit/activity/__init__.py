@@ -81,12 +81,15 @@ class ActSet():
     def get_ignore_class_index(self) -> Union[int, Tuple]:
         """Return the index of ignore classes, i.e., ``is_ignore=True``.
         If there are only one ignore class, return the index as int.
+        When there is no ignore classe, return None.
 
         Returns:
-            Union[int, Tuple]
+            Union[int, Tuple] or None
         """
         index = tuple([i for i, act in enumerate(
             self.classes) if act.is_ignore])
+        if len(index) == 0:
+            return None
         if len(index) == 1:
             return index[0]
         return index
@@ -94,11 +97,14 @@ class ActSet():
     def get_ignore_class_id(self) -> Union[int, Tuple]:
         """Return the ID of ignore classes, i.e., ``is_ignore=True``.
         If there are only one ignore class, return the ID as int.
+        When there is no ignore classe, return None.
 
         Returns:
-            Union[int, Tuple]
+            Union[int, Tuple] or None
         """
         ids = tuple([act.id for act in self.classes if act.is_ignore])
+        if len(ids) == 0:
+            return None
         if len(ids) == 1:
             return ids[0]
         return ids
