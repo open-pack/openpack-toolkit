@@ -19,7 +19,7 @@ def load_annotation(
     path: Path,
     unixtimes_ms: np.ndarray,
     classes: ActSet,
-    label_col: str = "operation_id",
+    label_col: str = None,
 ) -> pd.DataFrame:
     """Load annotation data and resample them according to unixtime sequence ``T``.
     If there are no annotation records for the given timestamp, that records is treated
@@ -66,6 +66,14 @@ def load_annotation(
         "act_id",
         "act_idx"]
     return df[cols]
+
+
+def load_and_resample_operation_labels(
+    path: Path,
+    unixtimes_ms: np.ndarray,
+    classes: ActSet,
+) -> pd.DataFrame:
+    return load_annotation(path, unixtimes_ms, classes, label_col="operation")
 
 
 def load_keypoints(path: Path) -> Tuple[np.ndarray, np.ndarray]:
