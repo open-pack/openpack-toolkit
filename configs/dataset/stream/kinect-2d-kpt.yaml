@@ -1,11 +1,16 @@
 schema: KeypointConfig
 name: kinect-2d-kpt
+category: 2d-kpt
+super_stream: null
+model: mmpose-hrnet-w48-posetrack18-384x288-posewarper-stage2
 description: 2D keypoint extracted by mmpose/hrnet
 path:
-  template: ${path.datasets.openpack}/{user}/2d-kpt/${.model}/{session}.csv
+  dir: ${path.openpack.rootdir}/${user.name}/kinect/${..category}/${..model}/single
+  fname: ${session}.json
+file_format:
+  file_type: json
+  note: MS COCO format
 frame_rate: 15
-category: 2d-kpt
-model: mmpose-hrnet-w48-posetrack18-384x288-posewarper-stage2
 nodes:
   0: nose
   1: left_eye

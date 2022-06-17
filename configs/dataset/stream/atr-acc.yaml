@@ -1,8 +1,31 @@
 schema: ImuConfig
 name: atr-acc
 description: Accelerations from ATR IMU sensors
+super_stream: atr-qags
 path:
-  template: ${path.datasets.openpack}/{user}/{node}/{session}.csv
+  dir: ${path.openpack.rootdir}/${user.name}/atr/${node}
+  fname: ${session}.csv
+file_format:
+  file_type: csv
+  columns:
+  - name: unixtime
+    unit: milli second
+  - name: acc_x
+    unit: G
+  - name: acc_y
+    unit: G
+  - name: acc_z
+    unit: G
+  - name: gyro_x
+    unit: dps
+  - name: gyro_y
+    unit: dps
+  - name: gyro_z
+    unit: dps
+  - name: quat_w
+  - name: quat_x
+  - name: quat_y
+  - name: quat_z
 frame_rate: 30
 nodes:
 - atr01
