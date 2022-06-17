@@ -3,6 +3,7 @@ Todo:
     - Make Unit-Test.
     - Refactoring is needed!
 """
+import datetime
 import json
 import os
 import zipfile
@@ -14,6 +15,7 @@ import numpy as np
 import pandas as pd
 
 from ...activity import ActSet
+from ...configs import users as OPENPACK_USERS
 from ...configs.datasets.annotations import OPENPACK_OPERATIONS
 from .eval import eval_operation_segmentation
 
@@ -63,6 +65,42 @@ def resample_prediction_1Hz(
     )
 
 
+def crop_seq_with_user_config(
+        ts_unix: np.ndarray,
+        seq: np.ndarray,
+        user: str,
+        session: str,
+):
+    """Extract valid segment from given sequence.
+
+    Args:
+        ts_unix (np.ndarray): 1d array of unixtimestamp.
+        y_id_out (np.ndarray): _description_
+        user_session (ster): e.g., "U0102-S0100"
+    """
+    assert ts_unix.ndim == 1
+    assert seq.ndim
+
+    if hasattr(OPENPACK_USERS, user):
+        user_cfg = getattr(OPENPACK_USERS, user)
+    else:
+        # raise ValueError(f"unsupported user ID: {user}")
+        logger.warn(
+            f"unsupported user ID: {user}, skip cropping this sequence.")
+        return ts_unix, seq
+
+    ts_head = datetime.datetime.fromisoformat(user_cfg.sessions[session].start)
+    ts_tail = datetime.datetime.fromisoformat(user_cfg.sessions[session].end)
+
+    unixtime_head = int(ts_head.timestamp() * 1000)  # [ms] precision
+    # FIXME: The last second is droped when I make release version CSV.
+    # See detail in har-open-pack-codes/issues/31
+    unixtime_tail = int(ts_tail.timestamp() * 1000) - 1000  # [ms] precision
+
+    ind = np.where((ts_unix >= unixtime_head) & (ts_unix < unixtime_tail))[0]
+    return ts_unix[ind], seq[ind]
+
+
 def construct_submission_dict(
         outputs: Dict[str, Dict[str, np.ndarray]], act_set: ActSet) -> Dict:
     """Make dict that can be used for submission and `eval_workprocess_segmentation()` func.
@@ -82,6 +120,10 @@ def construct_submission_dict(
         y_id = act_set.convert_index_to_id(np.argmax(d["y"], axis=1).ravel())
         ts_unix_out, y_id_out = resample_prediction_1Hz(
             ts_unix=d["unixtime"].ravel(), arr=y_id)
+
+        # TODO: Crop sequence with UserConfig
+        ts_unix_out, y_id_out, _ = crop_seq_with_user_config(
+            ts_unix_out, y_id_out)
 
         record["unixtime"] = ts_unix_out.copy()
         record["prediction"] = y_id_out.copy()
