@@ -1,0 +1,26 @@
+# Recommended Data Split (Train / Val / Test / Submission)
+
+{% for split in splits %}
+1. `{{ split.name }}`
+{% endfor%}
+
+{% for split in splits %}
+## [{{loop.index}}] {{split.name | replace("-", " ") | title}}
+
+{{ split.description }}
+
+- Config File: [{{split.name}}.yaml](../configs/dataset/split/{{split.name}}.yaml)
+- Python Class: [`openpack_toolkit.configs.datasets.splits.{{split.name | replace("-", "_") | upper}}_SPLIT`](../openpack_toolkit/configs/datasets/splits.py)
+
+| # | Usage |User | Session | 
+|---|-------|------|---------|
+{% for section in ["train", "val", "test", "submission"]%}
+{% for row in split[section]%}
+| {{loop.index}} | {{section|upper}} | {{row[0]}} | {{row[1]}} |
+{% endfor%}
+{% if section != "submission"%}
+|  |  |  |  |
+{% endif %}
+{% endfor%}
+
+{% endfor%}
