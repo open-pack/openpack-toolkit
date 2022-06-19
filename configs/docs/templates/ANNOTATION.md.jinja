@@ -1,0 +1,55 @@
+# Activity Class Definitions
+
+{% for _, annot in annotations.items() %}
+1. `{{annot.act_set_name}}`
+{% endfor %}
+
+## [1] `OPENPACK_OPERATIONS`
+{% set annot = annotations["openpack-operations"] %}
+
+- Class Name: `openpack_toolkit.OPENPACK_OPERATIONS`
+- Config (YAML): [configs/dataset/annotation/openpack-operations.yaml](../configs/dataset/annotation/openpack-operations.yaml)
+
+### 1-1: Activity Classes
+
+| ID | Name | Description | ignore |
+|----|------|-------------|--------|
+{% for cls in annot.classes %}
+| {{cls.id}} | {{cls.name}} | {{cls.description}} | {% if cls.ignore %}{{cls.ignore}}{% endif %} |
+{% endfor %}
+
+### 1-2: File Format
+
+Format: CSV
+
+| # | Column Name | Description |
+|---|-------------|-------------|
+{% for col in annot.file_format.columns %}
+| {{loop.index}} | {{col.name}} | {{col.description}} |
+{% endfor %}
+
+---
+
+## [2] `OPENPACK_ACTIONS`
+{% set annot = annotations["openpack-actions"] %}
+
+- Class Name: `openpack_toolkit.configs.dataset.annotation.OPENPACK_ACTIONS`
+- Config (YAML): [configs/dataset/annotation/openpack-actions.yaml](../configs/dataset/annotation/openpack-actions.yaml)
+
+### 2-1: Activity Classes
+
+| ID | Operation | Name | Description | ignore |
+|----|-----------|------|-------------|--------|
+{% for cls in annot.classes %}
+| {{cls.id}} | {{cls.operation}} | {{cls.name}} | {{cls.description}} | {% if cls.ignore %}{{cls.ignore}}{% endif %} |
+{% endfor %}
+
+### 2-2: File Format
+
+Format: CSV
+
+| # | Column Name | Description |
+|---|-------------|-------------|
+{% for col in annot.file_format.columns %}
+| {{loop.index}} | {{col.name}} | {{col.description}} |
+{% endfor %}

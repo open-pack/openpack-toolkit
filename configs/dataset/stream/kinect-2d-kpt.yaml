@@ -3,7 +3,8 @@ name: kinect-2d-kpt
 category: 2d-kpt
 super_stream: null
 model: mmpose-hrnet-w48-posetrack18-384x288-posewarper-stage2
-description: 2D keypoint extracted by mmpose/hrnet
+description: 2D keypoint extracted by mmpose/hrnet. The model used to extract keypoints
+  was 2-stage bottom-up model defined in [mmpose/2d_kpt_sview_rgb_vid/posewarper/posetrack18/hrnet_w48_posetrack18_384x288_posewarper_stage2.py](https://github.com/open-mmlab/mmpose/blob/master/configs/body/2d_kpt_sview_rgb_vid/posewarper/posetrack18/hrnet_w48_posetrack18_384x288_posewarper_stage2.py).
 path:
   dir: ${path.openpack.rootdir}/${user.name}/kinect/${..category}/${..model}/single
   fname: ${session}.json
@@ -11,6 +12,48 @@ file_format:
   file_type: json
   note: MS COCO format
 frame_rate: 15
+meta:
+  tables:
+  - name: Keypoints
+    note: Keypoints are defined in MS COCO style.
+    headers:
+    - ID
+    - Location
+    body:
+    - - 0
+      - nose
+    - - 1
+      - left_eye
+    - - 2
+      - right_eye
+    - - 3
+      - left_ear
+    - - 4
+      - right_ear
+    - - 5
+      - left_shoulder
+    - - 6
+      - right_shoulder
+    - - 7
+      - left_elbow
+    - - 8
+      - right_elbow
+    - - 9
+      - left_wrist
+    - - 10
+      - right_wrist
+    - - 11
+      - left_hip
+    - - 12
+      - right_hip
+    - - 13
+      - left_knee
+    - - 14
+      - right_knee
+    - - 15
+      - left_ankle
+    - - 16
+      - right_ankle
 nodes:
   0: nose
   1: left_eye

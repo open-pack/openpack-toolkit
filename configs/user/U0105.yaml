@@ -1,4 +1,16 @@
 id: 105
+meta:
+  age_group: 30s
+  dominant_hand: Right
+  note: ''
+  packaging_experience: 4 Year
+  scenarios:
+    S0100: S1
+    S0200: S1
+    S0300: S1
+    S0400: S1
+    S0500: S1
+  sex: F
 name: U0105
 sessions:
   S0100:
@@ -6,7 +18,7 @@ sessions:
     end: '2021-11-19T12:01:08+09:00'
     start: '2021-11-19T11:20:22+09:00'
   S0200:
-    duration: 37m0s
+    duration: 37m00s
     end: '2021-11-19T12:56:30+09:00'
     start: '2021-11-19T12:19:30+09:00'
   S0300:

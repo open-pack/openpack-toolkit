@@ -1,4 +1,16 @@
 id: 103
+meta:
+  age_group: 50s
+  dominant_hand: Right
+  note: ''
+  packaging_experience: 6 Month
+  scenarios:
+    S0100: S1
+    S0200: S1
+    S0300: S1
+    S0400: S1
+    S0500: S1
+  sex: F
 name: U0103
 sessions:
   S0100:

@@ -1,5 +1,5 @@
-from ...activity import ActClass, ActSet
 from .._schema import AnnotConfig
+from ...activity import ActSet, ActClass
 
 OPENPACK_OPERATIONS = ActSet((
     ActClass(100, "Picking", is_ignore=False),

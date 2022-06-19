@@ -26,6 +26,13 @@ poetry add  openpack-toolkit
 - [Dataset Page](https://open-pack.github.io/)
 - [API Docs](https://open-pack.github.io/openpack-toolkit/openpack_toolkit/)
 
+### Dataset Descriptions
+
+- [Subjects & Recording Scenarios](./docs/USER.md)
+- [Activity Class Definition](./docs/ANNOTATION.md)
+- [Modality](./docs/DATA_STREAM.md)
+- [Data Split (Train/Val/Test/Submission)](./docs/DATA_SPLIT.md)
+
 ## Examples (PyTorch)
 
 See [openpack-torch](https://github.com/open-pack/openpack-torch) for more dietail.

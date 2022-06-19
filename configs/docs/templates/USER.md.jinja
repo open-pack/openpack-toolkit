@@ -1,0 +1,45 @@
+# Subjects and Data Collection Scenario
+
+We invited 16 distinct subjects for our data collection.
+The ages of the subjects are between 20s and 50s.
+Here is information for currently available users.
+
+## Meta Data
+
+| Subject | Sex | Age | Dominant Hand | Experience | Note |
+|---------|-----|-----|---------------|------------|------|
+{% for user in users %}
+| {{ user.name }} | {{user.meta.sex}} | {{user.meta.age_group}} | {{user.meta.dominant_hand}} | {{user.meta.packaging_experience}} | {{user.meta.note}} |
+{% endfor%}
+
+
+## Sessions
+
+In the competition, predicted sequence will be evaluated within the following interval (`[Start, End]`).
+
+| Subject | Session | Scenario | Duration | Start | End |
+|---------|---------|----------|----------|-------|-----|
+{% for user in users %}
+{% for session_id, session in user.sessions.items() %}
+| {{ user.name }} | {{session_id}} | {{user.meta.scenarios[session_id]}} | {{session.duration}} | {{session.start|replace("T", " ")}} | {{session.end|replace("T", " ")}} |
+{% endfor%}
+{% endfor%}
+
+## Scenarios
+
+### Scenario.1 (S1)
+
+we asked the subjects to follow the work instructions as much as possible. While a list of items in an order is determined based on order sheets collected in actual logistics centers, the probabilities with which very large/small items are included in an order are moderate (higher than actual probabilities). 
+
+### Scenario.2 (S2)
+
+TBA
+
+### Scenario.3 (S3)
+
+TBA
+
+### Scenario.4 (S4)
+
+TBA
+

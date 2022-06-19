@@ -1,6 +1,6 @@
 schema: ImuConfig
 name: atr-qags
-description: Acceleration, gyro, and quaternion from ATR IMU sensors
+description: Acceleration, gyro, and quaternion data captured by ATR IMU sensors.
 super_stream: null
 path:
   dir: ${path.openpack.rootdir}/${user.name}/atr/${device}
@@ -27,6 +27,22 @@ file_format:
   - name: quat_y
   - name: quat_z
 frame_rate: 30
+meta:
+  tables:
+  - name: Device List
+    note: We attached 4 IMU sensors to subjects. IMU = [ATR TSND151](http://www.atr-p.com/products/TSND121_151.html).
+    headers:
+    - Device Name
+    - Location
+    body:
+    - - atr01
+      - Right Wrist
+    - - atr02
+      - Left Wrist
+    - - atr03
+      - Right Upper Arm
+    - - atr04
+      - Left Upper Arm
 devices:
 - atr01
 - atr02
