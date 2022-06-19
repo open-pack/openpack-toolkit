@@ -1,0 +1,51 @@
+# Modality
+
+{% for stream in streams %}
+1. `{{ stream.name }}`
+{% endfor%}
+
+{% for stream in streams %}
+## [{{loop.index}}] `{{stream.name}}`
+
+{{ stream.description }}
+
+- Config File: [{{stream.name}}.yaml](../configs/dataset/stream/{{stream.name}}.yaml)
+- Python Module: [`openpack_toolkit.configs.datasets.streams.{{stream.name|replace("-", "_")|upper}}_STREAM`](../openpack_toolkit/configs/datasets/streams.py)
+- Frame Rate: {{stream.frame_rate}}
+
+### {{loop.index}}-1: Path
+
+```txt
+{{stream.path.dir}}/{{stream.path.fname}}
+```
+
+### {{loop.index}}-2: File Format (`{{stream.file_format.file_type}}`)
+
+{{stream.file_format.note}}
+
+{% if 'columns' in stream.file_format.keys() %}
+| # | Column Name | Description | Unit | Dtype | Note |
+|---|-------------|-------------|------|-------|------|
+{% for col in stream.file_format.columns %}
+| {{loop.index - 1}} | {{col.name}} | {{col.description}} | {{col.unit}} | {{col.dtype}} | {{col.note}} |
+{% endfor%}
+{% endif %}
+
+### {{loop.index}}-2: Meta Data
+
+{% if 'tables' in stream.meta.keys() %}
+{% for table in stream.meta.tables %}
+#### {{table.name}}
+
+{{table.note}}
+
+| # |{% for h in table.headers %} {{h}} |{% endfor %} 
+|---|{% for _ in table.headers %}---|{% endfor %} 
+{% for row in table.body %}
+| {{loop.index - 1}} |{% for d in row %} {{d}} |{% endfor %} 
+{% endfor%}
+
+{% endfor%}
+{% endif %}
+
+{% endfor%}

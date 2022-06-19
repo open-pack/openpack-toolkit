@@ -1,3 +1,6 @@
+name: debug
+description: >-
+  This split is for debugging. The used sequence for each section is small.
 train:
   - ["U0102", "S0100"]
   - ["U0102", "S0200"]

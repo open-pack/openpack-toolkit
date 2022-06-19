@@ -1,12 +1,24 @@
 id: 106
+meta:
+  age_group: 40s
+  dominant_hand: Right
+  note: ''
+  packaging_experience: 1 Month
+  scenarios:
+    S0100: S1
+    S0200: S1
+    S0300: S1
+    S0400: S1
+    S0500: S1
+  sex: F
 name: U0106
 sessions:
   S0100:
-    duration: 49m6s
+    duration: 49m06s
     end: '2021-11-26T12:01:32+09:00'
     start: '2021-11-26T11:12:26+09:00'
   S0200:
-    duration: 35m0s
+    duration: 35m00s
     end: '2021-11-26T12:57:04+09:00'
     start: '2021-11-26T12:22:04+09:00'
   S0300:
@@ -18,6 +30,6 @@ sessions:
     end: '2021-11-26T15:42:59+09:00'
     start: '2021-11-26T15:06:35+09:00'
   S0500:
-    duration: 17m9s
+    duration: 17m09s
     end: '2021-11-26T16:18:55+09:00'
     start: '2021-11-26T16:01:46+09:00'
