@@ -10,7 +10,7 @@ U0102 = UserConfig(
             start="2021-10-22T11:19:54+09:00",
         ),
         "S0200": SessionConfig(
-            duration="39m8s",
+            duration="39m08s",
             end="2021-10-22T13:10:22+09:00",
             start="2021-10-22T12:31:14+09:00",
         ),
@@ -72,7 +72,7 @@ U0105 = UserConfig(
             start="2021-11-19T11:20:22+09:00",
         ),
         "S0200": SessionConfig(
-            duration="37m0s",
+            duration="37m00s",
             end="2021-11-19T12:56:30+09:00",
             start="2021-11-19T12:19:30+09:00",
         ),
@@ -98,12 +98,12 @@ U0106 = UserConfig(
     name="U0106",
     sessions={
         "S0100": SessionConfig(
-            duration="49m6s",
+            duration="49m06s",
             end="2021-11-26T12:01:32+09:00",
             start="2021-11-26T11:12:26+09:00",
         ),
         "S0200": SessionConfig(
-            duration="35m0s",
+            duration="35m00s",
             end="2021-11-26T12:57:04+09:00",
             start="2021-11-26T12:22:04+09:00",
         ),
@@ -118,7 +118,7 @@ U0106 = UserConfig(
             start="2021-11-26T15:06:35+09:00",
         ),
         "S0500": SessionConfig(
-            duration="17m9s",
+            duration="17m09s",
             end="2021-11-26T16:18:55+09:00",
             start="2021-11-26T16:01:46+09:00",
         ),
@@ -139,7 +139,7 @@ U0107 = UserConfig(
             start="2021-12-03T12:07:50+09:00",
         ),
         "S0300": SessionConfig(
-            duration="14m0s",
+            duration="14m00s",
             end="2021-12-03T14:06:41+09:00",
             start="2021-12-03T13:52:41+09:00",
         ),
@@ -149,7 +149,7 @@ U0107 = UserConfig(
             start="2021-12-03T14:43:09+09:00",
         ),
         "S0500": SessionConfig(
-            duration="30m6s",
+            duration="30m06s",
             end="2021-12-03T16:02:32+09:00",
             start="2021-12-03T15:32:26+09:00",
         ),
