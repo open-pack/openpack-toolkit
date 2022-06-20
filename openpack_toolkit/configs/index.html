@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>openpack_toolkit.configs API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>openpack_toolkit.configs</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">from . import datasets, users
+from ._schema import (
+    AnnotConfig,
+    DatasetConfig,
+    DataStreamConfig,
+    ImuConfig,
+    KeypointConfig,
+    SessionConfig,
+    UserConfig,
+)
+
+__all__ = [
+    &#34;datasets&#34;, &#34;users&#34;,
+    # Schema
+    &#34;AnnotConfig&#34;, &#34;DatasetConfig&#34;, &#34;DataStreamConfig&#34;,
+    &#34;ImuConfig&#34;, &#34;KeypointConfig&#34;, &#34;SessionConfig&#34;, &#34;UserConfig&#34;,
+]</code></pre>
+</details>
+</section>
+<section>
+<h2 class="section-title" id="header-submodules">Sub-modules</h2>
+<dl>
+<dt><code class="name"><a title="openpack_toolkit.configs.datasets" href="datasets/index.html">openpack_toolkit.configs.datasets</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="openpack_toolkit.configs.users" href="users.html">openpack_toolkit.configs.users</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="openpack_toolkit.configs.AnnotConfig"><code class="flex name class">
+<span>class <span class="ident">AnnotConfig</span></span>
+<span>(</span><span>name: str = '???', version: str = '???', path: Dict[str, str] = '???', file_format: Optional[Dict[str, str]] = None, classes: <a title="openpack_toolkit.activity.ActSet" href="../activity/index.html#openpack_toolkit.activity.ActSet">ActSet</a> = '???')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>AnnotConfig(name: str = '???', version: str = '???', path: Dict[str, str] = '???', file_format: Optional[Dict[str, str]] = None, classes: openpack_toolkit.activity.ActSet = '???')</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class AnnotConfig:
+    name: str = MISSING
+    version: str = MISSING
+    path: Dict[str, str] = MISSING
+    file_format: Optional[Dict[str, str]] = None
+    classes: ActSet = MISSING</code></pre>
+</details>
+<h3>Class variables</h3>
+<dl>
+<dt id="openpack_toolkit.configs.AnnotConfig.classes"><code class="name">var <span class="ident">classes</span> : <a title="openpack_toolkit.activity.ActSet" href="../activity/index.html#openpack_toolkit.activity.ActSet">ActSet</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="openpack_toolkit.configs.AnnotConfig.file_format"><code class="name">var <span class="ident">file_format</span> : Optional[Dict[str, str]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="openpack_toolkit.configs.AnnotConfig.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="openpack_toolkit.configs.AnnotConfig.path"><code class="name">var <span class="ident">path</span> : Dict[str, str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="openpack_toolkit.configs.AnnotConfig.version"><code class="name">var <span class="ident">version</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="openpack_toolkit.configs.DataStreamConfig"><code class="flex name class">
+<span>class <span class="ident">DataStreamConfig</span></span>
+<span>(</span><span>schema: str = '???', name: str = '???', description: Optional[str] = None, super_stream: Optional[str] = None, path: openpack_toolkit.configs._schema.DataStreamConfig.Paths = '???', file_format: Optional[Dict] = None, frame_rate: int = '???')</span>
+</code></dt>
+<dd>
+<div class="desc"><h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>schema</code></strong> :&ensp;<code>str</code></dt>
+<dd>-</dd>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>-</dd>
+<dt><strong><code>description</code></strong> :&ensp;<code>str</code></dt>
+<dd>-</dd>
+<dt><strong><code>super_stream</code></strong> :&ensp;<code>str</code></dt>
+<dd>Parent Class. Inherited from.</dd>
+<dt><strong><code>path</code></strong> :&ensp;<code>DatasetStream.Path</code></dt>
+<dd>-</dd>
+<dt><strong><code>frame_rate</code></strong> :&ensp;<code>int</code></dt>
+<dd>-</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class DataStreamConfig:
+    &#34;&#34;&#34;
+    Attributes:
+        schema (str): -
+        name (str): -
+        description (str): -
+        super_stream (str): Parent Class. Inherited from.
+        path (DatasetStream.Path): -
+        frame_rate (int): -
+    &#34;&#34;&#34;
+
+    @dataclass
+    class Paths:
+        # path to the root directory of this stream.
+        dir: Optional[str] = None
+        fname: Optional[str] = None
+
+    schema: str = MISSING
+    name: str = MISSING
+    description: Optional[str] = None
+    super_stream: Optional[str] = None
+    path: Paths = MISSING
+    file_format: Optional[Dict] = None
+    frame_rate: int = MISSING  # [Hz, fps]</code></pre>
+</details>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li>openpack_toolkit.configs._schema.ImuConfig</li>
+<li>openpack_toolkit.configs._schema.KeypointConfig</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="openpack_toolkit.configs.DataStreamConfig.Paths"><code class="name">var <span class="ident">Paths</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="openpack_toolkit.configs.DataStreamConfig.description"><code class="name">var <span class="ident">description</span> : Optional[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="openpack_toolkit.configs.DataStreamConfig.file_format"><code class="name">var <span class="ident">file_format</span> : Optional[Dict]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="openpack_toolkit.configs.DataStreamConfig.frame_rate"><code class="name">var <span class="ident">frame_rate</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="openpack_toolkit.configs.DataStreamConfig.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="openpack_toolkit.configs.DataStreamConfig.path"><code class="name">var <span class="ident">path</span> : openpack_toolkit.configs._schema.DataStreamConfig.Paths</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="openpack_toolkit.configs.DataStreamConfig.schema"><code class="name">var <span class="ident">schema</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="openpack_toolkit.configs.DataStreamConfig.super_stream"><code class="name">var <span class="ident">super_stream</span> : Optional[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="openpack_toolkit.configs.DatasetConfig"><code class="flex name class">
+<span>class <span class="ident">DatasetConfig</span></span>
+<span>(</span><span>name: str = '???', streams: Dict[str, openpack_toolkit.configs._schema.DataStreamConfig] = '???', split: openpack_toolkit.configs._schema.DataSplitConfig = '???', annot: openpack_toolkit.configs._schema.AnnotConfig = '???')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>DatasetConfig(name: str = '???', streams: Dict[str, openpack_toolkit.configs._schema.DataStreamConfig] = '???', split: openpack_toolkit.configs._schema.DataSplitConfig = '???', annot: openpack_toolkit.configs._schema.AnnotConfig = '???')</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class DatasetConfig:
+    name: str = MISSING
+    streams: Dict[str, DataStreamConfig] = MISSING
+    split: DataSplitConfig = MISSING
+    annot: AnnotConfig = MISSING</code></pre>
+</details>
+<h3>Class variables</h3>
+<dl>
+<dt id="openpack_toolkit.configs.DatasetConfig.annot"><code class="name">var <span class="ident">annot</span> : openpack_toolkit.configs._schema.AnnotConfig</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="openpack_toolkit.configs.DatasetConfig.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="openpack_toolkit.configs.DatasetConfig.split"><code class="name">var <span class="ident">split</span> : openpack_toolkit.configs._schema.DataSplitConfig</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="openpack_toolkit.configs.DatasetConfig.streams"><code class="name">var <span class="ident">streams</span> : Dict[str, openpack_toolkit.configs._schema.DataStreamConfig]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="openpack_toolkit.configs.ImuConfig"><code class="flex name class">
+<span>class <span class="ident">ImuConfig</span></span>
+<span>(</span><span>schema: str = 'ImuConfig', name: str = '???', description: Optional[str] = None, super_stream: Optional[str] = None, path: openpack_toolkit.configs._schema.DataStreamConfig.Paths = '???', file_format: Optional[Dict] = None, frame_rate: int = '???', devices: List[str] = '???', acc: bool = True, gyro: bool = True, quat: bool = True)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>ImuConfig(schema: str = 'ImuConfig', name: str = '???', description: Optional[str] = None, super_stream: Optional[str] = None, path: openpack_toolkit.configs._schema.DataStreamConfig.Paths = '???', file_format: Optional[Dict] = None, frame_rate: int = '???', devices: List[str] = '???', acc: bool = True, gyro: bool = True, quat: bool = True)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class ImuConfig(DataStreamConfig):
+    schema: str = &#34;ImuConfig&#34;
+    devices: List[str] = MISSING
+    acc: bool = True
+    gyro: bool = True
+    quat: bool = True</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>openpack_toolkit.configs._schema.DataStreamConfig</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="openpack_toolkit.configs.ImuConfig.acc"><code class="name">var <span class="ident">acc</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="openpack_toolkit.configs.ImuConfig.devices"><code class="name">var <span class="ident">devices</span> : List[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="openpack_toolkit.configs.ImuConfig.gyro"><code class="name">var <span class="ident">gyro</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="openpack_toolkit.configs.ImuConfig.quat"><code class="name">var <span class="ident">quat</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="openpack_toolkit.configs.ImuConfig.schema"><code class="name">var <span class="ident">schema</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="openpack_toolkit.configs.KeypointConfig"><code class="flex name class">
+<span>class <span class="ident">KeypointConfig</span></span>
+<span>(</span><span>schema: str = 'KeypointConfig', name: str = '???', description: Optional[str] = None, super_stream: Optional[str] = None, path: openpack_toolkit.configs._schema.DataStreamConfig.Paths = '???', file_format: Optional[Dict] = None, frame_rate: int = '???', category: str = '???', model: str = '???', nodes: Dict[int, str] = '???')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>KeypointConfig(schema: str = 'KeypointConfig', name: str = '???', description: Optional[str] = None, super_stream: Optional[str] = None, path: openpack_toolkit.configs._schema.DataStreamConfig.Paths = '???', file_format: Optional[Dict] = None, frame_rate: int = '???', category: str = '???', model: str = '???', nodes: Dict[int, str] = '???')</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class KeypointConfig(DataStreamConfig):
+    schema: str = &#34;KeypointConfig&#34;
+    category: str = MISSING
+    model: str = MISSING
+    nodes: Dict[int, str] = MISSING</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>openpack_toolkit.configs._schema.DataStreamConfig</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="openpack_toolkit.configs.KeypointConfig.category"><code class="name">var <span class="ident">category</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="openpack_toolkit.configs.KeypointConfig.model"><code class="name">var <span class="ident">model</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="openpack_toolkit.configs.KeypointConfig.nodes"><code class="name">var <span class="ident">nodes</span> : Dict[int, str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="openpack_toolkit.configs.KeypointConfig.schema"><code class="name">var <span class="ident">schema</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="openpack_toolkit.configs.SessionConfig"><code class="flex name class">
+<span>class <span class="ident">SessionConfig</span></span>
+<span>(</span><span>duration: str = '???', end: str = '???', start: str = '???')</span>
+</code></dt>
+<dd>
+<div class="desc"><h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>start</code></strong> :&ensp;<code>str</code></dt>
+<dd>Timestamp of session start time (IOS format)</dd>
+<dt><strong><code>end</code></strong> :&ensp;<code>str</code></dt>
+<dd>Timestamp of session end time (IOS format)</dd>
+<dt><strong><code>duration</code></strong> :&ensp;<code>str</code></dt>
+<dd>length of session, i.e., end - start</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class SessionConfig:
+    &#34;&#34;&#34;
+    Attributes:
+        start (str): Timestamp of session start time (IOS format)
+        end (str): Timestamp of session end time (IOS format)
+        duration (str): length of session, i.e., end - start
+    &#34;&#34;&#34;
+    duration: str = MISSING
+    end: str = MISSING
+    start: str = MISSING</code></pre>
+</details>
+<h3>Class variables</h3>
+<dl>
+<dt id="openpack_toolkit.configs.SessionConfig.duration"><code class="name">var <span class="ident">duration</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="openpack_toolkit.configs.SessionConfig.end"><code class="name">var <span class="ident">end</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="openpack_toolkit.configs.SessionConfig.start"><code class="name">var <span class="ident">start</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="openpack_toolkit.configs.UserConfig"><code class="flex name class">
+<span>class <span class="ident">UserConfig</span></span>
+<span>(</span><span>id: int = '???', name: str = '???', sessions: Dict[str, openpack_toolkit.configs._schema.SessionConfig] = '???')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>UserConfig(id: int = '???', name: str = '???', sessions: Dict[str, openpack_toolkit.configs._schema.SessionConfig] = '???')</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class UserConfig:
+    id: int = MISSING
+    name: str = MISSING
+    sessions: Dict[str, SessionConfig] = MISSING  # DictConfig</code></pre>
+</details>
+<h3>Class variables</h3>
+<dl>
+<dt id="openpack_toolkit.configs.UserConfig.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="openpack_toolkit.configs.UserConfig.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="openpack_toolkit.configs.UserConfig.sessions"><code class="name">var <span class="ident">sessions</span> : Dict[str, openpack_toolkit.configs._schema.SessionConfig]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="openpack_toolkit" href="../index.html">openpack_toolkit</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-submodules">Sub-modules</a></h3>
+<ul>
+<li><code><a title="openpack_toolkit.configs.datasets" href="datasets/index.html">openpack_toolkit.configs.datasets</a></code></li>
+<li><code><a title="openpack_toolkit.configs.users" href="users.html">openpack_toolkit.configs.users</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="openpack_toolkit.configs.AnnotConfig" href="#openpack_toolkit.configs.AnnotConfig">AnnotConfig</a></code></h4>
+<ul class="">
+<li><code><a title="openpack_toolkit.configs.AnnotConfig.classes" href="#openpack_toolkit.configs.AnnotConfig.classes">classes</a></code></li>
+<li><code><a title="openpack_toolkit.configs.AnnotConfig.file_format" href="#openpack_toolkit.configs.AnnotConfig.file_format">file_format</a></code></li>
+<li><code><a title="openpack_toolkit.configs.AnnotConfig.name" href="#openpack_toolkit.configs.AnnotConfig.name">name</a></code></li>
+<li><code><a title="openpack_toolkit.configs.AnnotConfig.path" href="#openpack_toolkit.configs.AnnotConfig.path">path</a></code></li>
+<li><code><a title="openpack_toolkit.configs.AnnotConfig.version" href="#openpack_toolkit.configs.AnnotConfig.version">version</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="openpack_toolkit.configs.DataStreamConfig" href="#openpack_toolkit.configs.DataStreamConfig">DataStreamConfig</a></code></h4>
+<ul class="two-column">
+<li><code><a title="openpack_toolkit.configs.DataStreamConfig.Paths" href="#openpack_toolkit.configs.DataStreamConfig.Paths">Paths</a></code></li>
+<li><code><a title="openpack_toolkit.configs.DataStreamConfig.description" href="#openpack_toolkit.configs.DataStreamConfig.description">description</a></code></li>
+<li><code><a title="openpack_toolkit.configs.DataStreamConfig.file_format" href="#openpack_toolkit.configs.DataStreamConfig.file_format">file_format</a></code></li>
+<li><code><a title="openpack_toolkit.configs.DataStreamConfig.frame_rate" href="#openpack_toolkit.configs.DataStreamConfig.frame_rate">frame_rate</a></code></li>
+<li><code><a title="openpack_toolkit.configs.DataStreamConfig.name" href="#openpack_toolkit.configs.DataStreamConfig.name">name</a></code></li>
+<li><code><a title="openpack_toolkit.configs.DataStreamConfig.path" href="#openpack_toolkit.configs.DataStreamConfig.path">path</a></code></li>
+<li><code><a title="openpack_toolkit.configs.DataStreamConfig.schema" href="#openpack_toolkit.configs.DataStreamConfig.schema">schema</a></code></li>
+<li><code><a title="openpack_toolkit.configs.DataStreamConfig.super_stream" href="#openpack_toolkit.configs.DataStreamConfig.super_stream">super_stream</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="openpack_toolkit.configs.DatasetConfig" href="#openpack_toolkit.configs.DatasetConfig">DatasetConfig</a></code></h4>
+<ul class="">
+<li><code><a title="openpack_toolkit.configs.DatasetConfig.annot" href="#openpack_toolkit.configs.DatasetConfig.annot">annot</a></code></li>
+<li><code><a title="openpack_toolkit.configs.DatasetConfig.name" href="#openpack_toolkit.configs.DatasetConfig.name">name</a></code></li>
+<li><code><a title="openpack_toolkit.configs.DatasetConfig.split" href="#openpack_toolkit.configs.DatasetConfig.split">split</a></code></li>
+<li><code><a title="openpack_toolkit.configs.DatasetConfig.streams" href="#openpack_toolkit.configs.DatasetConfig.streams">streams</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="openpack_toolkit.configs.ImuConfig" href="#openpack_toolkit.configs.ImuConfig">ImuConfig</a></code></h4>
+<ul class="">
+<li><code><a title="openpack_toolkit.configs.ImuConfig.acc" href="#openpack_toolkit.configs.ImuConfig.acc">acc</a></code></li>
+<li><code><a title="openpack_toolkit.configs.ImuConfig.devices" href="#openpack_toolkit.configs.ImuConfig.devices">devices</a></code></li>
+<li><code><a title="openpack_toolkit.configs.ImuConfig.gyro" href="#openpack_toolkit.configs.ImuConfig.gyro">gyro</a></code></li>
+<li><code><a title="openpack_toolkit.configs.ImuConfig.quat" href="#openpack_toolkit.configs.ImuConfig.quat">quat</a></code></li>
+<li><code><a title="openpack_toolkit.configs.ImuConfig.schema" href="#openpack_toolkit.configs.ImuConfig.schema">schema</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="openpack_toolkit.configs.KeypointConfig" href="#openpack_toolkit.configs.KeypointConfig">KeypointConfig</a></code></h4>
+<ul class="">
+<li><code><a title="openpack_toolkit.configs.KeypointConfig.category" href="#openpack_toolkit.configs.KeypointConfig.category">category</a></code></li>
+<li><code><a title="openpack_toolkit.configs.KeypointConfig.model" href="#openpack_toolkit.configs.KeypointConfig.model">model</a></code></li>
+<li><code><a title="openpack_toolkit.configs.KeypointConfig.nodes" href="#openpack_toolkit.configs.KeypointConfig.nodes">nodes</a></code></li>
+<li><code><a title="openpack_toolkit.configs.KeypointConfig.schema" href="#openpack_toolkit.configs.KeypointConfig.schema">schema</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="openpack_toolkit.configs.SessionConfig" href="#openpack_toolkit.configs.SessionConfig">SessionConfig</a></code></h4>
+<ul class="">
+<li><code><a title="openpack_toolkit.configs.SessionConfig.duration" href="#openpack_toolkit.configs.SessionConfig.duration">duration</a></code></li>
+<li><code><a title="openpack_toolkit.configs.SessionConfig.end" href="#openpack_toolkit.configs.SessionConfig.end">end</a></code></li>
+<li><code><a title="openpack_toolkit.configs.SessionConfig.start" href="#openpack_toolkit.configs.SessionConfig.start">start</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="openpack_toolkit.configs.UserConfig" href="#openpack_toolkit.configs.UserConfig">UserConfig</a></code></h4>
+<ul class="">
+<li><code><a title="openpack_toolkit.configs.UserConfig.id" href="#openpack_toolkit.configs.UserConfig.id">id</a></code></li>
+<li><code><a title="openpack_toolkit.configs.UserConfig.name" href="#openpack_toolkit.configs.UserConfig.name">name</a></code></li>
+<li><code><a title="openpack_toolkit.configs.UserConfig.sessions" href="#openpack_toolkit.configs.UserConfig.sessions">sessions</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

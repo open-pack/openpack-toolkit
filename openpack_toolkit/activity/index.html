@@ -110,12 +110,15 @@ class ActSet():
     def get_ignore_class_index(self) -&gt; Union[int, Tuple]:
         &#34;&#34;&#34;Return the index of ignore classes, i.e., ``is_ignore=True``.
         If there are only one ignore class, return the index as int.
+        When there is no ignore classe, return None.
 
         Returns:
-            Union[int, Tuple]
+            Union[int, Tuple] or None
         &#34;&#34;&#34;
         index = tuple([i for i, act in enumerate(
             self.classes) if act.is_ignore])
+        if len(index) == 0:
+            return None
         if len(index) == 1:
             return index[0]
         return index
@@ -123,11 +126,14 @@ class ActSet():
     def get_ignore_class_id(self) -&gt; Union[int, Tuple]:
         &#34;&#34;&#34;Return the ID of ignore classes, i.e., ``is_ignore=True``.
         If there are only one ignore class, return the ID as int.
+        When there is no ignore classe, return None.
 
         Returns:
-            Union[int, Tuple]
+            Union[int, Tuple] or None
         &#34;&#34;&#34;
         ids = tuple([act.id for act in self.classes if act.is_ignore])
+        if len(ids) == 0:
+            return None
         if len(ids) == 1:
             return ids[0]
         return ids
@@ -141,7 +147,10 @@ class ActSet():
         Returns:
             np.ndarray: 1d array of activity index.
         &#34;&#34;&#34;
-        assert set(ids.ravel()) &lt;= set(self.get_ids())
+        assert set(ids.ravel()) &lt;= set(self.get_ids()), (
+            f&#34;expected ID set is {set(self.get_ids())}, &#34;
+            f&#34;but got ID set={set(ids.ravel())}.&#34;
+        )
 
         index = np.full(ids.shape, -1)
         for i, cls in enumerate(self.classes):
@@ -203,24 +212,7 @@ class ActSet():
         for cls in self.classes:
             if cls.name == cls_name:
                 return cls.id
-        raise ValueError(f&#34;got unexpected class name. cls_name={cls_name}&#34;)
-
-
-&#34;&#34;&#34; Activity Set Definitions
-&#34;&#34;&#34;
-
-OPENPACK_OPERATIONS = ActSet((
-    ActClass(100, &#34;Picking&#34;),
-    ActClass(200, &#34;MoveItemLabel&#34;),
-    ActClass(300, &#34;AssembleBox&#34;),
-    ActClass(400, &#34;PackInBox&#34;),
-    ActClass(500, &#34;CloseBox&#34;),
-    ActClass(600, &#34;ReadLabel&#34;),
-    ActClass(700, &#34;AttachLabel&#34;),
-    ActClass(800, &#34;PutOnCartRack&#34;),
-    ActClass(900, &#34;Pen&#34;),
-    ActClass(1000, &#34;Null&#34;, is_ignore=True),
-))</code></pre>
+        raise ValueError(f&#34;got unexpected class name. cls_name={cls_name}&#34;)</code></pre>
 </details>
 </section>
 <section>
@@ -341,12 +333,15 @@ class ActSet():
     def get_ignore_class_index(self) -&gt; Union[int, Tuple]:
         &#34;&#34;&#34;Return the index of ignore classes, i.e., ``is_ignore=True``.
         If there are only one ignore class, return the index as int.
+        When there is no ignore classe, return None.
 
         Returns:
-            Union[int, Tuple]
+            Union[int, Tuple] or None
         &#34;&#34;&#34;
         index = tuple([i for i, act in enumerate(
             self.classes) if act.is_ignore])
+        if len(index) == 0:
+            return None
         if len(index) == 1:
             return index[0]
         return index
@@ -354,11 +349,14 @@ class ActSet():
     def get_ignore_class_id(self) -&gt; Union[int, Tuple]:
         &#34;&#34;&#34;Return the ID of ignore classes, i.e., ``is_ignore=True``.
         If there are only one ignore class, return the ID as int.
+        When there is no ignore classe, return None.
 
         Returns:
-            Union[int, Tuple]
+            Union[int, Tuple] or None
         &#34;&#34;&#34;
         ids = tuple([act.id for act in self.classes if act.is_ignore])
+        if len(ids) == 0:
+            return None
         if len(ids) == 1:
             return ids[0]
         return ids
@@ -372,7 +370,10 @@ class ActSet():
         Returns:
             np.ndarray: 1d array of activity index.
         &#34;&#34;&#34;
-        assert set(ids.ravel()) &lt;= set(self.get_ids())
+        assert set(ids.ravel()) &lt;= set(self.get_ids()), (
+            f&#34;expected ID set is {set(self.get_ids())}, &#34;
+            f&#34;but got ID set={set(ids.ravel())}.&#34;
+        )
 
         index = np.full(ids.shape, -1)
         for i, cls in enumerate(self.classes):
@@ -473,7 +474,10 @@ class ActSet():
     Returns:
         np.ndarray: 1d array of activity index.
     &#34;&#34;&#34;
-    assert set(ids.ravel()) &lt;= set(self.get_ids())
+    assert set(ids.ravel()) &lt;= set(self.get_ids()), (
+        f&#34;expected ID set is {set(self.get_ids())}, &#34;
+        f&#34;but got ID set={set(ids.ravel())}.&#34;
+    )
 
     index = np.full(ids.shape, -1)
     for i, cls in enumerate(self.classes):
@@ -549,9 +553,10 @@ class ActSet():
 </code></dt>
 <dd>
 <div class="desc"><p>Return the ID of ignore classes, i.e., <code>is_ignore=True</code>.
-If there are only one ignore class, return the ID as int.</p>
+If there are only one ignore class, return the ID as int.
+When there is no ignore classe, return None.</p>
 <h2 id="returns">Returns</h2>
-<p>Union[int, Tuple]</p></div>
+<p>Union[int, Tuple] or None</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -559,11 +564,14 @@ If there are only one ignore class, return the ID as int.</p>
 <pre><code class="python">def get_ignore_class_id(self) -&gt; Union[int, Tuple]:
     &#34;&#34;&#34;Return the ID of ignore classes, i.e., ``is_ignore=True``.
     If there are only one ignore class, return the ID as int.
+    When there is no ignore classe, return None.
 
     Returns:
-        Union[int, Tuple]
+        Union[int, Tuple] or None
     &#34;&#34;&#34;
     ids = tuple([act.id for act in self.classes if act.is_ignore])
+    if len(ids) == 0:
+        return None
     if len(ids) == 1:
         return ids[0]
     return ids</code></pre>
@@ -574,9 +582,10 @@ If there are only one ignore class, return the ID as int.</p>
 </code></dt>
 <dd>
 <div class="desc"><p>Return the index of ignore classes, i.e., <code>is_ignore=True</code>.
-If there are only one ignore class, return the index as int.</p>
+If there are only one ignore class, return the index as int.
+When there is no ignore classe, return None.</p>
 <h2 id="returns">Returns</h2>
-<p>Union[int, Tuple]</p></div>
+<p>Union[int, Tuple] or None</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -584,12 +593,15 @@ If there are only one ignore class, return the index as int.</p>
 <pre><code class="python">def get_ignore_class_index(self) -&gt; Union[int, Tuple]:
     &#34;&#34;&#34;Return the index of ignore classes, i.e., ``is_ignore=True``.
     If there are only one ignore class, return the index as int.
+    When there is no ignore classe, return None.
 
     Returns:
-        Union[int, Tuple]
+        Union[int, Tuple] or None
     &#34;&#34;&#34;
     index = tuple([i for i, act in enumerate(
         self.classes) if act.is_ignore])
+    if len(index) == 0:
+        return None
     if len(index) == 1:
         return index[0]
     return index</code></pre>

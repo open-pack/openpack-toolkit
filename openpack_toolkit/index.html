@@ -24,6 +24,8 @@
 <section id="section-intro">
 <h1 id="openpack-dataset-toolkit-optk">OpenPack Dataset Toolkit (optk)</h1>
 <p><img alt="OpenPack Challenge Logo" src="./img/OpenPackCHALLENG-black.png"></p>
+<p><a href="https://github.com/open-pack/openpack-toolkit/actions/workflows/test.yaml"><img alt="Test" src="https://github.com/open-pack/openpack-toolkit/actions/workflows/test.yaml/badge.svg"></a>
+<a href="https://github.com/open-pack/openpack-toolkit/actions/workflows/deploy-docs.yaml"><img alt="API Docs - GitHub Pages" src="https://github.com/open-pack/openpack-toolkit/actions/workflows/deploy-docs.yaml/badge.svg"></a></p>
 <p>"OpenPack Dataset" is a new large-scale multi modal dataset of manual packing process.
 OpenPack is an open access logistics-dataset for human activity recognition, which contains human movement and package information from 17 distinct subjects.
 This repository provide utilities to explore our exciting dataset.</p>
@@ -38,7 +40,14 @@ poetry add  openpack-toolkit
 <h2 id="documentation">Documentation</h2>
 <ul>
 <li><a href="https://open-pack.github.io/">Dataset Page</a></li>
-<li>API Docs (Comming soon&hellip;)</li>
+<li><a href="https://open-pack.github.io/openpack-toolkit/openpack_toolkit/">API Docs</a></li>
+</ul>
+<h3 id="dataset-descriptions">Dataset Descriptions</h3>
+<ul>
+<li><a href="./docs/USER.md">Subjects &amp; Recording Scenarios</a></li>
+<li><a href="./docs/ANNOTATION.md">Activity Class Definition</a></li>
+<li><a href="./docs/DATA_STREAM.md">Modality</a></li>
+<li><a href="./docs/DATA_SPLIT.md">Data Split (Train/Val/Test/Submission)</a></li>
 </ul>
 <h2 id="examples-pytorch">Examples (PyTorch)</h2>
 <p>See <a href="https://github.com/open-pack/openpack-torch">openpack-torch</a> for more dietail.</p>
@@ -60,12 +69,19 @@ poetry add  openpack-toolkit
 .. include:: ../README.md
 &#34;&#34;&#34;
 
-__version__ = &#39;0.2.0&#39;
-from . import codalab, data, utils
-from .activity import OPENPACK_OPERATIONS, ActClass, ActSet
+__version__ = &#39;0.3.0&#39;
+from . import codalab, configs, data, utils
+from .activity import ActClass, ActSet
+from .configs.datasets.annotations import OPENPACK_OPERATIONS
 
 __all__ = [
-    &#34;ActClass&#34;, &#34;ActSet&#34;, &#34;codalab&#34;, &#34;data&#34;, &#34;OPENPACK_OPERATIONS&#34;, &#34;utils&#34;,
+    &#34;ActClass&#34;,
+    &#34;ActSet&#34;,
+    &#34;codalab&#34;,
+    &#34;configs&#34;,
+    &#34;data&#34;,
+    &#34;OPENPACK_OPERATIONS&#34;,
+    &#34;utils&#34;,
 ]</code></pre>
 </details>
 </section>
@@ -77,6 +93,10 @@ __all__ = [
 <div class="desc"><p>Activity set definitions for OpenPack dataset.</p></div>
 </dd>
 <dt><code class="name"><a title="openpack_toolkit.codalab" href="codalab/index.html">openpack_toolkit.codalab</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="openpack_toolkit.configs" href="configs/index.html">openpack_toolkit.configs</a></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -206,12 +226,15 @@ class ActSet():
     def get_ignore_class_index(self) -&gt; Union[int, Tuple]:
         &#34;&#34;&#34;Return the index of ignore classes, i.e., ``is_ignore=True``.
         If there are only one ignore class, return the index as int.
+        When there is no ignore classe, return None.
 
         Returns:
-            Union[int, Tuple]
+            Union[int, Tuple] or None
         &#34;&#34;&#34;
         index = tuple([i for i, act in enumerate(
             self.classes) if act.is_ignore])
+        if len(index) == 0:
+            return None
         if len(index) == 1:
             return index[0]
         return index
@@ -219,11 +242,14 @@ class ActSet():
     def get_ignore_class_id(self) -&gt; Union[int, Tuple]:
         &#34;&#34;&#34;Return the ID of ignore classes, i.e., ``is_ignore=True``.
         If there are only one ignore class, return the ID as int.
+        When there is no ignore classe, return None.
 
         Returns:
-            Union[int, Tuple]
+            Union[int, Tuple] or None
         &#34;&#34;&#34;
         ids = tuple([act.id for act in self.classes if act.is_ignore])
+        if len(ids) == 0:
+            return None
         if len(ids) == 1:
             return ids[0]
         return ids
@@ -237,7 +263,10 @@ class ActSet():
         Returns:
             np.ndarray: 1d array of activity index.
         &#34;&#34;&#34;
-        assert set(ids.ravel()) &lt;= set(self.get_ids())
+        assert set(ids.ravel()) &lt;= set(self.get_ids()), (
+            f&#34;expected ID set is {set(self.get_ids())}, &#34;
+            f&#34;but got ID set={set(ids.ravel())}.&#34;
+        )
 
         index = np.full(ids.shape, -1)
         for i, cls in enumerate(self.classes):
@@ -338,7 +367,10 @@ class ActSet():
     Returns:
         np.ndarray: 1d array of activity index.
     &#34;&#34;&#34;
-    assert set(ids.ravel()) &lt;= set(self.get_ids())
+    assert set(ids.ravel()) &lt;= set(self.get_ids()), (
+        f&#34;expected ID set is {set(self.get_ids())}, &#34;
+        f&#34;but got ID set={set(ids.ravel())}.&#34;
+    )
 
     index = np.full(ids.shape, -1)
     for i, cls in enumerate(self.classes):
@@ -414,9 +446,10 @@ class ActSet():
 </code></dt>
 <dd>
 <div class="desc"><p>Return the ID of ignore classes, i.e., <code>is_ignore=True</code>.
-If there are only one ignore class, return the ID as int.</p>
+If there are only one ignore class, return the ID as int.
+When there is no ignore classe, return None.</p>
 <h2 id="returns">Returns</h2>
-<p>Union[int, Tuple]</p></div>
+<p>Union[int, Tuple] or None</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -424,11 +457,14 @@ If there are only one ignore class, return the ID as int.</p>
 <pre><code class="python">def get_ignore_class_id(self) -&gt; Union[int, Tuple]:
     &#34;&#34;&#34;Return the ID of ignore classes, i.e., ``is_ignore=True``.
     If there are only one ignore class, return the ID as int.
+    When there is no ignore classe, return None.
 
     Returns:
-        Union[int, Tuple]
+        Union[int, Tuple] or None
     &#34;&#34;&#34;
     ids = tuple([act.id for act in self.classes if act.is_ignore])
+    if len(ids) == 0:
+        return None
     if len(ids) == 1:
         return ids[0]
     return ids</code></pre>
@@ -439,9 +475,10 @@ If there are only one ignore class, return the ID as int.</p>
 </code></dt>
 <dd>
 <div class="desc"><p>Return the index of ignore classes, i.e., <code>is_ignore=True</code>.
-If there are only one ignore class, return the index as int.</p>
+If there are only one ignore class, return the index as int.
+When there is no ignore classe, return None.</p>
 <h2 id="returns">Returns</h2>
-<p>Union[int, Tuple]</p></div>
+<p>Union[int, Tuple] or None</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -449,12 +486,15 @@ If there are only one ignore class, return the index as int.</p>
 <pre><code class="python">def get_ignore_class_index(self) -&gt; Union[int, Tuple]:
     &#34;&#34;&#34;Return the index of ignore classes, i.e., ``is_ignore=True``.
     If there are only one ignore class, return the index as int.
+    When there is no ignore classe, return None.
 
     Returns:
-        Union[int, Tuple]
+        Union[int, Tuple] or None
     &#34;&#34;&#34;
     index = tuple([i for i, act in enumerate(
         self.classes) if act.is_ignore])
+    if len(index) == 0:
+        return None
     if len(index) == 1:
         return index[0]
     return index</code></pre>
@@ -593,7 +633,10 @@ Defaults to False.</dd>
 <ul>
 <li><a href="#openpack-dataset-toolkit-optk">OpenPack Dataset Toolkit (optk)</a><ul>
 <li><a href="#setup">Setup</a></li>
-<li><a href="#documentation">Documentation</a></li>
+<li><a href="#documentation">Documentation</a><ul>
+<li><a href="#dataset-descriptions">Dataset Descriptions</a></li>
+</ul>
+</li>
 <li><a href="#examples-pytorch">Examples (PyTorch)</a></li>
 <li><a href="#license">License</a></li>
 <li><a href="#generate-document">Generate Document</a></li>
@@ -606,6 +649,7 @@ Defaults to False.</dd>
 <ul>
 <li><code><a title="openpack_toolkit.activity" href="activity/index.html">openpack_toolkit.activity</a></code></li>
 <li><code><a title="openpack_toolkit.codalab" href="codalab/index.html">openpack_toolkit.codalab</a></code></li>
+<li><code><a title="openpack_toolkit.configs" href="configs/index.html">openpack_toolkit.configs</a></code></li>
 <li><code><a title="openpack_toolkit.data" href="data/index.html">openpack_toolkit.data</a></code></li>
 <li><code><a title="openpack_toolkit.utils" href="utils/index.html">openpack_toolkit.utils</a></code></li>
 </ul>

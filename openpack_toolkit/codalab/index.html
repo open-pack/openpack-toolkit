@@ -51,7 +51,7 @@ __all__ = [
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
 <dt id="openpack_toolkit.codalab.eval_operation_segmentation"><code class="name flex">
-<span>def <span class="ident">eval_operation_segmentation</span></span>(<span>t_id: numpy.ndarray = None, y_id: numpy.ndarray = None, classes: Tuple[Tuple[int, str], ...] = None, mode: str = 'final') ‑> pandas.core.frame.DataFrame</span>
+<span>def <span class="ident">eval_operation_segmentation</span></span>(<span>t_id: numpy.ndarray = None, y_id: numpy.ndarray = None, classes: Tuple[Tuple[int, str], ...] = None, ignore_class_id: int = None, mode: str = 'final') ‑> pandas.core.frame.DataFrame</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Compute metrics (i.e., precision, recall, f1, support) for the given sequence.</p>
@@ -62,7 +62,7 @@ __all__ = [
 <dt><strong><code>y_id</code></strong> :&ensp;<code>np.ndarray</code></dt>
 <dd>unixtime and predicted activity ID, shape=(T,)</dd>
 <dt><strong><code>classes</code></strong> :&ensp;<code>Tuple</code></dt>
-<dd>class definition.</dd>
+<dd>class definition. pairs of class id and name.</dd>
 <dt><strong><code>mode</code></strong> :&ensp;<code>str</code></dt>
 <dd>If final, only the macro score will be calculated. Otherwise,
 macro avg., weighted avg., and score for each class will be calculated.</dd>
@@ -77,13 +77,14 @@ macro avg., weighted avg., and score for each class will be calculated.</dd>
     t_id: np.ndarray = None,
     y_id: np.ndarray = None,
     classes: Tuple[Tuple[int, str], ...] = None,
+    ignore_class_id: int = None,
     mode: str = &#34;final&#34;,
 ) -&gt; pd.DataFrame:
     &#34;&#34;&#34;Compute metrics (i.e., precision, recall, f1, support) for the given sequence.
     Args:
         t_id (np.ndarray): unixtime and corresponding activity ID, shape=(T,)
         y_id (np.ndarray): unixtime and predicted activity ID, shape=(T,)
-        classes (Tuple): class definition.
+        classes (Tuple): class definition. pairs of class id and name.
         mode (str): If final, only the macro score will be calculated. Otherwise,
             macro avg., weighted avg., and score for each class will be calculated.
     Returns:
@@ -92,6 +93,10 @@ macro avg., weighted avg., and score for each class will be calculated.</dd>
     assert t_id.ndim == 1
     assert y_id.ndim == 1
     verify_class_ids(y_id, classes)
+
+    if ignore_class_id is not None:
+        t_id, y_id = drop_ignore_class(t_id, y_id, ignore_class_id)
+        classes = tuple([t for t in classes if t[0] != ignore_class_id])
 
     df_scores = [
         calc_avg_metrics(t_id, y_id, classes, average=&#34;macro&#34;),
@@ -110,7 +115,7 @@ macro avg., weighted avg., and score for each class will be calculated.</dd>
 </details>
 </dd>
 <dt id="openpack_toolkit.codalab.eval_operation_segmentation_wrapper"><code class="name flex">
-<span>def <span class="ident">eval_operation_segmentation_wrapper</span></span>(<span>outputs: Dict[str, Dict[str, numpy.ndarray]], act_set: <a title="openpack_toolkit.activity.ActSet" href="../activity/index.html#openpack_toolkit.activity.ActSet">ActSet</a> = ActSet(classes=(ActClass(id=100, name='Picking', is_ignore=False), ActClass(id=200, name='MoveItemLabel', is_ignore=False), ActClass(id=300, name='AssembleBox', is_ignore=False), ActClass(id=400, name='PackInBox', is_ignore=False), ActClass(id=500, name='CloseBox', is_ignore=False), ActClass(id=600, name='ReadLabel', is_ignore=False), ActClass(id=700, name='AttachLabel', is_ignore=False), ActClass(id=800, name='PutOnCartRack', is_ignore=False), ActClass(id=900, name='Pen', is_ignore=False), ActClass(id=1000, name='Null', is_ignore=True)))) ‑> pandas.core.frame.DataFrame</span>
+<span>def <span class="ident">eval_operation_segmentation_wrapper</span></span>(<span>outputs: Dict[str, Dict[str, numpy.ndarray]], act_set: <a title="openpack_toolkit.activity.ActSet" href="../activity/index.html#openpack_toolkit.activity.ActSet">ActSet</a> = ActSet(classes=(ActClass(id=100, name='Picking', is_ignore=False), ActClass(id=200, name='RelocateItemLabel', is_ignore=False), ActClass(id=300, name='AssembleBox', is_ignore=False), ActClass(id=400, name='InsertItems', is_ignore=False), ActClass(id=500, name='CloseBox', is_ignore=False), ActClass(id=600, name='AttachBoxLabel', is_ignore=False), ActClass(id=700, name='ScanLabel', is_ignore=False), ActClass(id=800, name='AttachShippingLabel', is_ignore=False), ActClass(id=900, name='PutOnRack', is_ignore=False), ActClass(id=1000, name='Fill-outOrder', is_ignore=False), ActClass(id=8100, name='Null', is_ignore=True))), exclude_ignore_class=True) ‑> pandas.core.frame.DataFrame</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Compute evaluation metrics from model outputs (predicted probability).</p>
@@ -132,6 +137,7 @@ y is a 3d array of predction probabilities with shape=(BATCH_SIZE, NUM_CLASSES, 
 <pre><code class="python">def eval_operation_segmentation_wrapper(
     outputs: Dict[str, Dict[str, np.ndarray]],
     act_set: ActSet = OPENPACK_OPERATIONS,
+    exclude_ignore_class=True,
 ) -&gt; pd.DataFrame:
     &#34;&#34;&#34; Compute evaluation metrics from model outputs (predicted probability).
 
@@ -145,6 +151,9 @@ y is a 3d array of predction probabilities with shape=(BATCH_SIZE, NUM_CLASSES, 
     &#34;&#34;&#34;
     submission = construct_submission_dict(outputs, act_set)
     classes = act_set.to_tuple()
+    ignore_class_id = act_set.get_ignore_class_id()
+    if isinstance(ignore_class_id, tuple):
+        raise NotImplementedError()
 
     # Evaluate
     df_scores = []
@@ -157,7 +166,11 @@ y is a 3d array of predction probabilities with shape=(BATCH_SIZE, NUM_CLASSES, 
         y_id_concat.append(y_id.copy())
 
         df_tmp = eval_operation_segmentation(
-            t_id, y_id, classes=classes, mode=None)
+            t_id,
+            y_id,
+            classes=classes,
+            ignore_class_id=ignore_class_id,
+            mode=None)
         df_tmp[&#34;key&#34;] = key
         df_scores.append(df_tmp.reset_index(drop=False))
 
@@ -166,6 +179,7 @@ y is a 3d array of predction probabilities with shape=(BATCH_SIZE, NUM_CLASSES, 
         np.concatenate(t_id_concat, axis=0),
         np.concatenate(y_id_concat, axis=0),
         classes=classes,
+        ignore_class_id=ignore_class_id,
         mode=None,
     )
     df_tmp[&#34;key&#34;] = &#34;all&#34;

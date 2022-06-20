@@ -30,8 +30,6 @@
 <pre><code class="python">&#34;&#34;&#34;``dataloader`` provide utility function to load files saved in OpenPack dataset format.
 &#34;&#34;&#34;
 import json
-
-# import re
 from logging import getLogger
 from pathlib import Path
 from typing import List, Tuple, Union
@@ -45,9 +43,11 @@ logger = getLogger(__name__)
 
 
 def load_annotation(
-        path: Path,
-        unixtimes_ms: np.ndarray,
-        classes: ActSet) -&gt; pd.DataFrame:
+    path: Path,
+    unixtimes_ms: np.ndarray,
+    classes: ActSet,
+    label_col: str = None,
+) -&gt; pd.DataFrame:
     &#34;&#34;&#34;Load annotation data and resample them according to unixtime sequence ``T``.
     If there are no annotation records for the given timestamp, that records is treated
     as NULL class.
@@ -68,7 +68,7 @@ def load_annotation(
     null_record = df.head(1).copy()
     null_record[&#34;unixtime&#34;] = 0
     null_record[&#34;box&#34;] = 0
-    null_record[&#34;act_id&#34;] = null_class_id
+    null_record[label_col] = null_class_id
     df = pd.concat([df, null_record], axis=0, ignore_index=True)
 
     # unixtime with second precision.
@@ -81,6 +81,7 @@ def load_annotation(
     df = df.loc[unixtimes_sec, :].reset_index(drop=False)
     df[&#34;unixtime&#34;] = unixtimes_ms
 
+    df[&#34;act_id&#34;] = df[label_col]
     df[&#34;act_idx&#34;] = classes.convert_id_to_index(df[&#34;act_id&#34;].values)
 
     cols = [
@@ -92,6 +93,14 @@ def load_annotation(
         &#34;act_id&#34;,
         &#34;act_idx&#34;]
     return df[cols]
+
+
+def load_and_resample_operation_labels(
+    path: Path,
+    unixtimes_ms: np.ndarray,
+    classes: ActSet,
+) -&gt; pd.DataFrame:
+    return load_annotation(path, unixtimes_ms, classes, label_col=&#34;operation&#34;)
 
 
 def load_keypoints(path: Path) -&gt; Tuple[np.ndarray, np.ndarray]:
@@ -130,6 +139,7 @@ def load_imu(
     use_acc: bool = True,
     use_gyro: bool = False,
     use_quat: bool = False,
+    th: int = 10,
 ) -&gt; Tuple[np.ndarray, np.ndarray]:
     &#34;&#34;&#34;Load IMU data from CSVs.
 
@@ -142,6 +152,7 @@ def load_imu(
             Defaults to False.
         use_quat (bool, optional): include quaternion data(e.g.,
             ``quat_w, quat_x, quat_y, quat_z``). Defaults to False.
+        th (int, optional): threshold of timestamp difference. [ms]
     Returns:
         Tuple[np.ndarray, np.ndarray]: unixtime and loaded sensor data.
     &#34;&#34;&#34;
@@ -157,7 +168,7 @@ def load_imu(
     if use_quat:
         channels += [&#34;quat_w&#34;, &#34;quat_x&#34;, &#34;quat_y&#34;, &#34;quat_z&#34;]
 
-    ts_ret, x_ret = None, []
+    ts_ret, x_ret, ts_list = None, [], []
     for path in paths:
         df = pd.read_csv(path)
         logger.debug(f&#34;load IMU data from {path} -&gt; df={df.shape}&#34;)
@@ -166,15 +177,23 @@ def load_imu(
         ts = df[&#34;unixtime&#34;].values
         x = df[channels].values.T
 
-        if ts_ret is None:
-            ts_ret = ts
-        else:
-            # Check whether the timestamps are equal or not.
-            np.testing.assert_array_equal(ts, ts_ret)
+        ts_list.append(ts)
         x_ret.append(x)
 
+    min_len = min([len(ts) for ts in ts_list])
+    ts_ret = None
+    for i in range(len(paths)):
+        x_ret[i] = x_ret[i][:, :min_len]
+        ts_list[i] = ts_list[i][:min_len]
+
+        if ts_ret is None:
+            ts_ret = ts_list[i]
+        else:
+            # Check whether the timestamps are equal or not.
+            assert np.abs(ts_list[i] - ts_ret).max() &lt; th
+
     x_ret = np.concatenate(x_ret, axis=0)
-    return ts, x_ret</code></pre>
+    return ts_ret, x_ret</code></pre>
 </details>
 </section>
 <section>
@@ -184,8 +203,25 @@ def load_imu(
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
+<dt id="openpack_toolkit.data.dataloader.load_and_resample_operation_labels"><code class="name flex">
+<span>def <span class="ident">load_and_resample_operation_labels</span></span>(<span>path: pathlib.Path, unixtimes_ms: numpy.ndarray, classes: <a title="openpack_toolkit.activity.ActSet" href="../activity/index.html#openpack_toolkit.activity.ActSet">ActSet</a>) ‑> pandas.core.frame.DataFrame</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def load_and_resample_operation_labels(
+    path: Path,
+    unixtimes_ms: np.ndarray,
+    classes: ActSet,
+) -&gt; pd.DataFrame:
+    return load_annotation(path, unixtimes_ms, classes, label_col=&#34;operation&#34;)</code></pre>
+</details>
+</dd>
 <dt id="openpack_toolkit.data.dataloader.load_annotation"><code class="name flex">
-<span>def <span class="ident">load_annotation</span></span>(<span>path: pathlib.Path, unixtimes_ms: numpy.ndarray, classes: <a title="openpack_toolkit.activity.ActSet" href="../activity/index.html#openpack_toolkit.activity.ActSet">ActSet</a>) ‑> pandas.core.frame.DataFrame</span>
+<span>def <span class="ident">load_annotation</span></span>(<span>path: pathlib.Path, unixtimes_ms: numpy.ndarray, classes: <a title="openpack_toolkit.activity.ActSet" href="../activity/index.html#openpack_toolkit.activity.ActSet">ActSet</a>, label_col: str = None) ‑> pandas.core.frame.DataFrame</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Load annotation data and resample them according to unixtime sequence <code>T</code>.
@@ -208,9 +244,11 @@ as NULL class.</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def load_annotation(
-        path: Path,
-        unixtimes_ms: np.ndarray,
-        classes: ActSet) -&gt; pd.DataFrame:
+    path: Path,
+    unixtimes_ms: np.ndarray,
+    classes: ActSet,
+    label_col: str = None,
+) -&gt; pd.DataFrame:
     &#34;&#34;&#34;Load annotation data and resample them according to unixtime sequence ``T``.
     If there are no annotation records for the given timestamp, that records is treated
     as NULL class.
@@ -231,7 +269,7 @@ as NULL class.</p>
     null_record = df.head(1).copy()
     null_record[&#34;unixtime&#34;] = 0
     null_record[&#34;box&#34;] = 0
-    null_record[&#34;act_id&#34;] = null_class_id
+    null_record[label_col] = null_class_id
     df = pd.concat([df, null_record], axis=0, ignore_index=True)
 
     # unixtime with second precision.
@@ -244,6 +282,7 @@ as NULL class.</p>
     df = df.loc[unixtimes_sec, :].reset_index(drop=False)
     df[&#34;unixtime&#34;] = unixtimes_ms
 
+    df[&#34;act_id&#34;] = df[label_col]
     df[&#34;act_idx&#34;] = classes.convert_id_to_index(df[&#34;act_id&#34;].values)
 
     cols = [
@@ -258,7 +297,7 @@ as NULL class.</p>
 </details>
 </dd>
 <dt id="openpack_toolkit.data.dataloader.load_imu"><code class="name flex">
-<span>def <span class="ident">load_imu</span></span>(<span>paths: Union[Tuple[pathlib.Path, ...], List[pathlib.Path]], use_acc: bool = True, use_gyro: bool = False, use_quat: bool = False) ‑> Tuple[numpy.ndarray, numpy.ndarray]</span>
+<span>def <span class="ident">load_imu</span></span>(<span>paths: Union[Tuple[pathlib.Path, ...], List[pathlib.Path]], use_acc: bool = True, use_gyro: bool = False, use_quat: bool = False, th: int = 10) ‑> Tuple[numpy.ndarray, numpy.ndarray]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Load IMU data from CSVs.</p>
@@ -276,6 +315,8 @@ Defaults to False.</dd>
 <dt><strong><code>use_quat</code></strong> :&ensp;<code>bool</code>, optional</dt>
 <dd>include quaternion data(e.g.,
 <code>quat_w, quat_x, quat_y, quat_z</code>). Defaults to False.</dd>
+<dt><strong><code>th</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>threshold of timestamp difference. [ms]</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
@@ -291,6 +332,7 @@ Defaults to False.</dd>
     use_acc: bool = True,
     use_gyro: bool = False,
     use_quat: bool = False,
+    th: int = 10,
 ) -&gt; Tuple[np.ndarray, np.ndarray]:
     &#34;&#34;&#34;Load IMU data from CSVs.
 
@@ -303,6 +345,7 @@ Defaults to False.</dd>
             Defaults to False.
         use_quat (bool, optional): include quaternion data(e.g.,
             ``quat_w, quat_x, quat_y, quat_z``). Defaults to False.
+        th (int, optional): threshold of timestamp difference. [ms]
     Returns:
         Tuple[np.ndarray, np.ndarray]: unixtime and loaded sensor data.
     &#34;&#34;&#34;
@@ -318,7 +361,7 @@ Defaults to False.</dd>
     if use_quat:
         channels += [&#34;quat_w&#34;, &#34;quat_x&#34;, &#34;quat_y&#34;, &#34;quat_z&#34;]
 
-    ts_ret, x_ret = None, []
+    ts_ret, x_ret, ts_list = None, [], []
     for path in paths:
         df = pd.read_csv(path)
         logger.debug(f&#34;load IMU data from {path} -&gt; df={df.shape}&#34;)
@@ -327,15 +370,23 @@ Defaults to False.</dd>
         ts = df[&#34;unixtime&#34;].values
         x = df[channels].values.T
 
-        if ts_ret is None:
-            ts_ret = ts
-        else:
-            # Check whether the timestamps are equal or not.
-            np.testing.assert_array_equal(ts, ts_ret)
+        ts_list.append(ts)
         x_ret.append(x)
 
+    min_len = min([len(ts) for ts in ts_list])
+    ts_ret = None
+    for i in range(len(paths)):
+        x_ret[i] = x_ret[i][:, :min_len]
+        ts_list[i] = ts_list[i][:min_len]
+
+        if ts_ret is None:
+            ts_ret = ts_list[i]
+        else:
+            # Check whether the timestamps are equal or not.
+            assert np.abs(ts_list[i] - ts_ret).max() &lt; th
+
     x_ret = np.concatenate(x_ret, axis=0)
-    return ts, x_ret</code></pre>
+    return ts_ret, x_ret</code></pre>
 </details>
 </dd>
 <dt id="openpack_toolkit.data.dataloader.load_keypoints"><code class="name flex">
@@ -411,6 +462,7 @@ prediction. shape=(3, FRAMES, NODE). The first dim is corresponding to
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
+<li><code><a title="openpack_toolkit.data.dataloader.load_and_resample_operation_labels" href="#openpack_toolkit.data.dataloader.load_and_resample_operation_labels">load_and_resample_operation_labels</a></code></li>
 <li><code><a title="openpack_toolkit.data.dataloader.load_annotation" href="#openpack_toolkit.data.dataloader.load_annotation">load_annotation</a></code></li>
 <li><code><a title="openpack_toolkit.data.dataloader.load_imu" href="#openpack_toolkit.data.dataloader.load_imu">load_imu</a></code></li>
 <li><code><a title="openpack_toolkit.data.dataloader.load_keypoints" href="#openpack_toolkit.data.dataloader.load_keypoints">load_keypoints</a></code></li>

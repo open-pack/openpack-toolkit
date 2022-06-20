@@ -26,13 +26,16 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from typing import Tuple
+<pre><code class="python">import warnings
+from logging import getLogger
+from typing import Tuple
 
 import numpy as np
 import pandas as pd
 from sklearn.metrics import precision_recall_fscore_support
 
 EVAL_METRICS = (&#34;precision&#34;, &#34;recall&#34;, &#34;f1&#34;)
+logger = getLogger(__name__)
 
 
 def verify_class_ids(
@@ -52,6 +55,36 @@ def verify_class_ids(
     raise ValueError(f&#34;y have invalid class ids[{set(class_ids) - set(y_id)}]&#34;)
 
 
+def drop_ignore_class(
+    t_id: np.ndarray,
+    y_id: np.ndarray,
+    ignore_class_id: int,
+) -&gt; Tuple[np.ndarray, np.ndarray]:
+    &#34;&#34;&#34;_summary_
+    Args:
+        t_id (np.ndarray): _description_
+        y_id (np.ndarray): _description_
+        classes (Tuple[Tuple[int, str], ...]): _description_
+    Returns:
+        bool: Tuple[np.ndarray, np.ndarray]
+    &#34;&#34;&#34;
+    assert t_id.ndim == 1
+    assert y_id.ndim == 1
+    logger.debug(f&#34;drop ignore classs samples (ID={ignore_class_id})&#34;)
+
+    ind = np.where(t_id != ignore_class_id)[0]
+    logger.debug(f&#34;  Befoe: t={t_id.shape}, y={y_id.shape}&#34;)
+
+    t_id = t_id[ind]
+    y_id = y_id[ind]
+    logger.debug(f&#34;  After: t={t_id.shape}, y={y_id.shape}&#34;)
+
+    if ignore_class_id in set(y_id):
+        warnings.warn(
+            f&#34;ignore_class_id (ID{ignore_class_id}) exists in y_id.&#34;)
+    return t_id, y_id
+
+
 def calc_class_metrics(t_id: np.ndarray, y_id: np.ndarray,
                        classes: Tuple[Tuple[int, str], ...]) -&gt; pd.DataFrame:
     &#34;&#34;&#34;
@@ -63,8 +96,12 @@ def calc_class_metrics(t_id: np.ndarray, y_id: np.ndarray,
         pd.DataFrame
     &#34;&#34;&#34;
     class_ids = tuple([t[0] for t in classes])
-    assert set(y_id) &lt;= set(
-        class_ids), f&#34;y have invalid class ids[{set(class_ids) - set(y_id)}]&#34;
+    if not (set(y_id) &lt;= set(class_ids)):
+        warnings.warn(
+            &#34;y_id includes unknown class IDs. &#34;
+            f&#34;expected class IDs are {class_ids}, &#34;
+            f&#34;but got {set(y_id)}.&#34;
+        )
 
     precision, recall, f1, support = precision_recall_fscore_support(
         t_id,
@@ -128,13 +165,14 @@ def eval_operation_segmentation(
     t_id: np.ndarray = None,
     y_id: np.ndarray = None,
     classes: Tuple[Tuple[int, str], ...] = None,
+    ignore_class_id: int = None,
     mode: str = &#34;final&#34;,
 ) -&gt; pd.DataFrame:
     &#34;&#34;&#34;Compute metrics (i.e., precision, recall, f1, support) for the given sequence.
     Args:
         t_id (np.ndarray): unixtime and corresponding activity ID, shape=(T,)
         y_id (np.ndarray): unixtime and predicted activity ID, shape=(T,)
-        classes (Tuple): class definition.
+        classes (Tuple): class definition. pairs of class id and name.
         mode (str): If final, only the macro score will be calculated. Otherwise,
             macro avg., weighted avg., and score for each class will be calculated.
     Returns:
@@ -143,6 +181,10 @@ def eval_operation_segmentation(
     assert t_id.ndim == 1
     assert y_id.ndim == 1
     verify_class_ids(y_id, classes)
+
+    if ignore_class_id is not None:
+        t_id, y_id = drop_ignore_class(t_id, y_id, ignore_class_id)
+        classes = tuple([t for t in classes if t[0] != ignore_class_id])
 
     df_scores = [
         calc_avg_metrics(t_id, y_id, classes, average=&#34;macro&#34;),
@@ -252,8 +294,12 @@ def eval_operation_segmentation(
         pd.DataFrame
     &#34;&#34;&#34;
     class_ids = tuple([t[0] for t in classes])
-    assert set(y_id) &lt;= set(
-        class_ids), f&#34;y have invalid class ids[{set(class_ids) - set(y_id)}]&#34;
+    if not (set(y_id) &lt;= set(class_ids)):
+        warnings.warn(
+            &#34;y_id includes unknown class IDs. &#34;
+            f&#34;expected class IDs are {class_ids}, &#34;
+            f&#34;but got {set(y_id)}.&#34;
+        )
 
     precision, recall, f1, support = precision_recall_fscore_support(
         t_id,
@@ -279,8 +325,61 @@ def eval_operation_segmentation(
     return df</code></pre>
 </details>
 </dd>
+<dt id="openpack_toolkit.codalab.operation_segmentation.eval.drop_ignore_class"><code class="name flex">
+<span>def <span class="ident">drop_ignore_class</span></span>(<span>t_id: numpy.ndarray, y_id: numpy.ndarray, ignore_class_id: int) ‑> Tuple[numpy.ndarray, numpy.ndarray]</span>
+</code></dt>
+<dd>
+<div class="desc"><p><em>summary</em></p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>t_id</code></strong> :&ensp;<code>np.ndarray</code></dt>
+<dd><em>description</em></dd>
+<dt><strong><code>y_id</code></strong> :&ensp;<code>np.ndarray</code></dt>
+<dd><em>description</em></dd>
+<dt><strong><code>classes</code></strong> :&ensp;<code>Tuple[Tuple[int, str], &hellip;]</code></dt>
+<dd><em>description</em></dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>bool</code></dt>
+<dd>Tuple[np.ndarray, np.ndarray]</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def drop_ignore_class(
+    t_id: np.ndarray,
+    y_id: np.ndarray,
+    ignore_class_id: int,
+) -&gt; Tuple[np.ndarray, np.ndarray]:
+    &#34;&#34;&#34;_summary_
+    Args:
+        t_id (np.ndarray): _description_
+        y_id (np.ndarray): _description_
+        classes (Tuple[Tuple[int, str], ...]): _description_
+    Returns:
+        bool: Tuple[np.ndarray, np.ndarray]
+    &#34;&#34;&#34;
+    assert t_id.ndim == 1
+    assert y_id.ndim == 1
+    logger.debug(f&#34;drop ignore classs samples (ID={ignore_class_id})&#34;)
+
+    ind = np.where(t_id != ignore_class_id)[0]
+    logger.debug(f&#34;  Befoe: t={t_id.shape}, y={y_id.shape}&#34;)
+
+    t_id = t_id[ind]
+    y_id = y_id[ind]
+    logger.debug(f&#34;  After: t={t_id.shape}, y={y_id.shape}&#34;)
+
+    if ignore_class_id in set(y_id):
+        warnings.warn(
+            f&#34;ignore_class_id (ID{ignore_class_id}) exists in y_id.&#34;)
+    return t_id, y_id</code></pre>
+</details>
+</dd>
 <dt id="openpack_toolkit.codalab.operation_segmentation.eval.eval_operation_segmentation"><code class="name flex">
-<span>def <span class="ident">eval_operation_segmentation</span></span>(<span>t_id: numpy.ndarray = None, y_id: numpy.ndarray = None, classes: Tuple[Tuple[int, str], ...] = None, mode: str = 'final') ‑> pandas.core.frame.DataFrame</span>
+<span>def <span class="ident">eval_operation_segmentation</span></span>(<span>t_id: numpy.ndarray = None, y_id: numpy.ndarray = None, classes: Tuple[Tuple[int, str], ...] = None, ignore_class_id: int = None, mode: str = 'final') ‑> pandas.core.frame.DataFrame</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Compute metrics (i.e., precision, recall, f1, support) for the given sequence.</p>
@@ -291,7 +390,7 @@ def eval_operation_segmentation(
 <dt><strong><code>y_id</code></strong> :&ensp;<code>np.ndarray</code></dt>
 <dd>unixtime and predicted activity ID, shape=(T,)</dd>
 <dt><strong><code>classes</code></strong> :&ensp;<code>Tuple</code></dt>
-<dd>class definition.</dd>
+<dd>class definition. pairs of class id and name.</dd>
 <dt><strong><code>mode</code></strong> :&ensp;<code>str</code></dt>
 <dd>If final, only the macro score will be calculated. Otherwise,
 macro avg., weighted avg., and score for each class will be calculated.</dd>
@@ -306,13 +405,14 @@ macro avg., weighted avg., and score for each class will be calculated.</dd>
     t_id: np.ndarray = None,
     y_id: np.ndarray = None,
     classes: Tuple[Tuple[int, str], ...] = None,
+    ignore_class_id: int = None,
     mode: str = &#34;final&#34;,
 ) -&gt; pd.DataFrame:
     &#34;&#34;&#34;Compute metrics (i.e., precision, recall, f1, support) for the given sequence.
     Args:
         t_id (np.ndarray): unixtime and corresponding activity ID, shape=(T,)
         y_id (np.ndarray): unixtime and predicted activity ID, shape=(T,)
-        classes (Tuple): class definition.
+        classes (Tuple): class definition. pairs of class id and name.
         mode (str): If final, only the macro score will be calculated. Otherwise,
             macro avg., weighted avg., and score for each class will be calculated.
     Returns:
@@ -321,6 +421,10 @@ macro avg., weighted avg., and score for each class will be calculated.</dd>
     assert t_id.ndim == 1
     assert y_id.ndim == 1
     verify_class_ids(y_id, classes)
+
+    if ignore_class_id is not None:
+        t_id, y_id = drop_ignore_class(t_id, y_id, ignore_class_id)
+        classes = tuple([t for t in classes if t[0] != ignore_class_id])
 
     df_scores = [
         calc_avg_metrics(t_id, y_id, classes, average=&#34;macro&#34;),
@@ -401,6 +505,7 @@ macro avg., weighted avg., and score for each class will be calculated.</dd>
 <ul class="">
 <li><code><a title="openpack_toolkit.codalab.operation_segmentation.eval.calc_avg_metrics" href="#openpack_toolkit.codalab.operation_segmentation.eval.calc_avg_metrics">calc_avg_metrics</a></code></li>
 <li><code><a title="openpack_toolkit.codalab.operation_segmentation.eval.calc_class_metrics" href="#openpack_toolkit.codalab.operation_segmentation.eval.calc_class_metrics">calc_class_metrics</a></code></li>
+<li><code><a title="openpack_toolkit.codalab.operation_segmentation.eval.drop_ignore_class" href="#openpack_toolkit.codalab.operation_segmentation.eval.drop_ignore_class">drop_ignore_class</a></code></li>
 <li><code><a title="openpack_toolkit.codalab.operation_segmentation.eval.eval_operation_segmentation" href="#openpack_toolkit.codalab.operation_segmentation.eval.eval_operation_segmentation">eval_operation_segmentation</a></code></li>
 <li><code><a title="openpack_toolkit.codalab.operation_segmentation.eval.verify_class_ids" href="#openpack_toolkit.codalab.operation_segmentation.eval.verify_class_ids">verify_class_ids</a></code></li>
 </ul>
