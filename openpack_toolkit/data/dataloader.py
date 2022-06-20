@@ -1,8 +1,6 @@
 """``dataloader`` provide utility function to load files saved in OpenPack dataset format.
 """
 import json
-
-# import re
 from logging import getLogger
 from pathlib import Path
 from typing import List, Tuple, Union
