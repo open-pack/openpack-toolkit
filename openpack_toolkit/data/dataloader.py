@@ -110,7 +110,7 @@ def load_imu(
     use_acc: bool = True,
     use_gyro: bool = False,
     use_quat: bool = False,
-    th: int = 10,
+    th: int = 30,
 ) -> Tuple[np.ndarray, np.ndarray]:
     """Load IMU data from CSVs.
 
@@ -123,7 +123,8 @@ def load_imu(
             Defaults to False.
         use_quat (bool, optional): include quaternion data(e.g.,
             ``quat_w, quat_x, quat_y, quat_z``). Defaults to False.
-        th (int, optional): threshold of timestamp difference. [ms]
+        th (int, optional): threshold of timestamp difference [ms].
+            Default. 30 [ms] (<= 1 sample)
     Returns:
         Tuple[np.ndarray, np.ndarray]: unixtime and loaded sensor data.
     """
@@ -161,7 +162,11 @@ def load_imu(
             ts_ret = ts_list[i]
         else:
             # Check whether the timestamps are equal or not.
-            assert np.abs(ts_list[i] - ts_ret).max() < th
+            delta = np.abs(ts_list[i] - ts_ret)
+            assert delta.max() < th, (
+                f"max difference is {delta.max()} [ms], "
+                f"but difference smaller than th={th} is allowed."
+            )
 
     x_ret = np.concatenate(x_ret, axis=0)
     return ts_ret, x_ret
