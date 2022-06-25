@@ -21,6 +21,32 @@ pip install openpack-toolkit
 poetry add  openpack-toolkit
 ```
 
+### Download Dataset
+
+```bash
+optk-download -d ../data/datasets -v v0.2.0 -s atr-qags,openpack-operations
+
+# If you are a user of poetry,
+poetry run optk-download -d ../data/datasets -v v0.2.0 -s atr-qags,openpack-operations
+```
+
+Help:
+
+```bash
+$ poetry run optk-download -d ../data/datasets -h
+usage: optk-download [-h] -d DATASET_DIR [-v VERSION] [-s STREAMS]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -d DATASET_DIR, --dataset-dir DATASET_DIR
+                        Path to dataset directory. Downloaded data will be stored under the directory
+  -v VERSION, --version VERSION
+                        Target dataset version. Default: v0.2.0
+  -s STREAMS, --streams STREAMS
+                        A list of data stream names that you want to download. Stream names must be separated by commas. Defaul: atr-qags,openpack-operations
+```
+
+
 ## Documentation
 
 - [Dataset Page](https://open-pack.github.io/)
