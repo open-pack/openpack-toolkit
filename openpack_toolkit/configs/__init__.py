@@ -5,6 +5,7 @@ from ._schema import (
     DataStreamConfig,
     ImuConfig,
     KeypointConfig,
+    ReleaseConfig,
     SessionConfig,
     UserConfig,
 )
@@ -13,5 +14,5 @@ __all__ = [
     "datasets", "users",
     # Schema
     "AnnotConfig", "DatasetConfig", "DataStreamConfig",
-    "ImuConfig", "KeypointConfig", "SessionConfig", "UserConfig",
+    "ImuConfig", "KeypointConfig", "ReleaseConfig", "SessionConfig", "UserConfig",
 ]

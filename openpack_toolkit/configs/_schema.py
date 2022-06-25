@@ -103,3 +103,19 @@ class DatasetConfig:
     streams: Dict[str, DataStreamConfig] = MISSING
     split: DataSplitConfig = MISSING
     annot: AnnotConfig = MISSING
+
+
+# =========
+#  Release
+# =========
+@dataclass
+class ReleaseConfig:
+    @dataclass
+    class _User:
+        sessions: List[str] = MISSING
+        exclude: Optional[List[str]] = MISSING
+
+    version: str = MISSING
+    url: str = MISSING
+    users: Dict[str, _User] = MISSING
+    streams: Dict[str, Dict] = MISSING

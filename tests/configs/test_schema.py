@@ -6,6 +6,7 @@ from openpack_toolkit.configs._schema import (
     DataStreamConfig,
     ImuConfig,
     KeypointConfig,
+    ReleaseConfig,
     SessionConfig,
     UserConfig,
 )
@@ -108,6 +109,32 @@ def test_KeypointConfig__01():
         category="2d-kpt",
         model="foo-hrnet",
         nodes={0: "node0", 1: "node1"},
+    )
+
+    conf = OmegaConf.structured(conf)
+    print(OmegaConf.to_yaml(conf))
+    assert isinstance(conf, DictConfig)
+
+
+# =========
+#  Release
+# =========
+def test_ReleaseConfig__01():
+    conf = ReleaseConfig(
+        version="v0.0.0",
+        url="https://xxxx",
+        users={
+            "U0101": ReleaseConfig._User(
+                sessions=["S0100", "S0200", "S0300", "S0400", "S0500"],
+                exclude=["ht"],
+            )
+        },
+        streams={
+            "annotation": {
+                "repository": "zenodo",
+                "subdirs": ["openpack-operations"],
+            },
+        }
     )
 
     conf = OmegaConf.structured(conf)
