@@ -1,0 +1,28 @@
+schema: SystemDataConfig
+name: system-ht-original
+description: Scan log data from a handy terminal.
+super_stream: null
+path:
+  dir: ${path.openpack.rootdir}/${user.name}/system/ht
+  fname: ${session}.csv
+file_format:
+  file_type: csv
+  columns:
+  - name: unixtime
+    unit: milli second
+    dtype: int
+  - name: datetime
+    unit: null
+    dtype: str (ISO format)
+  - name: order_sheet
+    unit: null
+    dtype: str
+  - name: box
+    unit: null
+    dtype: str
+  - name: item
+    unit: null
+    dtype: str
+frame_rate: 30
+meta:
+  tables: null

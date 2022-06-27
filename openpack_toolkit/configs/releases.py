@@ -22,9 +22,27 @@ RELEASE_CONFIG_V0_2_0 = ReleaseConfig(
         ),
     },
     streams={
+        "annotation": {
+            "repository": "zenodo",
+            "zip": "{user}__annotation.zip",
+            "subdirs": [
+                {
+                    "name": "${.fname}",
+                    "fname": "openpack-operations",
+                    "is_annotation": True
+                }
+            ]
+        },
         "atr": {
             "repository": "zenodo",
-            "subdirs": "${.devices}",
+            "zip": "{user}__atr.zip",
+            "subdirs": [
+                {
+                    "name": "${.fname}",
+                    "fname": "atr-qags",
+                    "subdir": "${device}"
+                }
+            ],
             "devices": [
                 "atr01",
                 "atr02",
@@ -35,6 +53,7 @@ RELEASE_CONFIG_V0_2_0 = ReleaseConfig(
         "kinect": {
             "2d-kpt": {
                 "repository": "zenodo",
+                "zip": "{user}__kinect__2d-kpt.zip",
                 "subdirs": [
                     {
                         "name": "${.model}",
@@ -45,12 +64,6 @@ RELEASE_CONFIG_V0_2_0 = ReleaseConfig(
                     }
                 ]
             }
-        },
-        "annotation": {
-            "repository": "zenodo",
-            "subdirs": [
-                "openpack-operations"
-            ]
         }
     },
 )
@@ -82,9 +95,27 @@ RELEASE_CONFIG_V0_2_1 = ReleaseConfig(
         ),
     },
     streams={
+        "annotation": {
+            "repository": "zenodo",
+            "zip": "{user}__annotation.zip",
+            "subdirs": [
+                {
+                    "name": "${.fname}",
+                    "fname": "openpack-operations",
+                    "is_annotation": True
+                }
+            ]
+        },
         "atr": {
             "repository": "zenodo",
-            "subdirs": "${.devices}",
+            "zip": "{user}__atr.zip",
+            "subdirs": [
+                {
+                    "name": "${.fname}",
+                    "fname": "atr-qags",
+                    "subdir": "${device}"
+                }
+            ],
             "devices": [
                 "atr01",
                 "atr02",
@@ -95,6 +126,7 @@ RELEASE_CONFIG_V0_2_1 = ReleaseConfig(
         "kinect": {
             "2d-kpt": {
                 "repository": "zenodo",
+                "zip": "{user}__kinect__2d-kpt.zip",
                 "subdirs": [
                     {
                         "name": "${.model}",
@@ -106,10 +138,18 @@ RELEASE_CONFIG_V0_2_1 = ReleaseConfig(
                 ]
             }
         },
-        "annotation": {
+        "system": {
             "repository": "zenodo",
+            "zip": "{user}__system.zip",
             "subdirs": [
-                "openpack-operations"
+                {
+                    "name": "order-sheet",
+                    "fname": "system-order-sheet"
+                },
+                {
+                    "name": "ht-original",
+                    "fname": "system-ht-original"
+                }
             ]
         }
     },

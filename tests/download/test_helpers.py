@@ -7,6 +7,7 @@ def test_download_openpack_from_zenodo__01():
     rootdir = Path("../data/datasets")
     streams = [
         "atr-qags",
+        "kinect-2d-kpt",
         "openpack-operations",
     ]
     version = "v0.2.0"

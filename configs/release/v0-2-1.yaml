@@ -41,9 +41,20 @@ users:
     exclude:
     - annotation
 streams:
+  annotation:
+    repository: zenodo
+    zip: '{user}__annotation.zip'
+    subdirs:
+    - name: ${.fname}
+      fname: openpack-operations
+      is_annotation: true
   atr:
     repository: zenodo
-    subdirs: ${.devices}
+    zip: '{user}__atr.zip'
+    subdirs:
+    - name: ${.fname}
+      fname: atr-qags
+      subdir: ${device}
     devices:
     - atr01
     - atr02
@@ -52,13 +63,18 @@ streams:
   kinect:
     2d-kpt:
       repository: zenodo
+      zip: '{user}__kinect__2d-kpt.zip'
       subdirs:
       - name: ${.model}
         category: 2d-kpt
         model: mmpose-hrnet-w48-posetrack18-384x288-posewarper-stage2
         subdir: single
         fname: kinect-2d-kpt
-  annotation:
+  system:
     repository: zenodo
+    zip: '{user}__system.zip'
     subdirs:
-    - openpack-operations
+    - name: order-sheet
+      fname: system-order-sheet
+    - name: ht-original
+      fname: system-ht-original

@@ -12,6 +12,7 @@ from openpack_toolkit.configs._schema import (
     OpenPackConfig,
     ReleaseConfig,
     SessionConfig,
+    SystemDataConfig,
     UserConfig,
 )
 
@@ -128,6 +129,23 @@ def test_KeypointConfig__01():
         category="2d-kpt",
         model="foo-hrnet",
         nodes={0: "node0", 1: "node1"},
+    )
+
+    conf = OmegaConf.structured(conf)
+    print(OmegaConf.to_yaml(conf))
+    assert isinstance(conf, DictConfig)
+
+
+def test_SystemDataConfig__01():
+    conf = SystemDataConfig(
+        name="system-ht-original",
+        description="hoge hoge hoge",
+        super_stream=None,
+        path=DataStreamConfig.Paths(
+            dir="/foo/subdir",
+            fname="huga.csv",
+        ),
+        frame_rate=-1,
     )
 
     conf = OmegaConf.structured(conf)

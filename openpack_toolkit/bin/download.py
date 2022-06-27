@@ -1,11 +1,12 @@
 import argparse
-from logging import getLogger
+from logging import INFO, basicConfig, getLogger
 from pathlib import Path
 
 from ..download._helpers import download_openpack_from_zenodo
 
 LATEST_VERSION_ON_ZENODO = "v0.2.0"
 
+basicConfig(level=INFO)
 logger = getLogger(__name__)
 
 
@@ -43,14 +44,10 @@ def entry_func():
 
     streams = args.streams.split(",")
 
-    # logger.info("donwload OpenPack dataset from zenodo.")
-    # logger.info(f" - dataset_dir : {args.dataset_dir}")
-    # logger.info(f" - version     : {args.version}")
-    # logger.info(f" - streams     : {streams}")
-    print("Donwload OpenPack dataset from zenodo.")
-    print(f" - dataset_dir : {args.dataset_dir}")
-    print(f" - version     : {args.version}")
-    print(f" - streams     : {streams}")
+    logger.info("Donwload OpenPack dataset from zenodo.")
+    logger.info(f" - dataset_dir : {args.dataset_dir}")
+    logger.info(f" - version     : {args.version}")
+    logger.info(f" - streams     : {streams}")
 
     download_openpack_from_zenodo(
         args.dataset_dir,

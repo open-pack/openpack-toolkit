@@ -89,6 +89,11 @@ class KeypointConfig(DataStreamConfig):
 
 
 @dataclass
+class SystemDataConfig(DataStreamConfig):
+    schema: str = "SystemDataConfig"
+
+
+@dataclass
 class AnnotConfig:
     name: str = MISSING
     version: str = MISSING

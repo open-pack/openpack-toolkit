@@ -8,6 +8,7 @@ from ._schema import (
     OpenPackConfig,
     ReleaseConfig,
     SessionConfig,
+    SystemDataConfig,
     UserConfig,
 )
 
@@ -16,5 +17,5 @@ __all__ = [
     # Schema
     "AnnotConfig", "DatasetConfig", "DataStreamConfig",
     "ImuConfig", "KeypointConfig", "OpenPackConfig",
-    "ReleaseConfig", "SessionConfig", "UserConfig",
+    "ReleaseConfig", "SessionConfig", "SystemDataConfig", "UserConfig",
 ]
