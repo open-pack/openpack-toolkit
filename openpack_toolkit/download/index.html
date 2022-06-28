@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
-<title>openpack_toolkit.configs.datasets.splits API documentation</title>
+<title>openpack_toolkit.download API documentation</title>
 <meta name="description" content="" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
@@ -19,69 +19,9 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>openpack_toolkit.configs.datasets.splits</code></h1>
+<h1 class="title">Module <code>openpack_toolkit.download</code></h1>
 </header>
 <section id="section-intro">
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">from .._schema import DataSplitConfig
-
-DEBUG_SPLIT = DataSplitConfig(
-    name=&#34;debug&#34;,
-    train=[
-        [&#39;U0102&#39;, &#39;S0100&#39;],
-        [&#39;U0102&#39;, &#39;S0200&#39;],
-        [&#39;U0102&#39;, &#39;S0300&#39;],
-    ],
-    val=[
-        [&#39;U0102&#39;, &#39;S0400&#39;],
-    ],
-    test=[
-        [&#39;U0102&#39;, &#39;S0500&#39;],
-    ],
-    submission=[
-        [&#39;U0102&#39;, &#39;S0500&#39;],
-    ],
-)
-
-PILOT_CHALLENGE_SPLIT = DataSplitConfig(
-    name=&#34;pilot-challenge&#34;,
-    train=[
-        [&#39;U0102&#39;, &#39;S0100&#39;],
-        [&#39;U0102&#39;, &#39;S0200&#39;],
-        [&#39;U0102&#39;, &#39;S0300&#39;],
-        [&#39;U0102&#39;, &#39;S0400&#39;],
-        [&#39;U0102&#39;, &#39;S0500&#39;],
-        [&#39;U0103&#39;, &#39;S0100&#39;],
-        [&#39;U0103&#39;, &#39;S0200&#39;],
-        [&#39;U0103&#39;, &#39;S0300&#39;],
-        [&#39;U0103&#39;, &#39;S0400&#39;],
-        [&#39;U0103&#39;, &#39;S0500&#39;],
-        [&#39;U0105&#39;, &#39;S0100&#39;],
-        [&#39;U0105&#39;, &#39;S0200&#39;],
-        [&#39;U0105&#39;, &#39;S0300&#39;],
-        [&#39;U0105&#39;, &#39;S0400&#39;],
-        [&#39;U0105&#39;, &#39;S0500&#39;],
-    ],
-    val=[
-        [&#39;U0106&#39;, &#39;S0200&#39;],
-        [&#39;U0106&#39;, &#39;S0400&#39;],
-    ],
-    test=[
-        [&#39;U0106&#39;, &#39;S0100&#39;],
-        [&#39;U0106&#39;, &#39;S0300&#39;],
-        [&#39;U0106&#39;, &#39;S0500&#39;],
-    ],
-    submission=[
-        [&#39;U0107&#39;, &#39;S0100&#39;],
-        [&#39;U0107&#39;, &#39;S0200&#39;],
-        [&#39;U0107&#39;, &#39;S0300&#39;],
-        [&#39;U0107&#39;, &#39;S0500&#39;],
-    ],
-)</code></pre>
-</details>
 </section>
 <section>
 </section>
@@ -100,7 +40,7 @@ PILOT_CHALLENGE_SPLIT = DataSplitConfig(
 <ul id="index">
 <li><h3>Super-module</h3>
 <ul>
-<li><code><a title="openpack_toolkit.configs.datasets" href="index.html">openpack_toolkit.configs.datasets</a></code></li>
+<li><code><a title="openpack_toolkit" href="../index.html">openpack_toolkit</a></code></li>
 </ul>
 </li>
 </ul>

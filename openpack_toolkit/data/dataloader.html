@@ -63,6 +63,7 @@ def load_annotation(
         null_class_id = null_class_id[-1]
 
     df = pd.read_csv(path)
+    logger.debug(f&#34;load annotation data from {path} -&gt; df={df.shape}&#34;)
     ut_min, ut_max = df[&#34;unixtime&#34;].min(), df[&#34;unixtime&#34;].max()
 
     null_record = df.head(1).copy()
@@ -119,6 +120,7 @@ def load_keypoints(path: Path) -&gt; Tuple[np.ndarray, np.ndarray]:
     &#34;&#34;&#34;
     with open(path, &#34;r&#34;) as f:
         data = json.load(f)
+    logger.debug(f&#34;load keypoints from {path}&#34;)
 
     T, X = [], []
     for i, d in enumerate(data[&#34;annotations&#34;][:]):
@@ -139,7 +141,7 @@ def load_imu(
     use_acc: bool = True,
     use_gyro: bool = False,
     use_quat: bool = False,
-    th: int = 10,
+    th: int = 30,
 ) -&gt; Tuple[np.ndarray, np.ndarray]:
     &#34;&#34;&#34;Load IMU data from CSVs.
 
@@ -152,7 +154,8 @@ def load_imu(
             Defaults to False.
         use_quat (bool, optional): include quaternion data(e.g.,
             ``quat_w, quat_x, quat_y, quat_z``). Defaults to False.
-        th (int, optional): threshold of timestamp difference. [ms]
+        th (int, optional): threshold of timestamp difference [ms].
+            Default. 30 [ms] (&lt;= 1 sample)
     Returns:
         Tuple[np.ndarray, np.ndarray]: unixtime and loaded sensor data.
     &#34;&#34;&#34;
@@ -190,10 +193,45 @@ def load_imu(
             ts_ret = ts_list[i]
         else:
             # Check whether the timestamps are equal or not.
-            assert np.abs(ts_list[i] - ts_ret).max() &lt; th
+            delta = np.abs(ts_list[i] - ts_ret)
+            assert delta.max() &lt; th, (
+                f&#34;max difference is {delta.max()} [ms], &#34;
+                f&#34;but difference smaller than th={th} is allowed.&#34;
+            )
 
     x_ret = np.concatenate(x_ret, axis=0)
-    return ts_ret, x_ret</code></pre>
+    return ts_ret, x_ret
+
+
+def load_and_resample_scan_log(
+    path: Path,
+    unixtimes_ms: np.ndarray,
+) -&gt; np.ndarray:
+    &#34;&#34;&#34;Load scan log data such as HT, and make binary vector for given timestamps.
+    Elements that have the same timestamp in second precision are marked as 1.
+    Other values are set to 0.
+
+    Args:
+        path (Path): path to a scan log CSV file.
+        unixtimes_ms (np.ndarray):  unixtime seqeuence (milli-scond precision).
+            shape=(T,).
+
+    Returns:
+        np.ndarray: binary 1d vector.
+    &#34;&#34;&#34;
+    assert unixtimes_ms.ndim == 1
+    df = pd.read_csv(path)
+    logger.info(f&#34;load scan log from {path} -&gt; df={df.shape}&#34;)
+
+    unixtimes_sec = unixtimes_ms // 1000
+
+    X_log = np.zeros(len(unixtimes_ms)).astype(np.int32)
+    for utime_ms in df[&#34;unixtime&#34;].values:
+        utime_sec = utime_ms // 1000
+        ind = np.where(unixtimes_sec == utime_sec)[0]
+        X_log[ind] = 1
+
+    return X_log</code></pre>
 </details>
 </section>
 <section>
@@ -218,6 +256,61 @@ def load_imu(
     classes: ActSet,
 ) -&gt; pd.DataFrame:
     return load_annotation(path, unixtimes_ms, classes, label_col=&#34;operation&#34;)</code></pre>
+</details>
+</dd>
+<dt id="openpack_toolkit.data.dataloader.load_and_resample_scan_log"><code class="name flex">
+<span>def <span class="ident">load_and_resample_scan_log</span></span>(<span>path: pathlib.Path, unixtimes_ms: numpy.ndarray) ‑> numpy.ndarray</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Load scan log data such as HT, and make binary vector for given timestamps.
+Elements that have the same timestamp in second precision are marked as 1.
+Other values are set to 0.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>path</code></strong> :&ensp;<code>Path</code></dt>
+<dd>path to a scan log CSV file.</dd>
+<dt><strong><code>unixtimes_ms</code></strong> :&ensp;<code>np.ndarray</code></dt>
+<dd>unixtime seqeuence (milli-scond precision).
+shape=(T,).</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>np.ndarray</code></dt>
+<dd>binary 1d vector.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def load_and_resample_scan_log(
+    path: Path,
+    unixtimes_ms: np.ndarray,
+) -&gt; np.ndarray:
+    &#34;&#34;&#34;Load scan log data such as HT, and make binary vector for given timestamps.
+    Elements that have the same timestamp in second precision are marked as 1.
+    Other values are set to 0.
+
+    Args:
+        path (Path): path to a scan log CSV file.
+        unixtimes_ms (np.ndarray):  unixtime seqeuence (milli-scond precision).
+            shape=(T,).
+
+    Returns:
+        np.ndarray: binary 1d vector.
+    &#34;&#34;&#34;
+    assert unixtimes_ms.ndim == 1
+    df = pd.read_csv(path)
+    logger.info(f&#34;load scan log from {path} -&gt; df={df.shape}&#34;)
+
+    unixtimes_sec = unixtimes_ms // 1000
+
+    X_log = np.zeros(len(unixtimes_ms)).astype(np.int32)
+    for utime_ms in df[&#34;unixtime&#34;].values:
+        utime_sec = utime_ms // 1000
+        ind = np.where(unixtimes_sec == utime_sec)[0]
+        X_log[ind] = 1
+
+    return X_log</code></pre>
 </details>
 </dd>
 <dt id="openpack_toolkit.data.dataloader.load_annotation"><code class="name flex">
@@ -264,6 +357,7 @@ as NULL class.</p>
         null_class_id = null_class_id[-1]
 
     df = pd.read_csv(path)
+    logger.debug(f&#34;load annotation data from {path} -&gt; df={df.shape}&#34;)
     ut_min, ut_max = df[&#34;unixtime&#34;].min(), df[&#34;unixtime&#34;].max()
 
     null_record = df.head(1).copy()
@@ -297,7 +391,7 @@ as NULL class.</p>
 </details>
 </dd>
 <dt id="openpack_toolkit.data.dataloader.load_imu"><code class="name flex">
-<span>def <span class="ident">load_imu</span></span>(<span>paths: Union[Tuple[pathlib.Path, ...], List[pathlib.Path]], use_acc: bool = True, use_gyro: bool = False, use_quat: bool = False, th: int = 10) ‑> Tuple[numpy.ndarray, numpy.ndarray]</span>
+<span>def <span class="ident">load_imu</span></span>(<span>paths: Union[Tuple[pathlib.Path, ...], List[pathlib.Path]], use_acc: bool = True, use_gyro: bool = False, use_quat: bool = False, th: int = 30) ‑> Tuple[numpy.ndarray, numpy.ndarray]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Load IMU data from CSVs.</p>
@@ -316,7 +410,8 @@ Defaults to False.</dd>
 <dd>include quaternion data(e.g.,
 <code>quat_w, quat_x, quat_y, quat_z</code>). Defaults to False.</dd>
 <dt><strong><code>th</code></strong> :&ensp;<code>int</code>, optional</dt>
-<dd>threshold of timestamp difference. [ms]</dd>
+<dd>threshold of timestamp difference [ms].
+Default. 30 [ms] (&lt;= 1 sample)</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
@@ -332,7 +427,7 @@ Defaults to False.</dd>
     use_acc: bool = True,
     use_gyro: bool = False,
     use_quat: bool = False,
-    th: int = 10,
+    th: int = 30,
 ) -&gt; Tuple[np.ndarray, np.ndarray]:
     &#34;&#34;&#34;Load IMU data from CSVs.
 
@@ -345,7 +440,8 @@ Defaults to False.</dd>
             Defaults to False.
         use_quat (bool, optional): include quaternion data(e.g.,
             ``quat_w, quat_x, quat_y, quat_z``). Defaults to False.
-        th (int, optional): threshold of timestamp difference. [ms]
+        th (int, optional): threshold of timestamp difference [ms].
+            Default. 30 [ms] (&lt;= 1 sample)
     Returns:
         Tuple[np.ndarray, np.ndarray]: unixtime and loaded sensor data.
     &#34;&#34;&#34;
@@ -383,7 +479,11 @@ Defaults to False.</dd>
             ts_ret = ts_list[i]
         else:
             # Check whether the timestamps are equal or not.
-            assert np.abs(ts_list[i] - ts_ret).max() &lt; th
+            delta = np.abs(ts_list[i] - ts_ret)
+            assert delta.max() &lt; th, (
+                f&#34;max difference is {delta.max()} [ms], &#34;
+                f&#34;but difference smaller than th={th} is allowed.&#34;
+            )
 
     x_ret = np.concatenate(x_ret, axis=0)
     return ts_ret, x_ret</code></pre>
@@ -429,6 +529,7 @@ prediction. shape=(3, FRAMES, NODE). The first dim is corresponding to
     &#34;&#34;&#34;
     with open(path, &#34;r&#34;) as f:
         data = json.load(f)
+    logger.debug(f&#34;load keypoints from {path}&#34;)
 
     T, X = [], []
     for i, d in enumerate(data[&#34;annotations&#34;][:]):
@@ -463,6 +564,7 @@ prediction. shape=(3, FRAMES, NODE). The first dim is corresponding to
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
 <li><code><a title="openpack_toolkit.data.dataloader.load_and_resample_operation_labels" href="#openpack_toolkit.data.dataloader.load_and_resample_operation_labels">load_and_resample_operation_labels</a></code></li>
+<li><code><a title="openpack_toolkit.data.dataloader.load_and_resample_scan_log" href="#openpack_toolkit.data.dataloader.load_and_resample_scan_log">load_and_resample_scan_log</a></code></li>
 <li><code><a title="openpack_toolkit.data.dataloader.load_annotation" href="#openpack_toolkit.data.dataloader.load_annotation">load_annotation</a></code></li>
 <li><code><a title="openpack_toolkit.data.dataloader.load_imu" href="#openpack_toolkit.data.dataloader.load_imu">load_imu</a></code></li>
 <li><code><a title="openpack_toolkit.data.dataloader.load_keypoints" href="#openpack_toolkit.data.dataloader.load_keypoints">load_keypoints</a></code></li>

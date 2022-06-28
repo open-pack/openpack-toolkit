@@ -26,22 +26,26 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from . import datasets, users
+<pre><code class="python">from . import datasets, releases, users
 from ._schema import (
     AnnotConfig,
     DatasetConfig,
     DataStreamConfig,
     ImuConfig,
     KeypointConfig,
+    OpenPackConfig,
+    ReleaseConfig,
     SessionConfig,
+    SystemDataConfig,
     UserConfig,
 )
 
 __all__ = [
-    &#34;datasets&#34;, &#34;users&#34;,
+    &#34;datasets&#34;, &#34;users&#34;, &#34;releases&#34;,
     # Schema
     &#34;AnnotConfig&#34;, &#34;DatasetConfig&#34;, &#34;DataStreamConfig&#34;,
-    &#34;ImuConfig&#34;, &#34;KeypointConfig&#34;, &#34;SessionConfig&#34;, &#34;UserConfig&#34;,
+    &#34;ImuConfig&#34;, &#34;KeypointConfig&#34;, &#34;OpenPackConfig&#34;,
+    &#34;ReleaseConfig&#34;, &#34;SessionConfig&#34;, &#34;SystemDataConfig&#34;, &#34;UserConfig&#34;,
 ]</code></pre>
 </details>
 </section>
@@ -49,6 +53,10 @@ __all__ = [
 <h2 class="section-title" id="header-submodules">Sub-modules</h2>
 <dl>
 <dt><code class="name"><a title="openpack_toolkit.configs.datasets" href="datasets/index.html">openpack_toolkit.configs.datasets</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="openpack_toolkit.configs.releases" href="releases.html">openpack_toolkit.configs.releases</a></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -161,6 +169,7 @@ class DataStreamConfig:
 <ul class="hlist">
 <li>openpack_toolkit.configs._schema.ImuConfig</li>
 <li>openpack_toolkit.configs._schema.KeypointConfig</li>
+<li>openpack_toolkit.configs._schema.SystemDataConfig</li>
 </ul>
 <h3>Class variables</h3>
 <dl>
@@ -200,10 +209,10 @@ class DataStreamConfig:
 </dd>
 <dt id="openpack_toolkit.configs.DatasetConfig"><code class="flex name class">
 <span>class <span class="ident">DatasetConfig</span></span>
-<span>(</span><span>name: str = '???', streams: Dict[str, openpack_toolkit.configs._schema.DataStreamConfig] = '???', split: openpack_toolkit.configs._schema.DataSplitConfig = '???', annot: openpack_toolkit.configs._schema.AnnotConfig = '???')</span>
+<span>(</span><span>name: str = '???', streams: Optional[Dict[str, openpack_toolkit.configs._schema.DataStreamConfig]] = None, stream: Optional[openpack_toolkit.configs._schema.DataStreamConfig] = None, split: openpack_toolkit.configs._schema.DataSplitConfig = '???', annotation: openpack_toolkit.configs._schema.AnnotConfig = '???')</span>
 </code></dt>
 <dd>
-<div class="desc"><p>DatasetConfig(name: str = '???', streams: Dict[str, openpack_toolkit.configs._schema.DataStreamConfig] = '???', split: openpack_toolkit.configs._schema.DataSplitConfig = '???', annot: openpack_toolkit.configs._schema.AnnotConfig = '???')</p></div>
+<div class="desc"><p>DatasetConfig(name: str = '???', streams: Optional[Dict[str, openpack_toolkit.configs._schema.DataStreamConfig]] = None, stream: Optional[openpack_toolkit.configs._schema.DataStreamConfig] = None, split: openpack_toolkit.configs._schema.DataSplitConfig = '???', annotation: openpack_toolkit.configs._schema.AnnotConfig = '???')</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -211,13 +220,14 @@ class DataStreamConfig:
 <pre><code class="python">@dataclass
 class DatasetConfig:
     name: str = MISSING
-    streams: Dict[str, DataStreamConfig] = MISSING
+    streams: Optional[Dict[str, DataStreamConfig]] = None
+    stream: Optional[DataStreamConfig] = None
     split: DataSplitConfig = MISSING
-    annot: AnnotConfig = MISSING</code></pre>
+    annotation: AnnotConfig = MISSING</code></pre>
 </details>
 <h3>Class variables</h3>
 <dl>
-<dt id="openpack_toolkit.configs.DatasetConfig.annot"><code class="name">var <span class="ident">annot</span> : openpack_toolkit.configs._schema.AnnotConfig</code></dt>
+<dt id="openpack_toolkit.configs.DatasetConfig.annotation"><code class="name">var <span class="ident">annotation</span> : openpack_toolkit.configs._schema.AnnotConfig</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -229,7 +239,11 @@ class DatasetConfig:
 <dd>
 <div class="desc"></div>
 </dd>
-<dt id="openpack_toolkit.configs.DatasetConfig.streams"><code class="name">var <span class="ident">streams</span> : Dict[str, openpack_toolkit.configs._schema.DataStreamConfig]</code></dt>
+<dt id="openpack_toolkit.configs.DatasetConfig.stream"><code class="name">var <span class="ident">stream</span> : Optional[openpack_toolkit.configs._schema.DataStreamConfig]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="openpack_toolkit.configs.DatasetConfig.streams"><code class="name">var <span class="ident">streams</span> : Optional[Dict[str, openpack_toolkit.configs._schema.DataStreamConfig]]</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -322,6 +336,80 @@ class KeypointConfig(DataStreamConfig):
 </dd>
 </dl>
 </dd>
+<dt id="openpack_toolkit.configs.OpenPackConfig"><code class="flex name class">
+<span>class <span class="ident">OpenPackConfig</span></span>
+<span>(</span><span>path: Optional[Dict] = None, dataset: openpack_toolkit.configs._schema.DatasetConfig = '???', release: Optional[openpack_toolkit.configs._schema.ReleaseConfig] = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>OpenPackConfig(path: Optional[Dict] = None, dataset: openpack_toolkit.configs._schema.DatasetConfig = '???', release: Optional[openpack_toolkit.configs._schema.ReleaseConfig] = None)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class OpenPackConfig:
+    path: Optional[Dict] = None
+    dataset: DatasetConfig = MISSING
+    release: Optional[ReleaseConfig] = None</code></pre>
+</details>
+<h3>Class variables</h3>
+<dl>
+<dt id="openpack_toolkit.configs.OpenPackConfig.dataset"><code class="name">var <span class="ident">dataset</span> : openpack_toolkit.configs._schema.DatasetConfig</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="openpack_toolkit.configs.OpenPackConfig.path"><code class="name">var <span class="ident">path</span> : Optional[Dict]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="openpack_toolkit.configs.OpenPackConfig.release"><code class="name">var <span class="ident">release</span> : Optional[openpack_toolkit.configs._schema.ReleaseConfig]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="openpack_toolkit.configs.ReleaseConfig"><code class="flex name class">
+<span>class <span class="ident">ReleaseConfig</span></span>
+<span>(</span><span>version: str = '???', url: str = '???', users: Dict[str, openpack_toolkit.configs._schema.ReleaseConfig._User] = '???', streams: Dict[str, Dict] = '???')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>ReleaseConfig(version: str = '???', url: str = '???', users: Dict[str, openpack_toolkit.configs._schema.ReleaseConfig._User] = '???', streams: Dict[str, Dict] = '???')</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class ReleaseConfig:
+    @dataclass
+    class _User:
+        sessions: List[str] = MISSING
+        exclude: Optional[List[str]] = MISSING
+
+    version: str = MISSING
+    url: str = MISSING
+    users: Dict[str, _User] = MISSING
+    streams: Dict[str, Dict] = MISSING</code></pre>
+</details>
+<h3>Class variables</h3>
+<dl>
+<dt id="openpack_toolkit.configs.ReleaseConfig.streams"><code class="name">var <span class="ident">streams</span> : Dict[str, Dict]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="openpack_toolkit.configs.ReleaseConfig.url"><code class="name">var <span class="ident">url</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="openpack_toolkit.configs.ReleaseConfig.users"><code class="name">var <span class="ident">users</span> : Dict[str, openpack_toolkit.configs._schema.ReleaseConfig._User]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="openpack_toolkit.configs.ReleaseConfig.version"><code class="name">var <span class="ident">version</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
 <dt id="openpack_toolkit.configs.SessionConfig"><code class="flex name class">
 <span>class <span class="ident">SessionConfig</span></span>
 <span>(</span><span>duration: str = '???', end: str = '???', start: str = '???')</span>
@@ -363,6 +451,32 @@ class SessionConfig:
 <div class="desc"></div>
 </dd>
 <dt id="openpack_toolkit.configs.SessionConfig.start"><code class="name">var <span class="ident">start</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="openpack_toolkit.configs.SystemDataConfig"><code class="flex name class">
+<span>class <span class="ident">SystemDataConfig</span></span>
+<span>(</span><span>schema: str = 'SystemDataConfig', name: str = '???', description: Optional[str] = None, super_stream: Optional[str] = None, path: openpack_toolkit.configs._schema.DataStreamConfig.Paths = '???', file_format: Optional[Dict] = None, frame_rate: int = '???')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>SystemDataConfig(schema: str = 'SystemDataConfig', name: str = '???', description: Optional[str] = None, super_stream: Optional[str] = None, path: openpack_toolkit.configs._schema.DataStreamConfig.Paths = '???', file_format: Optional[Dict] = None, frame_rate: int = '???')</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class SystemDataConfig(DataStreamConfig):
+    schema: str = &#34;SystemDataConfig&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>openpack_toolkit.configs._schema.DataStreamConfig</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="openpack_toolkit.configs.SystemDataConfig.schema"><code class="name">var <span class="ident">schema</span> : str</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -417,6 +531,7 @@ class UserConfig:
 <li><h3><a href="#header-submodules">Sub-modules</a></h3>
 <ul>
 <li><code><a title="openpack_toolkit.configs.datasets" href="datasets/index.html">openpack_toolkit.configs.datasets</a></code></li>
+<li><code><a title="openpack_toolkit.configs.releases" href="releases.html">openpack_toolkit.configs.releases</a></code></li>
 <li><code><a title="openpack_toolkit.configs.users" href="users.html">openpack_toolkit.configs.users</a></code></li>
 </ul>
 </li>
@@ -448,9 +563,10 @@ class UserConfig:
 <li>
 <h4><code><a title="openpack_toolkit.configs.DatasetConfig" href="#openpack_toolkit.configs.DatasetConfig">DatasetConfig</a></code></h4>
 <ul class="">
-<li><code><a title="openpack_toolkit.configs.DatasetConfig.annot" href="#openpack_toolkit.configs.DatasetConfig.annot">annot</a></code></li>
+<li><code><a title="openpack_toolkit.configs.DatasetConfig.annotation" href="#openpack_toolkit.configs.DatasetConfig.annotation">annotation</a></code></li>
 <li><code><a title="openpack_toolkit.configs.DatasetConfig.name" href="#openpack_toolkit.configs.DatasetConfig.name">name</a></code></li>
 <li><code><a title="openpack_toolkit.configs.DatasetConfig.split" href="#openpack_toolkit.configs.DatasetConfig.split">split</a></code></li>
+<li><code><a title="openpack_toolkit.configs.DatasetConfig.stream" href="#openpack_toolkit.configs.DatasetConfig.stream">stream</a></code></li>
 <li><code><a title="openpack_toolkit.configs.DatasetConfig.streams" href="#openpack_toolkit.configs.DatasetConfig.streams">streams</a></code></li>
 </ul>
 </li>
@@ -474,11 +590,34 @@ class UserConfig:
 </ul>
 </li>
 <li>
+<h4><code><a title="openpack_toolkit.configs.OpenPackConfig" href="#openpack_toolkit.configs.OpenPackConfig">OpenPackConfig</a></code></h4>
+<ul class="">
+<li><code><a title="openpack_toolkit.configs.OpenPackConfig.dataset" href="#openpack_toolkit.configs.OpenPackConfig.dataset">dataset</a></code></li>
+<li><code><a title="openpack_toolkit.configs.OpenPackConfig.path" href="#openpack_toolkit.configs.OpenPackConfig.path">path</a></code></li>
+<li><code><a title="openpack_toolkit.configs.OpenPackConfig.release" href="#openpack_toolkit.configs.OpenPackConfig.release">release</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="openpack_toolkit.configs.ReleaseConfig" href="#openpack_toolkit.configs.ReleaseConfig">ReleaseConfig</a></code></h4>
+<ul class="">
+<li><code><a title="openpack_toolkit.configs.ReleaseConfig.streams" href="#openpack_toolkit.configs.ReleaseConfig.streams">streams</a></code></li>
+<li><code><a title="openpack_toolkit.configs.ReleaseConfig.url" href="#openpack_toolkit.configs.ReleaseConfig.url">url</a></code></li>
+<li><code><a title="openpack_toolkit.configs.ReleaseConfig.users" href="#openpack_toolkit.configs.ReleaseConfig.users">users</a></code></li>
+<li><code><a title="openpack_toolkit.configs.ReleaseConfig.version" href="#openpack_toolkit.configs.ReleaseConfig.version">version</a></code></li>
+</ul>
+</li>
+<li>
 <h4><code><a title="openpack_toolkit.configs.SessionConfig" href="#openpack_toolkit.configs.SessionConfig">SessionConfig</a></code></h4>
 <ul class="">
 <li><code><a title="openpack_toolkit.configs.SessionConfig.duration" href="#openpack_toolkit.configs.SessionConfig.duration">duration</a></code></li>
 <li><code><a title="openpack_toolkit.configs.SessionConfig.end" href="#openpack_toolkit.configs.SessionConfig.end">end</a></code></li>
 <li><code><a title="openpack_toolkit.configs.SessionConfig.start" href="#openpack_toolkit.configs.SessionConfig.start">start</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="openpack_toolkit.configs.SystemDataConfig" href="#openpack_toolkit.configs.SystemDataConfig">SystemDataConfig</a></code></h4>
+<ul class="">
+<li><code><a title="openpack_toolkit.configs.SystemDataConfig.schema" href="#openpack_toolkit.configs.SystemDataConfig.schema">schema</a></code></li>
 </ul>
 </li>
 <li>

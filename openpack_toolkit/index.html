@@ -27,9 +27,9 @@
 <p><a href="https://github.com/open-pack/openpack-toolkit/actions/workflows/test.yaml"><img alt="Test" src="https://github.com/open-pack/openpack-toolkit/actions/workflows/test.yaml/badge.svg"></a>
 <a href="https://github.com/open-pack/openpack-toolkit/actions/workflows/deploy-docs.yaml"><img alt="API Docs - GitHub Pages" src="https://github.com/open-pack/openpack-toolkit/actions/workflows/deploy-docs.yaml/badge.svg"></a></p>
 <p>"OpenPack Dataset" is a new large-scale multi modal dataset of manual packing process.
-OpenPack is an open access logistics-dataset for human activity recognition, which contains human movement and package information from 17 distinct subjects.
+OpenPack is an open access logistics-dataset for human activity recognition, which contains human movement and package information from 16 distinct subjects.
 This repository provide utilities to explore our exciting dataset.</p>
-<h2 id="setup">Setup</h2>
+<h2 id="install">Install</h2>
 <p>We provide some utility functions as python package. You can install via pip with the following command.</p>
 <pre><code class="language-bash"># Pip
 pip install openpack-toolkit
@@ -37,30 +37,125 @@ pip install openpack-toolkit
 # Poetry
 poetry add  openpack-toolkit
 </code></pre>
-<h2 id="documentation">Documentation</h2>
+<h2 id="docs-links">Docs &amp; Links</h2>
+<h3 id="tool">Tool</h3>
 <ul>
-<li><a href="https://open-pack.github.io/">Dataset Page</a></li>
 <li><a href="https://open-pack.github.io/openpack-toolkit/openpack_toolkit/">API Docs</a></li>
+<li><a href="https://pypi.org/project/openpack-toolkit/">PyPI</a></li>
 </ul>
-<h3 id="dataset-descriptions">Dataset Descriptions</h3>
+<h3 id="dataset">Dataset</h3>
 <ul>
+<li><a href="https://open-pack.github.io/">Homepage</a> (External Site)</li>
 <li><a href="./docs/USER.md">Subjects &amp; Recording Scenarios</a></li>
 <li><a href="./docs/ANNOTATION.md">Activity Class Definition</a></li>
 <li><a href="./docs/DATA_STREAM.md">Modality</a></li>
 <li><a href="./docs/DATA_SPLIT.md">Data Split (Train/Val/Test/Submission)</a></li>
 </ul>
+<h3 id="task">Task</h3>
+<ul>
+<li>Work Operation Recognition</li>
+<li><a href="./docs/OPENPACK_CHALLENGE/">OpenPack Challenge</a></li>
+</ul>
 <h2 id="examples-pytorch">Examples (PyTorch)</h2>
-<p>See <a href="https://github.com/open-pack/openpack-torch">openpack-torch</a> for more dietail.</p>
+<p>PyTorch code samples for work operation prediction task is available.
+See <a href="https://github.com/open-pack/openpack-torch">openpack-torch</a> for more dietail.</p>
 <ul>
 <li><a href="https://github.com/open-pack/openpack-torch/tree/main/examples/unet">U-Net with Accelration Data</a></li>
 <li><a href="https://github.com/open-pack/openpack-torch/tree/main/examples/st-gcn">ST-GCN with Keypoints Data</a></li>
 </ul>
+<h2 id="download-dataset">Download Dataset</h2>
+<pre><code class="language-bash">optk-download -d ../data/datasets -v v0.2.0 -s atr-qags,openpack-operations
+
+# If you are a user of poetry,
+poetry run optk-download -d ../data/datasets -v v0.2.0 -s atr-qags,openpack-operations
+</code></pre>
+<p>Help:</p>
+<pre><code class="language-bash">$ poetry run optk-download -d ../data/datasets -h
+usage: optk-download [-h] -d DATASET_DIR [-v VERSION] [-s STREAMS]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -d DATASET_DIR, --dataset-dir DATASET_DIR
+                        Path to dataset directory. Downloaded data will be stored under the directory
+  -v VERSION, --version VERSION
+                        Target dataset version. Default: v0.2.0
+  -s STREAMS, --streams STREAMS
+                        A list of data stream names that you want to download. Stream names must be separated by commas. Defaul: atr-qags,openpack-operations
+</code></pre>
+<h3 id="dataset-structure">Dataset Structure</h3>
+<p><a href="https://zenodo.org/record/6697990">v0.2.0</a></p>
+<pre><code class="language-txt">../data/datasets/
+└── openpack
+    └── v0.2.0
+        ├── U0102
+        │   ├── annotation
+        │   │   └── openpack-operations
+        │   │       ├── S0100.csv
+        │   │       ├── S0200.csv
+        │   │       ├── S0300.csv
+        │   │       ├── S0400.csv
+        │   │       └── S0500.csv
+        │   ├── atr
+        │   │   ├── atr01
+        │   │   │   ├── S0100.csv
+        │   │   │   ├── S0200.csv
+        │   │   │   ├── S0300.csv
+        │   │   │   ├── S0400.csv
+        │   │   │   └── S0500.csv
+        │   │   ├── atr02
+        │   │   │   ├── S0100.csv
+        │   │   │   ├── S0200.csv
+        │   │   │   ├── S0300.csv
+        │   │   │   ├── S0400.csv
+        │   │   │   └── S0500.csv
+        │   │   ├── atr03
+        │   │   │   ├── S0100.csv
+        │   │   │   ├── S0200.csv
+        │   │   │   ├── S0300.csv
+        │   │   │   ├── S0400.csv
+        │   │   │   └── S0500.csv
+        │   │   └── atr04
+        │   │       ├── S0100.csv
+        │   │       ├── S0200.csv
+        │   │       ├── S0300.csv
+        │   │       ├── S0400.csv
+        │   │       └── S0500.csv
+        │   └── kinect
+        │       └── 2d-kpt
+        │           └── mmpose-hrnet-w48-posetrack18-384x288-posewarper-stage2
+        │               ├── U0102
+        │               │   └── single
+        │               │       ├── S0100.json
+        │               │       ├── S0200.json
+        │               │       ├── S0300.json
+        │               │       ├── S0400.json
+        │               │       └── S0500.json
+        │               └── single
+        │                   ├── S0100.json
+        │                   ├── S0200.json
+        │                   ├── S0300.json
+        │                   ├── S0400.json
+        │                   └── S0500.json
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+        └── zenodo
+            ├── U0102__annotation.zip
+            ├── U0102__atr.zip
+            ├── U0102__kinect__2d-kpt.zip
+            ├── U0103__annotation.zip
+            ├── U0103__atr.zip
+            ├── U0103__kinect__2d-kpt.zip
+            ├── U0105__annotation.zip
+            ├── U0105__atr.zip
+            ├── U0105__kinect__2d-kpt.zip
+            ├── U0106__annotation.zip
+            ├── U0106__atr.zip
+            └── U0106__kinect__2d-kpt.zip
+</code></pre>
 <h2 id="license">License</h2>
 <p>openpack-toolkit has a MIT license, as found in the <a href="./LICENCE">LICENSE</a> file.</p>
-<hr>
-<h2 id="generate-document">Generate Document</h2>
-<pre><code class="language-bash">pdoc --html --output-dir docs --force openpack_toolkit/
-</code></pre>
+<p>NOTE: <a href="https://doi.org/10.5281/zenodo.5909086">OpenPack Dataset</a> itself is available under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode">Creative Commons Attribution Non Commercial Share Alike 4.0 International</a> license.</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -69,8 +164,8 @@ poetry add  openpack-toolkit
 .. include:: ../README.md
 &#34;&#34;&#34;
 
-__version__ = &#39;0.3.0&#39;
-from . import codalab, configs, data, utils
+__version__ = &#39;0.4.0&#39;
+from . import codalab, configs, data, download, utils
 from .activity import ActClass, ActSet
 from .configs.datasets.annotations import OPENPACK_OPERATIONS
 
@@ -80,8 +175,9 @@ __all__ = [
     &#34;codalab&#34;,
     &#34;configs&#34;,
     &#34;data&#34;,
-    &#34;OPENPACK_OPERATIONS&#34;,
+    &#34;download&#34;,
     &#34;utils&#34;,
+    &#34;OPENPACK_OPERATIONS&#34;,
 ]</code></pre>
 </details>
 </section>
@@ -91,6 +187,10 @@ __all__ = [
 <dt><code class="name"><a title="openpack_toolkit.activity" href="activity/index.html">openpack_toolkit.activity</a></code></dt>
 <dd>
 <div class="desc"><p>Activity set definitions for OpenPack dataset.</p></div>
+</dd>
+<dt><code class="name"><a title="openpack_toolkit.bin" href="bin/index.html">openpack_toolkit.bin</a></code></dt>
+<dd>
+<div class="desc"></div>
 </dd>
 <dt><code class="name"><a title="openpack_toolkit.codalab" href="codalab/index.html">openpack_toolkit.codalab</a></code></dt>
 <dd>
@@ -103,6 +203,10 @@ __all__ = [
 <dt><code class="name"><a title="openpack_toolkit.data" href="data/index.html">openpack_toolkit.data</a></code></dt>
 <dd>
 <div class="desc"><p><code>optk.data</code> module provide easy access to our dataset.</p></div>
+</dd>
+<dt><code class="name"><a title="openpack_toolkit.download" href="download/index.html">openpack_toolkit.download</a></code></dt>
+<dd>
+<div class="desc"></div>
 </dd>
 <dt><code class="name"><a title="openpack_toolkit.utils" href="utils/index.html">openpack_toolkit.utils</a></code></dt>
 <dd>
@@ -632,14 +736,19 @@ Defaults to False.</dd>
 <div class="toc">
 <ul>
 <li><a href="#openpack-dataset-toolkit-optk">OpenPack Dataset Toolkit (optk)</a><ul>
-<li><a href="#setup">Setup</a></li>
-<li><a href="#documentation">Documentation</a><ul>
-<li><a href="#dataset-descriptions">Dataset Descriptions</a></li>
+<li><a href="#install">Install</a></li>
+<li><a href="#docs-links">Docs &amp; Links</a><ul>
+<li><a href="#tool">Tool</a></li>
+<li><a href="#dataset">Dataset</a></li>
+<li><a href="#task">Task</a></li>
 </ul>
 </li>
 <li><a href="#examples-pytorch">Examples (PyTorch)</a></li>
+<li><a href="#download-dataset">Download Dataset</a><ul>
+<li><a href="#dataset-structure">Dataset Structure</a></li>
+</ul>
+</li>
 <li><a href="#license">License</a></li>
-<li><a href="#generate-document">Generate Document</a></li>
 </ul>
 </li>
 </ul>
@@ -648,9 +757,11 @@ Defaults to False.</dd>
 <li><h3><a href="#header-submodules">Sub-modules</a></h3>
 <ul>
 <li><code><a title="openpack_toolkit.activity" href="activity/index.html">openpack_toolkit.activity</a></code></li>
+<li><code><a title="openpack_toolkit.bin" href="bin/index.html">openpack_toolkit.bin</a></code></li>
 <li><code><a title="openpack_toolkit.codalab" href="codalab/index.html">openpack_toolkit.codalab</a></code></li>
 <li><code><a title="openpack_toolkit.configs" href="configs/index.html">openpack_toolkit.configs</a></code></li>
 <li><code><a title="openpack_toolkit.data" href="data/index.html">openpack_toolkit.data</a></code></li>
+<li><code><a title="openpack_toolkit.download" href="download/index.html">openpack_toolkit.download</a></code></li>
 <li><code><a title="openpack_toolkit.utils" href="utils/index.html">openpack_toolkit.utils</a></code></li>
 </ul>
 </li>

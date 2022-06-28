@@ -91,6 +91,30 @@ KINECT_2D_KPT_STREAM = KeypointConfig(
         15: &#34;left_ankle&#34;,
         16: &#34;right_ankle&#34;,
     },
+)
+
+SYSTEM_HT_ORIGINAL_STREAM = ImuConfig(
+    schema=&#34;SystemDataConfig&#34;,
+    name=&#34;system-ht-original&#34;,
+    description=&#34;Scan log data from a handy terminal.&#34;,
+    super_stream=&#34;None&#34;,
+    path=DataStreamConfig.Paths(
+        dir=&#34;${path.openpack.rootdir}/${user.name}/system/ht&#34;,
+        fname=&#34;${session}.csv&#34;,
+    ),
+    frame_rate=-1,
+)
+
+SYSTEM_ORDER_SHEET_STREAM = ImuConfig(
+    schema=&#34;SystemDataConfig&#34;,
+    name=&#34;system-order-sheet&#34;,
+    description=&#34;Master data of order sheets.&#34;,
+    super_stream=&#34;None&#34;,
+    path=DataStreamConfig.Paths(
+        dir=&#34;${path.openpack.rootdir}/${user.name}/system/order-sheet/&#34;,
+        fname=&#34;${session}.csv&#34;,
+    ),
+    frame_rate=-1,
 )</code></pre>
 </details>
 </section>
