@@ -36,6 +36,18 @@ from .._schema import DataStreamConfig, ImuConfig, KeypointConfig
 {% endfor %}
     },
 )
+{% elif stream.schema == "SystemDataConfig" %}
+{{stream.name|replace("-", "_")|upper}}_STREAM = ImuConfig(
+    schema="SystemDataConfig",
+    name="{{stream.name}}",
+    description="{{stream.description}}",
+    super_stream="{{stream.super_stream}}",
+    path=DataStreamConfig.Paths(
+        dir="{{stream.path.dir}}",
+        fname="{{stream.path.fname}}",
+    ),
+    frame_rate=-1,
+)
 {% endif %}
 
 {% endfor %}

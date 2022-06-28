@@ -9,6 +9,7 @@ import openpack_toolkit as optk
 from openpack_toolkit import OPENPACK_OPERATIONS
 from openpack_toolkit.data.dataloader import (
     load_and_resample_operation_labels,
+    load_and_resample_scan_log,
     load_imu,
     load_keypoints,
 )
@@ -108,3 +109,34 @@ def test_load_imu__01(cfg, stream, expected_ch):
     )
     assert T.shape[0] == X.shape[1]
     assert X.shape[0] == expected_ch
+
+
+def test_load_and_resample_scan_log__01(cfg):
+    with open_dict(cfg):
+        cfg.dataset = {
+            "stream": optk.configs.datasets.streams.SYSTEM_HT_ORIGINAL_STREAM}
+
+    path = Path(
+        cfg.dataset.stream.path.dir,
+        cfg.dataset.stream.path.fname,
+    )
+    print(f"input path: {path} (exists={path.exists()})")
+
+    unixtimes = np.array([
+        1634885927000,
+        1634885927500,
+        1634885928000,  # =1
+        1634885928200,  # =1
+        1634885928400,  # =1
+        1634885928600,  # =1
+        1634885928800,  # =1
+        1634885929000,
+        1634885929500,
+        1634885930000,
+    ])
+
+    expect = np.array([0, 0, 1, 1, 1, 1, 1, 0, 0, 0])
+
+    actual = load_and_resample_scan_log(path, unixtimes)
+    print(actual)
+    np.testing.assert_array_equal(actual, expect)
