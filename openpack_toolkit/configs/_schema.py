@@ -89,6 +89,11 @@ class KeypointConfig(DataStreamConfig):
 
 
 @dataclass
+class SystemDataConfig(DataStreamConfig):
+    schema: str = "SystemDataConfig"
+
+
+@dataclass
 class AnnotConfig:
     name: str = MISSING
     version: str = MISSING
@@ -100,6 +105,34 @@ class AnnotConfig:
 @dataclass
 class DatasetConfig:
     name: str = MISSING
-    streams: Dict[str, DataStreamConfig] = MISSING
+    streams: Optional[Dict[str, DataStreamConfig]] = None
+    stream: Optional[DataStreamConfig] = None
     split: DataSplitConfig = MISSING
-    annot: AnnotConfig = MISSING
+    annotation: AnnotConfig = MISSING
+
+
+# =========
+#  Release
+# =========
+@dataclass
+class ReleaseConfig:
+    @dataclass
+    class _User:
+        sessions: List[str] = MISSING
+        exclude: Optional[List[str]] = MISSING
+
+    version: str = MISSING
+    url: str = MISSING
+    users: Dict[str, _User] = MISSING
+    streams: Dict[str, Dict] = MISSING
+
+
+# =======================
+#  OpenPack Root Config
+# =======================
+
+@dataclass
+class OpenPackConfig:
+    path: Optional[Dict] = None
+    dataset: DatasetConfig = MISSING
+    release: Optional[ReleaseConfig] = None

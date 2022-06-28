@@ -57,6 +57,5 @@ This split is for OpenPack Pilot Challenge (private competition).
 | 1 | SUBMISSION | U0107 | S0100 |
 | 2 | SUBMISSION | U0107 | S0200 |
 | 3 | SUBMISSION | U0107 | S0300 |
-| 4 | SUBMISSION | U0107 | S0400 |
-| 5 | SUBMISSION | U0107 | S0500 |
+| 4 | SUBMISSION | U0107 | S0500 |
 

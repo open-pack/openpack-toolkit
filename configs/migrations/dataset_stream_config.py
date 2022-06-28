@@ -14,6 +14,9 @@ TARGET_STREAM = [
     "atr-qags",
     # -- Keypoint --
     "kinect-2d-kpt",
+    # -- System --
+    "system-ht-original",
+    "system-order-sheet",
 ]
 
 

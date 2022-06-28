@@ -8,6 +8,8 @@ from openpack_toolkit.configs import datasets
     datasets.streams.ATR_ACC_STREAM,
     datasets.streams.ATR_QAGS_STREAM,
     datasets.streams.KINECT_2D_KPT_STREAM,
+    datasets.streams.SYSTEM_HT_ORIGINAL_STREAM,
+    datasets.streams.SYSTEM_ORDER_SHEET_STREAM,
 ))
 def test_users__DataStreamConfigs__01(conf):
     print(OmegaConf.to_yaml(conf))

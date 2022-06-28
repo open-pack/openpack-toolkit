@@ -1,12 +1,18 @@
 import pytest
 from omegaconf import DictConfig, OmegaConf
 
+from openpack_toolkit import ActClass, ActSet
 from openpack_toolkit.configs._schema import (
+    AnnotConfig,
+    DatasetConfig,
     DataSplitConfig,
     DataStreamConfig,
     ImuConfig,
     KeypointConfig,
+    OpenPackConfig,
+    ReleaseConfig,
     SessionConfig,
+    SystemDataConfig,
     UserConfig,
 )
 
@@ -26,6 +32,38 @@ def sessions():
         )
     }
     return sessions
+
+
+@pytest.fixture()
+def split_conf():
+    conf = DataSplitConfig(
+        train=[
+            ["U0102", "S0100"],
+            ["U0102", "S0200"],
+            ["U0102", "S0300"],
+        ],
+        val=[
+            ["U0102", "S0400"],
+        ],
+        test=[
+            ["U0102", "S0500"],
+        ],
+        submission=[
+            ["U0102", "S0500"],
+        ]
+    )
+    return conf
+
+
+@pytest.fixture()
+def annot_conf():
+    conf = AnnotConfig(
+        name="test",
+        version="v0.0.0",
+        path={"dir": "test"},
+        classes=ActSet((ActClass(99, "Test1"),)),
+    )
+    return conf
 
 
 def test_SessionsConfig__01(sessions):
@@ -48,25 +86,8 @@ def test_UserConfig__01(sessions):
     assert isinstance(conf, DictConfig)
 
 
-def test_DataSplitConfig__01():
-    conf = DataSplitConfig(
-        train=[
-            ["U0102", "S0100"],
-            ["U0102", "S0200"],
-            ["U0102", "S0300"],
-        ],
-        val=[
-            ["U0102", "S0400"],
-        ],
-        test=[
-            ["U0102", "S0500"],
-        ],
-        submission=[
-            ["U0102", "S0500"],
-        ]
-    )
-
-    conf = OmegaConf.structured(conf)
+def test_DataSplitConfig__01(split_conf):
+    conf = OmegaConf.structured(split_conf)
     print(OmegaConf.to_yaml(conf))
     assert isinstance(conf, DictConfig)
 
@@ -108,6 +129,73 @@ def test_KeypointConfig__01():
         category="2d-kpt",
         model="foo-hrnet",
         nodes={0: "node0", 1: "node1"},
+    )
+
+    conf = OmegaConf.structured(conf)
+    print(OmegaConf.to_yaml(conf))
+    assert isinstance(conf, DictConfig)
+
+
+def test_SystemDataConfig__01():
+    conf = SystemDataConfig(
+        name="system-ht-original",
+        description="hoge hoge hoge",
+        super_stream=None,
+        path=DataStreamConfig.Paths(
+            dir="/foo/subdir",
+            fname="huga.csv",
+        ),
+        frame_rate=-1,
+    )
+
+    conf = OmegaConf.structured(conf)
+    print(OmegaConf.to_yaml(conf))
+    assert isinstance(conf, DictConfig)
+
+# =======================
+#  OpenPack Root Config
+# =======================
+
+
+def test_OpenPackConfig__01(split_conf, annot_conf):
+    dataset_conf = DatasetConfig(
+        name="test",
+        streams=None,
+        stream=None,
+        split=split_conf,
+        annotation=annot_conf,
+    )
+
+    conf = OpenPackConfig(
+        path={"dir": "test"},
+        dataset=dataset_conf,
+    )
+
+    conf = OmegaConf.structured(conf)
+    print(OmegaConf.to_yaml(conf))
+    assert isinstance(conf, DictConfig)
+
+# =========
+#  Release
+# =========
+
+
+def test_ReleaseConfig__01():
+    conf = ReleaseConfig(
+        version="v0.0.0",
+        url="https://xxxx",
+        users={
+            "U0101": ReleaseConfig._User(
+                sessions=["S0100", "S0200", "S0300", "S0400", "S0500"],
+                exclude=["ht"],
+            )
+        },
+        streams={
+            "annotation": {
+                "repository": "zenodo",
+                "subdirs": ["openpack-operations"],
+            },
+        }
     )
 
     conf = OmegaConf.structured(conf)
