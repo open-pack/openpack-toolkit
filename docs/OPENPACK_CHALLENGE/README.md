@@ -8,20 +8,20 @@
 
 ## Overview
 
-Other than in daily life settings, Human Activity Recognition, has been applied to industrial domains to improve the efficiency of manual work.
-Work processes, such as production line systems inside factories or packaging tasks at logistics centers, mainly depend on human workers.
-To deal with the rapidly changing demands of customers and suppliers, works by human workers are expected to continue to play an important role in the future.
-Therefore, quantifying such manual works is crucial for streamlining the work process, finding bottlenecks, assessing a worker’s performance, and detecting outliers.
+Other than in daily life settings, Human Activity Recognition has been applied in industrial domains to improve the efficiency of manual labor.
+Work processes, such as production line systems inside factories or packaging tasks at logistics centers, still depend mainly on human workers.
+To deal with the rapidly changing demands of customers and suppliers, tasks by human workers are expected to continue to play an important role in the future.
+Therefore, quantifying such manual work is crucial for streamlining the existing processes, finding bottlenecks, assessing a worker’s performance, and detecting outliers.
 
-In many manual works, such as packing tasks in the logistic domain, human workers repetitively perform a typical series of operations is iterated, with each iteration (i.e., work period) comprising a sequence of operations
-such as assembling a shipping box and filling the box with items.
-Getting information on each operation such as temporal location, duration, and anomalies is crucial for the optimization of the work process.
-However, because the size of items to pack, the number of items, and the size of shipping items depend on shipping orders, sensor
-data collected in different work periods and the duration of the same operation in different work periods vary.
-These characteristics of the packaging work make the recognition task challenging.
+In many of these manual jobs, such as performing packaging tasks in the logistic domain, human workers repetitively perform a typical series of sequential operations, with each iteration (i.e., work period) comprising a sequence of operations
+such as assembling a shipping box and filling up the box with items.
+Getting meaningful information about each operation such as its temporal location,  average duration, and its abnormalities is crucial for optimizing the work process.
+However, because the varying size and number of items to pack, and the size of shipping boxes depend on individual shipping orders,
+sensor data collected in different work periods, as well as the duration of the same operation in different work periods, can vary.
+These characteristics of packaging work make its recognition a challenging task.
 
-In this competition, you’ll develop a model to recognize operations in packaging work from 4 IMU data and keypoint data.
-The packaging work consists of 9 operations (i.e., activity classes) described below.
+In this competition, you’ll develop a model to recognize the operations that conform packaging work from 4 IMU streams and keypoint data.
+The packaging work consists of 10 operations (i.e., activity classes) described bellow.
 To quantify the operations as precisely as possible, dense labeling is required.
 You must predict activity classes for each 1second-long timeslot.
 You can use data from 4 subjects to develop your model.
@@ -101,8 +101,8 @@ Please sign up from these two forms.
 
 From the Google Form, please register the team name, leader, and members of your team and agree to our competition
 terms.
-To sign up as Team, please refer to [this document](<https://github.com/codalab/codalab-competitions/wiki/User_Teams>).
-The organizers will approve your team after submitting both forms and then now you can submit your predictions.
+To sign up as a Team, please refer to [this document](<https://github.com/codalab/codalab-competitions/wiki/User_Teams>).
+The organizers will approve your team after submitting both forms and then you will be able to submit your predictions.
 There is no limit to the number of team members.
 Only one team from a single laboratory or equivalent group may participate to avoid private sharing.
 
