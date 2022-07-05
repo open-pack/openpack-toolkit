@@ -21,16 +21,18 @@ pip install openpack-toolkit
 poetry add  openpack-toolkit
 ```
 
-## Docs & Links
+## Links
 
-### Tool
-
+- [Homepage](https://open-pack.github.io/) (External Site)
+- [zenodo](https://doi.org/10.5281/zenodo.5909086)
 - [API Docs](https://open-pack.github.io/openpack-toolkit/openpack_toolkit/)
 - [PyPI](https://pypi.org/project/openpack-toolkit/)
+- [openpack-torch](https://github.com/open-pack/openpack-torch)
+
+## Docs
 
 ### Dataset
 
-- [Homepage](https://open-pack.github.io/) (External Site)
 - [Subjects & Recording Scenarios](./docs/USER.md)
 - [Activity Class Definition](./docs/ANNOTATION.md)
 - [Modality](./docs/DATA_STREAM.md)
@@ -41,7 +43,15 @@ poetry add  openpack-toolkit
 - Work Operation Recognition
   - [OpenPack Challenge](./docs/OPENPACK_CHALLENGE/)
 
-## Examples (PyTorch)
+## Examples
+
+### Tutorial
+
+[Getting Started (Notebook)](./samples/OpenPack_GettingStarted.ipynb)
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/open-pack/openpack-toolkit/blob/main/samples/OpenPack_GettingStarted.ipynb)
+
+### Work Activity Recognition (PyTorch)
 
 PyTorch code samples for work operation prediction task is available.
 See [openpack-torch](https://github.com/open-pack/openpack-torch) for more dietail.
