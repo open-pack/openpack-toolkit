@@ -17,13 +17,17 @@ Here is information for currently available users.
 
 In the competition, predicted sequence will be evaluated within the following interval (`[Start, End]`).
 
-| Subject | Session | Scenario | Duration | Start | End |
-|---------|---------|----------|----------|-------|-----|
+| Subject | Session | Scenario | Duration | Periods | Start | End |
+|---------|---------|----------|----------|---------|-------|-----|
 {% for user in users %}
 {% for session_id, session in user.sessions.items() %}
-| {{ user.name }} | {{session_id}} | {{user.meta.scenarios[session_id]}} | {{session.duration}} | {{session.start|replace("T", " ")}} | {{session.end|replace("T", " ")}} |
+| {{ user.name }} | {{session_id}} | {{user.meta.scenarios[session_id]}} | {{session.duration}} | {{session.annotated_box}} | {{session.start|replace("T", " ")}} | {{session.end|replace("T", " ")}} |
 {% endfor%}
 {% endfor%}
+
+NOTE: `Period` is a number of packed boxes (or repetitions) that have been already annotated. 
+Due to sensor data issues, some periods are not annotated.
+We are working hard to fix these problems. Thank you for your patience.
 
 ## Scenarios
 

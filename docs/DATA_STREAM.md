@@ -67,6 +67,22 @@ ${path.openpack.rootdir}/${user.name}/kinect/${..category}/${..model}/single/${s
 
 MS COCO format
 
+| # | Column Name | Description | Unit | Dtype | Note |
+|---|-------------|-------------|------|-------|------|
+| 0 | info |  | None | dict |  |
+| 1 | licences |  | None | list[dict] |  |
+| 2 | annotations |  | None | list[dict] |  |
+| 3 | annotations/id |  | None | int |  |
+| 4 | annotations/image_id |  | milli seconds | int | UNIXtime with milli seconds precision |
+| 5 | annotations/category_id |  | None | int |  |
+| 6 | annotations/area |  | None | float |  |
+| 7 | annotations/bbox |  | None | Tuple[float, float, float, float] | [x, y, width, height] |
+| 8 | annotations/iscrowd |  | None | int | iscrowd = 0 |
+| 9 | annotations/keypoints |  | px | list[float] | [x1, y1, v1, ...] (v? = confidence score) |
+| 10 | annotations/num_keypoints |  | None | int |  |
+| 11 | annotations/bbox_score |  | None | float | confidence score for the bounding box |
+| 12 | annotations/track_id |  | None | int |  |
+| 13 | category |  | None | list |  |
 
 ### 2-2: Meta Data
 

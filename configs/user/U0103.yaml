@@ -1,3 +1,37 @@
+errors:
+- segments:
+    boxes:
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    - 10
+    sessions:
+    - S0100
+    streams:
+    - atr01
+    - atr02
+    - atr03
+    - atr04
+  status: pending
+  title: ATR was not working; Kinect data is available but annotation is pending.
+- note: It seems that the ATR03 is installed in the wrong direction (upside down);
+    We corrected this by multiplying the x- and y-axes of the acc data by -1. The
+    gyro and quat sequences have not been corrected yet.
+  segments:
+    boxes: -1
+    sessions:
+    - S0300
+    - S0400
+    streams:
+    - atr03
+  status: partially fixed
+  title: ATR03 was attached in the wrong direction.
 id: 103
 meta:
   age_group: 50s
@@ -14,22 +48,38 @@ meta:
 name: U0103
 sessions:
   S0100:
+    annotated_box: 10
+    box:
+    - 11
+    - 12
+    - 13
+    - 14
+    - 15
+    - 16
+    - 17
+    - 18
+    - 19
+    - 20
     duration: 19m58s
     end: '2021-11-12T12:59:03+09:00'
     start: '2021-11-12T12:39:05+09:00'
   S0200:
+    annotated_box: 20
     duration: 35m46s
     end: '2021-11-12T14:47:13+09:00'
     start: '2021-11-12T14:11:27+09:00'
   S0300:
+    annotated_box: 20
     duration: 33m58s
     end: '2021-11-12T15:45:12+09:00'
     start: '2021-11-12T15:11:14+09:00'
   S0400:
+    annotated_box: 20
     duration: 31m48s
     end: '2021-11-12T16:39:03+09:00'
     start: '2021-11-12T16:07:15+09:00'
   S0500:
+    annotated_box: 20
     duration: 30m11s
     end: '2021-11-12T17:49:35+09:00'
     start: '2021-11-12T17:19:24+09:00'
