@@ -1,5 +1,5 @@
 name: openpack-actions
-version: v3.0.0
+version: v3.2.1
 path:
   dir: ${path.openpack.rootdir}/${user.name}/annotation/${..name}
   fname: ${session}.csv
@@ -16,7 +16,7 @@ file_format:
 classes:
 - id: 101
   operation: Picking
-  name: PickUp-OrderSheet
+  name: PickUp-Sheet
   description: ''
   version: v3.0.0
   ignore: false
@@ -50,6 +50,18 @@ classes:
   description: ''
   version: v2.5.x
   ignore: false
+- id: 107
+  operation: Picking
+  name: PickUp-BoxSheet
+  description: ''
+  version: v3.1.0
+  ignore: false
+- id: 108
+  operation: Picking
+  name: Walk-ToWorkBench
+  description: ''
+  version: v3.2.1
+  ignore: false
 - id: 201
   operation: RelocateItemLabel
   name: Remove-ItemLabel
@@ -72,13 +84,13 @@ classes:
   operation: RelocateItemLabel
   name: Write-CheckMark
   description: ''
-  version: v3.0.0
+  version: v3.2.0
   ignore: false
 - id: 205
   operation: RelocateItemLabel
-  name: Put-Item-SmallBack
+  name: Put-Item-SmallBag
   description: ''
-  version: v3.0.0
+  version: v3.2.0
   ignore: false
 - id: 206
   operation: RelocateItemLabel
@@ -102,19 +114,19 @@ classes:
   operation: AssembleBox
   name: Bend-Flap
   description: ''
-  version: v3.0.0
+  version: v3.2.0
   ignore: false
 - id: 303
   operation: AssembleBox
   name: Attach-Tape
   description: ''
-  version: v3.0.0
+  version: v3.2.0
   ignore: false
 - id: 304
   operation: AssembleBox
   name: TurnOver-Box
   description: ''
-  version: v3.0.0
+  version: v3.2.0
   ignore: false
 - id: 305
   operation: AssembleBox
@@ -148,7 +160,7 @@ classes:
   ignore: false
 - id: 404
   operation: InsertItems
-  name: Put-Item-SmallBack
+  name: Put-Item-SmallBag
   description: ''
   version: v3.0.0
   ignore: false
@@ -180,7 +192,7 @@ classes:
   operation: AttachBoxLabel
   name: Attach-BoxLabel
   description: ''
-  version: v3.0.0
+  version: v3.2.0
   ignore: false
 - id: 602
   operation: AttachBoxLabel
@@ -198,19 +210,19 @@ classes:
   operation: ScanLabel
   name: Scan-OrderSheet
   description: ''
-  version: v3.0.0
+  version: v3.2.0
   ignore: false
 - id: 703
   operation: ScanLabel
   name: Scan-Box
   description: ''
-  version: v3.0.0
+  version: v3.2.0
   ignore: false
 - id: 704
   operation: ScanLabel
   name: Scan-Item
   description: ''
-  version: v3.0.0
+  version: v3.2.0
   ignore: false
 - id: 705
   operation: ScanLabel
@@ -218,25 +230,25 @@ classes:
   description: ''
   version: v3.0.0
   ignore: false
-- id: 704
+- id: 706
   operation: ScanLabel
   name: Scan-OrderSheet
   description: ''
-  version: v3.0.0
+  version: v3.2.0
   ignore: false
-- id: 706
+- id: 707
   operation: ScanLabel
   name: Scan-Printer
   description: ''
-  version: v3.0.0
+  version: v3.2.0
   ignore: false
-- id: 707
+- id: 708
   operation: ScanLabel
   name: HT-v2
   description: ''
   version: v2.5.x
   ignore: false
-- id: 708
+- id: 709
   operation: ScanLabel
   name: Printer-v2
   description: ''
@@ -252,7 +264,7 @@ classes:
   operation: AttachShippingLabel
   name: Attach-ShippingLabel
   description: ''
-  version: v3.0.0
+  version: v3.2.0
   ignore: false
 - id: 802
   operation: AttachShippingLabel
@@ -270,7 +282,7 @@ classes:
   operation: PutOnRack
   name: Put-PackedBox
   description: ''
-  version: v3.0.0
+  version: v3.2.0
   ignore: false
 - id: 903
   operation: PutOnRack
@@ -288,13 +300,13 @@ classes:
   operation: Fill-outOrder
   name: Write-Sign
   description: ''
-  version: v3.0.0
+  version: v3.2.0
   ignore: false
 - id: 1003
   operation: Fill-outOrder
   name: Push-OrderSheet-IntoTray
   description: ''
-  version: v3.0.0
+  version: v3.2.0
   ignore: false
 - id: 1004
   operation: Fill-outOrder

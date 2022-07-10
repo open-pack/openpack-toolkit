@@ -4,7 +4,7 @@ from pathlib import Path
 
 from ..download._helpers import download_openpack_from_zenodo
 
-LATEST_VERSION_ON_ZENODO = "v0.2.0"
+LATEST_VERSION_ON_ZENODO = "v0.2.1"
 
 basicConfig(level=INFO)
 logger = getLogger(__name__)

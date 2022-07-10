@@ -14,22 +14,38 @@ meta:
 name: U0106
 sessions:
   S0100:
+    annotated_box: 20
     duration: 49m06s
     end: '2021-11-26T12:01:32+09:00'
     start: '2021-11-26T11:12:26+09:00'
   S0200:
+    annotated_box: 20
     duration: 35m00s
     end: '2021-11-26T12:57:04+09:00'
     start: '2021-11-26T12:22:04+09:00'
   S0300:
+    annotated_box: 20
     duration: 34m18s
     end: '2021-11-26T14:48:59+09:00'
     start: '2021-11-26T14:14:41+09:00'
   S0400:
+    annotated_box: 20
     duration: 36m24s
     end: '2021-11-26T15:42:59+09:00'
     start: '2021-11-26T15:06:35+09:00'
   S0500:
+    annotated_box: 10
+    box:
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    - 10
     duration: 17m09s
     end: '2021-11-26T16:18:55+09:00'
     start: '2021-11-26T16:01:46+09:00'

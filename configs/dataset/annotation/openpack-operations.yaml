@@ -1,5 +1,5 @@
 name: openpack-operations
-version: v3.0.0
+version: v3.2.1
 path:
   dir: ${path.openpack.rootdir}/${user.name}/annotation/${..name}
   fname: ${session}.csv

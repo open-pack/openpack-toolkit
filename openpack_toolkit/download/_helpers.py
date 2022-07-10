@@ -112,7 +112,7 @@ def download_openpack_from_zenodo(
         for j, (user, user_data) in enumerate(release_conf.users.items()):
             logger.info(f"[{j}/{num_users}] {user}")
             if user_data.exclude is not None:
-                if zip_data["stream_category"] in user_data.exclude:
+                if zip_data["category"] in user_data.exclude:
                     continue
 
             zip_fname = zip_data["zip"].format(user=user)
