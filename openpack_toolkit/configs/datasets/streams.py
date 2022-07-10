@@ -32,6 +32,7 @@ ATR_QAGS_STREAM = ImuConfig(
     quat=True,
 )
 
+
 KINECT_2D_KPT_STREAM = KeypointConfig(
     schema="KeypointConfig",
     name="kinect-2d-kpt",

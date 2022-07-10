@@ -25,4 +25,4 @@ file_format:
     dtype: str
 frame_rate: 30
 meta:
-  tables: null
+  tables: []

@@ -11,6 +11,54 @@ path:
 file_format:
   file_type: json
   note: MS COCO format
+  columns:
+  - name: info
+    unit: null
+    dtype: dict
+  - name: licences
+    unit: null
+    dtype: list[dict]
+  - name: annotations
+    unit: null
+    dtype: list[dict]
+  - name: annotations/id
+    unit: null
+    dtype: int
+  - name: annotations/image_id
+    unit: milli seconds
+    dtype: int
+    note: UNIXtime with milli seconds precision
+  - name: annotations/category_id
+    unit: null
+    dtype: int
+  - name: annotations/area
+    unit: null
+    dtype: float
+  - name: annotations/bbox
+    unit: null
+    dtype: Tuple[float, float, float, float]
+    note: '[x, y, width, height]'
+  - name: annotations/iscrowd
+    unit: null
+    dtype: int
+    note: iscrowd = 0
+  - name: annotations/keypoints
+    unit: px
+    dtype: list[float]
+    note: '[x1, y1, v1, ...] (v? = confidence score)'
+  - name: annotations/num_keypoints
+    unit: null
+    dtype: int
+  - name: annotations/bbox_score
+    unit: null
+    dtype: float
+    note: confidence score for the bounding box
+  - name: annotations/track_id
+    unit: null
+    dtype: int
+  - name: category
+    unit: null
+    dtype: list
 frame_rate: 15
 meta:
   tables:

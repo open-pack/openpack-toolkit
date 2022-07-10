@@ -71,7 +71,7 @@ RELEASE_CONFIG_V0_2_0 = ReleaseConfig(
 
 RELEASE_CONFIG_V0_2_1 = ReleaseConfig(
     version="v0.2.1",
-    url="None",
+    url="https://zenodo.org/record/6811369",
     users={
         "U0102": ReleaseConfig._User(
             sessions=['S0100', 'S0200', 'S0300', 'S0400', 'S0500'],
@@ -150,6 +150,27 @@ RELEASE_CONFIG_V0_2_1 = ReleaseConfig(
                     "name": "ht-original",
                     "fname": "system-ht-original"
                 }
+            ]
+        },
+        "e4": {
+            "repository": "zenodo",
+            "zip": "{user}__e4.zip",
+            "subdirs": [
+                {
+                    "name": "${.fname}",
+                    "fname": "e4-all",
+                    "subdir": "${device}/${sensor}"
+                }
+            ],
+            "devices": [
+                "e401",
+                "e402"
+            ],
+            "sensors": [
+                "acc",
+                "bvp",
+                "eda",
+                "temp"
             ]
         }
     },

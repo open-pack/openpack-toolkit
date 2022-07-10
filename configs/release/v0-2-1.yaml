@@ -1,7 +1,7 @@
 version: v0.2.1
 description: Add TEST data for Pilot Challenge
-url: null
-release_date: null
+url: https://zenodo.org/record/6811369
+release_date: '2022-07-08'
 users:
   U0102:
     sessions:
@@ -78,3 +78,18 @@ streams:
       fname: system-order-sheet
     - name: ht-original
       fname: system-ht-original
+  e4:
+    repository: zenodo
+    zip: '{user}__e4.zip'
+    subdirs:
+    - name: ${.fname}
+      fname: e4-all
+      subdir: ${device}/${sensor}
+    devices:
+    - e401
+    - e402
+    sensors:
+    - acc
+    - bvp
+    - eda
+    - temp
