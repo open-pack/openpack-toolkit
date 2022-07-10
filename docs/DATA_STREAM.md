@@ -2,6 +2,9 @@
 
 1. `atr-qags`
 1. `kinect-2d-kpt`
+1. `e4-all`
+1. `system-ht-original`
+1. `system-order-sheet`
 
 ## [1] `atr-qags`
 
@@ -109,5 +112,124 @@ Keypoints are defined in MS COCO style.
 | 14 | 14 | right_knee | 
 | 15 | 15 | left_ankle | 
 | 16 | 16 | right_ankle | 
+
+
+## [3] `e4-all`
+
+All modes from Empatica E4 sensors
+
+- Config File: [e4-all.yaml](../configs/dataset/stream/e4-all.yaml)
+- Python Module: [`openpack_toolkit.configs.datasets.streams.E4_ALL_STREAM`](../openpack_toolkit/configs/datasets/streams.py)
+- Frame Rate: {'acc': '32Hz', 'bvp': '64Hz', 'eda': '4Hz', 'temp': '4Hz'}
+
+### 3-1: Path
+
+```txt
+${path.openpack.rootdir}/${user.name}/e4/${device}//${sensor}/${session}.csv
+```
+
+### 3-2: File Format (`csv`)
+
+
+
+| # | Column Name | Description | Unit | Dtype | Note |
+|---|-------------|-------------|------|-------|------|
+| 0 | unixtime |  | milli second |  |  |
+| 1 | TBA |  | None |  |  |
+
+### 3-2: Meta Data
+
+
+## [4] `system-ht-original`
+
+Scan log data from a handy terminal.
+
+- Config File: [system-ht-original.yaml](../configs/dataset/stream/system-ht-original.yaml)
+- Python Module: [`openpack_toolkit.configs.datasets.streams.SYSTEM_HT_ORIGINAL_STREAM`](../openpack_toolkit/configs/datasets/streams.py)
+- Frame Rate: 30
+
+### 4-1: Path
+
+```txt
+${path.openpack.rootdir}/${user.name}/system/ht/${session}.csv
+```
+
+### 4-2: File Format (`csv`)
+
+
+
+| # | Column Name | Description | Unit | Dtype | Note |
+|---|-------------|-------------|------|-------|------|
+| 0 | unixtime |  | milli second | int |  |
+| 1 | datetime |  | None | str (ISO format) |  |
+| 2 | order_sheet |  | None | str |  |
+| 3 | box |  | None | str |  |
+| 4 | item |  | None | str |  |
+
+### 4-2: Meta Data
+
+
+## [5] `system-order-sheet`
+
+Master data of order sheets.
+
+- Config File: [system-order-sheet.yaml](../configs/dataset/stream/system-order-sheet.yaml)
+- Python Module: [`openpack_toolkit.configs.datasets.streams.SYSTEM_ORDER_SHEET_STREAM`](../openpack_toolkit/configs/datasets/streams.py)
+- Frame Rate: 30
+
+### 5-1: Path
+
+```txt
+${path.openpack.rootdir}/${user.name}/system/order-sheet//${session}.csv
+```
+
+### 5-2: File Format (`csv`)
+
+
+
+| # | Column Name | Description | Unit | Dtype | Note |
+|---|-------------|-------------|------|-------|------|
+| 0 | sheet_no |  | None | str | format = DEN{session_no:0=4}{box_no:0=2} |
+| 1 | session |  | None | str |  |
+| 2 | box |  | None | str |  |
+| 3 | pattern |  | None | str |  |
+| 4 | total_amount |  | None | str |  |
+| 5 | item1 |  | None | str |  |
+| 6 | item2 |  | None | str |  |
+| 7 | item3 |  | None | str |  |
+| 8 | item4 |  | None | str |  |
+| 9 | item5 |  | None | str |  |
+| 10 | amount1 |  | None | str |  |
+| 11 | amount2 |  | None | str |  |
+| 12 | amount3 |  | None | str |  |
+| 13 | amount4 |  | None | str |  |
+| 14 | amount5 |  | None | str |  |
+
+### 5-2: Meta Data
+
+#### Combination Patterns of Items
+
+-
+
+| # | Key | Amount | Size Category | 
+|---|---|---|---| 
+| 0 | S1 |  |  | 
+| 1 | S2 |  |  | 
+| 2 | S3 |  |  | 
+| 3 | S4 |  |  | 
+| 4 | S5 |  |  | 
+| 5 | M1 |  |  | 
+| 6 | M2 |  |  | 
+| 7 | M3 |  |  | 
+| 8 | M4 |  |  | 
+| 9 | M5 |  |  | 
+| 10 | L1 |  |  | 
+| 11 | L2 |  |  | 
+| 12 | L3 |  |  | 
+| 13 | L4 |  |  | 
+| 14 | L5 |  |  | 
+| 15 | MIX2 |  |  | 
+| 16 | MIX3 |  |  | 
+| 17 | MIX4 |  |  | 
 
 
