@@ -45,7 +45,7 @@ OPENPACK_OPERATIONS = ActSet((
 
 OPENPACK_OPERATIONS_ANNOTATION = AnnotConfig(
     name=&#34;openpack-operations&#34;,
-    version=&#34;v3.0.0&#34;,
+    version=&#34;v3.2.1&#34;,
     path={
         &#34;dir&#34;: &#34;${path.openpack.rootdir}/${user.name}/annotation/${..name}&#34;,
         &#34;fname&#34;: &#34;${session}.csv&#34;,
@@ -55,17 +55,19 @@ OPENPACK_OPERATIONS_ANNOTATION = AnnotConfig(
 
 
 OPENPACK_ACTIONS = ActSet((
-    ActClass(101, &#34;PickUp-OrderSheet&#34;, is_ignore=False),
+    ActClass(101, &#34;PickUp-Sheet&#34;, is_ignore=False),
     ActClass(102, &#34;Walk-ToRack&#34;, is_ignore=False),
     ActClass(103, &#34;PickUp-Item-FromBox&#34;, is_ignore=False),
     ActClass(104, &#34;Pick-UpOrderSheet&amp;Walk-ToRack-v2&#34;, is_ignore=False),
     ActClass(105, &#34;Walk-ToWorkBench-v2&#34;, is_ignore=False),
     ActClass(106, &#34;Pick-UpOrderSheet&amp;Walk-ToRack-with-PrevPackedBox-v2&#34;, is_ignore=False),
+    ActClass(107, &#34;PickUp-BoxSheet&#34;, is_ignore=False),
+    ActClass(108, &#34;Walk-ToWorkBench&#34;, is_ignore=False),
     ActClass(201, &#34;Remove-ItemLabel&#34;, is_ignore=False),
     ActClass(202, &#34;AttachTo-OrderSheet&#34;, is_ignore=False),
     ActClass(203, &#34;Hold-Pen&#34;, is_ignore=False),
     ActClass(204, &#34;Write-CheckMark&#34;, is_ignore=False),
-    ActClass(205, &#34;Put-Item-SmallBack&#34;, is_ignore=False),
+    ActClass(205, &#34;Put-Item-SmallBag&#34;, is_ignore=False),
     ActClass(206, &#34;Relocate-ItemLabel-v2&#34;, is_ignore=False),
     ActClass(207, &#34;Write-v2&#34;, is_ignore=False),
     ActClass(301, &#34;Pick-Cardboard&#34;, is_ignore=False),
@@ -77,7 +79,7 @@ OPENPACK_ACTIONS = ActSet((
     ActClass(401, &#34;Insert-Item-into-Box&#34;, is_ignore=False),
     ActClass(402, &#34;AirCushion&#34;, is_ignore=False),
     ActClass(403, &#34;Separate-AirCushion&#34;, is_ignore=False),
-    ActClass(404, &#34;Put-Item-SmallBack&#34;, is_ignore=False),
+    ActClass(404, &#34;Put-Item-SmallBag&#34;, is_ignore=False),
     ActClass(405, &#34;Insert-Items-v2&#34;, is_ignore=False),
     ActClass(501, &#34;Bend-Flap&#34;, is_ignore=False),
     ActClass(502, &#34;Attach-Tape&#34;, is_ignore=False),
@@ -89,10 +91,10 @@ OPENPACK_ACTIONS = ActSet((
     ActClass(703, &#34;Scan-Box&#34;, is_ignore=False),
     ActClass(704, &#34;Scan-Item&#34;, is_ignore=False),
     ActClass(705, &#34;Hold-Scanner&#34;, is_ignore=False),
-    ActClass(704, &#34;Scan-OrderSheet&#34;, is_ignore=False),
-    ActClass(706, &#34;Scan-Printer&#34;, is_ignore=False),
-    ActClass(707, &#34;HT-v2&#34;, is_ignore=False),
-    ActClass(708, &#34;Printer-v2&#34;, is_ignore=False),
+    ActClass(706, &#34;Scan-OrderSheet&#34;, is_ignore=False),
+    ActClass(707, &#34;Scan-Printer&#34;, is_ignore=False),
+    ActClass(708, &#34;HT-v2&#34;, is_ignore=False),
+    ActClass(709, &#34;Printer-v2&#34;, is_ignore=False),
     ActClass(801, &#34;PickUp-ShippingLabel&#34;, is_ignore=False),
     ActClass(802, &#34;Attach-ShippingLabel&#34;, is_ignore=False),
     ActClass(802, &#34;Attach-ShippingLabel-v2&#34;, is_ignore=False),
@@ -114,7 +116,7 @@ OPENPACK_ACTIONS = ActSet((
 
 OPENPACK_ACTIONS_ANNOTATION = AnnotConfig(
     name=&#34;openpack-actions&#34;,
-    version=&#34;v3.0.0&#34;,
+    version=&#34;v3.2.1&#34;,
     path={
         &#34;dir&#34;: &#34;${path.openpack.rootdir}/${user.name}/annotation/${..name}&#34;,
         &#34;fname&#34;: &#34;${session}.csv&#34;,

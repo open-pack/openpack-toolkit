@@ -37,15 +37,17 @@ pip install openpack-toolkit
 # Poetry
 poetry add  openpack-toolkit
 </code></pre>
-<h2 id="docs-links">Docs &amp; Links</h2>
-<h3 id="tool">Tool</h3>
-<ul>
-<li><a href="https://open-pack.github.io/openpack-toolkit/openpack_toolkit/">API Docs</a></li>
-<li><a href="https://pypi.org/project/openpack-toolkit/">PyPI</a></li>
-</ul>
-<h3 id="dataset">Dataset</h3>
+<h2 id="links">Links</h2>
 <ul>
 <li><a href="https://open-pack.github.io/">Homepage</a> (External Site)</li>
+<li><a href="https://doi.org/10.5281/zenodo.5909086">zenodo</a></li>
+<li><a href="https://open-pack.github.io/openpack-toolkit/openpack_toolkit/">API Docs</a></li>
+<li><a href="https://pypi.org/project/openpack-toolkit/">PyPI</a></li>
+<li><a href="https://github.com/open-pack/openpack-torch">openpack-torch</a></li>
+</ul>
+<h2 id="docs">Docs</h2>
+<h3 id="dataset">Dataset</h3>
+<ul>
 <li><a href="./docs/USER.md">Subjects &amp; Recording Scenarios</a></li>
 <li><a href="./docs/ANNOTATION.md">Activity Class Definition</a></li>
 <li><a href="./docs/DATA_STREAM.md">Modality</a></li>
@@ -56,7 +58,11 @@ poetry add  openpack-toolkit
 <li>Work Operation Recognition</li>
 <li><a href="./docs/OPENPACK_CHALLENGE/">OpenPack Challenge</a></li>
 </ul>
-<h2 id="examples-pytorch">Examples (PyTorch)</h2>
+<h2 id="examples">Examples</h2>
+<h3 id="tutorial">Tutorial</h3>
+<p><a href="./samples/OpenPack_GettingStarted.ipynb">Getting Started (Notebook)</a></p>
+<p><a href="https://colab.research.google.com/github/open-pack/openpack-toolkit/blob/main/samples/OpenPack_GettingStarted.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg"></a></p>
+<h3 id="work-activity-recognition-pytorch">Work Activity Recognition (PyTorch)</h3>
 <p>PyTorch code samples for work operation prediction task is available.
 See <a href="https://github.com/open-pack/openpack-torch">openpack-torch</a> for more dietail.</p>
 <ul>
@@ -164,7 +170,7 @@ optional arguments:
 .. include:: ../README.md
 &#34;&#34;&#34;
 
-__version__ = &#39;0.4.0&#39;
+__version__ = &#39;0.5.0&#39;
 from . import codalab, configs, data, download, utils
 from .activity import ActClass, ActSet
 from .configs.datasets.annotations import OPENPACK_OPERATIONS
@@ -737,13 +743,17 @@ Defaults to False.</dd>
 <ul>
 <li><a href="#openpack-dataset-toolkit-optk">OpenPack Dataset Toolkit (optk)</a><ul>
 <li><a href="#install">Install</a></li>
-<li><a href="#docs-links">Docs &amp; Links</a><ul>
-<li><a href="#tool">Tool</a></li>
+<li><a href="#links">Links</a></li>
+<li><a href="#docs">Docs</a><ul>
 <li><a href="#dataset">Dataset</a></li>
 <li><a href="#task">Task</a></li>
 </ul>
 </li>
-<li><a href="#examples-pytorch">Examples (PyTorch)</a></li>
+<li><a href="#examples">Examples</a><ul>
+<li><a href="#tutorial">Tutorial</a></li>
+<li><a href="#work-activity-recognition-pytorch">Work Activity Recognition (PyTorch)</a></li>
+</ul>
+</li>
 <li><a href="#download-dataset">Download Dataset</a><ul>
 <li><a href="#dataset-structure">Dataset Structure</a></li>
 </ul>

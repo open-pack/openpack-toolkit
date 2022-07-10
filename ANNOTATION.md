@@ -47,17 +47,19 @@ Format: CSV
 
 | ID | Operation | Name | Description | ignore |
 |----|-----------|------|-------------|--------|
-| 101 | Picking | PickUp-OrderSheet |  |  |
+| 101 | Picking | PickUp-Sheet |  |  |
 | 102 | Picking | Walk-ToRack |  |  |
 | 103 | Picking | PickUp-Item-FromBox |  |  |
 | 104 | Picking | Pick-UpOrderSheet&Walk-ToRack-v2 |  |  |
 | 105 | Picking | Walk-ToWorkBench-v2 |  |  |
 | 106 | Picking | Pick-UpOrderSheet&Walk-ToRack-with-PrevPackedBox-v2 |  |  |
+| 107 | Picking | PickUp-BoxSheet |  |  |
+| 108 | Picking | Walk-ToWorkBench |  |  |
 | 201 | RelocateItemLabel | Remove-ItemLabel |  |  |
 | 202 | RelocateItemLabel | AttachTo-OrderSheet |  |  |
 | 203 | RelocateItemLabel | Hold-Pen |  |  |
 | 204 | RelocateItemLabel | Write-CheckMark |  |  |
-| 205 | RelocateItemLabel | Put-Item-SmallBack |  |  |
+| 205 | RelocateItemLabel | Put-Item-SmallBag |  |  |
 | 206 | RelocateItemLabel | Relocate-ItemLabel-v2 |  |  |
 | 207 | RelocateItemLabel | Write-v2 |  |  |
 | 301 | AssembleBox | Pick-Cardboard |  |  |
@@ -69,7 +71,7 @@ Format: CSV
 | 401 | InsertItems | Insert-Item-into-Box |  |  |
 | 402 | InsertItems | AirCushion |  |  |
 | 403 | InsertItems | Separate-AirCushion |  |  |
-| 404 | InsertItems | Put-Item-SmallBack |  |  |
+| 404 | InsertItems | Put-Item-SmallBag |  |  |
 | 405 | InsertItems | Insert-Items-v2 |  |  |
 | 501 | CloseBox | Bend-Flap |  |  |
 | 502 | CloseBox | Attach-Tape |  |  |
@@ -81,10 +83,10 @@ Format: CSV
 | 703 | ScanLabel | Scan-Box |  |  |
 | 704 | ScanLabel | Scan-Item |  |  |
 | 705 | ScanLabel | Hold-Scanner |  |  |
-| 704 | ScanLabel | Scan-OrderSheet |  |  |
-| 706 | ScanLabel | Scan-Printer |  |  |
-| 707 | ScanLabel | HT-v2 |  |  |
-| 708 | ScanLabel | Printer-v2 |  |  |
+| 706 | ScanLabel | Scan-OrderSheet |  |  |
+| 707 | ScanLabel | Scan-Printer |  |  |
+| 708 | ScanLabel | HT-v2 |  |  |
+| 709 | ScanLabel | Printer-v2 |  |  |
 | 801 | AttachShippingLabel | PickUp-ShippingLabel |  |  |
 | 802 | AttachShippingLabel | Attach-ShippingLabel |  |  |
 | 802 | AttachShippingLabel | Attach-ShippingLabel-v2 |  |  |
