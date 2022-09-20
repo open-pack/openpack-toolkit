@@ -12,7 +12,6 @@ Here is information for currently available users.
 | {{ user.name }} | {{user.meta.sex}} | {{user.meta.age_group}} | {{user.meta.dominant_hand}} | {{user.meta.packaging_experience}} | {{user.meta.note}} |
 {% endfor%}
 
-
 ## Sessions
 
 In the competition, predicted sequence will be evaluated within the following interval (`[Start, End]`).
@@ -33,17 +32,26 @@ We are working hard to fix these problems. Thank you for your patience.
 
 ### Scenario.1 (S1)
 
-we asked the subjects to follow the work instructions as much as possible. While a list of items in an order is determined based on order sheets collected in actual logistics centers, the probabilities with which very large/small items are included in an order are moderate (higher than actual probabilities). 
+In this scenario, we asked the subjects to follow the work instructions as much as possible. A list of items in an order was determined based on order sheets collected in actual logistics centers, and the probabilities with which very large or small items were included in an order were higher than the actual probabilities. In addition, the variety of items to be packed was limited (54 items). The number of items in an order was 1.83 on average. 
 
 ### Scenario.2 (S2)
 
-TBA
+In this scenario, we encouraged the subjects to alter the procedure of operations at their discretion. In addition, the probabilities with which quite large or small items were included in an order were lower than those of Scenario 1 (similar to actual probabilities), which made recognizing related operations with supervised learning difficult due to the data imbalance issue. The number of items in an order was 2.04 on average. In addition, we added 21 new items.
 
 ### Scenario.3 (S3)
 
-TBA
+In this scenario, irregular situations/actions were added to Scenario 2. (i) Some shipping boxes were already assembled (because of mistakes, for example) and were available for workers to use. (ii) When small items (such as dry-cell batteries) were included in an order, a subject was also asked to put them in a paper bag. (iii) When multiple consecutive orders included only small items, a subject could bring them from the back table to the workbench at the same time.
 
 ### Scenario.4 (S4)
 
-TBA
+To simulate a busy working time, we rushed the subjects by introducing an auditory alarm in Scenario 3. We measured the average duration of a work period performed by a subject in prior sessions, and we started periodic alarms (30-45 s interval) when the elapsed time of a period exceeded about 80\% of the average duration.
 
+## Recording Errors
+
+| Subject | Sessions | Box | Stream | Error | Status |
+|---------|----------|-----|--------|-------|--------|
+{% for user in users %}
+{% for error in user.errors %}{% for sess in error.segments.sessions %}
+| {{ user.name }} | {{sess}} | {% if error.segments.boxes == -1 %}ALL{% else %}{%for b in error.segments.boxes %}{{b}},{% endfor %}{% endif %} | {% for s in error.segments.streams %}{{s}},{% endfor %} | {{error.title}} | `{{error.status | replace("_", " ")}}` |
+{% endfor %}{% endfor%}
+{% endfor%}

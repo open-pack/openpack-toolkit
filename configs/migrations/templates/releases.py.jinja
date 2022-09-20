@@ -12,7 +12,7 @@ RELEASE_CONFIG_{{release.version|replace(".", "_")|upper}} = ReleaseConfig(
         ),
 {% endfor %}
     },
-    streams={{release.streams_str|replace("true", "True")}},
+    streams={{release.streams_str|replace("true", "True")|replace("null", "None")}},
 )
 
 

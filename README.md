@@ -1,6 +1,6 @@
 # OpenPack Dataset Toolkit (optk)
 
-![OpenPack Challenge Logo](./img/OpenPackCHALLENG-black.png)
+![OpenPack Dataset Logo](./img/OpenPackDataset-black.png)
 
 [![Test](https://github.com/open-pack/openpack-toolkit/actions/workflows/test.yaml/badge.svg)](https://github.com/open-pack/openpack-toolkit/actions/workflows/test.yaml)
 [![API Docs - GitHub Pages](https://github.com/open-pack/openpack-toolkit/actions/workflows/deploy-docs.yaml/badge.svg)](https://github.com/open-pack/openpack-toolkit/actions/workflows/deploy-docs.yaml)
@@ -42,6 +42,8 @@ poetry add  openpack-toolkit
 
 - Work Operation Recognition
   - [OpenPack Challenge](./docs/OPENPACK_CHALLENGE/)
+
+![OpenPack Challenge Logo](./img/OpenPackCHALLENG-black.png)
 
 ## Examples
 

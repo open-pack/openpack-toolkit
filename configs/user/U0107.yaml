@@ -1,17 +1,15 @@
 errors:
-- note: It seems that the ATR01 is installed in the wrong direction (upside down);
-    I corrected this by multiplying the x- and y-axes of the acc data by -1. The gyro
-    and quat sequences have not been corrected yet.
+- note: It seems that the ATR01 is installed in the wrong direction (upside down).
   segments:
     boxes: -1
     sessions:
     - S0400
     streams:
     - atr03
-  status: partially fixed
+  status: NO_FIX_AVAILABLE
   title: ATR01 was attached in the wrong direction.
-- status: pending
-  title: Video data is missing.
+- status: PENDING
+  title: Video data (kinect) is missing. Annotation process is suspended.
   segments:
     sessions:
     - S0300

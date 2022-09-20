@@ -5,7 +5,6 @@ from .._schema import DataStreamConfig, ImuConfig, KeypointConfig
 {{stream.name|replace("-", "_")|upper}}_STREAM = ImuConfig(
     schema="ImuConfig",
     name="{{stream.name}}",
-    description="{{stream.description}}",
     super_stream="{{stream.super_stream}}",
     path=DataStreamConfig.Paths(
         dir="{{stream.path.dir}}",
@@ -21,7 +20,6 @@ from .._schema import DataStreamConfig, ImuConfig, KeypointConfig
 {{stream.name|replace("-", "_")|upper}}_STREAM = KeypointConfig(
     schema="KeypointConfig",
     name="{{stream.name}}",
-    description="{{stream.description}}",
     super_stream="{{stream.super_stream}}",
     path=DataStreamConfig.Paths(
         dir="{{stream.path.dir}}",
@@ -40,7 +38,6 @@ from .._schema import DataStreamConfig, ImuConfig, KeypointConfig
 {{stream.name|replace("-", "_")|upper}}_STREAM = ImuConfig(
     schema="SystemDataConfig",
     name="{{stream.name}}",
-    description="{{stream.description}}",
     super_stream="{{stream.super_stream}}",
     path=DataStreamConfig.Paths(
         dir="{{stream.path.dir}}",

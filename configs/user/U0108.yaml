@@ -1,0 +1,63 @@
+errors:
+- note: Kinect data is available so that annotationa are done based on kinect data.
+  segments:
+    boxes:
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    - 10
+    sessions:
+    - S0100
+    streams:
+    - atr01
+    - atr02
+    - atr03
+    - atr04
+  status: NO_FIX_AVAILABLE
+  title: ATR was not working.
+id: 108
+meta:
+  age_group: 30s
+  dominant_hand: Right
+  note: ''
+  packaging_experience: 3 Years
+  scenarios:
+    S0100: S1
+    S0200: S1
+    S0300: S1
+    S0400: S1
+    S0500: S1
+  sex: F
+name: U0108
+sessions:
+  S0100:
+    annotated_box: 20
+    duration: 35m54s
+    end: '2021-12-09T10:41:59+09:00'
+    start: '2021-12-09T10:06:05+09:00'
+  S0200:
+    annotated_box: 20
+    duration: 39m05s
+    end: '2021-12-09T11:41:09+09:00'
+    start: '2021-12-09T11:02:04+09:00'
+  S0300:
+    annotated_box: 20
+    duration: 34m40s
+    end: '2021-12-09T12:35:11+09:00'
+    start: '2021-12-09T12:00:31+09:00'
+  S0400:
+    annotated_box: 20
+    duration: 38m37s
+    end: '2021-12-09T14:21:24+09:00'
+    start: '2021-12-09T13:42:47+09:00'
+  S0500:
+    annotated_box: 20
+    duration: 34m23s
+    end: '2021-12-09T15:17:01+09:00'
+    start: '2021-12-09T14:42:38+09:00'
