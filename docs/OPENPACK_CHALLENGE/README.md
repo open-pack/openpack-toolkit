@@ -1,112 +1,118 @@
-# OpenPack Pilot Challenge - Work Operation Recognition Competition (Private)
+# OpenPack Challenge 2022 @PerCom2023 WS
 
-- Competition Site (TBA)
-- [HomePage](https://open-pack.github.io/)
-- [zenodo (Dataset Repogitory)](https://doi.org/10.5281/zenodo.5909086)
-- [GitHub - open-pack/openpack-toolkit (Dataset description and utilities)](https://github.com/open-pack/openpack-toolkit)
-- [GitHub - open-pack/openpack-torch (Code samples)](https://github.com/open-pack/openpack-torch)
+This page describes technical details of "OpenPack Challenge 2022".
+For motivations, rules and timeline of this challenge, please check [https://open-pack.github.io/challenge2022](https://open-pack.github.io/challenge2022).
 
-## Overview
+## Task
 
-Other than in daily life settings, Human Activity Recognition has been applied in industrial domains to improve the efficiency of manual labor.
-Work processes, such as production line systems inside factories or packaging tasks at logistics centers, still depend mainly on human workers.
-To deal with the rapidly changing demands of customers and suppliers, tasks by human workers are expected to continue to play an important role in the future.
-Therefore, quantifying such manual work is crucial for streamlining the existing processes, finding bottlenecks, assessing a worker’s performance, and detecting outliers.
-
-In many of these manual jobs, such as performing packaging tasks in the logistic domain, human workers repetitively perform a typical series of sequential operations, with each iteration (i.e., work period) comprising a sequence of operations
-such as assembling a shipping box and filling up the box with items.
-Getting meaningful information about each operation such as its temporal location,  average duration, and its abnormalities is crucial for optimizing the work process.
-However, because the varying size and number of items to pack, and the size of shipping boxes depend on individual shipping orders,
-sensor data collected in different work periods, as well as the duration of the same operation in different work periods, can vary.
-These characteristics of packaging work make its recognition a challenging task.
-
-In this competition, you’ll develop a model to recognize the operations that conform packaging work from 4 IMU streams and keypoint data.
-The packaging work consists of 10 operations (i.e., activity classes) described bellow.
-To quantify the operations as precisely as possible, dense labeling is required.
-You must predict activity classes for each 1second-long timeslot.
-You can use data from 4 subjects to develop your model.
-The test data is 5 sessions from user U0107, 69 periods in total.
+In this competition, you'll develop a time-series segmentation model that recognizes 10 work operations.
+The required time resolution of the segmentation is 1 second.
+Timeslots are defined based on data collection times. Please refer to the [evaluation/timeslot](#timeslot) section for more details.
 
 If successful, your work will help the ubiquitous research community improve current smart factories and better integrate human factors into the smart factory optimization process.
 
-### Timeline
+## Data
 
-- Competition Site  Open: TBA
-- Development Phase (Start): TBA
-- Final Phase (Start): TBA
-- Competition End: TBA
+The Dataset for this challenge is [**OpenPack Dataset (v0.3.x)** (Realse Note - TBA)](.).
+You can use all modalities listed below as inputs. Please find the best sensor combination that fits your approach.
 
-## Task & Evaluation
+- ATR (acc, gyro, quaternion)
+- E4 (acc, BVP, EDA, temperature)
+- Kinect - Front View Camera (2d keypoints, depth)
+- LiDAR - Front View (depth)
+- RealSense - Top View Camera (depth)
+- Meta Data
+  - Order Sheet
+  - HT Log Data
+  - Psuedo Printer Log Data
 
-The problem to be solved is the multiclass classification problem of time-series data.
-You must predict ["operation class"](../ANNOTATION.md#1-openpack_operations) for each timeslot.
-The size of timeslot is set to 1 second in this challenge.
+### Splits
 
-The F1 measure (macro-average) is used as the evaluation metric.
-F1-measure is calculated for each class and the average of them is used as the score.
+There are two types of data split, `DEBUG` and `CHALLENGE`.
+
+#### `DEV` Split
+
+This split can be used for checking the usage of the submission site and debugging your model.
+This split consists of **TBA** subjects, **TBA** for training, and **TBA** for testing.
+Official tutorials are in principle implemented with this split.
+
+#### `CHALLENGE` Split
+
+This split is for a main challenge.
+You can use data from 11 subjects for training. Test data consists from 6 subjects [U0104, U0108, U0110, U0203, U0204, and U0207].
+Data from non-experienced workers has been excluded from this challenge.
+In addition, sessions with recording errors are excluded from test data.
+Training data with recording errors are included in the training data. So please use them with considerations.
+Recording errors are listed in [this page](TBA).
+
+## Evaluation
+
+The problem of this challenge is time-series classification with a 1s time-resolution.
+Performance of your model will be evaluated besed on the F1-measure (macro average).
+In this section, we will explain more details about the evaluation procedure and submission format.
+
+### Activity Set
+
+Please refer to [`OPENPACK_OPERATIONS`](../ANNOTATION.md#1-openpack_operations).
+
+Notes:
+
+- 10 activity classes + `Null` class
+- Samples with the `Null` label are ignored during evaluation.
+
+### Timeslot
+
+Timeslot is necessary to handle multimodal data with different sampling interval.
+The timeslot is defined based on the data collection time, and its size is set to 1 second.
+Timeslot of a record is obtained by discarding the symbols under 1 second.
+For example, when we got following timestamps (unixtime with milli second precision), you can get the timeslot by discarding the last three digits.
+
+```txt
+TIMESTAMP (UNIXTIME), Prediction (Class ID)
+1634869193126, ID01 
+1634869193225, ID01
+1634869193324, ID04
+1634869193423, ID04
+1634869193522, ID01
+1634869193621, ID01
+1634869193720, ID01
+1634869193819, ID01
+1634869193918, ID01 => Timeslot ID = 1634869193 (= 2021-10-22- 11:19:53)
+-------------- 
+1634869194017, ID01 
+1634869194116, ID01
+1634869194215, ID01
+1634869194314, ID03
+1634869194413, ID01
+1634869194512, ID01
+1634869194611, ID01
+...           => Timeslot ID = 1634869194 (= 2021-10-22- 11:19:54)
+```
+
+The predictions within the same timeslot will be aggregated into a single record.
+The following example is aggregated records by selecting the last record within each timesplot.
+This sequence is used to calculate the evaluation metric.
+
+```txt
+TIMESTAMP (UNIXTIME), Prediction (Class ID)
+1634869193, ID01
+1634869194, ID01
+```
+
+### Evaluation Metric
+
+The F1-measure (macro-average) is used as the evaluation metric.
+A F1-measure is calculated for each class and the average of all of them is used as the score.
 Segments corresponding to the "Null" class are excluded before evaluation.
 The winner will be selected based on this metric evaluated on the test data.
 
-Script to calculate your score is available at [`optk.codalab.eval_operation_segmentation()`](../../openpack_toolkit/codalab/operation_segmentation/eval.py)!
+In this competition, evaluation scores for each subject are included in the feedback.
 
-### Activity Class
+### Function to Calculate Your Score
 
-[`OPENPACK_OPERATIONS`](../ANNOTATION.md#1-openpack_operations)
+The script to calculate your score is available at [`optk.codalab.eval_operation_segmentation()`](../../openpack_toolkit/codalab/operation_segmentation/eval.py).
 
-- 10 activity classes + `Null` class
-- Samples with the `Null` label is ignored from the evaluation.
-
-### Data Split
-
-Train, Val, Test, and Submission split is described in [DATA_SPLIT](../DATA_SPLIT.md).
-In the **Development** phase, you need to follow [**Debug** split](../DATA_SPLIT.md#1-debug).
-In the **Final** phase, you need to follow [**Pilot Challenge** split](../DATA_SPLIT.md#2-pilot-challenge).
-Therefore the submission file should contain prediction results of S0100, S0200, S0300, and S0500 of U0107, 69 periods in total.
-
-NOTE: Validation and test sets are defined on the above page, but you can change them as you want.
-
-## Data
-
-For this challenge, you are given the sensor data (acceleration, etc.) and keypoints along with supporting metadata.
-Your challenge is to predict activity classes at each timestep corresponding to the sensor data.
-You can use data from 4 subjects (U0102, U0103, U0105, U0106) for training.
-Data from U0107 is a submission set, so the annotation data is unavailable.
-
-You can download the data from [zenodo - "OpenPack: Public multi-modal dataset for packaging work recognition in logistics domain"](https://zenodo.org/record/6697990).
-Data structure information and data download utilities are described in [openpack-toolkit](../../).
-
-### Quick Download
-
-You can download all data (annotation, IMU, keypoints) with the following command.
-
-```bash
-pip install openpack-tooklit
-mkdir -p ../data/datasets/
-optk-download -d ../data/datasets/ -v v0.2.0 -s atr-qags,openpack-operations,kinect-2d-kpt
-```
-
-## Code Samples
-
-Code samples written in PyTorch are available in [open-pack/openpack-torch](https://github.com/open-pack/openpack-torch).
-
----
-
-## Registration
-
-Registration is required to join this competition.
-Please sign up from these two forms.
-
-1. Participate Tab in Codalab >> Click "Sign Up"
-1. [Google Form](https://docs.google.com/forms/d/e/1FAIpQLScSLsf7zbFH_KsRflnCqu_3ICqVI9KmOFt6XrBSR2G5J3aBfg/viewform?usp=sf_link)
-
-From the Google Form, please register the team name, leader, and members of your team and agree to our competition
-terms.
-To sign up as a Team, please refer to [this document](<https://github.com/codalab/codalab-competitions/wiki/User_Teams>).
-The organizers will approve your team after submitting both forms and then you will be able to submit your predictions.
-There is no limit to the number of team members.
-Only one team from a single laboratory or equivalent group may participate to avoid private sharing.
-
-## Submission Format
+### Submission Format
 
 To submit your results to this competition you must construct a submission zip file containing a single file named `submission.json` containing your model’s prediction (operation ID) on the submission set and corresponding timestamp.
 This file should follow the format detailed in the subsequent section.
@@ -125,34 +131,18 @@ This file should follow the format detailed in the subsequent section.
 }
 ```
 
-Sample submission files for `Development Phase` are available from here.
+Sample submission files for `Development Phase` are available here.
 
 - [submission.json](./submission.json)
 - [submission.zip](./submission.zip)
 
----
+## Rules
 
-## Terms and Conditions
+### Use of External Dataset
 
-### One Account per Team
+You may use data other than the competition data to develop and test your submission. However, you will ensure the external data is publicly available to everyone without any cost.
 
-Only the submission from the registered team leader will be considered in the leaderboard.
-Submissions from the not registered user are ignored.
+## Relevant links
 
-### No Private Sharing Outside Teams
-
-Privately sharing code or data outside of teams is not permitted.
-It’s OK to share code if made available to all participants on the forum.
-
-### External Dataset
-
-You may use data other than the competition data to develop and test your submission.
-However, you will ensure the external data is publicly accessible without any cost.
-
-### Winner
-
-The winner is determined by the F1-measure (macro average) which you can see in the Results tab.
-
-You agree that if you place in the **top-TBA** at the end of the challenge you must submit your code so that we can check for cheating.
-As well as source code, winners are required to submit a short report paper that describes the award methodology in addition to the source code submission.
-These instructions will be sent from the organizer via email.
+- [OpenPack Challenge - Main Site](https://open-pack.github.io/)
+- Codalab (Submission Site) (TBA)
