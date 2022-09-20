@@ -97,9 +97,9 @@ class SystemDataConfig(DataStreamConfig):
 class AnnotConfig:
     name: str = MISSING
     version: str = MISSING
-    path: Dict[str, str] = MISSING
+    path: Optional[Dict[str, str]] = MISSING
     file_format: Optional[Dict[str, str]] = None
-    classes: ActSet = MISSING
+    classes: Optional[ActSet] = MISSING
 
 
 @dataclass

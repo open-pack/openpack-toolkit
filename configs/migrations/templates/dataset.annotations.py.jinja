@@ -18,8 +18,9 @@ from ...activity import ActSet, ActClass
         "dir": "{{annot.path.dir}}",
         "fname": "{{annot.path.fname}}",
     },
-{% endif %}
+{% else %}
     classes={{key|replace("-", "_")|upper}},
+{% endif %}
 )
 
 

@@ -195,7 +195,7 @@ RELEASE_CONFIG_V0_3_0 = ReleaseConfig(
         ),
         "U0104": ReleaseConfig._User(
             sessions=['S0100', 'S0200', 'S0300', 'S0400'],
-            exclude=None,
+            exclude=['annotation'],
         ),
         "U0105": ReleaseConfig._User(
             sessions=['S0100', 'S0200', 'S0300', 'S0400', 'S0500'],
@@ -211,7 +211,7 @@ RELEASE_CONFIG_V0_3_0 = ReleaseConfig(
         ),
         "U0108": ReleaseConfig._User(
             sessions=['S0100', 'S0200', 'S0300', 'S0400', 'S0500'],
-            exclude=None,
+            exclude=['annotation'],
         ),
         "U0109": ReleaseConfig._User(
             sessions=['S0100', 'S0200', 'S0300', 'S0400', 'S0500'],
@@ -219,7 +219,7 @@ RELEASE_CONFIG_V0_3_0 = ReleaseConfig(
         ),
         "U0110": ReleaseConfig._User(
             sessions=['S0100', 'S0200', 'S0300', 'S0400', 'S0500'],
-            exclude=None,
+            exclude=['annotation'],
         ),
         "U0111": ReleaseConfig._User(
             sessions=['S0100', 'S0200', 'S0300', 'S0400', 'S0500'],
@@ -231,11 +231,11 @@ RELEASE_CONFIG_V0_3_0 = ReleaseConfig(
         ),
         "U0203": ReleaseConfig._User(
             sessions=['S0100', 'S0200', 'S0300', 'S0400', 'S0500'],
-            exclude=['e4'],
+            exclude=['e4', 'annotation'],
         ),
         "U0204": ReleaseConfig._User(
             sessions=['S0100', 'S0200', 'S0300', 'S0400', 'S0500'],
-            exclude=None,
+            exclude=['annotation'],
         ),
         "U0205": ReleaseConfig._User(
             sessions=['S0100', 'S0200', 'S0300', 'S0400', 'S0500'],
@@ -243,7 +243,7 @@ RELEASE_CONFIG_V0_3_0 = ReleaseConfig(
         ),
         "U0207": ReleaseConfig._User(
             sessions=['S0100', 'S0200', 'S0300', 'S0400', 'S0500'],
-            exclude=None,
+            exclude=['annotation'],
         ),
         "U0210": ReleaseConfig._User(
             sessions=['S0100', 'S0200', 'S0300', 'S0400', 'S0500'],

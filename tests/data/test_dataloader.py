@@ -34,7 +34,7 @@ def cfg() -> DictConfig:
 def test_load_annotatation__01(cfg):
     with open_dict(cfg):
         cfg.dataset = {
-            "annotation": optk.configs.datasets.annotations.OPENPACK_OPERATIONS_ANNOTATION}
+            "annotation": optk.configs.datasets.annotations.ACTIVITY_1S_ANNOTATION}
 
     path = Path(
         cfg.dataset.annotation.path.dir,

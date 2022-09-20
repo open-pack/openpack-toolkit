@@ -32,6 +32,8 @@ users:
     - S0200
     - S0300
     - S0400
+    exclude:
+    - annotation
   U0105:
     sessions:
     - S0100
@@ -60,6 +62,8 @@ users:
     - S0300
     - S0400
     - S0500
+    exclude:
+    - annotation
   U0109:
     sessions:
     - S0100
@@ -74,6 +78,8 @@ users:
     - S0300
     - S0400
     - S0500
+    exclude:
+    - annotation
   U0111:
     sessions:
     - S0100
@@ -97,6 +103,7 @@ users:
     - S0500
     exclude:
     - e4
+    - annotation
   U0204:
     sessions:
     - S0100
@@ -104,6 +111,8 @@ users:
     - S0300
     - S0400
     - S0500
+    exclude:
+    - annotation
   U0205:
     sessions:
     - S0100
@@ -118,6 +127,8 @@ users:
     - S0300
     - S0400
     - S0500
+    exclude:
+    - annotation
   U0210:
     sessions:
     - S0100
