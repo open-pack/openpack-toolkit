@@ -1,3 +1,4 @@
+type: ACTIVITY_SET
 name: openpack-actions
 version: v3.2.2
 classes:

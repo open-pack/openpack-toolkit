@@ -3,11 +3,14 @@ Note:
     This example is from https://scikit-learn.org/stable/modules/generated/sklearn.metrics.precision_recall_fscore_support.html
 """
 import time
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
 import pytest
+from omegaconf import OmegaConf
 
+import openpack_toolkit as optk
 from openpack_toolkit import OPENPACK_OPERATIONS
 from openpack_toolkit.codalab.operation_segmentation.eval import (
     calc_avg_metrics,
@@ -15,8 +18,7 @@ from openpack_toolkit.codalab.operation_segmentation.eval import (
     drop_ignore_class,
     eval_operation_segmentation,
 )
-from openpack_toolkit.codalab.operation_segmentation.utils import (
-    crop_seq_with_user_config,
+from openpack_toolkit.codalab.operation_segmentation.utils import (  # crop_seq_with_user_config,
     eval_operation_segmentation_wrapper,
     resample_prediction_1Hz,
 )
@@ -70,10 +72,10 @@ def test_drop_ignore_class__01():
     ignore_class_id = 500
     t_id = np.array([100, 200, 300, 400, 500, 600, 700, 800, 900])
     # NOTE: index 6 cause warning. (ignore_class exists in y_id)
-    y_id = np.array([100, 200, 300, 400, 500, 500, 700, 800, 900])
+    y_id = np.array([100, 200, 300, 400, 500, 600, 700, 800, 900])
 
     expect1 = np.array([100, 200, 300, 400, 600, 700, 800, 900])
-    expect2 = np.array([100, 200, 300, 400, 500, 700, 800, 900])
+    expect2 = np.array([100, 200, 300, 400, 600, 700, 800, 900])
 
     actual1, actual2 = drop_ignore_class(t_id, y_id, ignore_class_id)
     np.testing.assert_array_equal(actual1, expect1)
@@ -215,56 +217,42 @@ def test_resample_prediction_1Hz__02():
     assert elapsed_time < 1.0
 
 
-def test_crop_seq_with_user_config__01():
-    user, session = "U0102", "S0500"
-    ts_unix = np.array([
-        # Margin
-        1634885784000,
-        1634885785000,
-        # Body part,
-        1634885786000,  # CSV head
-        1634885787000,
-        1634885788000,
-        # ...
-        1634887604000,
-        1634887605000,
-        1634887606000,  # CSV tail
-        # Margin
-        1634887607000,
-        1634887608000,
-    ])
-    seq = np.arange(10)
-
-    ts_unix_expect = ts_unix[2:-2]
-    seq_expect = np.arange(2, 8)
-
-    ts_unix_actual, seq_actual = crop_seq_with_user_config(
-        ts_unix, seq, user, session)
-
-    np.testing.assert_array_equal(ts_unix_actual, ts_unix_expect)
-    np.testing.assert_array_equal(seq_actual, seq_expect)
-
-
-def test_eval_operation_segmentation_wrapper__01():
+@pytest.mark.parametrize("mode", ("test",))
+def test_eval_operation_segmentation_wrapper__01(mode):
     T = int(30 * 60 * 50)
     W = 30 * 60
-    classes = OPENPACK_OPERATIONS
-    print(classes)
     class_ids = OPENPACK_OPERATIONS.get_ids()
     print(class_ids)
 
+    rootdir = Path(__file__).parents[2] / "samples/openpack/${.version}"
+    cfg = OmegaConf.create({
+        "mode": mode,
+        "user": optk.configs.users.U0102,
+        "session": "S0500",
+        "path": {
+            "openpack": {
+                "version": optk.DATASET_VERSION,
+                "rootdir": str(rootdir),
+            }
+        },
+        "dataset": {
+            "stream": None,
+            "annotation": optk.configs.datasets.annotations.ACTIVITY_1S_ANNOTATION,
+        }
+    })
+
     t_idx = np.random.choice(len(class_ids), size=T).reshape(T // W, W)
-    y = np.random.uniform(size=(T // W, len(class_ids), W))
-    ts_unix = np.arange(0, T) * 100 + 1000000
+    y = np.random.uniform(size=(T // W, len(class_ids) - 1, W))
+    ts_unix = np.arange(0, T) * 100 + 1634885786000
     print(f"t_idx={t_idx.shape}, y={y.shape}")
     print("ts_unix:", ts_unix[:100])
 
     outputs = {
-        "U0000-S0000": {
-            "t_idx": t_idx, "y": y, "unixtime": ts_unix,
+        "U0102-S0500": {
+            "ground_truth": t_idx, "y": y, "unixtime": ts_unix,
         }
     }
-    df_score = eval_operation_segmentation_wrapper(outputs, classes)
+    df_score = eval_operation_segmentation_wrapper(cfg, outputs)
     print(df_score)
 
     # NOTE: 26 = (len(classes) - ignore_class + 2) * (num_sessions + 1)

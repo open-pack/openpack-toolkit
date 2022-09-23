@@ -1,4 +1,8 @@
 name: activity-1s
+type: ANNOT_FILE
+activity_sets:
+- openpack-operations
+- openpack-actions
 path:
   dir: ${path.openpack.rootdir}/${user.name}/annotation/activity-1s/
   fname: ${session}.csv

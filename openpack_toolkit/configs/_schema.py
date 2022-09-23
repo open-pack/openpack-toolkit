@@ -95,11 +95,13 @@ class SystemDataConfig(DataStreamConfig):
 
 @dataclass
 class AnnotConfig:
+    conf_type: str = MISSING
     name: str = MISSING
     version: str = MISSING
     path: Optional[Dict[str, str]] = MISSING
     file_format: Optional[Dict[str, str]] = None
     classes: Optional[ActSet] = MISSING
+    activity_set: Optional[Dict] = None
 
 
 @dataclass

@@ -3,7 +3,6 @@ Todo:
     - Make Unit-Test.
     - Refactoring is needed!
 """
-import datetime
 import json
 import os
 import zipfile
@@ -13,9 +12,9 @@ from typing import Dict, Tuple
 
 import numpy as np
 import pandas as pd
+from omegaconf import DictConfig, open_dict
 
 from ...activity import ActSet
-from ...configs import users as OPENPACK_USERS
 from ...configs.datasets.annotations import OPENPACK_OPERATIONS
 from .eval import eval_operation_segmentation
 
@@ -65,50 +64,40 @@ def resample_prediction_1Hz(
     )
 
 
-def crop_seq_with_user_config(
-        ts_unix: np.ndarray,
-        seq: np.ndarray,
-        user: str,
-        session: str,
+def crop_prediction_sequence(
+    unixtime_gt: np.ndarray,
+    unixtime_pred: np.ndarray,
+    prediction: np.ndarray,
 ):
-    """Extract valid segment from given sequence.
-
+    """Crop prediction array to have the same timestamp as reference data.
     Args:
-        ts_unix (np.ndarray): 1d array of unixtimestamp.
-        y_id_out (np.ndarray): _description_
-        user_session (ster): e.g., "U0102-S0100"
+        unixtime_gt (np.ndarray): unixtimes of the ground truth sequence
+        unixtime_pred (np.ndarray): unixtimes of the prediction sequence
+        prediction (np.ndarray): -
     """
-    assert ts_unix.ndim == 1
-    assert seq.ndim
+    ts_head, ts_tail = unixtime_gt[0], unixtime_gt[-1]
+    logger.debug(f"ts_head={ts_head}, ts_tail={ts_tail}")
 
-    if hasattr(OPENPACK_USERS, user):
-        user_cfg = getattr(OPENPACK_USERS, user)
-    else:
-        logger.warning(
-            f"unsupported user ID: {user}, skip cropping this sequence.")
-        return ts_unix, seq
+    ind = np.where((unixtime_pred >= ts_head) & (unixtime_pred <= ts_tail))[0]
+    logger.debug(
+        f"ind={ind.shape}, unixtime_pred={unixtime_pred.shape}, prediction={prediction.shape}")
 
-    ts_head = datetime.datetime.fromisoformat(user_cfg.sessions[session].start)
-    ts_tail = datetime.datetime.fromisoformat(user_cfg.sessions[session].end)
+    unixtime_pred = unixtime_pred[ind]
+    prediction = prediction[ind]
 
-    unixtime_head = int(ts_head.timestamp() * 1000)  # [ms] precision
-    # FIXME: The last second is droped when I make release version CSV.
-    # See detail in har-open-pack-codes/issues/31
-    unixtime_tail = int(ts_tail.timestamp() * 1000) - 1000  # [ms] precision
-
-    ind = np.where((ts_unix >= unixtime_head) & (ts_unix < unixtime_tail))[0]
-    return ts_unix[ind], seq[ind]
+    return unixtime_pred, prediction
 
 
 def construct_submission_dict(
-        outputs: Dict[str, Dict[str, np.ndarray]], act_set: ActSet) -> Dict:
+    cfg: DictConfig,
+    outputs: Dict[str, Dict[str, np.ndarray]],
+    act_set: ActSet,
+) -> Dict:
     """Make dict that can be used for submission and `eval_workprocess_segmentation()` func.
-
     Args:
         outputs (Dict[str, Dict[str, np.ndarray]]): key is expected to be a pair of user and
             session. e.g., "U0102-S0100".
-        act_set (ActSet): _description_
-
+        act_set (ActSet): -
     Returns:
         Dict: _description_
     """
@@ -118,27 +107,35 @@ def construct_submission_dict(
         user, session = key.split("-")
 
         assert d["y"].ndim == 3
-        y_id = act_set.convert_index_to_id(np.argmax(d["y"], axis=1).ravel())
-        ts_unix_out, y_id_out = resample_prediction_1Hz(
-            ts_unix=d["unixtime"].copy().ravel(), arr=y_id)
+        prediction_sess = act_set.convert_index_to_id(
+            np.argmax(d["y"], axis=1).ravel())
+        unixtime_pred_sess, prediction_sess = resample_prediction_1Hz(
+            ts_unix=d["unixtime"].copy().ravel(), arr=prediction_sess)
 
-        ts_unix_out, y_id_out = crop_seq_with_user_config(
-            ts_unix_out, y_id_out, user, session)
+        if cfg.mode in ("test", "test-on-submission"):
+            with open_dict(cfg):
+                cfg.user = {"name": user}
+                cfg.session = session
 
-        record["unixtime"] = ts_unix_out.copy()
-        record["prediction"] = y_id_out.copy()
+            # TODO: Move to new function ( load_ground_truth() )
+            path = Path(
+                cfg.dataset.annotation.path.dir,
+                cfg.dataset.annotation.path.fname
+            )
+            df_label = pd.read_csv(path)
 
-        if "t_idx" in d.keys():
-            assert d["t_idx"].ndim == 2
-            t_id = act_set.convert_index_to_id(d["t_idx"]).ravel()
-            ts_unix_out2, t_id_out = resample_prediction_1Hz(
-                ts_unix=d["unixtime"].copy().ravel(), arr=t_id)
-            ts_unix_out2, t_id_out = crop_seq_with_user_config(
-                ts_unix_out2, t_id_out, user, session)
-            np.testing.assert_array_equal(ts_unix_out, ts_unix_out2)
+            unixtime_gt_sess = df_label["unixtime"].values
+            ground_truth_sess = df_label["operation"].values
 
-            record["ground_truth"] = t_id_out.copy()
+            # check timestamp
+            unixtime_pred_sess, prediction_sess = crop_prediction_sequence(
+                unixtime_gt_sess, unixtime_pred_sess, prediction_sess)
+            np.testing.assert_array_equal(unixtime_pred_sess, unixtime_gt_sess)
 
+            record["ground_truth"] = ground_truth_sess.copy()
+
+        record["unixtime"] = unixtime_pred_sess.copy()
+        record["prediction"] = prediction_sess.copy()
         submission[key] = record
 
     return submission
@@ -148,8 +145,8 @@ def make_submission_zipfile(submission: Dict, logdir: Path) -> None:
     """Check dict contents and generate zip file for codalab submission.
 
     Args:
-        submission (Dict): _description_
-        logdir (Path): _description_
+        submission (Dict): submission dict
+        logdir (Path): path to the output directory
     Returns:
         None (make JSON & zip files)
     """
@@ -187,21 +184,23 @@ def make_submission_zipfile(submission: Dict, logdir: Path) -> None:
 # -----------------------------------------------------------------------------
 
 def eval_operation_segmentation_wrapper(
+    cfg: DictConfig,
     outputs: Dict[str, Dict[str, np.ndarray]],
     act_set: ActSet = OPENPACK_OPERATIONS,
     exclude_ignore_class=True,
 ) -> pd.DataFrame:
     """ Compute evaluation metrics from model outputs (predicted probability).
-
     Args:
+        cfg (DictConfig): -
         outputs (Dict[str, Dict[str, np.ndarray]]): dict object that contains t_idx and y.
             t_idx is a 2d array of target class index with shape=(BATCH_SIZE, WINDOW).
             y is a 3d array of predction probabilities with shape=(BATCH_SIZE, NUM_CLASSES, WINDOW).
-        classes (Tuple, optional): class definition.
+        act_set (ActSete, optional): class definition.
+        exclude_ignore_class (bool): If true, ignore classes are excluded. (default: True)
     Returns:
         pd.DataFrame
     """
-    submission = construct_submission_dict(outputs, act_set)
+    submission = construct_submission_dict(cfg, outputs, act_set)
     classes = act_set.to_tuple()
     ignore_class_id = act_set.get_ignore_class_id()
     if isinstance(ignore_class_id, tuple):

@@ -16,6 +16,7 @@ OPENPACK_OPERATIONS = ActSet((
 ))
 
 OPENPACK_OPERATIONS_ANNOTATION = AnnotConfig(
+    conf_type="ACTIVITY_SET",
     name="openpack-operations",
     version="v3.2.2",
     classes=OPENPACK_OPERATIONS,
@@ -82,6 +83,7 @@ OPENPACK_ACTIONS = ActSet((
 ))
 
 OPENPACK_ACTIONS_ANNOTATION = AnnotConfig(
+    conf_type="ACTIVITY_SET",
     name="openpack-actions",
     version="v3.2.2",
     classes=OPENPACK_ACTIONS,
@@ -89,10 +91,15 @@ OPENPACK_ACTIONS_ANNOTATION = AnnotConfig(
 
 
 ACTIVITY_1S_ANNOTATION = AnnotConfig(
+    conf_type="ANNOT_FILE",
     name="activity-1s",
     version="",
     path={
         "dir": "${path.openpack.rootdir}/${user.name}/annotation/activity-1s/",
         "fname": "${session}.csv",
+    },
+    activity_set={
+        "openpack-operations": OPENPACK_OPERATIONS,
+        "openpack-actions": OPENPACK_ACTIONS,
     },
 )

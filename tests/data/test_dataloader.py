@@ -17,13 +17,14 @@ from openpack_toolkit.data.dataloader import (
 
 @pytest.fixture()
 def cfg() -> DictConfig:
-    rootdir = Path(__file__).parents[2] / "samples/openpack/vX.X.X"
+    rootdir = Path(__file__).parents[2] / "samples/openpack/${.version}"
 
     config = OmegaConf.create({
         "user": optk.configs.users.U0102,
         "session": "S0500",
         "path": {
             "openpack": {
+                "version": optk.DATASET_VERSION,
                 "rootdir": str(rootdir),
             }
         }
@@ -31,7 +32,7 @@ def cfg() -> DictConfig:
     return config
 
 
-def test_load_annotatation__01(cfg):
+def test_load_and_resample_operation_labels__01(cfg):
     with open_dict(cfg):
         cfg.dataset = {
             "annotation": optk.configs.datasets.annotations.ACTIVITY_1S_ANNOTATION}
@@ -54,14 +55,14 @@ def test_load_annotatation__01(cfg):
     ])
 
     expect = pd.DataFrame([
-        [1634885794000, 1634885794000, 102, 500, 1, 100, 0],
-        [1634885794200, 1634885794000, 102, 500, 1, 100, 0],
-        [1634885794400, 1634885794000, 102, 500, 1, 100, 0],
-        [1634885794600, 1634885794000, 102, 500, 1, 100, 0],
-        [1634885794800, 1634885794000, 102, 500, 1, 100, 0],
-        [1634885795000, 1634885795000, 102, 500, 1, 100, 0],
-        [1634885796000, 1634885796000, 102, 500, 1, 200, 1],
-        [1634885798000, 1634885798000, 102, 500, 1, 200, 1],
+        [1634885794000, 1634885794000, "U0102", "S0500", 1, 100, 0],
+        [1634885794200, 1634885794000, "U0102", "S0500", 1, 100, 0],
+        [1634885794400, 1634885794000, "U0102", "S0500", 1, 100, 0],
+        [1634885794600, 1634885794000, "U0102", "S0500", 1, 100, 0],
+        [1634885794800, 1634885794000, "U0102", "S0500", 1, 100, 0],
+        [1634885795000, 1634885795000, "U0102", "S0500", 1, 100, 0],
+        [1634885796000, 1634885796000, "U0102", "S0500", 1, 200, 1],
+        [1634885798000, 1634885798000, "U0102", "S0500", 1, 200, 1],
     ], columns=["unixtime", "annot_time", "user", "session", "box", "act_id", "act_idx"])
 
     df_annot = load_and_resample_operation_labels(
@@ -82,8 +83,8 @@ def test_load_keypoints__01(cfg):
     print(f"input path: {path} (exists={path.exists()})")
 
     T, X = load_keypoints(path)
-    np.testing.assert_array_equal(T.shape, (29423,))
-    np.testing.assert_array_equal(X.shape, (3, 29423, 17))
+    np.testing.assert_array_equal(T.shape, (27377,))
+    np.testing.assert_array_equal(X.shape, (3, 27377, 17))
 
 
 @pytest.mark.parametrize("stream, expected_ch", (
