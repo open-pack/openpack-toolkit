@@ -11,7 +11,7 @@
 
 - Config File: [{{stream.name}}.yaml](../configs/dataset/stream/{{stream.name}}.yaml)
 - Python Module: [`openpack_toolkit.configs.datasets.streams.{{stream.name|replace("-", "_")|upper}}_STREAM`](../openpack_toolkit/configs/datasets/streams.py)
-- Frame Rate: {{stream.frame_rate}}
+- Frame Rate: {{stream.frame_rate}} Hz
 
 ### {{loop.index}}-1: Path
 
@@ -34,6 +34,7 @@
 ### {{loop.index}}-2: Meta Data
 
 {% if 'tables' in stream.meta.keys() %}
+{% if stream.meta.tables|length > 0 %}
 {% for table in stream.meta.tables %}
 #### {{table.name}}
 
@@ -46,6 +47,9 @@
 {% endfor%}
 
 {% endfor%}
+{% else %}
+No DATA
+{% endif %}
 {% endif %}
 
 {% endfor%}

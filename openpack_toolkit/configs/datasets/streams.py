@@ -1,4 +1,4 @@
-from .._schema import DataStreamConfig, ImuConfig, KeypointConfig
+from .._schema import E4Config, DataStreamConfig, ImuConfig, KeypointConfig
 
 ATR_ACC_STREAM = ImuConfig(
     schema="ImuConfig",
@@ -30,6 +30,53 @@ ATR_QAGS_STREAM = ImuConfig(
     quat=True,
 )
 
+E4_ACC_STREAM = E4Config(
+    schema="ImuConfig",
+    name="e4-acc",
+    sensor="",
+    path=DataStreamConfig.Paths(
+        dir="${path.openpack.rootdir}/${user.name}/e4/${device}/acc",
+        fname="${session}.csv",
+    ),
+    frame_rate=32,
+    devices=['e401', 'e402'],
+)
+
+E4_BVP_STREAM = E4Config(
+    schema="ImuConfig",
+    name="e4-bvp",
+    sensor="",
+    path=DataStreamConfig.Paths(
+        dir="${path.openpack.rootdir}/${user.name}/e4/${device}/bvp",
+        fname="${session}.csv",
+    ),
+    frame_rate=64,
+    devices=['e401', 'e402'],
+)
+
+E4_EDA_STREAM = E4Config(
+    schema="ImuConfig",
+    name="e4-eda",
+    sensor="",
+    path=DataStreamConfig.Paths(
+        dir="${path.openpack.rootdir}/${user.name}/e4/${device}/eda",
+        fname="${session}.csv",
+    ),
+    frame_rate=4,
+    devices=['e401', 'e402'],
+)
+
+E4_TEMP_STREAM = E4Config(
+    schema="ImuConfig",
+    name="e4-temp",
+    sensor="",
+    path=DataStreamConfig.Paths(
+        dir="${path.openpack.rootdir}/${user.name}/e4/${device}/temp",
+        fname="${session}.csv",
+    ),
+    frame_rate=4,
+    devices=['e401', 'e402'],
+)
 
 KINECT_2D_KPT_STREAM = KeypointConfig(
     schema="KeypointConfig",

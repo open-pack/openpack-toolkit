@@ -1,0 +1,35 @@
+schema: E4Config
+name: e4-acc
+description: Acc data from Empatica E4 sensors
+path:
+  dir: ${path.openpack.rootdir}/${user.name}/e4/${device}/acc
+  fname: ${session}.csv
+  template: ${.dir}/${.fname}
+file_format:
+  file_type: csv
+  columns:
+  - name: time
+    unit: milli second
+  - name: acc_x
+    unit: G
+  - name: acc_y
+    unit: G
+  - name: acc_z
+    unit: G
+frame_rate: 32
+meta:
+  tables:
+  - name: Device List
+    note: We attached 2 [Empatica E4](https://www.empatica.com/en-int/research/e4/)
+      sensors to subjects.
+    headers:
+    - Device Name
+    - Location
+    body:
+    - - e401
+      - Right Wrist
+    - - e402
+      - Left Wrist
+devices:
+- e401
+- e402

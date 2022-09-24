@@ -12,7 +12,10 @@ TARGET_STREAM = [
     # -- IMU --
     "atr-acc",
     "atr-qags",
-    "e4-all",
+    "e4-acc",
+    "e4-bvp",
+    "e4-eda",
+    "e4-temp",
     # -- Keypoint --
     "kinect-2d-kpt",
     # -- System --

@@ -81,6 +81,13 @@ class ImuConfig(DataStreamConfig):
 
 
 @dataclass
+class E4Config(DataStreamConfig):
+    schema: str = "E4Config"
+    devices: List[str] = MISSING
+    sensor: str = MISSING
+
+
+@dataclass
 class KeypointConfig(DataStreamConfig):
     schema: str = "KeypointConfig"
     category: str = MISSING
