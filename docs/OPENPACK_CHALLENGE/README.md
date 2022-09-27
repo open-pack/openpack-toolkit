@@ -9,12 +9,12 @@ In this competition, you'll develop a time-series segmentation model that recogn
 The required time resolution of the segmentation is 1 second.
 Timeslots are defined based on data collection times. Please refer to the [evaluation/timeslot](#timeslot) section for more details.
 
-If successful, your work will help the ubiquitous research community improve current smart factories and better integrate human factors into the smart factory optimization process.
+If successful, your work will help the ubiquitous research community improve current smart factories and better integration of human factors into the smart-factory optimization process.
 
 ## Data
 
 The Dataset for this challenge is [**OpenPack Dataset (v0.3.x)** (Realse Note - TBA)](.).
-You can use all modalities listed below as inputs. Please find the best sensor combination that fits your approach.
+You can use all the modalities listed below as inputs. Please find the best sensor combination that fits your approach.
 
 - ATR (acc, gyro, quaternion)
 - E4 (acc, BVP, EDA, temperature)
@@ -34,22 +34,22 @@ There are two types of data split, `DEBUG` and `CHALLENGE`.
 
 This split can be used for checking the usage of the submission site and debugging your model.
 This split consists of **TBA** subjects, **TBA** for training, and **TBA** for testing.
-Official tutorials are in principle implemented with this split.
+Official tutorials are, in principle, implemented with this split.
 
 #### `CHALLENGE` Split
 
 This split is for a main challenge.
-You can use data from 11 subjects for training. Test data consists from 6 subjects [U0104, U0108, U0110, U0203, U0204, and U0207].
-Data from non-experienced workers has been excluded from this challenge.
+You can use data from 11 subjects for training. Test data consist of 6 subjects [U0104, U0108, U0110, U0203, U0204, and U0207].
+Data from non-experienced workers have been excluded from this challenge.
 In addition, sessions with recording errors are excluded from test data.
-Training data with recording errors are included in the training data. So please use them with considerations.
+Training data with recording errors are included in the training data. So please consider that when using the data.
 Recording errors are listed in [this page](TBA).
 
 ## Evaluation
 
-The problem of this challenge is time-series classification with a 1s time-resolution.
-Performance of your model will be evaluated besed on the F1-measure (macro average).
-In this section, we will explain more details about the evaluation procedure and submission format.
+The goal of this challenge is time-series classification with a 1s time-resolution.
+Performance of your model will be evaluated based on the F1-measure (macro average).
+In this section, we will explain the evaluation procedure and submission format in detail.
 
 ### Activity Set
 
@@ -62,7 +62,7 @@ Notes:
 
 ### Timeslot
 
-Timeslot is necessary to handle multimodal data with different sampling interval.
+Timeslot is necessary to handle multimodal data with different sampling intervals.
 The timeslot is defined based on the data collection time, and its size is set to 1 second.
 Timeslot of a record is obtained by discarding the symbols under 1 second.
 For example, when we got following timestamps (unixtime with milli second precision), you can get the timeslot by discarding the last three digits.
@@ -104,7 +104,7 @@ TIMESTAMP (UNIXTIME), Prediction (Class ID)
 The F1-measure (macro-average) is used as the evaluation metric.
 A F1-measure is calculated for each class and the average of all of them is used as the score.
 Segments corresponding to the "Null" class are excluded before evaluation.
-The winner will be selected based on this metric evaluated on the test data.
+The winner will be selected based on this metric, evaluated on the test data.
 
 In this competition, evaluation scores for each subject are included in the feedback.
 
@@ -140,7 +140,7 @@ Sample submission files for `Development Phase` are available here.
 
 ### Use of External Dataset
 
-You may use data other than the competition data to develop and test your submission. However, you will ensure the external data is publicly available to everyone without any cost.
+You may use data other than the competition data to develop and test your submission. However, you should ensure that the external data is publicly available to anyone without any cost.
 
 ## Relevant links
 
