@@ -26,12 +26,11 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from .._schema import DataStreamConfig, ImuConfig, KeypointConfig
+<pre><code class="python">from .._schema import E4Config, DataStreamConfig, ImuConfig, KeypointConfig
 
 ATR_ACC_STREAM = ImuConfig(
     schema=&#34;ImuConfig&#34;,
     name=&#34;atr-acc&#34;,
-    description=&#34;Accelerations from ATR IMU sensors&#34;,
     super_stream=&#34;atr-qags&#34;,
     path=DataStreamConfig.Paths(
         dir=&#34;${path.openpack.rootdir}/${user.name}/atr/${device}&#34;,
@@ -47,7 +46,6 @@ ATR_ACC_STREAM = ImuConfig(
 ATR_QAGS_STREAM = ImuConfig(
     schema=&#34;ImuConfig&#34;,
     name=&#34;atr-qags&#34;,
-    description=&#34;Acceleration, gyro, and quaternion data captured by ATR IMU sensors.&#34;,
     super_stream=&#34;None&#34;,
     path=DataStreamConfig.Paths(
         dir=&#34;${path.openpack.rootdir}/${user.name}/atr/${device}&#34;,
@@ -60,11 +58,57 @@ ATR_QAGS_STREAM = ImuConfig(
     quat=True,
 )
 
+E4_ACC_STREAM = E4Config(
+    schema=&#34;ImuConfig&#34;,
+    name=&#34;e4-acc&#34;,
+    sensor=&#34;&#34;,
+    path=DataStreamConfig.Paths(
+        dir=&#34;${path.openpack.rootdir}/${user.name}/e4/${device}/acc&#34;,
+        fname=&#34;${session}.csv&#34;,
+    ),
+    frame_rate=32,
+    devices=[&#39;e401&#39;, &#39;e402&#39;],
+)
+
+E4_BVP_STREAM = E4Config(
+    schema=&#34;ImuConfig&#34;,
+    name=&#34;e4-bvp&#34;,
+    sensor=&#34;&#34;,
+    path=DataStreamConfig.Paths(
+        dir=&#34;${path.openpack.rootdir}/${user.name}/e4/${device}/bvp&#34;,
+        fname=&#34;${session}.csv&#34;,
+    ),
+    frame_rate=64,
+    devices=[&#39;e401&#39;, &#39;e402&#39;],
+)
+
+E4_EDA_STREAM = E4Config(
+    schema=&#34;ImuConfig&#34;,
+    name=&#34;e4-eda&#34;,
+    sensor=&#34;&#34;,
+    path=DataStreamConfig.Paths(
+        dir=&#34;${path.openpack.rootdir}/${user.name}/e4/${device}/eda&#34;,
+        fname=&#34;${session}.csv&#34;,
+    ),
+    frame_rate=4,
+    devices=[&#39;e401&#39;, &#39;e402&#39;],
+)
+
+E4_TEMP_STREAM = E4Config(
+    schema=&#34;ImuConfig&#34;,
+    name=&#34;e4-temp&#34;,
+    sensor=&#34;&#34;,
+    path=DataStreamConfig.Paths(
+        dir=&#34;${path.openpack.rootdir}/${user.name}/e4/${device}/temp&#34;,
+        fname=&#34;${session}.csv&#34;,
+    ),
+    frame_rate=4,
+    devices=[&#39;e401&#39;, &#39;e402&#39;],
+)
 
 KINECT_2D_KPT_STREAM = KeypointConfig(
     schema=&#34;KeypointConfig&#34;,
     name=&#34;kinect-2d-kpt&#34;,
-    description=&#34;2D keypoint extracted by mmpose/hrnet. The model used to extract keypoints was 2-stage bottom-up model defined in [mmpose/2d_kpt_sview_rgb_vid/posewarper/posetrack18/hrnet_w48_posetrack18_384x288_posewarper_stage2.py](https://github.com/open-mmlab/mmpose/blob/master/configs/body/2d_kpt_sview_rgb_vid/posewarper/posetrack18/hrnet_w48_posetrack18_384x288_posewarper_stage2.py).&#34;,
     super_stream=&#34;None&#34;,
     path=DataStreamConfig.Paths(
         dir=&#34;${path.openpack.rootdir}/${user.name}/kinect/${..category}/${..model}/single&#34;,
@@ -97,7 +141,6 @@ KINECT_2D_KPT_STREAM = KeypointConfig(
 SYSTEM_HT_ORIGINAL_STREAM = ImuConfig(
     schema=&#34;SystemDataConfig&#34;,
     name=&#34;system-ht-original&#34;,
-    description=&#34;Scan log data from a handy terminal.&#34;,
     super_stream=&#34;None&#34;,
     path=DataStreamConfig.Paths(
         dir=&#34;${path.openpack.rootdir}/${user.name}/system/ht&#34;,
@@ -109,7 +152,6 @@ SYSTEM_HT_ORIGINAL_STREAM = ImuConfig(
 SYSTEM_ORDER_SHEET_STREAM = ImuConfig(
     schema=&#34;SystemDataConfig&#34;,
     name=&#34;system-order-sheet&#34;,
-    description=&#34;Master data of order sheets.&#34;,
     super_stream=&#34;None&#34;,
     path=DataStreamConfig.Paths(
         dir=&#34;${path.openpack.rootdir}/${user.name}/system/order-sheet/&#34;,

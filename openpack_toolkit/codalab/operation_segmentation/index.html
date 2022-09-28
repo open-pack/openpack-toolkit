@@ -88,7 +88,7 @@ __all__ = [
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
 <dt id="openpack_toolkit.codalab.operation_segmentation.construct_submission_dict"><code class="name flex">
-<span>def <span class="ident">construct_submission_dict</span></span>(<span>outputs: Dict[str, Dict[str, numpy.ndarray]], act_set: <a title="openpack_toolkit.activity.ActSet" href="../../activity/index.html#openpack_toolkit.activity.ActSet">ActSet</a>) ‑> Dict</span>
+<span>def <span class="ident">construct_submission_dict</span></span>(<span>outputs: Dict[str, Dict[str, numpy.ndarray]], act_set: <a title="openpack_toolkit.activity.ActSet" href="../../activity/index.html#openpack_toolkit.activity.ActSet">ActSet</a>, include_ground_truth: Optional[bool] = False, cfg: Optional[omegaconf.dictconfig.DictConfig] = None) ‑> Dict</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Make dict that can be used for submission and <code>eval_workprocess_segmentation()</code> func.</p>
@@ -98,28 +98,38 @@ __all__ = [
 <dd>key is expected to be a pair of user and
 session. e.g., "U0102-S0100".</dd>
 <dt><strong><code>act_set</code></strong> :&ensp;<code>ActSet</code></dt>
-<dd><em>description</em></dd>
+<dd>-</dd>
+<dt><strong><code>include_ground_truth</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>If True, ground truth labels are included
+in the submission dict. Set True when you calculate scores.</dd>
+<dt><strong><code>cfg</code></strong> :&ensp;<code>DictConfig</code>, optional</dt>
+<dd>config dict.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>Dict</code></dt>
-<dd><em>description</em></dd>
+<dd>submission dict</dd>
 </dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def construct_submission_dict(
-        outputs: Dict[str, Dict[str, np.ndarray]], act_set: ActSet) -&gt; Dict:
+    outputs: Dict[str, Dict[str, np.ndarray]],
+    act_set: ActSet,
+    include_ground_truth: Optional[bool] = False,
+    cfg: Optional[DictConfig] = None,
+) -&gt; Dict:
     &#34;&#34;&#34;Make dict that can be used for submission and `eval_workprocess_segmentation()` func.
-
     Args:
         outputs (Dict[str, Dict[str, np.ndarray]]): key is expected to be a pair of user and
             session. e.g., &#34;U0102-S0100&#34;.
-        act_set (ActSet): _description_
-
+        act_set (ActSet): -
+        include_ground_truth (bool, optional): If True, ground truth labels are included
+            in the submission dict. Set True when you calculate scores.
+        cfg (DictConfig, optional): config dict.
     Returns:
-        Dict: _description_
+        Dict: submission dict
     &#34;&#34;&#34;
     submission = dict()
     for key, d in outputs.items():
@@ -127,27 +137,35 @@ session. e.g., "U0102-S0100".</dd>
         user, session = key.split(&#34;-&#34;)
 
         assert d[&#34;y&#34;].ndim == 3
-        y_id = act_set.convert_index_to_id(np.argmax(d[&#34;y&#34;], axis=1).ravel())
-        ts_unix_out, y_id_out = resample_prediction_1Hz(
-            ts_unix=d[&#34;unixtime&#34;].copy().ravel(), arr=y_id)
+        prediction_sess = act_set.convert_index_to_id(
+            np.argmax(d[&#34;y&#34;], axis=1).ravel())
+        unixtime_pred_sess, prediction_sess = resample_prediction_1Hz(
+            ts_unix=d[&#34;unixtime&#34;].copy().ravel(), arr=prediction_sess)
 
-        ts_unix_out, y_id_out = crop_seq_with_user_config(
-            ts_unix_out, y_id_out, user, session)
+        if include_ground_truth:
+            with open_dict(cfg):
+                cfg.user = {&#34;name&#34;: user}
+                cfg.session = session
 
-        record[&#34;unixtime&#34;] = ts_unix_out.copy()
-        record[&#34;prediction&#34;] = y_id_out.copy()
+            # TODO: Move to new function ( load_ground_truth() )
+            path = Path(
+                cfg.dataset.annotation.path.dir,
+                cfg.dataset.annotation.path.fname
+            )
+            df_label = pd.read_csv(path)
 
-        if &#34;t_idx&#34; in d.keys():
-            assert d[&#34;t_idx&#34;].ndim == 2
-            t_id = act_set.convert_index_to_id(d[&#34;t_idx&#34;]).ravel()
-            ts_unix_out2, t_id_out = resample_prediction_1Hz(
-                ts_unix=d[&#34;unixtime&#34;].copy().ravel(), arr=t_id)
-            ts_unix_out2, t_id_out = crop_seq_with_user_config(
-                ts_unix_out2, t_id_out, user, session)
-            np.testing.assert_array_equal(ts_unix_out, ts_unix_out2)
+            unixtime_gt_sess = df_label[&#34;unixtime&#34;].values
+            ground_truth_sess = df_label[&#34;operation&#34;].values
 
-            record[&#34;ground_truth&#34;] = t_id_out.copy()
+            # check timestamp
+            unixtime_pred_sess, prediction_sess = crop_prediction_sequence(
+                unixtime_gt_sess, unixtime_pred_sess, prediction_sess)
+            np.testing.assert_array_equal(unixtime_pred_sess, unixtime_gt_sess)
 
+            record[&#34;ground_truth&#34;] = ground_truth_sess.copy()
+
+        record[&#34;unixtime&#34;] = unixtime_pred_sess.copy()
+        record[&#34;prediction&#34;] = prediction_sess.copy()
         submission[key] = record
 
     return submission</code></pre>
@@ -218,18 +236,22 @@ macro avg., weighted avg., and score for each class will be calculated.</dd>
 </details>
 </dd>
 <dt id="openpack_toolkit.codalab.operation_segmentation.eval_operation_segmentation_wrapper"><code class="name flex">
-<span>def <span class="ident">eval_operation_segmentation_wrapper</span></span>(<span>outputs: Dict[str, Dict[str, numpy.ndarray]], act_set: <a title="openpack_toolkit.activity.ActSet" href="../../activity/index.html#openpack_toolkit.activity.ActSet">ActSet</a> = ActSet(classes=(ActClass(id=100, name='Picking', is_ignore=False), ActClass(id=200, name='RelocateItemLabel', is_ignore=False), ActClass(id=300, name='AssembleBox', is_ignore=False), ActClass(id=400, name='InsertItems', is_ignore=False), ActClass(id=500, name='CloseBox', is_ignore=False), ActClass(id=600, name='AttachBoxLabel', is_ignore=False), ActClass(id=700, name='ScanLabel', is_ignore=False), ActClass(id=800, name='AttachShippingLabel', is_ignore=False), ActClass(id=900, name='PutOnRack', is_ignore=False), ActClass(id=1000, name='Fill-outOrder', is_ignore=False), ActClass(id=8100, name='Null', is_ignore=True))), exclude_ignore_class=True) ‑> pandas.core.frame.DataFrame</span>
+<span>def <span class="ident">eval_operation_segmentation_wrapper</span></span>(<span>cfg: omegaconf.dictconfig.DictConfig, outputs: Dict[str, Dict[str, numpy.ndarray]], act_set: <a title="openpack_toolkit.activity.ActSet" href="../../activity/index.html#openpack_toolkit.activity.ActSet">ActSet</a> = ActSet(classes=(ActClass(id=100, name='Picking', is_ignore=False), ActClass(id=200, name='Relocate Item Label', is_ignore=False), ActClass(id=300, name='Assemble Box', is_ignore=False), ActClass(id=400, name='Insert Items', is_ignore=False), ActClass(id=500, name='Close Box', is_ignore=False), ActClass(id=600, name='Attach Box Label', is_ignore=False), ActClass(id=700, name='Scan Label', is_ignore=False), ActClass(id=800, name='Attach Shipping Label', is_ignore=False), ActClass(id=900, name='Put on Back Table', is_ignore=False), ActClass(id=1000, name='Fill out Order', is_ignore=False), ActClass(id=8100, name='Null', is_ignore=True))), exclude_ignore_class=True) ‑> pandas.core.frame.DataFrame</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Compute evaluation metrics from model outputs (predicted probability).</p>
 <h2 id="args">Args</h2>
 <dl>
+<dt><strong><code>cfg</code></strong> :&ensp;<code>DictConfig</code></dt>
+<dd>config dict.</dd>
 <dt><strong><code>outputs</code></strong> :&ensp;<code>Dict[str, Dict[str, np.ndarray]]</code></dt>
 <dd>dict object that contains t_idx and y.
 t_idx is a 2d array of target class index with shape=(BATCH_SIZE, WINDOW).
 y is a 3d array of predction probabilities with shape=(BATCH_SIZE, NUM_CLASSES, WINDOW).</dd>
-<dt><strong><code>classes</code></strong> :&ensp;<code>Tuple</code>, optional</dt>
+<dt><strong><code>act_set</code></strong> :&ensp;<code>ActSete</code>, optional</dt>
 <dd>class definition.</dd>
+<dt><strong><code>exclude_ignore_class</code></strong> :&ensp;<code>bool</code></dt>
+<dd>If true, ignore classes are excluded. (default: True)</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <p>pd.DataFrame</p></div>
@@ -238,21 +260,24 @@ y is a 3d array of predction probabilities with shape=(BATCH_SIZE, NUM_CLASSES, 
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def eval_operation_segmentation_wrapper(
+    cfg: DictConfig,
     outputs: Dict[str, Dict[str, np.ndarray]],
     act_set: ActSet = OPENPACK_OPERATIONS,
     exclude_ignore_class=True,
 ) -&gt; pd.DataFrame:
     &#34;&#34;&#34; Compute evaluation metrics from model outputs (predicted probability).
-
     Args:
+        cfg (DictConfig): config dict.
         outputs (Dict[str, Dict[str, np.ndarray]]): dict object that contains t_idx and y.
             t_idx is a 2d array of target class index with shape=(BATCH_SIZE, WINDOW).
             y is a 3d array of predction probabilities with shape=(BATCH_SIZE, NUM_CLASSES, WINDOW).
-        classes (Tuple, optional): class definition.
+        act_set (ActSete, optional): class definition.
+        exclude_ignore_class (bool): If true, ignore classes are excluded. (default: True)
     Returns:
         pd.DataFrame
     &#34;&#34;&#34;
-    submission = construct_submission_dict(outputs, act_set)
+    submission = construct_submission_dict(
+        outputs, act_set, include_ground_truth=True, cfg=cfg)
     classes = act_set.to_tuple()
     ignore_class_id = act_set.get_ignore_class_id()
     if isinstance(ignore_class_id, tuple):
@@ -293,16 +318,19 @@ y is a 3d array of predction probabilities with shape=(BATCH_SIZE, NUM_CLASSES, 
 </details>
 </dd>
 <dt id="openpack_toolkit.codalab.operation_segmentation.make_submission_zipfile"><code class="name flex">
-<span>def <span class="ident">make_submission_zipfile</span></span>(<span>submission: Dict, logdir: pathlib.Path) ‑> None</span>
+<span>def <span class="ident">make_submission_zipfile</span></span>(<span>submission: Dict, logdir: pathlib.Path, metadata: dict = None) ‑> None</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Check dict contents and generate zip file for codalab submission.</p>
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>submission</code></strong> :&ensp;<code>Dict</code></dt>
-<dd><em>description</em></dd>
+<dd>submission dict</dd>
 <dt><strong><code>logdir</code></strong> :&ensp;<code>Path</code></dt>
-<dd><em>description</em></dd>
+<dd>path to the output directory</dd>
+<dt><strong><code>metadata</code></strong> :&ensp;<code>dict</code></dt>
+<dd>dict of additional information that is included in
+<code>submission.json</code>. We recommend to include a data split name.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <p>None (make JSON &amp; zip files)</p></div>
@@ -310,12 +338,17 @@ y is a 3d array of predction probabilities with shape=(BATCH_SIZE, NUM_CLASSES, 
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def make_submission_zipfile(submission: Dict, logdir: Path) -&gt; None:
+<pre><code class="python">def make_submission_zipfile(
+        submission: Dict,
+        logdir: Path,
+        metadata: dict = None) -&gt; None:
     &#34;&#34;&#34;Check dict contents and generate zip file for codalab submission.
 
     Args:
-        submission (Dict): _description_
-        logdir (Path): _description_
+        submission (Dict): submission dict
+        logdir (Path): path to the output directory
+        metadata (dict): dict of additional information that is included in
+            ``submission.json``. We recommend to include a data split name.
     Returns:
         None (make JSON &amp; zip files)
     &#34;&#34;&#34;
@@ -332,6 +365,10 @@ y is a 3d array of predction probabilities with shape=(BATCH_SIZE, NUM_CLASSES, 
             assert isinstance(arr, np.ndarray)
             record[arr_name] = arr.tolist()
         submission_clean[key] = record
+
+    # Add meta data
+    if metadata is not None:
+        submission_clean[&#34;meta&#34;] = metadata
 
     # Write JSON file
     path_json = Path(logdir, &#34;submission.json&#34;)

@@ -203,6 +203,12 @@ Default. 30 [ms] (&lt;= 1 sample)</dd>
         logger.debug(f&#34;load IMU data from {path} -&gt; df={df.shape}&#34;)
         assert set(channels) &lt; set(df.columns)
 
+        # NOTE: Error handling : ATR01 in U0101-S0500 has timestamp error.
+        #       See an issue #87.
+        if str(path).endswith(&#34;/U0101/atr/atr01/S0500.csv&#34;):
+            df = df.drop(0, axis=0)
+            df = df.reset_index(drop=True)
+
         ts = df[&#34;unixtime&#34;].values
         x = df[channels].values.T
 

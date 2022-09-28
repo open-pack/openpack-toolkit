@@ -75,25 +75,35 @@ __all__ = [
 <dl>
 <dt id="openpack_toolkit.configs.AnnotConfig"><code class="flex name class">
 <span>class <span class="ident">AnnotConfig</span></span>
-<span>(</span><span>name: str = '???', version: str = '???', path: Dict[str, str] = '???', file_format: Optional[Dict[str, str]] = None, classes: <a title="openpack_toolkit.activity.ActSet" href="../activity/index.html#openpack_toolkit.activity.ActSet">ActSet</a> = '???')</span>
+<span>(</span><span>conf_type: str = '???', name: str = '???', version: str = '???', path: Optional[Dict[str, str]] = '???', file_format: Optional[Dict[str, str]] = None, classes: Optional[<a title="openpack_toolkit.activity.ActSet" href="../activity/index.html#openpack_toolkit.activity.ActSet">ActSet</a>] = '???', activity_sets: Optional[Dict] = None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>AnnotConfig(name: str = '???', version: str = '???', path: Dict[str, str] = '???', file_format: Optional[Dict[str, str]] = None, classes: openpack_toolkit.activity.ActSet = '???')</p></div>
+<div class="desc"><p>AnnotConfig(conf_type: str = '???', name: str = '???', version: str = '???', path: Optional[Dict[str, str]] = '???', file_format: Optional[Dict[str, str]] = None, classes: Optional[openpack_toolkit.activity.ActSet] = '???', activity_sets: Optional[Dict] = None)</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@dataclass
 class AnnotConfig:
+    conf_type: str = MISSING
     name: str = MISSING
     version: str = MISSING
-    path: Dict[str, str] = MISSING
+    path: Optional[Dict[str, str]] = MISSING
     file_format: Optional[Dict[str, str]] = None
-    classes: ActSet = MISSING</code></pre>
+    classes: Optional[ActSet] = MISSING
+    activity_sets: Optional[Dict] = None</code></pre>
 </details>
 <h3>Class variables</h3>
 <dl>
-<dt id="openpack_toolkit.configs.AnnotConfig.classes"><code class="name">var <span class="ident">classes</span> : <a title="openpack_toolkit.activity.ActSet" href="../activity/index.html#openpack_toolkit.activity.ActSet">ActSet</a></code></dt>
+<dt id="openpack_toolkit.configs.AnnotConfig.activity_sets"><code class="name">var <span class="ident">activity_sets</span> : Optional[Dict]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="openpack_toolkit.configs.AnnotConfig.classes"><code class="name">var <span class="ident">classes</span> : Optional[<a title="openpack_toolkit.activity.ActSet" href="../activity/index.html#openpack_toolkit.activity.ActSet">ActSet</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="openpack_toolkit.configs.AnnotConfig.conf_type"><code class="name">var <span class="ident">conf_type</span> : str</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -105,7 +115,7 @@ class AnnotConfig:
 <dd>
 <div class="desc"></div>
 </dd>
-<dt id="openpack_toolkit.configs.AnnotConfig.path"><code class="name">var <span class="ident">path</span> : Dict[str, str]</code></dt>
+<dt id="openpack_toolkit.configs.AnnotConfig.path"><code class="name">var <span class="ident">path</span> : Optional[Dict[str, str]]</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -167,6 +177,7 @@ class DataStreamConfig:
 </details>
 <h3>Subclasses</h3>
 <ul class="hlist">
+<li>openpack_toolkit.configs._schema.E4Config</li>
 <li>openpack_toolkit.configs._schema.ImuConfig</li>
 <li>openpack_toolkit.configs._schema.KeypointConfig</li>
 <li>openpack_toolkit.configs._schema.SystemDataConfig</li>
@@ -209,10 +220,10 @@ class DataStreamConfig:
 </dd>
 <dt id="openpack_toolkit.configs.DatasetConfig"><code class="flex name class">
 <span>class <span class="ident">DatasetConfig</span></span>
-<span>(</span><span>name: str = '???', streams: Optional[Dict[str, openpack_toolkit.configs._schema.DataStreamConfig]] = None, stream: Optional[openpack_toolkit.configs._schema.DataStreamConfig] = None, split: openpack_toolkit.configs._schema.DataSplitConfig = '???', annotation: openpack_toolkit.configs._schema.AnnotConfig = '???')</span>
+<span>(</span><span>name: str = '???', streams: Optional[Dict[str, openpack_toolkit.configs._schema.DataStreamConfig]] = None, stream: Optional[openpack_toolkit.configs._schema.DataStreamConfig] = None, split: openpack_toolkit.configs._schema.DataSplitConfig = '???', annotation: openpack_toolkit.configs._schema.AnnotConfig = '???', classes: Optional[<a title="openpack_toolkit.activity.ActSet" href="../activity/index.html#openpack_toolkit.activity.ActSet">ActSet</a>] = '???')</span>
 </code></dt>
 <dd>
-<div class="desc"><p>DatasetConfig(name: str = '???', streams: Optional[Dict[str, openpack_toolkit.configs._schema.DataStreamConfig]] = None, stream: Optional[openpack_toolkit.configs._schema.DataStreamConfig] = None, split: openpack_toolkit.configs._schema.DataSplitConfig = '???', annotation: openpack_toolkit.configs._schema.AnnotConfig = '???')</p></div>
+<div class="desc"><p>DatasetConfig(name: str = '???', streams: Optional[Dict[str, openpack_toolkit.configs._schema.DataStreamConfig]] = None, stream: Optional[openpack_toolkit.configs._schema.DataStreamConfig] = None, split: openpack_toolkit.configs._schema.DataSplitConfig = '???', annotation: openpack_toolkit.configs._schema.AnnotConfig = '???', classes: Optional[openpack_toolkit.activity.ActSet] = '???')</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -223,11 +234,16 @@ class DatasetConfig:
     streams: Optional[Dict[str, DataStreamConfig]] = None
     stream: Optional[DataStreamConfig] = None
     split: DataSplitConfig = MISSING
-    annotation: AnnotConfig = MISSING</code></pre>
+    annotation: AnnotConfig = MISSING
+    classes: Optional[ActSet] = MISSING</code></pre>
 </details>
 <h3>Class variables</h3>
 <dl>
 <dt id="openpack_toolkit.configs.DatasetConfig.annotation"><code class="name">var <span class="ident">annotation</span> : openpack_toolkit.configs._schema.AnnotConfig</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="openpack_toolkit.configs.DatasetConfig.classes"><code class="name">var <span class="ident">classes</span> : Optional[<a title="openpack_toolkit.activity.ActSet" href="../activity/index.html#openpack_toolkit.activity.ActSet">ActSet</a>]</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -539,8 +555,10 @@ class UserConfig:
 <ul>
 <li>
 <h4><code><a title="openpack_toolkit.configs.AnnotConfig" href="#openpack_toolkit.configs.AnnotConfig">AnnotConfig</a></code></h4>
-<ul class="">
+<ul class="two-column">
+<li><code><a title="openpack_toolkit.configs.AnnotConfig.activity_sets" href="#openpack_toolkit.configs.AnnotConfig.activity_sets">activity_sets</a></code></li>
 <li><code><a title="openpack_toolkit.configs.AnnotConfig.classes" href="#openpack_toolkit.configs.AnnotConfig.classes">classes</a></code></li>
+<li><code><a title="openpack_toolkit.configs.AnnotConfig.conf_type" href="#openpack_toolkit.configs.AnnotConfig.conf_type">conf_type</a></code></li>
 <li><code><a title="openpack_toolkit.configs.AnnotConfig.file_format" href="#openpack_toolkit.configs.AnnotConfig.file_format">file_format</a></code></li>
 <li><code><a title="openpack_toolkit.configs.AnnotConfig.name" href="#openpack_toolkit.configs.AnnotConfig.name">name</a></code></li>
 <li><code><a title="openpack_toolkit.configs.AnnotConfig.path" href="#openpack_toolkit.configs.AnnotConfig.path">path</a></code></li>
@@ -562,8 +580,9 @@ class UserConfig:
 </li>
 <li>
 <h4><code><a title="openpack_toolkit.configs.DatasetConfig" href="#openpack_toolkit.configs.DatasetConfig">DatasetConfig</a></code></h4>
-<ul class="">
+<ul class="two-column">
 <li><code><a title="openpack_toolkit.configs.DatasetConfig.annotation" href="#openpack_toolkit.configs.DatasetConfig.annotation">annotation</a></code></li>
+<li><code><a title="openpack_toolkit.configs.DatasetConfig.classes" href="#openpack_toolkit.configs.DatasetConfig.classes">classes</a></code></li>
 <li><code><a title="openpack_toolkit.configs.DatasetConfig.name" href="#openpack_toolkit.configs.DatasetConfig.name">name</a></code></li>
 <li><code><a title="openpack_toolkit.configs.DatasetConfig.split" href="#openpack_toolkit.configs.DatasetConfig.split">split</a></code></li>
 <li><code><a title="openpack_toolkit.configs.DatasetConfig.stream" href="#openpack_toolkit.configs.DatasetConfig.stream">stream</a></code></li>

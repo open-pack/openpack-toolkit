@@ -115,18 +115,22 @@ macro avg., weighted avg., and score for each class will be calculated.</dd>
 </details>
 </dd>
 <dt id="openpack_toolkit.codalab.eval_operation_segmentation_wrapper"><code class="name flex">
-<span>def <span class="ident">eval_operation_segmentation_wrapper</span></span>(<span>outputs: Dict[str, Dict[str, numpy.ndarray]], act_set: <a title="openpack_toolkit.activity.ActSet" href="../activity/index.html#openpack_toolkit.activity.ActSet">ActSet</a> = ActSet(classes=(ActClass(id=100, name='Picking', is_ignore=False), ActClass(id=200, name='RelocateItemLabel', is_ignore=False), ActClass(id=300, name='AssembleBox', is_ignore=False), ActClass(id=400, name='InsertItems', is_ignore=False), ActClass(id=500, name='CloseBox', is_ignore=False), ActClass(id=600, name='AttachBoxLabel', is_ignore=False), ActClass(id=700, name='ScanLabel', is_ignore=False), ActClass(id=800, name='AttachShippingLabel', is_ignore=False), ActClass(id=900, name='PutOnRack', is_ignore=False), ActClass(id=1000, name='Fill-outOrder', is_ignore=False), ActClass(id=8100, name='Null', is_ignore=True))), exclude_ignore_class=True) ‑> pandas.core.frame.DataFrame</span>
+<span>def <span class="ident">eval_operation_segmentation_wrapper</span></span>(<span>cfg: omegaconf.dictconfig.DictConfig, outputs: Dict[str, Dict[str, numpy.ndarray]], act_set: <a title="openpack_toolkit.activity.ActSet" href="../activity/index.html#openpack_toolkit.activity.ActSet">ActSet</a> = ActSet(classes=(ActClass(id=100, name='Picking', is_ignore=False), ActClass(id=200, name='Relocate Item Label', is_ignore=False), ActClass(id=300, name='Assemble Box', is_ignore=False), ActClass(id=400, name='Insert Items', is_ignore=False), ActClass(id=500, name='Close Box', is_ignore=False), ActClass(id=600, name='Attach Box Label', is_ignore=False), ActClass(id=700, name='Scan Label', is_ignore=False), ActClass(id=800, name='Attach Shipping Label', is_ignore=False), ActClass(id=900, name='Put on Back Table', is_ignore=False), ActClass(id=1000, name='Fill out Order', is_ignore=False), ActClass(id=8100, name='Null', is_ignore=True))), exclude_ignore_class=True) ‑> pandas.core.frame.DataFrame</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Compute evaluation metrics from model outputs (predicted probability).</p>
 <h2 id="args">Args</h2>
 <dl>
+<dt><strong><code>cfg</code></strong> :&ensp;<code>DictConfig</code></dt>
+<dd>config dict.</dd>
 <dt><strong><code>outputs</code></strong> :&ensp;<code>Dict[str, Dict[str, np.ndarray]]</code></dt>
 <dd>dict object that contains t_idx and y.
 t_idx is a 2d array of target class index with shape=(BATCH_SIZE, WINDOW).
 y is a 3d array of predction probabilities with shape=(BATCH_SIZE, NUM_CLASSES, WINDOW).</dd>
-<dt><strong><code>classes</code></strong> :&ensp;<code>Tuple</code>, optional</dt>
+<dt><strong><code>act_set</code></strong> :&ensp;<code>ActSete</code>, optional</dt>
 <dd>class definition.</dd>
+<dt><strong><code>exclude_ignore_class</code></strong> :&ensp;<code>bool</code></dt>
+<dd>If true, ignore classes are excluded. (default: True)</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <p>pd.DataFrame</p></div>
@@ -135,21 +139,24 @@ y is a 3d array of predction probabilities with shape=(BATCH_SIZE, NUM_CLASSES, 
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def eval_operation_segmentation_wrapper(
+    cfg: DictConfig,
     outputs: Dict[str, Dict[str, np.ndarray]],
     act_set: ActSet = OPENPACK_OPERATIONS,
     exclude_ignore_class=True,
 ) -&gt; pd.DataFrame:
     &#34;&#34;&#34; Compute evaluation metrics from model outputs (predicted probability).
-
     Args:
+        cfg (DictConfig): config dict.
         outputs (Dict[str, Dict[str, np.ndarray]]): dict object that contains t_idx and y.
             t_idx is a 2d array of target class index with shape=(BATCH_SIZE, WINDOW).
             y is a 3d array of predction probabilities with shape=(BATCH_SIZE, NUM_CLASSES, WINDOW).
-        classes (Tuple, optional): class definition.
+        act_set (ActSete, optional): class definition.
+        exclude_ignore_class (bool): If true, ignore classes are excluded. (default: True)
     Returns:
         pd.DataFrame
     &#34;&#34;&#34;
-    submission = construct_submission_dict(outputs, act_set)
+    submission = construct_submission_dict(
+        outputs, act_set, include_ground_truth=True, cfg=cfg)
     classes = act_set.to_tuple()
     ignore_class_id = act_set.get_ignore_class_id()
     if isinstance(ignore_class_id, tuple):
