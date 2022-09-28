@@ -5,6 +5,7 @@ from pathlib import Path
 import autopep8
 import yaml
 from jinja2 import Environment, FileSystemLoader
+from omegaconf import OmegaConf
 
 basicConfig(level=DEBUG)
 logger = getLogger(__name__)
@@ -12,6 +13,7 @@ logger = getLogger(__name__)
 TARGET_RELEASE_VERSIONS = [
     "v0-2-0",
     "v0-2-1",
+    "v0-3-0",
 ]
 
 
@@ -22,7 +24,7 @@ def main():
         path = Path("../release", f"{release}.yaml")
         logger.info(f"load release config from {path}")
         with open(path, "r") as f:
-            data = yaml.safe_load(f)
+            data = OmegaConf.to_container(OmegaConf.create(yaml.safe_load(f)))
 
         data["streams_str"] = json.dumps(data["streams"], indent=4)
         releases.append(data)

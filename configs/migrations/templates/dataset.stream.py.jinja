@@ -1,11 +1,10 @@
-from .._schema import DataStreamConfig, ImuConfig, KeypointConfig
+from .._schema import E4Config, DataStreamConfig, ImuConfig, KeypointConfig
 
 {% for stream in streams %}
 {% if stream.schema == "ImuConfig" %}
 {{stream.name|replace("-", "_")|upper}}_STREAM = ImuConfig(
     schema="ImuConfig",
     name="{{stream.name}}",
-    description="{{stream.description}}",
     super_stream="{{stream.super_stream}}",
     path=DataStreamConfig.Paths(
         dir="{{stream.path.dir}}",
@@ -17,11 +16,22 @@ from .._schema import DataStreamConfig, ImuConfig, KeypointConfig
     gyro={{stream.gyro}},
     quat={{stream.quat}},
 )
+{% elif stream.schema == "E4Config" %}
+{{stream.name|replace("-", "_")|upper}}_STREAM = E4Config(
+    schema="ImuConfig",
+    name="{{stream.name}}",
+    sensor="{{stream.sensor}}",
+    path=DataStreamConfig.Paths(
+        dir="{{stream.path.dir}}",
+        fname="{{stream.path.fname}}",
+    ),
+    frame_rate={{stream.frame_rate}},
+    devices={{stream.devices}},
+)
 {% elif stream.schema == "KeypointConfig" %}
 {{stream.name|replace("-", "_")|upper}}_STREAM = KeypointConfig(
     schema="KeypointConfig",
     name="{{stream.name}}",
-    description="{{stream.description}}",
     super_stream="{{stream.super_stream}}",
     path=DataStreamConfig.Paths(
         dir="{{stream.path.dir}}",
@@ -40,7 +50,6 @@ from .._schema import DataStreamConfig, ImuConfig, KeypointConfig
 {{stream.name|replace("-", "_")|upper}}_STREAM = ImuConfig(
     schema="SystemDataConfig",
     name="{{stream.name}}",
-    description="{{stream.description}}",
     super_stream="{{stream.super_stream}}",
     path=DataStreamConfig.Paths(
         dir="{{stream.path.dir}}",

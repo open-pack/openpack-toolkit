@@ -2,22 +2,37 @@ from .._schema import AnnotConfig
 from ...activity import ActSet, ActClass
 
 {% for key, annot in annotations.items() %}
+{% if annot.type == "ACTIVITY_SET" %}
 {{key|replace("-", "_")|upper}} = ActSet((
 {% for act in annot.classes %}
         ActClass({{act.id}}, "{{act.name}}", is_ignore={{act.ignore}}),
 {% endfor %}
 ))
+{% endif %}
 
+{% if annot.type == "ACTIVITY_SET" %}
 {{key|replace("-", "_")|upper}}_ANNOTATION = AnnotConfig(
+    conf_type="ACTIVITY_SET",
+    name="{{annot.name}}",
+    version="{{annot.version}}",
+    classes={{key|replace("-", "_")|upper}},
+)
+{% elif annot.type == "ANNOT_FILE" %}
+{{key|replace("-", "_")|upper}}_ANNOTATION = AnnotConfig(
+    conf_type="ANNOT_FILE",
     name="{{annot.name}}",
     version="{{annot.version}}",
     path={
         "dir": "{{annot.path.dir}}",
         "fname": "{{annot.path.fname}}",
     },
-    classes={{key|replace("-", "_")|upper}},
+    activity_sets={
+        {% for aset in annot.activity_sets %}
+        "{{aset}}": {{aset|replace("-", "_")|upper}},
+        {% endfor %}
+    },
 )
-
+{% endif %}
 
 
 {% endfor %}

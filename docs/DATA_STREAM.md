@@ -2,7 +2,10 @@
 
 1. `atr-qags`
 1. `kinect-2d-kpt`
-1. `e4-all`
+1. `e4-acc`
+1. `e4-bvp`
+1. `e4-eda`
+1. `e4-temp`
 1. `system-ht-original`
 1. `system-order-sheet`
 
@@ -12,7 +15,7 @@ Acceleration, gyro, and quaternion data captured by ATR IMU sensors.
 
 - Config File: [atr-qags.yaml](../configs/dataset/stream/atr-qags.yaml)
 - Python Module: [`openpack_toolkit.configs.datasets.streams.ATR_QAGS_STREAM`](../openpack_toolkit/configs/datasets/streams.py)
-- Frame Rate: 30
+- Frame Rate: 30 Hz
 
 ### 1-1: Path
 
@@ -58,7 +61,7 @@ We attached 4 IMU sensors to subjects. IMU = [ATR TSND151](http://www.atr-p.com/
 
 - Config File: [kinect-2d-kpt.yaml](../configs/dataset/stream/kinect-2d-kpt.yaml)
 - Python Module: [`openpack_toolkit.configs.datasets.streams.KINECT_2D_KPT_STREAM`](../openpack_toolkit/configs/datasets/streams.py)
-- Frame Rate: 15
+- Frame Rate: 15 Hz
 
 ### 2-1: Path
 
@@ -114,18 +117,18 @@ Keypoints are defined in MS COCO style.
 | 16 | 16 | right_ankle | 
 
 
-## [3] `e4-all`
+## [3] `e4-acc`
 
-All modes from Empatica E4 sensors
+Acc data from Empatica E4 sensors
 
-- Config File: [e4-all.yaml](../configs/dataset/stream/e4-all.yaml)
-- Python Module: [`openpack_toolkit.configs.datasets.streams.E4_ALL_STREAM`](../openpack_toolkit/configs/datasets/streams.py)
-- Frame Rate: {'acc': '32Hz', 'bvp': '64Hz', 'eda': '4Hz', 'temp': '4Hz'}
+- Config File: [e4-acc.yaml](../configs/dataset/stream/e4-acc.yaml)
+- Python Module: [`openpack_toolkit.configs.datasets.streams.E4_ACC_STREAM`](../openpack_toolkit/configs/datasets/streams.py)
+- Frame Rate: 32 Hz
 
 ### 3-1: Path
 
 ```txt
-${path.openpack.rootdir}/${user.name}/e4/${device}//${sensor}/${session}.csv
+${path.openpack.rootdir}/${user.name}/e4/${device}/acc/${session}.csv
 ```
 
 ### 3-2: File Format (`csv`)
@@ -134,27 +137,143 @@ ${path.openpack.rootdir}/${user.name}/e4/${device}//${sensor}/${session}.csv
 
 | # | Column Name | Description | Unit | Dtype | Note |
 |---|-------------|-------------|------|-------|------|
-| 0 | unixtime |  | milli second |  |  |
-| 1 | TBA |  | None |  |  |
+| 0 | time |  | milli second |  |  |
+| 1 | acc_x |  | G |  |  |
+| 2 | acc_y |  | G |  |  |
+| 3 | acc_z |  | G |  |  |
 
 ### 3-2: Meta Data
 
+#### Device List
 
-## [4] `system-ht-original`
+We attached 2 [Empatica E4](https://www.empatica.com/en-int/research/e4/) sensors to subjects.
+
+| # | Device Name | Location | 
+|---|---|---| 
+| 0 | e401 | Right Wrist | 
+| 1 | e402 | Left Wrist | 
+
+
+## [4] `e4-bvp`
+
+BVP (Blood Volume Pulse) data from Empatica E4 sensors
+
+- Config File: [e4-bvp.yaml](../configs/dataset/stream/e4-bvp.yaml)
+- Python Module: [`openpack_toolkit.configs.datasets.streams.E4_BVP_STREAM`](../openpack_toolkit/configs/datasets/streams.py)
+- Frame Rate: 64 Hz
+
+### 4-1: Path
+
+```txt
+${path.openpack.rootdir}/${user.name}/e4/${device}/bvp/${session}.csv
+```
+
+### 4-2: File Format (`csv`)
+
+
+
+| # | Column Name | Description | Unit | Dtype | Note |
+|---|-------------|-------------|------|-------|------|
+| 0 | time |  | milli second |  |  |
+| 1 | bvp |  | mmHg |  |  |
+
+### 4-2: Meta Data
+
+#### Device List
+
+We attached 2 [Empatica E4](https://www.empatica.com/en-int/research/e4/) sensors to subjects.
+
+| # | Device Name | Location | 
+|---|---|---| 
+| 0 | e401 | Right Wrist | 
+| 1 | e402 | Left Wrist | 
+
+
+## [5] `e4-eda`
+
+EDA data from Empatica E4 sensors
+
+- Config File: [e4-eda.yaml](../configs/dataset/stream/e4-eda.yaml)
+- Python Module: [`openpack_toolkit.configs.datasets.streams.E4_EDA_STREAM`](../openpack_toolkit/configs/datasets/streams.py)
+- Frame Rate: 4 Hz
+
+### 5-1: Path
+
+```txt
+${path.openpack.rootdir}/${user.name}/e4/${device}/eda/${session}.csv
+```
+
+### 5-2: File Format (`csv`)
+
+
+
+| # | Column Name | Description | Unit | Dtype | Note |
+|---|-------------|-------------|------|-------|------|
+| 0 | time |  | milli second |  |  |
+| 1 | eda |  | microsiemens |  |  |
+
+### 5-2: Meta Data
+
+#### Device List
+
+We attached 2 [Empatica E4](https://www.empatica.com/en-int/research/e4/) sensors to subjects.
+
+| # | Device Name | Location | 
+|---|---|---| 
+| 0 | e401 | Right Wrist | 
+| 1 | e402 | Left Wrist | 
+
+
+## [6] `e4-temp`
+
+Temp (temperature) data from Empatica E4 sensors
+
+- Config File: [e4-temp.yaml](../configs/dataset/stream/e4-temp.yaml)
+- Python Module: [`openpack_toolkit.configs.datasets.streams.E4_TEMP_STREAM`](../openpack_toolkit/configs/datasets/streams.py)
+- Frame Rate: 4 Hz
+
+### 6-1: Path
+
+```txt
+${path.openpack.rootdir}/${user.name}/e4/${device}/temp/${session}.csv
+```
+
+### 6-2: File Format (`csv`)
+
+
+
+| # | Column Name | Description | Unit | Dtype | Note |
+|---|-------------|-------------|------|-------|------|
+| 0 | time |  | milli second |  |  |
+| 1 | temp |  | microsiemens |  |  |
+
+### 6-2: Meta Data
+
+#### Device List
+
+We attached 2 [Empatica E4](https://www.empatica.com/en-int/research/e4/) sensors to subjects.
+
+| # | Device Name | Location | 
+|---|---|---| 
+| 0 | e401 | Right Wrist | 
+| 1 | e402 | Left Wrist | 
+
+
+## [7] `system-ht-original`
 
 Scan log data from a handy terminal.
 
 - Config File: [system-ht-original.yaml](../configs/dataset/stream/system-ht-original.yaml)
 - Python Module: [`openpack_toolkit.configs.datasets.streams.SYSTEM_HT_ORIGINAL_STREAM`](../openpack_toolkit/configs/datasets/streams.py)
-- Frame Rate: 30
+- Frame Rate: 30 Hz
 
-### 4-1: Path
+### 7-1: Path
 
 ```txt
 ${path.openpack.rootdir}/${user.name}/system/ht/${session}.csv
 ```
 
-### 4-2: File Format (`csv`)
+### 7-2: File Format (`csv`)
 
 
 
@@ -166,24 +285,25 @@ ${path.openpack.rootdir}/${user.name}/system/ht/${session}.csv
 | 3 | box |  | None | str |  |
 | 4 | item |  | None | str |  |
 
-### 4-2: Meta Data
+### 7-2: Meta Data
 
+No DATA
 
-## [5] `system-order-sheet`
+## [8] `system-order-sheet`
 
 Master data of order sheets.
 
 - Config File: [system-order-sheet.yaml](../configs/dataset/stream/system-order-sheet.yaml)
 - Python Module: [`openpack_toolkit.configs.datasets.streams.SYSTEM_ORDER_SHEET_STREAM`](../openpack_toolkit/configs/datasets/streams.py)
-- Frame Rate: 30
+- Frame Rate: 30 Hz
 
-### 5-1: Path
+### 8-1: Path
 
 ```txt
 ${path.openpack.rootdir}/${user.name}/system/order-sheet//${session}.csv
 ```
 
-### 5-2: File Format (`csv`)
+### 8-2: File Format (`csv`)
 
 
 
@@ -205,7 +325,7 @@ ${path.openpack.rootdir}/${user.name}/system/order-sheet//${session}.csv
 | 13 | amount4 |  | None | str |  |
 | 14 | amount5 |  | None | str |  |
 
-### 5-2: Meta Data
+### 8-2: Meta Data
 
 #### Combination Patterns of Items
 

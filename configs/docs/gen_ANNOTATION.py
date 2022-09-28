@@ -12,6 +12,7 @@ logger = getLogger(__name__)
 TARGET_ANNOTATIONS = [
     "openpack-operations",
     "openpack-actions",
+    "activity-1s",
 ]
 
 

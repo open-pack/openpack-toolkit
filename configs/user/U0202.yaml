@@ -1,0 +1,56 @@
+id: 202
+meta:
+  age_group: 30s
+  dominant_hand: Right
+  note: Same person as U0105
+  packaging_experience: 4 Years
+  scenarios:
+    S0100: S2
+    S0200: S2
+    S0300: S3
+    S0400: S3
+    S0500: S4
+  sex: F
+name: U0202
+sessions:
+  S0100:
+    annotated_box: 20
+    duration: 37m16s
+    end: '2022-03-04T10:52:17+09:00'
+    start: '2022-03-04T10:15:01+09:00'
+  S0200:
+    annotated_box: 20
+    duration: 29m27s
+    end: '2022-03-04T11:47:13+09:00'
+    start: '2022-03-04T11:17:46+09:00'
+  S0300:
+    annotated_box: 20
+    duration: 34m10s
+    end: '2022-03-04T13:47:28+09:00'
+    start: '2022-03-04T13:13:18+09:00'
+  S0400:
+    annotated_box: 20
+    duration: 32m13s
+    end: '2022-03-04T14:43:29+09:00'
+    start: '2022-03-04T14:11:16+09:00'
+  S0500:
+    annotated_box: 15
+    box:
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    - 10
+    - 11
+    - 12
+    - 13
+    - 14
+    - 15
+    duration: 17m54s
+    end: '2022-03-04T15:24:52+09:00'
+    start: '2022-03-04T15:06:58+09:00'

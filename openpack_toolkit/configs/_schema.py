@@ -81,6 +81,13 @@ class ImuConfig(DataStreamConfig):
 
 
 @dataclass
+class E4Config(DataStreamConfig):
+    schema: str = "E4Config"
+    devices: List[str] = MISSING
+    sensor: str = MISSING
+
+
+@dataclass
 class KeypointConfig(DataStreamConfig):
     schema: str = "KeypointConfig"
     category: str = MISSING
@@ -95,11 +102,13 @@ class SystemDataConfig(DataStreamConfig):
 
 @dataclass
 class AnnotConfig:
+    conf_type: str = MISSING
     name: str = MISSING
     version: str = MISSING
-    path: Dict[str, str] = MISSING
+    path: Optional[Dict[str, str]] = MISSING
     file_format: Optional[Dict[str, str]] = None
-    classes: ActSet = MISSING
+    classes: Optional[ActSet] = MISSING
+    activity_sets: Optional[Dict] = None
 
 
 @dataclass
@@ -109,6 +118,7 @@ class DatasetConfig:
     stream: Optional[DataStreamConfig] = None
     split: DataSplitConfig = MISSING
     annotation: AnnotConfig = MISSING
+    classes: Optional[ActSet] = MISSING
 
 
 # =========

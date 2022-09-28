@@ -12,7 +12,10 @@ logger = getLogger(__name__)
 TARGET_DATA_STREAM = [
     "atr-qags",
     "kinect-2d-kpt",
-    "e4-all",
+    "e4-acc",
+    "e4-bvp",
+    "e4-eda",
+    "e4-temp",
     "system-ht-original",
     "system-order-sheet",
 ]

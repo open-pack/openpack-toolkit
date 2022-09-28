@@ -4,6 +4,7 @@ from pathlib import Path
 import autopep8
 import yaml
 from jinja2 import Environment, FileSystemLoader
+from omegaconf import OmegaConf
 
 basicConfig(level=DEBUG)
 logger = getLogger(__name__)
@@ -11,6 +12,7 @@ logger = getLogger(__name__)
 TARGET_SPLITS = [
     "debug",
     "pilot-challenge",
+    "openpack-challenge-2022",
 ]
 
 
@@ -21,7 +23,7 @@ def main():
         path = Path("../dataset/split", f"{split}.yaml")
         logger.info(f"load dataset/split config from {path}")
         with open(path, "r") as f:
-            data = yaml.safe_load(f)
+            data = OmegaConf.create(yaml.safe_load(f))
         params["splits"][split] = data
 
     # build python script with jinja2

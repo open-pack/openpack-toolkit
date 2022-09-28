@@ -1,0 +1,24 @@
+name: activity-1s
+type: ANNOT_FILE
+activity_sets:
+- openpack-operations
+- openpack-actions
+path:
+  dir: ${path.openpack.rootdir}/${user.name}/annotation/activity-1s/
+  fname: ${session}.csv
+file_format:
+  file_type: csv
+  columns:
+  - name: unixtime
+    unit: milli scond
+    dtype: int
+  - name: user
+    dtype: str
+  - name: session
+    dtype: str
+  - name: box
+    dtype: int
+  - name: operation
+    dtype: int
+  - name: action
+    dtype: int

@@ -1,328 +1,322 @@
+type: ACTIVITY_SET
 name: openpack-actions
-version: v3.2.1
-path:
-  dir: ${path.openpack.rootdir}/${user.name}/annotation/${..name}
-  fname: ${session}.csv
-file_format:
-  file_type: csv
-  columns:
-  - name: unixtime
-    unit: milli scond
-  - name: user
-  - name: session
-  - name: box
-  - name: operation
-  - name: action
+version: v3.3.0
 classes:
 - id: 101
   operation: Picking
-  name: PickUp-Sheet
-  description: ''
-  version: v3.0.0
-  ignore: false
-- id: 102
-  operation: Picking
-  name: Walk-ToRack
-  description: ''
-  version: v3.0.0
+  name: Pick Up Sheet
+  description: Pick up order sheet from the workbench.
+  version: v3.2.2
   ignore: false
 - id: 103
   operation: Picking
-  name: PickUp-Item-FromBox
-  description: ''
-  version: v3.0.0
+  name: Pick Up Item from Box
+  description: Pick items out of a box that contains items picked in batches.
+  version: v3.2.2
   ignore: false
 - id: 104
   operation: Picking
-  name: Pick-UpOrderSheet&Walk-ToRack-v2
+  name: Pick Up Order Sheet & Walk to Rack - v2
   description: ''
   version: v2.5.x
   ignore: false
 - id: 105
   operation: Picking
-  name: Walk-ToWorkBench-v2
+  name: Walk to Work Bench - v2
   description: ''
   version: v2.5.x
   ignore: false
 - id: 106
   operation: Picking
-  name: Pick-UpOrderSheet&Walk-ToRack-with-PrevPackedBox-v2
+  name: Pick Up Order Sheet & Walk to Rack with Prev Packed Box - v2
   description: ''
   version: v2.5.x
   ignore: false
 - id: 107
   operation: Picking
-  name: PickUp-BoxSheet
-  description: ''
-  version: v3.1.0
+  name: Pick Up Box Sheet
+  description: Pick up an order sheet and packed boxes at the same time. (This label
+    is used for moving packed boxes and picking items for the next box at the same
+    time.)
+  version: v3.2.2
   ignore: false
 - id: 108
   operation: Picking
-  name: Walk-ToWorkBench
-  description: ''
-  version: v3.2.1
+  name: Walk to Work Bench
+  description: Lift the item and turn back toward the workbench. (When picking is
+    done in one round trip, this action is set as the beginning of the box.)
+  version: v3.2.2
+  ignore: false
+- id: 109
+  operation: Picking
+  name: Put Packed Box
+  description: Go to the back table and place the packed box under the table.
+  version: v3.3.0
   ignore: false
 - id: 201
-  operation: RelocateItemLabel
-  name: Remove-ItemLabel
-  description: ''
-  version: v3.0.0
+  operation: Relocate Item Label
+  name: Remove Item Label
+  description: Remove the sticker with the barcode from the each item.
+  version: v3.2.2
   ignore: false
 - id: 202
-  operation: RelocateItemLabel
-  name: AttachTo-OrderSheet
-  description: ''
-  version: v3.0.0
+  operation: Relocate Item Label
+  name: Attach to Order Sheet
+  description: Attach the label on the bottom margin of the order sheet.
+  version: v3.2.2
   ignore: false
 - id: 203
-  operation: RelocateItemLabel
-  name: Hold-Pen
+  operation: Relocate Item Label
+  name: Hold Pen
   description: ''
-  version: v3.0.0
+  version: v3.2.2
   ignore: false
 - id: 204
-  operation: RelocateItemLabel
-  name: Write-CheckMark
-  description: ''
-  version: v3.2.0
+  operation: Relocate Item Label
+  name: Write Check Mark
+  description: 'The subject''s checkes items name and quantity. '
+  version: v3.2.2
   ignore: false
 - id: 205
-  operation: RelocateItemLabel
-  name: Put-Item-SmallBag
-  description: ''
-  version: v3.2.0
+  operation: Relocate Item Label
+  name: Put Item Small Bag
+  description: TBD
+  version: v3.2.2
   ignore: false
 - id: 206
-  operation: RelocateItemLabel
-  name: Relocate-ItemLabel-v2
+  operation: Relocate Item Label
+  name: Relocate Item Label - v2
   description: ''
   version: v2.5.x
   ignore: false
 - id: 207
-  operation: RelocateItemLabel
-  name: Write-v2
+  operation: Relocate Item Label
+  name: Write - v2
   description: ''
   version: v2.5.x
   ignore: false
 - id: 301
-  operation: AssembleBox
-  name: Pick-Cardboard
-  description: ''
-  version: v3.0.0
+  operation: Assemble Box
+  name: Pick Cardboard
+  description: Select and pick up boxes that match the size of the items.
+  version: v3.2.2
   ignore: false
 - id: 302
-  operation: AssembleBox
-  name: Bend-Flap
-  description: ''
-  version: v3.2.0
+  operation: Assemble Box
+  name: Bend Flap
+  description: Bend "bottom" 4 flaps of the box.
+  version: v3.2.2
   ignore: false
 - id: 303
-  operation: AssembleBox
-  name: Attach-Tape
-  description: ''
-  version: v3.2.0
+  operation: Assemble Box
+  name: Attach Tape
+  description: Apply craft tape to close the "bottom" of the box.
+  version: v3.2.2
   ignore: false
 - id: 304
-  operation: AssembleBox
-  name: TurnOver-Box
-  description: ''
-  version: v3.2.0
+  operation: Assemble Box
+  name: Turn Over Box
+  description: Turn the box upside down so that the side with the craft tape is on
+    the bottom.
+  version: v3.2.2
   ignore: false
 - id: 305
-  operation: AssembleBox
-  name: PickUp-AssembledBox
-  description: ''
-  version: v3.0.0
+  operation: Assemble Box
+  name: Pick Up Assembled Box
+  description: Pick up a pre-assembled box. (Used in Scenario.3-5)
+  version: v3.2.2
   ignore: false
 - id: 306
-  operation: AssembleBox
-  name: AssembleBox-v2
+  operation: Assemble Box
+  name: Assemble Box - v2
   description: ''
   version: v2.5.x
   ignore: false
 - id: 401
-  operation: InsertItems
-  name: Insert-Item-into-Box
-  description: ''
-  version: v3.0.0
+  operation: Insert Items
+  name: Insert Item into Box
+  description: Subject grabs individual items and inserts them in the assembled box
+  version: v3.2.2
   ignore: false
 - id: 402
-  operation: InsertItems
-  name: AirCushion
-  description: ''
-  version: v3.0.0
+  operation: Insert Items
+  name: Air Cushion
+  description: Insert air cushion to the box.
+  version: v3.2.2
   ignore: false
 - id: 403
-  operation: InsertItems
-  name: Separate-AirCushion
-  description: ''
-  version: v3.0.0
+  operation: Insert Items
+  name: Separate Air Cushion
+  description: Tear off the connected cushioning.
+  version: v3.2.2
   ignore: false
 - id: 404
-  operation: InsertItems
-  name: Put-Item-SmallBag
-  description: ''
-  version: v3.0.0
+  operation: Insert Items
+  name: Put Item Small Bag
+  description: Insert small items (<10cm) into the small paper bag and close it with
+    tape.
+  version: v3.2.2
   ignore: false
 - id: 405
-  operation: InsertItems
-  name: Insert-Items-v2
+  operation: Insert Items
+  name: Insert Items - v2
   description: ''
   version: v2.5.x
   ignore: false
 - id: 501
-  operation: CloseBox
-  name: Bend-Flap
-  description: ''
-  version: v3.0.0
+  operation: Close Box
+  name: Bend Flap
+  description: Bend 4 flaps in the upper side of the box.
+  version: v3.2.2
   ignore: false
 - id: 502
-  operation: CloseBox
-  name: Attach-Tape
-  description: ''
-  version: v3.0.0
+  operation: Close Box
+  name: Attach Tape
+  description: Close the box with craft tape.
+  version: v3.2.2
   ignore: false
 - id: 503
-  operation: CloseBox
-  name: CloseBox-v2
+  operation: Close Box
+  name: Close Box - v2
   description: ''
   version: v2.5.x
   ignore: false
 - id: 601
-  operation: AttachBoxLabel
-  name: Attach-BoxLabel
-  description: ''
-  version: v3.2.0
+  operation: Attach Box Label
+  name: Attach Box Label
+  description: Place the box number label on the side of the box.
+  version: v3.2.2
   ignore: false
 - id: 602
-  operation: AttachBoxLabel
-  name: Attach-BoxLabel-v2
+  operation: Attach Box Label
+  name: Attach Box Label - v2
   description: ''
   version: v2.5.x
   ignore: false
 - id: 701
-  operation: ScanLabel
-  name: PickUp-HT
-  description: ''
-  version: v3.0.0
+  operation: Scan Label
+  name: Pick Up HT
+  description: Pick up handy scanner (HT).
+  version: v3.2.2
   ignore: false
 - id: 702
-  operation: ScanLabel
-  name: Scan-OrderSheet
-  description: ''
-  version: v3.2.0
+  operation: Scan Label
+  name: Scan Order Sheet
+  description: Scan the order ID code in the upper left corner of the order sheet.
+  version: v3.2.2
   ignore: false
 - id: 703
-  operation: ScanLabel
-  name: Scan-Box
-  description: ''
-  version: v3.2.0
+  operation: Scan Label
+  name: Scan Box
+  description: Scan  the box number label.
+  version: v3.2.2
   ignore: false
 - id: 704
-  operation: ScanLabel
-  name: Scan-Item
-  description: ''
-  version: v3.2.0
+  operation: Scan Label
+  name: Scan Item
+  description: Scan each item number on the label on the order sheet one by one.
+  version: v3.2.2
   ignore: false
 - id: 705
-  operation: ScanLabel
-  name: Hold-Scanner
-  description: ''
-  version: v3.0.0
+  operation: Scan Label
+  name: Hold Scanner
+  description: Pick up white scanner (for label printer).
+  version: v3.2.2
   ignore: false
 - id: 706
-  operation: ScanLabel
-  name: Scan-OrderSheet
-  description: ''
-  version: v3.2.0
+  operation: Scan Label
+  name: Scan Order Sheet
+  description: Scan the order ID code in the upper left corner of the order sheet
+    with the white scanner.
+  version: v3.2.2
   ignore: false
 - id: 707
-  operation: ScanLabel
-  name: Scan-Printer
-  description: ''
-  version: v3.2.0
+  operation: Scan Label
+  name: Scan Printer
+  description: Scan the code on the label printer to print out sheiiping labels.
+  version: v3.2.2
   ignore: false
 - id: 708
-  operation: ScanLabel
-  name: HT-v2
+  operation: Scan Label
+  name: HT - v2
   description: ''
   version: v2.5.x
   ignore: false
 - id: 709
-  operation: ScanLabel
-  name: Printer-v2
+  operation: Scan Label
+  name: Printer - v2
   description: ''
   version: v2.5.x
   ignore: false
 - id: 801
-  operation: AttachShippingLabel
-  name: PickUp-ShippingLabel
-  description: ''
-  version: v3.0.0
+  operation: Attach Shipping Label
+  name: Pick Up Shipping Label
+  description: Pick up shipping label from the label printer.
+  version: v3.2.2
   ignore: false
 - id: 802
-  operation: AttachShippingLabel
-  name: Attach-ShippingLabel
-  description: ''
-  version: v3.2.0
+  operation: Attach Shipping Label
+  name: Attach Shipping Label
+  description: Attach the printed shipping label to the upper side of the box.
+  version: v3.2.2
   ignore: false
-- id: 802
-  operation: AttachShippingLabel
-  name: Attach-ShippingLabel-v2
+- id: 803
+  operation: Attach Shipping Label
+  name: Attach Shipping Label - v2
   description: ''
   version: v2.5.x
   ignore: false
 - id: 901
-  operation: PutOnRack
-  name: PickUp-PackedBox
-  description: ''
-  version: v3.0.0
+  operation: Put on Back Table
+  name: Pick Up Packed Box
+  description: Pick up prepared box from the workbench.
+  version: v3.2.2
   ignore: false
 - id: 902
-  operation: PutOnRack
-  name: Put-PackedBox
-  description: ''
-  version: v3.2.0
+  operation: Put on Back Table
+  name: Put Packed Box
+  description: Go to the back table and place the packed box under the table.
+  version: v3.2.2
   ignore: false
 - id: 903
-  operation: PutOnRack
-  name: Put-OnPack-v2
+  operation: Put on Back Table
+  name: Put on Back Table - v2
   description: ''
   version: v2.5.x
   ignore: false
 - id: 1001
-  operation: Fill-outOrder
-  name: PickUp-Pen
-  description: ''
-  version: v3.0.0
+  operation: Fill out Order
+  name: Pick Up Pen
+  description: The subject's hand touches the pen.
+  version: v3.2.2
   ignore: false
 - id: 1002
-  operation: Fill-outOrder
-  name: Write-Sign
-  description: ''
-  version: v3.2.0
+  operation: Fill out Order
+  name: Write Sign
+  description: Sign each field in the column next to the item list on the order sheet.
+  version: v3.2.2
   ignore: false
 - id: 1003
-  operation: Fill-outOrder
-  name: Push-OrderSheet-IntoTray
-  description: ''
-  version: v3.2.0
+  operation: Fill out Order
+  name: Push Order Sheet into Tray
+  description: Insert order sheet into the tray for completed order sheets.
+  version: v3.2.2
   ignore: false
 - id: 1004
-  operation: Fill-outOrder
-  name: FillOut-v2
+  operation: Fill out Order
+  name: Fill out - v2
   description: ''
   version: v2.5.x
   ignore: false
 - id: 1005
-  operation: Fill-outOrder
-  name: Write-v2
+  operation: Fill out Order
+  name: Write - v2
   description: ''
   version: v2.5.x
   ignore: false
 - id: 1006
-  operation: Fill-outOrder
-  name: Insert-v2
+  operation: Fill out Order
+  name: Insert - v2
   description: ''
   version: v2.5.x
   ignore: false
@@ -330,29 +324,29 @@ classes:
   operation: 'Null'
   name: Others
   description: ''
-  version: v3.0.0
+  version: v3.2.2
   ignore: true
 - id: 8102
   operation: 'Null'
-  name: SystemError
+  name: System Error
   description: ''
-  version: v3.0.0
+  version: v3.2.2
   ignore: true
 - id: 8103
   operation: 'Null'
   name: Ignore
   description: ''
-  version: v3.0.0
+  version: v3.2.2
   ignore: true
 - id: 8104
   operation: 'Null'
   name: Unknown
   description: ''
-  version: v3.0.0
+  version: v3.2.2
   ignore: true
 - id: 8201
-  operation: SystemError
-  name: SystemError
+  operation: System Error
+  name: System Error
   description: ''
-  version: v3.0.0
+  version: v3.2.2
   ignore: true

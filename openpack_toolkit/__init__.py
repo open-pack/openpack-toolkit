@@ -2,10 +2,12 @@
 .. include:: ../README.md
 """
 
-__version__ = '0.5.0'
+__version__ = '0.6.0'
 from . import codalab, configs, data, download, utils
 from .activity import ActClass, ActSet
 from .configs.datasets.annotations import OPENPACK_OPERATIONS
+
+DATASET_VERSION = "v0.3.0"
 
 __all__ = [
     "ActClass",
@@ -15,5 +17,6 @@ __all__ = [
     "data",
     "download",
     "utils",
+    "DATASET_VERSION",
     "OPENPACK_OPERATIONS",
 ]
