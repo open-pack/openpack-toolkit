@@ -18,7 +18,7 @@ OPENPACK_OPERATIONS = ActSet((
 OPENPACK_OPERATIONS_ANNOTATION = AnnotConfig(
     conf_type="ACTIVITY_SET",
     name="openpack-operations",
-    version="v3.2.2",
+    version="v3.3.0",
     classes=OPENPACK_OPERATIONS,
 )
 
@@ -31,6 +31,7 @@ OPENPACK_ACTIONS = ActSet((
     ActClass(106, "Pick Up Order Sheet & Walk to Rack with Prev Packed Box - v2", is_ignore=False),
     ActClass(107, "Pick Up Box Sheet", is_ignore=False),
     ActClass(108, "Walk to Work Bench", is_ignore=False),
+    ActClass(109, "Put Packed Box", is_ignore=False),
     ActClass(201, "Remove Item Label", is_ignore=False),
     ActClass(202, "Attach to Order Sheet", is_ignore=False),
     ActClass(203, "Hold Pen", is_ignore=False),
@@ -85,7 +86,7 @@ OPENPACK_ACTIONS = ActSet((
 OPENPACK_ACTIONS_ANNOTATION = AnnotConfig(
     conf_type="ACTIVITY_SET",
     name="openpack-actions",
-    version="v3.2.2",
+    version="v3.3.0",
     classes=OPENPACK_ACTIONS,
 )
 
@@ -98,7 +99,7 @@ ACTIVITY_1S_ANNOTATION = AnnotConfig(
         "dir": "${path.openpack.rootdir}/${user.name}/annotation/activity-1s/",
         "fname": "${session}.csv",
     },
-    activity_set={
+    activity_sets={
         "openpack-operations": OPENPACK_OPERATIONS,
         "openpack-actions": OPENPACK_ACTIONS,
     },

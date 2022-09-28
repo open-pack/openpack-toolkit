@@ -1,6 +1,6 @@
 type: ACTIVITY_SET
 name: openpack-operations
-version: v3.2.2
+version: v3.3.0
 classes:
 - id: 100
   name: Picking

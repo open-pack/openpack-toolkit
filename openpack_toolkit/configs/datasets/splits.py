@@ -115,7 +115,6 @@ OPENPACK_CHALLENGE_2022_SPLIT = DataSplitConfig(
         ['U0102', 'S0300'],
         ['U0106', 'S0300'],
         ['U0202', 'S0300'],
-        ['U0206', 'S0300'],
         ['U0210', 'S0300'],
     ],
     submission=[

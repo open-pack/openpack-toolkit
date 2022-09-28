@@ -43,20 +43,21 @@
 | 106 | Picking | Pick Up Order Sheet & Walk to Rack with Prev Packed Box - v2 |  |  |
 | 107 | Picking | Pick Up Box Sheet | Pick up an order sheet and packed boxes at the same time. (This label is used for moving packed boxes and picking items for the next box at the same time.) |  |
 | 108 | Picking | Walk to Work Bench | Lift the item and turn back toward the workbench. (When picking is done in one round trip, this action is set as the beginning of the box.) |  |
+| 109 | Picking | Put Packed Box | Go to the back table and place the packed box under the table. |  |
 | 201 | Relocate Item Label | Remove Item Label | Remove the sticker with the barcode from the each item. |  |
 | 202 | Relocate Item Label | Attach to Order Sheet | Attach the label on the bottom margin of the order sheet. |  |
 | 203 | Relocate Item Label | Hold Pen |  |  |
-| 204 | Relocate Item Label | Write Check Mark | The subject's hand touches the pen. |  |
-| 205 | Relocate Item Label | Put Item Small Bag |  |  |
+| 204 | Relocate Item Label | Write Check Mark | The subject's checkes items name and quantity.  |  |
+| 205 | Relocate Item Label | Put Item Small Bag | TBD |  |
 | 206 | Relocate Item Label | Relocate Item Label - v2 |  |  |
 | 207 | Relocate Item Label | Write - v2 |  |  |
 | 301 | Assemble Box | Pick Cardboard | Select and pick up boxes that match the size of the items. |  |
-| 302 | Assemble Box | Bend Flap | Bend 4 flaps of the box. |  |
-| 303 | Assemble Box | Attach Tape | Apply craft tape to close the bottom of the box. |  |
+| 302 | Assemble Box | Bend Flap | Bend "bottom" 4 flaps of the box. |  |
+| 303 | Assemble Box | Attach Tape | Apply craft tape to close the "bottom" of the box. |  |
 | 304 | Assemble Box | Turn Over Box | Turn the box upside down so that the side with the craft tape is on the bottom. |  |
 | 305 | Assemble Box | Pick Up Assembled Box | Pick up a pre-assembled box. (Used in Scenario.3-5) |  |
 | 306 | Assemble Box | Assemble Box - v2 |  |  |
-| 401 | Insert Items | Insert Item into Box |  |  |
+| 401 | Insert Items | Insert Item into Box | Subject grabs individual items and inserts them in the assembled box |  |
 | 402 | Insert Items | Air Cushion | Insert air cushion to the box. |  |
 | 403 | Insert Items | Separate Air Cushion | Tear off the connected cushioning. |  |
 | 404 | Insert Items | Put Item Small Bag | Insert small items (<10cm) into the small paper bag and close it with tape. |  |

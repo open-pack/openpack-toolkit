@@ -71,6 +71,8 @@ users:
     - S0300
     - S0400
     - S0500
+    exclude:
+    - annotation
   U0110:
     sessions:
     - S0100

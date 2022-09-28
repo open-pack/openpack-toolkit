@@ -1,6 +1,6 @@
 type: ACTIVITY_SET
 name: openpack-actions
-version: v3.2.2
+version: v3.3.0
 classes:
 - id: 101
   operation: Picking
@@ -47,6 +47,12 @@ classes:
     done in one round trip, this action is set as the beginning of the box.)
   version: v3.2.2
   ignore: false
+- id: 109
+  operation: Picking
+  name: Put Packed Box
+  description: Go to the back table and place the packed box under the table.
+  version: v3.3.0
+  ignore: false
 - id: 201
   operation: Relocate Item Label
   name: Remove Item Label
@@ -68,13 +74,13 @@ classes:
 - id: 204
   operation: Relocate Item Label
   name: Write Check Mark
-  description: The subject's hand touches the pen.
+  description: 'The subject''s checkes items name and quantity. '
   version: v3.2.2
   ignore: false
 - id: 205
   operation: Relocate Item Label
   name: Put Item Small Bag
-  description: ''
+  description: TBD
   version: v3.2.2
   ignore: false
 - id: 206
@@ -98,13 +104,13 @@ classes:
 - id: 302
   operation: Assemble Box
   name: Bend Flap
-  description: Bend 4 flaps of the box.
+  description: Bend "bottom" 4 flaps of the box.
   version: v3.2.2
   ignore: false
 - id: 303
   operation: Assemble Box
   name: Attach Tape
-  description: Apply craft tape to close the bottom of the box.
+  description: Apply craft tape to close the "bottom" of the box.
   version: v3.2.2
   ignore: false
 - id: 304
@@ -129,7 +135,7 @@ classes:
 - id: 401
   operation: Insert Items
   name: Insert Item into Box
-  description: ''
+  description: Subject grabs individual items and inserts them in the assembled box
   version: v3.2.2
   ignore: false
 - id: 402

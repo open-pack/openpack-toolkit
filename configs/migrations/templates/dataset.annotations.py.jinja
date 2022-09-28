@@ -26,7 +26,7 @@ from ...activity import ActSet, ActClass
         "dir": "{{annot.path.dir}}",
         "fname": "{{annot.path.fname}}",
     },
-    activity_set={
+    activity_sets={
         {% for aset in annot.activity_sets %}
         "{{aset}}": {{aset|replace("-", "_")|upper}},
         {% endfor %}

@@ -215,7 +215,7 @@ RELEASE_CONFIG_V0_3_0 = ReleaseConfig(
         ),
         "U0109": ReleaseConfig._User(
             sessions=['S0100', 'S0200', 'S0300', 'S0400', 'S0500'],
-            exclude=None,
+            exclude=['annotation'],
         ),
         "U0110": ReleaseConfig._User(
             sessions=['S0100', 'S0200', 'S0300', 'S0400', 'S0500'],

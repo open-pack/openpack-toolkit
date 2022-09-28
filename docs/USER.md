@@ -150,7 +150,7 @@ To simulate a busy working time, we rushed the subjects by introducing an audito
 | U0104 | S0400 | ALL | atr03,atr04, | The position of ATR03 and ATR04 seem to be swapped. | `PENDING` |
 | U0107 | S0400 | ALL | atr03, | ATR01 was attached in the wrong direction. | `NO FIX AVAILABLE` |
 | U0107 | S0300 | 10,11,12,13,14,15,16,17,18,19,20, | kinect, | Video data (kinect) is missing. Annotation process is suspended. | `PENDING` |
-| U0108 | S0100 | 1,2,3,4,5,6,7,8,9,10, | atr01,atr02,atr03,atr04, | ATR was not working. | `NO FIX AVAILABLE` |
+| U0108 | S0400 | 1,2,3,4,5,6,7,8,9,10, | atr01,atr02,atr03,atr04, | ATR was not working for these boxes. The timestamps of the ATR data sequences in the data set are not consistent. | `NO FIX AVAILABLE` |
 | U0109 | S0100 | 17,18,19,20, | kinect,atr01,atr02,atr03,atr04, | ATR was not available. Annotation process is suspended. | `PENDING` |
 | U0204 | S0100 | ALL | atr02, | ATR02 was attached in the wrong direction. | `NO FIX AVAILABLE` |
 | U0204 | S0500 | ALL | atr02, | ATR02 was attached in the wrong direction. | `NO FIX AVAILABLE` |

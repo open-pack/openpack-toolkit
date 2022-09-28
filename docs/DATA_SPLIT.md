@@ -125,8 +125,7 @@ Train/val/test/submission Split for OpenPack Challenge. Train/val/test data is s
 | 1 | TEST | U0102 | S0300 |
 | 2 | TEST | U0106 | S0300 |
 | 3 | TEST | U0202 | S0300 |
-| 4 | TEST | U0206 | S0300 |
-| 5 | TEST | U0210 | S0300 |
+| 4 | TEST | U0210 | S0300 |
 |  |  |  |  |
 | 1 | SUBMISSION | U0104 | S0100 |
 | 2 | SUBMISSION | U0104 | S0300 |

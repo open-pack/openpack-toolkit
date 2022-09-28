@@ -108,7 +108,7 @@ class AnnotConfig:
     path: Optional[Dict[str, str]] = MISSING
     file_format: Optional[Dict[str, str]] = None
     classes: Optional[ActSet] = MISSING
-    activity_set: Optional[Dict] = None
+    activity_sets: Optional[Dict] = None
 
 
 @dataclass
@@ -118,6 +118,7 @@ class DatasetConfig:
     stream: Optional[DataStreamConfig] = None
     split: DataSplitConfig = MISSING
     annotation: AnnotConfig = MISSING
+    classes: Optional[ActSet] = MISSING
 
 
 # =========

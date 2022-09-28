@@ -8,7 +8,7 @@ import os
 import zipfile
 from logging import getLogger
 from pathlib import Path
-from typing import Dict, Tuple
+from typing import Dict, Optional, Tuple
 
 import numpy as np
 import pandas as pd
@@ -89,17 +89,21 @@ def crop_prediction_sequence(
 
 
 def construct_submission_dict(
-    cfg: DictConfig,
     outputs: Dict[str, Dict[str, np.ndarray]],
     act_set: ActSet,
+    include_ground_truth: Optional[bool] = False,
+    cfg: Optional[DictConfig] = None,
 ) -> Dict:
     """Make dict that can be used for submission and `eval_workprocess_segmentation()` func.
     Args:
         outputs (Dict[str, Dict[str, np.ndarray]]): key is expected to be a pair of user and
             session. e.g., "U0102-S0100".
         act_set (ActSet): -
+        include_ground_truth (bool, optional): If True, ground truth labels are included
+            in the submission dict. Set True when you calculate scores.
+        cfg (DictConfig, optional): config dict.
     Returns:
-        Dict: _description_
+        Dict: submission dict
     """
     submission = dict()
     for key, d in outputs.items():
@@ -112,7 +116,7 @@ def construct_submission_dict(
         unixtime_pred_sess, prediction_sess = resample_prediction_1Hz(
             ts_unix=d["unixtime"].copy().ravel(), arr=prediction_sess)
 
-        if cfg.mode in ("test", "test-on-submission"):
+        if include_ground_truth:
             with open_dict(cfg):
                 cfg.user = {"name": user}
                 cfg.session = session
@@ -141,12 +145,17 @@ def construct_submission_dict(
     return submission
 
 
-def make_submission_zipfile(submission: Dict, logdir: Path) -> None:
+def make_submission_zipfile(
+        submission: Dict,
+        logdir: Path,
+        metadata: dict = None) -> None:
     """Check dict contents and generate zip file for codalab submission.
 
     Args:
         submission (Dict): submission dict
         logdir (Path): path to the output directory
+        metadata (dict): dict of additional information that is included in
+            ``submission.json``. We recommend to include a data split name.
     Returns:
         None (make JSON & zip files)
     """
@@ -163,6 +172,10 @@ def make_submission_zipfile(submission: Dict, logdir: Path) -> None:
             assert isinstance(arr, np.ndarray)
             record[arr_name] = arr.tolist()
         submission_clean[key] = record
+
+    # Add meta data
+    if metadata is not None:
+        submission_clean["meta"] = metadata
 
     # Write JSON file
     path_json = Path(logdir, "submission.json")
@@ -191,7 +204,7 @@ def eval_operation_segmentation_wrapper(
 ) -> pd.DataFrame:
     """ Compute evaluation metrics from model outputs (predicted probability).
     Args:
-        cfg (DictConfig): -
+        cfg (DictConfig): config dict.
         outputs (Dict[str, Dict[str, np.ndarray]]): dict object that contains t_idx and y.
             t_idx is a 2d array of target class index with shape=(BATCH_SIZE, WINDOW).
             y is a 3d array of predction probabilities with shape=(BATCH_SIZE, NUM_CLASSES, WINDOW).
@@ -200,7 +213,8 @@ def eval_operation_segmentation_wrapper(
     Returns:
         pd.DataFrame
     """
-    submission = construct_submission_dict(cfg, outputs, act_set)
+    submission = construct_submission_dict(
+        outputs, act_set, include_ground_truth=True, cfg=cfg)
     classes = act_set.to_tuple()
     ignore_class_id = act_set.get_ignore_class_id()
     if isinstance(ignore_class_id, tuple):
