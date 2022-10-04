@@ -1,5 +1,7 @@
 version: v0.3.0
 description: full version
+url: https://zenodo.org/record/7139262
+release_date: '2022-10-01'
 users:
   U0101:
     sessions:
@@ -149,7 +151,10 @@ streams:
   atr:
     repository: zenodo
     zip: '{user}__atr.zip'
-    subdirs: ${.devices}
+    subdirs:
+    - name: ${.fname}
+      fname: atr-qags
+      subdir: ${device}
     devices:
     - atr01
     - atr02
@@ -202,13 +207,17 @@ streams:
     zip: '{user}__e4.zip'
     subdirs:
     - name: ${.fname}
-      fname: e4-all
-      subdir: ${device}/${sensor}
+      fname: e4-acc
+      subdir: ${device}/acc
+    - name: ${.fname}
+      fname: e4-bvp
+      subdir: ${device}/bvp
+    - name: ${.fname}
+      fname: e4-eda
+      subdir: ${device}/eda
+    - name: ${.fname}
+      fname: e4-temp
+      subdir: ${device}/temp
     devices:
     - e401
     - e402
-    sensors:
-    - acc
-    - bvp
-    - eda
-    - temp

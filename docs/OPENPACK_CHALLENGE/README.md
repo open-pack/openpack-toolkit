@@ -28,22 +28,22 @@ You can use all the modalities listed below as inputs. Please find the best sens
 
 ### Splits
 
-There are two types of data split, `DEBUG` and `CHALLENGE`.
+There are two types of data split, `DEBUG_SPLIT` and `OPENPACK_CHALLENGE_2022_SPLIT`.
 
-#### `DEV` Split
+#### `DEBUG_SPLIT`
 
 This split can be used for checking the usage of the submission site and debugging your model.
-This split consists of **TBA** subjects, **TBA** for training, and **TBA** for testing.
+This split consists of 1 subjects, 3 sessions for training, 1 session for validation and 1 session for testing.
 Official tutorials are, in principle, implemented with this split.
 
-#### `CHALLENGE` Split
+#### `OPENPACK_CHALLENGE_2022_SPLITE`
 
 This split is for a main challenge.
 You can use data from 11 subjects for training. Test data consist of 6 subjects [U0104, U0108, U0110, U0203, U0204, and U0207].
 Data from non-experienced workers have been excluded from this challenge.
 In addition, sessions with recording errors are excluded from test data.
 Training data with recording errors are included in the training data. So please consider that when using the data.
-Recording errors are listed in [this page](TBA).
+Recording errors are listed in [this page](../USER.md).
 
 ## Evaluation
 

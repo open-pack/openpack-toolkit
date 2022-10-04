@@ -53,15 +53,15 @@ See [openpack-torch](https://github.com/open-pack/openpack-torch) for more dieta
 ## Download Dataset
 
 ```bash
-optk-download -d ../data/datasets -v v0.2.0 -s atr-qags,openpack-operations
+optk-download -d ../data/datasets -v v0.3.0
 
 # If you are a user of poetry,
-poetry run optk-download -d ../data/datasets -v v0.2.0 -s atr-qags,openpack-operations
+poetry run optk-download -d ../data/datasets -v v0.3.0
 ```
 
 Help:
 
-```bash
+```txt
 $ poetry run optk-download -d ../data/datasets -h
 usage: optk-download [-h] -d DATASET_DIR [-v VERSION] [-s STREAMS]
 
@@ -72,7 +72,9 @@ optional arguments:
   -v VERSION, --version VERSION
                         Target dataset version. Default: v0.2.0
   -s STREAMS, --streams STREAMS
-                        A list of data stream names that you want to download. Stream names must be separated by commas. Defaul: atr-qags,openpack-operations
+                        A list of data stream names that you want to download.
+                        Stream names must be separated by commas. If none, all
+                        data in zenodo will be downloaded. Defaul: none
 ```
 
 
