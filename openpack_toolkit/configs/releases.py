@@ -179,7 +179,7 @@ RELEASE_CONFIG_V0_2_1 = ReleaseConfig(
 
 RELEASE_CONFIG_V0_3_0 = ReleaseConfig(
     version="v0.3.0",
-    url="",
+    url="https://zenodo.org/record/7139262",
     users={
         "U0101": ReleaseConfig._User(
             sessions=['S0100', 'S0200', 'S0300', 'S0400', 'S0500'],
@@ -265,7 +265,13 @@ RELEASE_CONFIG_V0_3_0 = ReleaseConfig(
         "atr": {
             "repository": "zenodo",
             "zip": "{user}__atr.zip",
-            "subdirs": "${.devices}",
+            "subdirs": [
+                {
+                    "name": "${.fname}",
+                    "fname": "atr-qags",
+                    "subdir": "${device}"
+                }
+            ],
             "devices": [
                 "atr01",
                 "atr02",
@@ -348,19 +354,28 @@ RELEASE_CONFIG_V0_3_0 = ReleaseConfig(
             "subdirs": [
                 {
                     "name": "${.fname}",
-                    "fname": "e4-all",
-                    "subdir": "${device}/${sensor}"
+                    "fname": "e4-acc",
+                    "subdir": "${device}/acc"
+                },
+                {
+                    "name": "${.fname}",
+                    "fname": "e4-bvp",
+                    "subdir": "${device}/bvp"
+                },
+                {
+                    "name": "${.fname}",
+                    "fname": "e4-eda",
+                    "subdir": "${device}/eda"
+                },
+                {
+                    "name": "${.fname}",
+                    "fname": "e4-temp",
+                    "subdir": "${device}/temp"
                 }
             ],
             "devices": [
                 "e401",
                 "e402"
-            ],
-            "sensors": [
-                "acc",
-                "bvp",
-                "eda",
-                "temp"
             ]
         }
     },

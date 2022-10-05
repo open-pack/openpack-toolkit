@@ -1,3 +1,14 @@
+errors:
+- segments:
+    boxes: -1
+    sessions:
+    - S0400
+    - S0500
+    streams:
+    - lidar
+  status: PENDING
+  title: An error occurs when loading data, and the frame extraction process has not
+    been completed.
 id: 106
 meta:
   age_group: 40s

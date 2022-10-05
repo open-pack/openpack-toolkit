@@ -1,3 +1,12 @@
+errors:
+- segments:
+    boxes: -1
+    session:
+    - S0400
+    streams:
+    - e4-01
+  status: NO_FIX_AVAILABLE
+  title: An error occurs when downloading data from E4 and this data is not available.
 id: 203
 meta:
   age_group: 30s
