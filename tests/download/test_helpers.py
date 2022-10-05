@@ -14,9 +14,9 @@ def test_download_openpack_from_zenodo__01(tmpdir):
         # "atr-qags",
         # "e4-all",
         # "kinect-2d-kpt",
-        "openpack-operations",
+        "activity-1s",
     ]
-    version = "v0.2.1"
+    version = "v0.3.0"
 
     download_openpack_from_zenodo(rootdir, streams=streams, version=version)
 
