@@ -30,9 +30,22 @@
 from logging import INFO, basicConfig, getLogger
 from pathlib import Path
 
+from .. import DATASET_VERSION
 from ..download._helpers import download_openpack_from_zenodo
 
-LATEST_VERSION_ON_ZENODO = &#34;v0.2.1&#34;
+LATEST_VERSION_ON_ZENODO = DATASET_VERSION
+AVAILABLE_STREAMS_IN_ZENODO = [
+    &#34;activity-1s&#34;,
+    &#34;atr-qags&#34;,
+    &#34;kinect-2d-kpt&#34;,
+    &#34;system-order-sheet&#34;,
+    &#34;system-ht-original&#34;,
+    &#34;system-printer&#34;,
+    &#34;e4-acc&#34;,
+    &#34;e4-bvp&#34;,
+    &#34;e4-eda&#34;,
+    &#34;e4-temp&#34;,
+]
 
 basicConfig(level=INFO)
 logger = getLogger(__name__)
@@ -55,12 +68,13 @@ def make_parser():
     parser.add_argument(
         &#34;-s&#34;,
         &#34;--streams&#34;,
-        default=&#34;atr-qags,openpack-operations&#34;,
+        default=&#34;none&#34;,
         type=str,
         help=(
             &#34;A list of data stream names that you want to download. &#34;
             &#34;Stream names must be separated by commas. &#34;
-            &#34;Defaul: atr-qags,openpack-operations&#34;
+            &#34;If none, all data in zenodo will be downloaded.&#34;
+            &#34;Defaul: none&#34;
         ))
 
     return parser
@@ -70,7 +84,10 @@ def entry_func():
     parser = make_parser()
     args = parser.parse_args()
 
-    streams = args.streams.split(&#34;,&#34;)
+    if args.streams == &#34;none&#34;:
+        streams = AVAILABLE_STREAMS_IN_ZENODO
+    else:
+        streams = args.streams.split(&#34;,&#34;)
 
     logger.info(&#34;Donwload OpenPack dataset from zenodo.&#34;)
     logger.info(f&#34; - dataset_dir : {args.dataset_dir}&#34;)
@@ -107,7 +124,10 @@ if __name__ == &#34;__main__&#34;:
     parser = make_parser()
     args = parser.parse_args()
 
-    streams = args.streams.split(&#34;,&#34;)
+    if args.streams == &#34;none&#34;:
+        streams = AVAILABLE_STREAMS_IN_ZENODO
+    else:
+        streams = args.streams.split(&#34;,&#34;)
 
     logger.info(&#34;Donwload OpenPack dataset from zenodo.&#34;)
     logger.info(f&#34; - dataset_dir : {args.dataset_dir}&#34;)
@@ -146,12 +166,13 @@ if __name__ == &#34;__main__&#34;:
     parser.add_argument(
         &#34;-s&#34;,
         &#34;--streams&#34;,
-        default=&#34;atr-qags,openpack-operations&#34;,
+        default=&#34;none&#34;,
         type=str,
         help=(
             &#34;A list of data stream names that you want to download. &#34;
             &#34;Stream names must be separated by commas. &#34;
-            &#34;Defaul: atr-qags,openpack-operations&#34;
+            &#34;If none, all data in zenodo will be downloaded.&#34;
+            &#34;Defaul: none&#34;
         ))
 
     return parser</code></pre>

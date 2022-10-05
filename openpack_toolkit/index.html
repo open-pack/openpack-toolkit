@@ -61,13 +61,13 @@ poetry add  openpack-toolkit
 <p>PyTorch code samples for work operation prediction task is available.
 See <a href="https://github.com/open-pack/openpack-torch">openpack-torch</a> for more dietail.</p>
 <h2 id="download-dataset">Download Dataset</h2>
-<pre><code class="language-bash">optk-download -d ../data/datasets -v v0.2.0 -s atr-qags,openpack-operations
+<pre><code class="language-bash">optk-download -d ../data/datasets -v v0.3.0
 
 # If you are a user of poetry,
-poetry run optk-download -d ../data/datasets -v v0.2.0 -s atr-qags,openpack-operations
+poetry run optk-download -d ../data/datasets -v v0.3.0
 </code></pre>
 <p>Help:</p>
-<pre><code class="language-bash">$ poetry run optk-download -d ../data/datasets -h
+<pre><code class="language-txt">$ poetry run optk-download -d ../data/datasets -h
 usage: optk-download [-h] -d DATASET_DIR [-v VERSION] [-s STREAMS]
 
 optional arguments:
@@ -77,7 +77,9 @@ optional arguments:
   -v VERSION, --version VERSION
                         Target dataset version. Default: v0.2.0
   -s STREAMS, --streams STREAMS
-                        A list of data stream names that you want to download. Stream names must be separated by commas. Defaul: atr-qags,openpack-operations
+                        A list of data stream names that you want to download.
+                        Stream names must be separated by commas. If none, all
+                        data in zenodo will be downloaded. Defaul: none
 </code></pre>
 <h2 id="links">Links</h2>
 <ul>
@@ -100,7 +102,7 @@ optional arguments:
 .. include:: ../README.md
 &#34;&#34;&#34;
 
-__version__ = &#39;0.6.0&#39;
+__version__ = &#39;0.6.1&#39;
 from . import codalab, configs, data, download, utils
 from .activity import ActClass, ActSet
 from .configs.datasets.annotations import OPENPACK_OPERATIONS

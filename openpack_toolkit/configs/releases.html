@@ -207,7 +207,7 @@ RELEASE_CONFIG_V0_2_1 = ReleaseConfig(
 
 RELEASE_CONFIG_V0_3_0 = ReleaseConfig(
     version=&#34;v0.3.0&#34;,
-    url=&#34;&#34;,
+    url=&#34;https://zenodo.org/record/7139262&#34;,
     users={
         &#34;U0101&#34;: ReleaseConfig._User(
             sessions=[&#39;S0100&#39;, &#39;S0200&#39;, &#39;S0300&#39;, &#39;S0400&#39;, &#39;S0500&#39;],
@@ -293,7 +293,13 @@ RELEASE_CONFIG_V0_3_0 = ReleaseConfig(
         &#34;atr&#34;: {
             &#34;repository&#34;: &#34;zenodo&#34;,
             &#34;zip&#34;: &#34;{user}__atr.zip&#34;,
-            &#34;subdirs&#34;: &#34;${.devices}&#34;,
+            &#34;subdirs&#34;: [
+                {
+                    &#34;name&#34;: &#34;${.fname}&#34;,
+                    &#34;fname&#34;: &#34;atr-qags&#34;,
+                    &#34;subdir&#34;: &#34;${device}&#34;
+                }
+            ],
             &#34;devices&#34;: [
                 &#34;atr01&#34;,
                 &#34;atr02&#34;,
@@ -376,19 +382,28 @@ RELEASE_CONFIG_V0_3_0 = ReleaseConfig(
             &#34;subdirs&#34;: [
                 {
                     &#34;name&#34;: &#34;${.fname}&#34;,
-                    &#34;fname&#34;: &#34;e4-all&#34;,
-                    &#34;subdir&#34;: &#34;${device}/${sensor}&#34;
+                    &#34;fname&#34;: &#34;e4-acc&#34;,
+                    &#34;subdir&#34;: &#34;${device}/acc&#34;
+                },
+                {
+                    &#34;name&#34;: &#34;${.fname}&#34;,
+                    &#34;fname&#34;: &#34;e4-bvp&#34;,
+                    &#34;subdir&#34;: &#34;${device}/bvp&#34;
+                },
+                {
+                    &#34;name&#34;: &#34;${.fname}&#34;,
+                    &#34;fname&#34;: &#34;e4-eda&#34;,
+                    &#34;subdir&#34;: &#34;${device}/eda&#34;
+                },
+                {
+                    &#34;name&#34;: &#34;${.fname}&#34;,
+                    &#34;fname&#34;: &#34;e4-temp&#34;,
+                    &#34;subdir&#34;: &#34;${device}/temp&#34;
                 }
             ],
             &#34;devices&#34;: [
                 &#34;e401&#34;,
                 &#34;e402&#34;
-            ],
-            &#34;sensors&#34;: [
-                &#34;acc&#34;,
-                &#34;bvp&#34;,
-                &#34;eda&#34;,
-                &#34;temp&#34;
             ]
         }
     },
