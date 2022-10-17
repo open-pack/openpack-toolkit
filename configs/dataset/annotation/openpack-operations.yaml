@@ -1,6 +1,6 @@
 type: ACTIVITY_SET
 name: openpack-operations
-version: v3.3.0
+version: v3.4.0
 classes:
 - id: 100
   name: Picking
@@ -62,6 +62,6 @@ classes:
   ignore: false
 - id: 8100
   name: 'Null'
-  description: ''
+  description: For the operation label, ID8200 is translated into this label (ID8100).
   version: v3.2.2
   ignore: true

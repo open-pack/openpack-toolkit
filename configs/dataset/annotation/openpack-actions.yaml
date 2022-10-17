@@ -1,6 +1,6 @@
 type: ACTIVITY_SET
 name: openpack-actions
-version: v3.3.0
+version: v3.4.0
 classes:
 - id: 101
   operation: Picking
@@ -13,24 +13,6 @@ classes:
   name: Pick Up Item from Box
   description: Pick items out of a box that contains items picked in batches.
   version: v3.2.2
-  ignore: false
-- id: 104
-  operation: Picking
-  name: Pick Up Order Sheet & Walk to Rack - v2
-  description: ''
-  version: v2.5.x
-  ignore: false
-- id: 105
-  operation: Picking
-  name: Walk to Work Bench - v2
-  description: ''
-  version: v2.5.x
-  ignore: false
-- id: 106
-  operation: Picking
-  name: Pick Up Order Sheet & Walk to Rack with Prev Packed Box - v2
-  description: ''
-  version: v2.5.x
   ignore: false
 - id: 107
   operation: Picking
@@ -80,20 +62,9 @@ classes:
 - id: 205
   operation: Relocate Item Label
   name: Put Item Small Bag
-  description: TBD
-  version: v3.2.2
-  ignore: false
-- id: 206
-  operation: Relocate Item Label
-  name: Relocate Item Label - v2
-  description: ''
-  version: v2.5.x
-  ignore: false
-- id: 207
-  operation: Relocate Item Label
-  name: Write - v2
-  description: ''
-  version: v2.5.x
+  description: Insert small items (<10cm) into the small paper bag and close it with
+    tape. The action is almost the same as ID0404 but the timing is different.
+  version: v3.4.0
   ignore: false
 - id: 301
   operation: Assemble Box
@@ -126,12 +97,6 @@ classes:
   description: Pick up a pre-assembled box. (Used in Scenario.3-5)
   version: v3.2.2
   ignore: false
-- id: 306
-  operation: Assemble Box
-  name: Assemble Box - v2
-  description: ''
-  version: v2.5.x
-  ignore: false
 - id: 401
   operation: Insert Items
   name: Insert Item into Box
@@ -154,14 +119,8 @@ classes:
   operation: Insert Items
   name: Put Item Small Bag
   description: Insert small items (<10cm) into the small paper bag and close it with
-    tape.
-  version: v3.2.2
-  ignore: false
-- id: 405
-  operation: Insert Items
-  name: Insert Items - v2
-  description: ''
-  version: v2.5.x
+    tape. The action is almost the same as ID0205 but the timing is different.
+  version: v3.4.0
   ignore: false
 - id: 501
   operation: Close Box
@@ -175,23 +134,11 @@ classes:
   description: Close the box with craft tape.
   version: v3.2.2
   ignore: false
-- id: 503
-  operation: Close Box
-  name: Close Box - v2
-  description: ''
-  version: v2.5.x
-  ignore: false
 - id: 601
   operation: Attach Box Label
   name: Attach Box Label
   description: Place the box number label on the side of the box.
   version: v3.2.2
-  ignore: false
-- id: 602
-  operation: Attach Box Label
-  name: Attach Box Label - v2
-  description: ''
-  version: v2.5.x
   ignore: false
 - id: 701
   operation: Scan Label
@@ -236,18 +183,6 @@ classes:
   description: Scan the code on the label printer to print out sheiiping labels.
   version: v3.2.2
   ignore: false
-- id: 708
-  operation: Scan Label
-  name: HT - v2
-  description: ''
-  version: v2.5.x
-  ignore: false
-- id: 709
-  operation: Scan Label
-  name: Printer - v2
-  description: ''
-  version: v2.5.x
-  ignore: false
 - id: 801
   operation: Attach Shipping Label
   name: Pick Up Shipping Label
@@ -260,12 +195,6 @@ classes:
   description: Attach the printed shipping label to the upper side of the box.
   version: v3.2.2
   ignore: false
-- id: 803
-  operation: Attach Shipping Label
-  name: Attach Shipping Label - v2
-  description: ''
-  version: v2.5.x
-  ignore: false
 - id: 901
   operation: Put on Back Table
   name: Pick Up Packed Box
@@ -277,12 +206,6 @@ classes:
   name: Put Packed Box
   description: Go to the back table and place the packed box under the table.
   version: v3.2.2
-  ignore: false
-- id: 903
-  operation: Put on Back Table
-  name: Put on Back Table - v2
-  description: ''
-  version: v2.5.x
   ignore: false
 - id: 1001
   operation: Fill out Order
@@ -301,24 +224,6 @@ classes:
   name: Push Order Sheet into Tray
   description: Insert order sheet into the tray for completed order sheets.
   version: v3.2.2
-  ignore: false
-- id: 1004
-  operation: Fill out Order
-  name: Fill out - v2
-  description: ''
-  version: v2.5.x
-  ignore: false
-- id: 1005
-  operation: Fill out Order
-  name: Write - v2
-  description: ''
-  version: v2.5.x
-  ignore: false
-- id: 1006
-  operation: Fill out Order
-  name: Insert - v2
-  description: ''
-  version: v2.5.x
   ignore: false
 - id: 8101
   operation: 'Null'
