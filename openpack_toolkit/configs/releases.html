@@ -407,6 +407,211 @@ RELEASE_CONFIG_V0_3_0 = ReleaseConfig(
             ]
         }
     },
+)
+
+
+RELEASE_CONFIG_V0_3_1 = ReleaseConfig(
+    version=&#34;v0.3.1&#34;,
+    url=&#34;https://zenodo.org/record/7213887#.Y0126OzP1eg&#34;,
+    users={
+        &#34;U0101&#34;: ReleaseConfig._User(
+            sessions=[&#39;S0100&#39;, &#39;S0200&#39;, &#39;S0300&#39;, &#39;S0400&#39;, &#39;S0500&#39;],
+            exclude=[&#39;lidar/frames&#39;],
+        ),
+        &#34;U0102&#34;: ReleaseConfig._User(
+            sessions=[&#39;S0100&#39;, &#39;S0200&#39;, &#39;S0300&#39;, &#39;S0400&#39;, &#39;S0500&#39;],
+            exclude=[&#39;lidar/frames&#39;],
+        ),
+        &#34;U0103&#34;: ReleaseConfig._User(
+            sessions=[&#39;S0100&#39;, &#39;S0200&#39;, &#39;S0300&#39;, &#39;S0400&#39;, &#39;S0500&#39;],
+            exclude=None,
+        ),
+        &#34;U0104&#34;: ReleaseConfig._User(
+            sessions=[&#39;S0100&#39;, &#39;S0200&#39;, &#39;S0300&#39;, &#39;S0400&#39;],
+            exclude=[&#39;annotation&#39;],
+        ),
+        &#34;U0105&#34;: ReleaseConfig._User(
+            sessions=[&#39;S0100&#39;, &#39;S0200&#39;, &#39;S0300&#39;, &#39;S0400&#39;, &#39;S0500&#39;],
+            exclude=None,
+        ),
+        &#34;U0106&#34;: ReleaseConfig._User(
+            sessions=[&#39;S0100&#39;, &#39;S0200&#39;, &#39;S0300&#39;, &#39;S0400&#39;, &#39;S0500&#39;],
+            exclude=None,
+        ),
+        &#34;U0107&#34;: ReleaseConfig._User(
+            sessions=[&#39;S0100&#39;, &#39;S0200&#39;, &#39;S0300&#39;, &#39;S0400&#39;, &#39;S0500&#39;],
+            exclude=None,
+        ),
+        &#34;U0108&#34;: ReleaseConfig._User(
+            sessions=[&#39;S0100&#39;, &#39;S0200&#39;, &#39;S0300&#39;, &#39;S0400&#39;, &#39;S0500&#39;],
+            exclude=[&#39;annotation&#39;],
+        ),
+        &#34;U0109&#34;: ReleaseConfig._User(
+            sessions=[&#39;S0100&#39;, &#39;S0200&#39;, &#39;S0300&#39;, &#39;S0400&#39;, &#39;S0500&#39;],
+            exclude=None,
+        ),
+        &#34;U0110&#34;: ReleaseConfig._User(
+            sessions=[&#39;S0100&#39;, &#39;S0200&#39;, &#39;S0300&#39;, &#39;S0400&#39;, &#39;S0500&#39;],
+            exclude=[&#39;annotation&#39;],
+        ),
+        &#34;U0111&#34;: ReleaseConfig._User(
+            sessions=[&#39;S0100&#39;, &#39;S0200&#39;, &#39;S0300&#39;, &#39;S0400&#39;, &#39;S0500&#39;],
+            exclude=None,
+        ),
+        &#34;U0202&#34;: ReleaseConfig._User(
+            sessions=[&#39;S0100&#39;, &#39;S0200&#39;, &#39;S0300&#39;, &#39;S0400&#39;, &#39;S0500&#39;],
+            exclude=None,
+        ),
+        &#34;U0203&#34;: ReleaseConfig._User(
+            sessions=[&#39;S0100&#39;, &#39;S0200&#39;, &#39;S0300&#39;, &#39;S0400&#39;, &#39;S0500&#39;],
+            exclude=[&#39;annotation&#39;],
+        ),
+        &#34;U0204&#34;: ReleaseConfig._User(
+            sessions=[&#39;S0100&#39;, &#39;S0200&#39;, &#39;S0300&#39;, &#39;S0400&#39;, &#39;S0500&#39;],
+            exclude=[&#39;annotation&#39;],
+        ),
+        &#34;U0205&#34;: ReleaseConfig._User(
+            sessions=[&#39;S0100&#39;, &#39;S0200&#39;, &#39;S0300&#39;, &#39;S0400&#39;, &#39;S0500&#39;],
+            exclude=None,
+        ),
+        &#34;U0207&#34;: ReleaseConfig._User(
+            sessions=[&#39;S0100&#39;, &#39;S0200&#39;, &#39;S0300&#39;, &#39;S0400&#39;, &#39;S0500&#39;],
+            exclude=[&#39;annotation&#39;],
+        ),
+        &#34;U0210&#34;: ReleaseConfig._User(
+            sessions=[&#39;S0100&#39;, &#39;S0200&#39;, &#39;S0300&#39;, &#39;S0400&#39;, &#39;S0500&#39;],
+            exclude=None,
+        ),
+    },
+    streams={
+        &#34;annotation&#34;: {
+            &#34;repository&#34;: &#34;zenodo&#34;,
+            &#34;zip&#34;: &#34;{user}__annotation.zip&#34;,
+            &#34;subdirs&#34;: [
+                {
+                    &#34;name&#34;: &#34;${.fname}&#34;,
+                    &#34;fname&#34;: &#34;activity-1s&#34;,
+                    &#34;is_annotation&#34;: True
+                }
+            ]
+        },
+        &#34;atr&#34;: {
+            &#34;repository&#34;: &#34;zenodo&#34;,
+            &#34;zip&#34;: &#34;{user}__atr.zip&#34;,
+            &#34;subdirs&#34;: [
+                {
+                    &#34;name&#34;: &#34;${.fname}&#34;,
+                    &#34;fname&#34;: &#34;atr-qags&#34;,
+                    &#34;subdir&#34;: &#34;${device}&#34;
+                }
+            ],
+            &#34;devices&#34;: [
+                &#34;atr01&#34;,
+                &#34;atr02&#34;,
+                &#34;atr03&#34;,
+                &#34;atr04&#34;
+            ]
+        },
+        &#34;kinect&#34;: {
+            &#34;2d-kpt&#34;: {
+                &#34;repository&#34;: &#34;zenodo&#34;,
+                &#34;zip&#34;: &#34;{user}__kinect__2d-kpt.zip&#34;,
+                &#34;subdirs&#34;: [
+                    {
+                        &#34;name&#34;: &#34;${.model}&#34;,
+                        &#34;category&#34;: &#34;2d-kpt&#34;,
+                        &#34;model&#34;: &#34;mmpose-hrnet-w48-posetrack18-384x288-posewarper-stage2&#34;,
+                        &#34;subdir&#34;: &#34;single&#34;,
+                        &#34;fname&#34;: &#34;kinect-2d-kpt&#34;
+                    }
+                ]
+            },
+            &#34;frames&#34;: {
+                &#34;repository&#34;: &#34;gooogle-drive&#34;,
+                &#34;zip&#34;: &#34;{user}/kinect/{img_type}/frames/{session}.zip&#34;,
+                &#34;subdirs&#34;: [
+                    {
+                        &#34;name&#34;: &#34;${.img_type}&#34;,
+                        &#34;fname&#34;: None,
+                        &#34;img_type&#34;: &#34;depth&#34;
+                    }
+                ]
+            }
+        },
+        &#34;rs02&#34;: {
+            &#34;frames&#34;: {
+                &#34;repository&#34;: &#34;gooogle-drive&#34;,
+                &#34;zip&#34;: &#34;{user}/rs02/{img_type}/frames/{session}.zip&#34;,
+                &#34;subdirs&#34;: [
+                    {
+                        &#34;name&#34;: &#34;${.img_type}&#34;,
+                        &#34;fname&#34;: None,
+                        &#34;img_type&#34;: &#34;depth&#34;
+                    }
+                ]
+            }
+        },
+        &#34;lidar&#34;: {
+            &#34;frames&#34;: {
+                &#34;repository&#34;: &#34;gooogle-drive&#34;,
+                &#34;zip&#34;: &#34;{user}/lidar/frames/{session}.zip&#34;,
+                &#34;subdirs&#34;: [
+                    {
+                        &#34;name&#34;: &#34;pcl&#34;,
+                        &#34;fname&#34;: None
+                    }
+                ]
+            }
+        },
+        &#34;system&#34;: {
+            &#34;repository&#34;: &#34;zenodo&#34;,
+            &#34;zip&#34;: &#34;{user}__system.zip&#34;,
+            &#34;subdirs&#34;: [
+                {
+                    &#34;name&#34;: &#34;order-sheet&#34;,
+                    &#34;fname&#34;: &#34;system-order-sheet&#34;
+                },
+                {
+                    &#34;name&#34;: &#34;ht-original&#34;,
+                    &#34;fname&#34;: &#34;system-ht-original&#34;
+                },
+                {
+                    &#34;name&#34;: &#34;printer&#34;,
+                    &#34;fname&#34;: &#34;system-printer&#34;
+                }
+            ]
+        },
+        &#34;e4&#34;: {
+            &#34;repository&#34;: &#34;zenodo&#34;,
+            &#34;zip&#34;: &#34;{user}__e4.zip&#34;,
+            &#34;subdirs&#34;: [
+                {
+                    &#34;name&#34;: &#34;${.fname}&#34;,
+                    &#34;fname&#34;: &#34;e4-acc&#34;,
+                    &#34;subdir&#34;: &#34;${device}/acc&#34;
+                },
+                {
+                    &#34;name&#34;: &#34;${.fname}&#34;,
+                    &#34;fname&#34;: &#34;e4-bvp&#34;,
+                    &#34;subdir&#34;: &#34;${device}/bvp&#34;
+                },
+                {
+                    &#34;name&#34;: &#34;${.fname}&#34;,
+                    &#34;fname&#34;: &#34;e4-eda&#34;,
+                    &#34;subdir&#34;: &#34;${device}/eda&#34;
+                },
+                {
+                    &#34;name&#34;: &#34;${.fname}&#34;,
+                    &#34;fname&#34;: &#34;e4-temp&#34;,
+                    &#34;subdir&#34;: &#34;${device}/temp&#34;
+                }
+            ],
+            &#34;devices&#34;: [
+                &#34;e401&#34;,
+                &#34;e402&#34;
+            ]
+        }
+    },
 )</code></pre>
 </details>
 </section>

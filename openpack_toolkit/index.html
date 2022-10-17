@@ -102,12 +102,15 @@ optional arguments:
 .. include:: ../README.md
 &#34;&#34;&#34;
 
-__version__ = &#39;0.6.1&#39;
+__version__ = &#39;0.6.2&#39;
 from . import codalab, configs, data, download, utils
 from .activity import ActClass, ActSet
 from .configs.datasets.annotations import OPENPACK_OPERATIONS
 
-DATASET_VERSION = &#34;v0.3.0&#34;
+DATASET_VERSION_LATEST = &#34;v0.3.1&#34;
+DATASET_VERSION = DATASET_VERSION_LATEST
+SAMPLE_DATASET_VERSION = &#34;v0.3.0&#34;
+
 
 __all__ = [
     &#34;ActClass&#34;,
