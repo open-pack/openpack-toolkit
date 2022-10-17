@@ -16,12 +16,20 @@ jobs:
           - ubuntu-20.04
           - ubuntu-latest
         python-version: [3.8, 3.9]
+        poetry-version: ["1.2.0"]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
-      - uses: atu4403/poetry-setup-multi-platform@v1
+
+      # install poetry
+      - name: Run image
+        uses: abatilo/actions-poetry@v2
+        with:
+          poetry-version: ${{ matrix.poetry-version }}
+
+      # run test
       - name: Install Dependencis and Run Tests
         run: |
           poetry install
