@@ -231,7 +231,7 @@ def test_eval_operation_segmentation_wrapper__01(mode):
         "session": "S0500",
         "path": {
             "openpack": {
-                "version": optk.DATASET_VERSION,
+                "version": optk.SAMPLE_DATASET_VERSION,
                 "rootdir": str(rootdir),
             }
         },

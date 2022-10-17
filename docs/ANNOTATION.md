@@ -23,7 +23,7 @@
 | 800 | Attach Shipping Label | Attach the shipping label printed out from the label printer to the box. |  |
 | 900 | Put on Back Table | Move the completed packing box under the back table. |  |
 | 1000 | Fill out Order | Write their signatures in the confirmation column of the order sheet and insert it into the tray for completed order sheets. |  |
-| 8100 | Null |  | True |
+| 8100 | Null | For the operation label, ID8200 is translated into this label (ID8100). | True |
 
 ---
 
@@ -38,9 +38,6 @@
 |----|-----------|------|-------------|--------|
 | 101 | Picking | Pick Up Sheet | Pick up order sheet from the workbench. |  |
 | 103 | Picking | Pick Up Item from Box | Pick items out of a box that contains items picked in batches. |  |
-| 104 | Picking | Pick Up Order Sheet & Walk to Rack - v2 |  |  |
-| 105 | Picking | Walk to Work Bench - v2 |  |  |
-| 106 | Picking | Pick Up Order Sheet & Walk to Rack with Prev Packed Box - v2 |  |  |
 | 107 | Picking | Pick Up Box Sheet | Pick up an order sheet and packed boxes at the same time. (This label is used for moving packed boxes and picking items for the next box at the same time.) |  |
 | 108 | Picking | Walk to Work Bench | Lift the item and turn back toward the workbench. (When picking is done in one round trip, this action is set as the beginning of the box.) |  |
 | 109 | Picking | Put Packed Box | Go to the back table and place the packed box under the table. |  |
@@ -48,25 +45,19 @@
 | 202 | Relocate Item Label | Attach to Order Sheet | Attach the label on the bottom margin of the order sheet. |  |
 | 203 | Relocate Item Label | Hold Pen |  |  |
 | 204 | Relocate Item Label | Write Check Mark | The subject's checkes items name and quantity.  |  |
-| 205 | Relocate Item Label | Put Item Small Bag | TBD |  |
-| 206 | Relocate Item Label | Relocate Item Label - v2 |  |  |
-| 207 | Relocate Item Label | Write - v2 |  |  |
+| 205 | Relocate Item Label | Put Item Small Bag | Insert small items (<10cm) into the small paper bag and close it with tape. The action is almost the same as ID0404 but the timing is different. |  |
 | 301 | Assemble Box | Pick Cardboard | Select and pick up boxes that match the size of the items. |  |
 | 302 | Assemble Box | Bend Flap | Bend "bottom" 4 flaps of the box. |  |
 | 303 | Assemble Box | Attach Tape | Apply craft tape to close the "bottom" of the box. |  |
 | 304 | Assemble Box | Turn Over Box | Turn the box upside down so that the side with the craft tape is on the bottom. |  |
 | 305 | Assemble Box | Pick Up Assembled Box | Pick up a pre-assembled box. (Used in Scenario.3-5) |  |
-| 306 | Assemble Box | Assemble Box - v2 |  |  |
 | 401 | Insert Items | Insert Item into Box | Subject grabs individual items and inserts them in the assembled box |  |
 | 402 | Insert Items | Air Cushion | Insert air cushion to the box. |  |
 | 403 | Insert Items | Separate Air Cushion | Tear off the connected cushioning. |  |
-| 404 | Insert Items | Put Item Small Bag | Insert small items (<10cm) into the small paper bag and close it with tape. |  |
-| 405 | Insert Items | Insert Items - v2 |  |  |
+| 404 | Insert Items | Put Item Small Bag | Insert small items (<10cm) into the small paper bag and close it with tape. The action is almost the same as ID0205 but the timing is different. |  |
 | 501 | Close Box | Bend Flap | Bend 4 flaps in the upper side of the box. |  |
 | 502 | Close Box | Attach Tape | Close the box with craft tape. |  |
-| 503 | Close Box | Close Box - v2 |  |  |
 | 601 | Attach Box Label | Attach Box Label | Place the box number label on the side of the box. |  |
-| 602 | Attach Box Label | Attach Box Label - v2 |  |  |
 | 701 | Scan Label | Pick Up HT | Pick up handy scanner (HT). |  |
 | 702 | Scan Label | Scan Order Sheet | Scan the order ID code in the upper left corner of the order sheet. |  |
 | 703 | Scan Label | Scan Box | Scan  the box number label. |  |
@@ -74,20 +65,13 @@
 | 705 | Scan Label | Hold Scanner | Pick up white scanner (for label printer). |  |
 | 706 | Scan Label | Scan Order Sheet | Scan the order ID code in the upper left corner of the order sheet with the white scanner. |  |
 | 707 | Scan Label | Scan Printer | Scan the code on the label printer to print out sheiiping labels. |  |
-| 708 | Scan Label | HT - v2 |  |  |
-| 709 | Scan Label | Printer - v2 |  |  |
 | 801 | Attach Shipping Label | Pick Up Shipping Label | Pick up shipping label from the label printer. |  |
 | 802 | Attach Shipping Label | Attach Shipping Label | Attach the printed shipping label to the upper side of the box. |  |
-| 803 | Attach Shipping Label | Attach Shipping Label - v2 |  |  |
 | 901 | Put on Back Table | Pick Up Packed Box | Pick up prepared box from the workbench. |  |
 | 902 | Put on Back Table | Put Packed Box | Go to the back table and place the packed box under the table. |  |
-| 903 | Put on Back Table | Put on Back Table - v2 |  |  |
 | 1001 | Fill out Order | Pick Up Pen | The subject's hand touches the pen. |  |
 | 1002 | Fill out Order | Write Sign | Sign each field in the column next to the item list on the order sheet. |  |
 | 1003 | Fill out Order | Push Order Sheet into Tray | Insert order sheet into the tray for completed order sheets. |  |
-| 1004 | Fill out Order | Fill out - v2 |  |  |
-| 1005 | Fill out Order | Write - v2 |  |  |
-| 1006 | Fill out Order | Insert - v2 |  |  |
 | 8101 | Null | Others |  | True |
 | 8102 | Null | System Error |  | True |
 | 8103 | Null | Ignore |  | True |
