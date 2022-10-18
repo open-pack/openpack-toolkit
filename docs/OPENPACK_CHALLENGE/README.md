@@ -36,7 +36,7 @@ This split can be used for checking the usage of the submission site and debuggi
 This split consists of 1 subjects, 3 sessions for training, 1 session for validation and 1 session for testing.
 Official tutorials are, in principle, implemented with this split.
 
-#### `OPENPACK_CHALLENGE_2022_SPLITE`
+#### `OPENPACK_CHALLENGE_2022_SPLIT`
 
 This split is for a main challenge.
 You can use data from 11 subjects for training. Test data consist of 6 subjects [U0104, U0108, U0110, U0203, U0204, and U0207].
