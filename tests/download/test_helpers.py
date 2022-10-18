@@ -1,5 +1,6 @@
 from pathlib import Path
 
+import openpack_toolkit as optk
 from openpack_toolkit.download._helpers import download_openpack_from_zenodo
 
 
@@ -16,7 +17,7 @@ def test_download_openpack_from_zenodo__01(tmpdir):
         # "kinect-2d-kpt",
         "activity-1s",
     ]
-    version = "v0.3.0"
+    version = optk.DATASET_VERSION_LATEST
 
     download_openpack_from_zenodo(rootdir, streams=streams, version=version)
 
