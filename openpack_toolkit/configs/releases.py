@@ -384,7 +384,7 @@ RELEASE_CONFIG_V0_3_0 = ReleaseConfig(
 
 RELEASE_CONFIG_V0_3_1 = ReleaseConfig(
     version="v0.3.1",
-    url="https://zenodo.org/record/7213887#.Y0126OzP1eg",
+    url="https://zenodo.org/record/7213887",
     users={
         "U0101": ReleaseConfig._User(
             sessions=['S0100', 'S0200', 'S0300', 'S0400', 'S0500'],
