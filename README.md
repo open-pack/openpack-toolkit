@@ -53,10 +53,10 @@ See [openpack-torch](https://github.com/open-pack/openpack-torch) for more dieta
 ## Download Dataset
 
 ```bash
-optk-download -d ../data/datasets -v v0.3.0
+optk-download -d ../data/datasets
 
 # If you are a user of poetry,
-poetry run optk-download -d ../data/datasets -v v0.3.0
+poetry run optk-download -d ../data/datasets
 ```
 
 Help:

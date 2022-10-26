@@ -13,7 +13,7 @@ If successful, your work will help the ubiquitous research community improve cur
 
 ## Data
 
-The Dataset for this challenge is [**OpenPack Dataset (v0.3.x)** (Realse Note - TBA)](.).
+The Dataset for this challenge is [**OpenPack Dataset (v0.3.1)** (Realse Note)](https://open-pack.github.io/release/v0-3-1).
 You can use all the modalities listed below as inputs. Please find the best sensor combination that fits your approach.
 
 - ATR (acc, gyro, quaternion)
@@ -25,6 +25,16 @@ You can use all the modalities listed below as inputs. Please find the best sens
   - Order Sheet
   - HT Log Data
   - Psuedo Printer Log Data
+
+### How to Donwload
+
+```bash
+# Step.1: Install a python package (openpack-toolkit).
+pip install openpack-toolkit
+
+# Step.2: Download the dataset.
+optk-download -d ../data/datasets
+```
 
 ### Splits
 
@@ -145,4 +155,4 @@ You may use data other than the competition data to develop and test your submis
 ## Relevant links
 
 - [OpenPack Challenge - Main Site](https://open-pack.github.io/)
-- Codalab (Submission Site) (TBA)
+- [Codalab (Submission Site)](https://codalab.lisn.upsaclay.fr/competitions/7830)
