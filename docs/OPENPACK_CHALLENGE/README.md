@@ -26,7 +26,7 @@ You can use all the modalities listed below as inputs. Please find the best sens
   - HT Log Data
   - Psuedo Printer Log Data
 
-### How to Donwload
+### Download
 
 ```bash
 # Step.1: Install a python package (openpack-toolkit).
