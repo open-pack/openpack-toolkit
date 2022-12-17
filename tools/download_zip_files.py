@@ -97,13 +97,13 @@ if __name__ == '__main__':
         "-i",
         "--input",
         default="gdrive_file_index.csv",
-        help="path to the file index CSV.")
+        help="path to the file index CSV. (Default: gdrive_file_index.csv)")
 
     parser.add_argument(
         "-o",
         "--output",
         default="./data/openpack",
-        help="dataset root directory.")
+        help="dataset root directory. (Default: ./data/openpack)")
     parser.add_argument("--debug", action="store_true")
     args = parser.parse_args()
 
