@@ -1,3 +1,6 @@
 token.json
 credentials.json
 *.csv
+!gdrive_file_index.csv
+data/
+debug/

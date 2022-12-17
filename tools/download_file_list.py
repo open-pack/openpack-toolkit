@@ -1,6 +1,7 @@
 import argparse
 import logging
 import os.path
+from pathlib import Path
 
 import pandas as pd
 from google.auth.transport.requests import Request
@@ -32,6 +33,7 @@ def get_children_list_by_id(drive, file_id):
 
 
 def get_credential():
+    creds = None
     if os.path.exists('token.json'):
         creds = Credentials.from_authorized_user_file('token.json', SCOPES)
 
@@ -73,7 +75,7 @@ def main(args):
     cnt = 0
     while len(folders) > 0:
         cnt += 1
-        folder = folders.pop(-1)
+        folder = folders.pop(0)
         log.debug("=== {path} ===".format(**folder))
         log.debug(f"queue size: {len(folder)}")
         items = get_children_list_by_id(drive, folder["id"])
@@ -91,9 +93,13 @@ def main(args):
     df = pd.DataFrame(df)
 
     # Write CSV
+    path = Path(args.output)
+    if args.debug:
+        path = Path(path.parent, "debug", path.name)
+    path.parent.mkdir(parents=True, exist_ok=True)
     cols = ["id", "path", "mimeType", "version", "driveId"]
-    df[cols].to_csv(args.output, index=False)
-    log.info("write csv to {fname}")
+    df[cols].to_csv(path, index=False)
+    log.info(f"write csv to {path}")
 
 
 if __name__ == '__main__':
