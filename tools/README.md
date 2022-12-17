@@ -29,6 +29,21 @@ poetry install
 poetry run python download_zip_files.py
 ```
 
+Usage:
+
+```txt
+poetry run python download_zip_files.py -h                                                                                            2523ms  Sat Dec 17 10:38:37 2022
+usage: download_zip_files.py [-h] [-i INPUT] [-o OUTPUT] [--debug]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i INPUT, --input INPUT
+                        path to the file index CSV.
+  -o OUTPUT, --output OUTPUT
+                        dataset root directory.
+  --debug
+```
+
 ### Reference
 
 - [Drive API Python quickstart](https://developers.google.com/drive/api/quickstart/python)
