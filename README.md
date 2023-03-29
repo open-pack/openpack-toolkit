@@ -9,6 +9,13 @@
 OpenPack is an open access logistics-dataset for human activity recognition, which contains human movement and package information from 16 distinct subjects.
 This repository provide utilities to explore our exciting dataset.
 
+## Dataset
+
+- [OpenPack Dataset (v0.3.1)](https://open-pack.github.io/release/v0-3-1)
+
+NOTE: We added a "Tutorial Dataset" that include IMU data (acc, gyro, quaternion) and Operation labels in a single CSV file.
+For preliminary analysis, you can save the time of combining data and labels by using this dataset. (March 29, 2023)
+
 ## Docs
 
 ### Dataset
