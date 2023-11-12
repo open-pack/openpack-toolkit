@@ -23,9 +23,6 @@ pdoc3 = "^0.10.0"
 Jinja2 = "^3.1.2"
 autopep8 = "^1.6.0"
 
-[tool.poetry.scripts]
-optk-download = "openpack_toolkit.bin.download:entry_func"
-
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"

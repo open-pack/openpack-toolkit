@@ -6,10 +6,7 @@ RELEASE_CONFIG_V1_0_0 = ReleaseConfig(
     metadata=Metadata(
         labels={
             "version": "v1.0.0",
-            "release": "None",
-            "urlZenodo": "None",
-            "urlGoogleDrive": "None",
-            "urlGoogleDriveRGB": "None",
+            "release": "2023-07-14",
         }
     ),
     users={

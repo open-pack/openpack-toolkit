@@ -3,11 +3,12 @@ name: ${.metadata.labels.version}
 metadata:
   labels:
     version: v1.0.0
-    release: null
-    urlZenodo: null
-    urlGoogleDrive: null
-    urlGoogleDriveRGB: null
+    release: "2023-07-14"
 spec:
+  url:
+    zenodo: https://zenodo.org/records/8145223
+    googleDrive: https://drive.google.com/drive/folders/10hYJYkhPRgf-uTToUm5KR99EHkH2v9GB?usp=drive_link
+    googleDriveRGB: null
   users:
     U0101:
       sessions:

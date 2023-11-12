@@ -37,6 +37,7 @@ This preprocessed dataset include IMU data (acc, gyro, quaternion) assosiated wi
 ## Install
 
 We provide some utility functions as python package. You can install via pip with the following command.
+Note that the supported dataset version is `>=1.0.0`.
 
 ```bash
 # Pip
@@ -88,29 +89,13 @@ assert ts_out == ts
 
 ## Download Dataset
 
+### From Zenodo (w/o Depth Images)
+
 ```bash
-optk-download -d ../data/datasets
+bash tools/download/dl_from_zenodo.sh <path to a dataset root directory>
 
-# If you are a user of poetry,
-poetry run optk-download -d ../data/datasets
-```
-
-Help:
-
-```txt
-$ poetry run optk-download -d ../data/datasets -h
-usage: optk-download [-h] -d DATASET_DIR [-v VERSION] [-s STREAMS]
-
-optional arguments:
-  -h, --help            show this help message and exit
-  -d DATASET_DIR, --dataset-dir DATASET_DIR
-                        Path to dataset directory. Downloaded data will be stored under the directory
-  -v VERSION, --version VERSION
-                        Target dataset version. Default: v0.2.0
-  -s STREAMS, --streams STREAMS
-                        A list of data stream names that you want to download.
-                        Stream names must be separated by commas. If none, all
-                        data in zenodo will be downloaded. Defaul: none
+# Example:
+bash tools/download/dl_from_zenodo.sh ./data/datasets
 ```
 
 ## Links

@@ -1,4 +1,3 @@
-import json
 from logging import DEBUG, basicConfig, getLogger
 from pathlib import Path
 
@@ -11,10 +10,6 @@ basicConfig(level=DEBUG)
 logger = getLogger(__name__)
 
 TARGET_RELEASE_VERSIONS = [
-    # "v0-2-0",
-    # "v0-2-1",
-    # "v0-3-0",
-    # "v0-3-1",
     "v1-0-0",
 ]
 
