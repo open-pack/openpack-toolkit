@@ -1,6 +1,6 @@
 kind: dataset/stream/imu
 name: atr-qags
-mdetadata:
+metadata:
   labels:
     app: openpack
     version: 1.0.0

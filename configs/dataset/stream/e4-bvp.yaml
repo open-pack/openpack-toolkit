@@ -1,4 +1,4 @@
-kind: dataset/stream
+kind: dataset/stream/e4
 name: e4-bvp
 metadata:
   labels:

@@ -60,4 +60,4 @@ spec:
     - name: amount5
       unit: null
       dtype: str
-  frameRate: 30
+  frameRate: -1

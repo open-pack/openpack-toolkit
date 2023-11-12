@@ -1,62 +1,36 @@
-from .._schema import E4Config, DataStreamConfig, ImuConfig, KeypointConfig
+from .._schema import DataStreamConfig
 
 {% for stream in streams %}
-{% if stream.schema == "ImuConfig" %}
-{{stream.name|replace("-", "_")|upper}}_STREAM = ImuConfig(
-    schema="ImuConfig",
+{{stream.name|replace("-", "_")|upper}}_STREAM = DataStreamConfig(
+    kind="{{stream.kind}}",
     name="{{stream.name}}",
-    super_stream="{{stream.super_stream}}",
-    path=DataStreamConfig.Paths(
-        dir="{{stream.path.dir}}",
-        fname="{{stream.path.fname}}",
-    ),
-    frame_rate={{stream.frame_rate}},
-    devices={{stream.devices}},
-    acc={{stream.acc}},
-    gyro={{stream.gyro}},
-    quat={{stream.quat}},
-)
-{% elif stream.schema == "E4Config" %}
-{{stream.name|replace("-", "_")|upper}}_STREAM = E4Config(
-    schema="ImuConfig",
-    name="{{stream.name}}",
-    sensor="{{stream.sensor}}",
-    path=DataStreamConfig.Paths(
-        dir="{{stream.path.dir}}",
-        fname="{{stream.path.fname}}",
-    ),
-    frame_rate={{stream.frame_rate}},
-    devices={{stream.devices}},
-)
-{% elif stream.schema == "KeypointConfig" %}
-{{stream.name|replace("-", "_")|upper}}_STREAM = KeypointConfig(
-    schema="KeypointConfig",
-    name="{{stream.name}}",
-    super_stream="{{stream.super_stream}}",
-    path=DataStreamConfig.Paths(
-        dir="{{stream.path.dir}}",
-        fname="{{stream.path.fname}}",
-    ),
-    frame_rate={{stream.frame_rate}},
-    category="{{stream.category}}",
-    model="{{stream.model}}",
+    metadata={
+        "labels": {
+{% for key, val in stream.metadata.labels.items() %}
+        "{{key}}": "{{val}}",
+{% endfor %}
+        }
+    },
+    path={
+        "dir": "{{stream.spec.path.dir}}",
+        "fname": "{{stream.spec.path.fname}}",
+    },
+    frameRate={{stream.spec.frameRate}},
+{% if stream.kind == "dataset/stream/imu" %}
+    devices={{stream.spec.devices}},
+    acc={{stream.spec.acc}},
+    gyro={{stream.spec.gyro}},
+    quat={{stream.spec.quat}},
+{% elif stream.kind == "dataset/stream/e4" %}
+    devices={{stream.spec.devices}},
+{% elif stream.kind == "dataset/stream/keypoint" %}
     nodes={
-{% for key, val in stream.nodes.items() %}
+{% for key, val in stream.spec.nodes.items() %}
         {{key}}: "{{val}}",
 {% endfor %}
     },
-)
-{% elif stream.schema == "SystemDataConfig" %}
-{{stream.name|replace("-", "_")|upper}}_STREAM = ImuConfig(
-    schema="SystemDataConfig",
-    name="{{stream.name}}",
-    super_stream="{{stream.super_stream}}",
-    path=DataStreamConfig.Paths(
-        dir="{{stream.path.dir}}",
-        fname="{{stream.path.fname}}",
-    ),
-    frame_rate=-1,
-)
 {% endif %}
+)
+
 
 {% endfor %}

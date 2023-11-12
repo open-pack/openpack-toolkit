@@ -18,9 +18,14 @@ TARGET_STREAM = [
     "e4-temp",
     # -- Keypoint --
     "kinect-2d-kpt",
+    "kinect-3d-kpt",
+    "kinect-depth2",
+    # -- RS02 --
+    "rs02-depth",
     # -- System --
     "system-ht-original",
     "system-order-sheet",
+    "system-printer",
 ]
 
 

@@ -23,4 +23,4 @@ spec:
     - name: order_sheet
       unit: null
       dtype: str
-  frameRate: 30
+  frameRate: -1
