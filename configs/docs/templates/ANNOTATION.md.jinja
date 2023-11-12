@@ -14,7 +14,7 @@
 
 {% if annot.spec.classes %}
 | ID | Operation | Description | ignore |
-|----|------|-------------|--------|
+|----|-----------|:------------|--------|
 {% for cls in annot.spec.classes %}
 | {{cls.id}} | {{cls.name}} | {{cls.description}} | {% if cls.ignore %}{{cls.ignore}}{% endif %} |
 {% endfor %}
@@ -31,7 +31,7 @@
 ### 2-1: Activity Classes
 
 | ID | Operation | Action | Description | ignore |
-|----|-----------|------|-------------|--------|
+|----|-----------|--------|:------------|--------|
 {% for cls in annot.spec.classes %}
 | {{cls.id}} | {{cls.operation}} | {{cls.name}} | {{cls.description}} | {% if cls.ignore %}{{cls.ignore}}{% endif %} |
 {% endfor %}
@@ -46,9 +46,9 @@
 
 ### 3-1: Activity Classes
 
-| ID | Category | Event | Tags | ignore | Note |
-|----|----------|-------|------|--------|------|
+| ID | Category | Event | Description | Tags | ignore | Note |
+|----|----------|-------|:------------|:-----|--------|:-----|
 {% for cls in annot.spec.classes %}
-| {{cls.id|replace("x", "")}} | {{cls.category}} | {{cls.event}} | {% for t in cls.tags%}{{t}}, {% endfor %} | {% if cls.ignore %}{{cls.ignore}}{% endif %} | |
+| {{cls.id|replace("x", "")}} | {{cls.category}} | {{cls.event}} | {{cls.description}} | {% for t in cls.tags%}{{t}}, {% endfor %} | {% if cls.ignore %}{{cls.ignore}}{% endif %} | |
 {% endfor %}
 

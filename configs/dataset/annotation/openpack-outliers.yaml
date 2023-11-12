@@ -36,6 +36,7 @@ spec:
   - id: Aa01
     category: Incident
     event: Others
+    description: (no specific events)
     version: v1.4.0
     ignore: false
     tags:
@@ -45,6 +46,7 @@ spec:
   - id: Aa02
     category: Incident
     event: Miss
+    description: A worker makes a mistake.
     version: v1.4.0
     ignore: false
     tags:
@@ -54,6 +56,7 @@ spec:
   - id: Aa03
     category: Incident
     event: Accident
+    description: A worker suffers from an accident.
     version: v1.4.0
     ignore: false
     tags:
@@ -63,21 +66,28 @@ spec:
   - id: Aa04
     category: Incident
     event: System Error
+    description: Problems occurred in the experimental environment or in the sensors
+      device side.
     version: v1.4.0
     ignore: false
   - id: Aa05
     category: Incident
     event: Talk to Staff
+    description: Talking to staff to inform of problems they faced. For example, box
+      stock is runnning out.
     version: v1.4.0
     ignore: false
   - id: Aa06
     category: Incident
     event: Break Label
+    description: The item label is broken when it is peeled off.
     version: v1.4.0
     ignore: false
   - id: Aa07
     category: Incident
     event: Wrong Choice of Box Size
+    description: A worker is picking up a box that is not sufficiently large to put
+      all the items in it.
     version: v1.4.0
     ignore: false
     tags:
@@ -88,6 +98,7 @@ spec:
   - id: Ab01
     category: Investigation
     event: Others
+    description: (no specific events)
     version: v1.4.0
     ignore: false
     tags:
@@ -96,11 +107,14 @@ spec:
   - id: Ab02
     category: Investigation
     event: System Error
+    description: Checking sensor devices or tools such as handheld scanners.
     version: v1.4.0
     ignore: false
   - id: Ab03
     category: Investigation
     event: Check Box Size
+    description: Checking to see if all the items fit into the box by, for example,
+      placing the item to the side of the box.
     version: v1.4.0
     ignore: false
     tags:
@@ -111,16 +125,20 @@ spec:
   - id: Ab04
     category: Investigation
     event: Check Item Size
+    description: Holding items to see their sizes.
     version: v1.4.0
     ignore: false
   - id: Ab05
     category: Investigation
     event: Talk to Staff
+    description: Stopping their work and asking how they can recover from mistakes
+      or accidents.
     version: v1.4.0
     ignore: false
   - id: Ac01
     category: Recovery
     event: Others
+    description: (no specific events)
     version: v1.4.0
     ignore: false
     tags:
@@ -129,16 +147,20 @@ spec:
   - id: Ac02
     category: Recovery
     event: System Error
+    description: Fixing device errors etc.
     version: v1.4.0
     ignore: false
   - id: Ac03
     category: Recovery
     event: Take out Inserted Items from Box
+    description: Taking out items from the box to change to a different size box.
     version: v1.4.0
     ignore: false
   - id: Ac04
     category: Recovery
     event: Put Away Box for Resizing
+    description: Moving the box to the side of the workbench to discard the box which
+      is of the wrong size.
     version: v1.4.0
     ignore: false
     tags:
@@ -149,6 +171,8 @@ spec:
   - id: Ac05
     category: Recovery
     event: Disassemble Box for Resizing
+    description: Removing the attached tapes and disassembling box to use a different
+      sized box
     version: v1.4.0
     ignore: false
     tags:
@@ -159,26 +183,32 @@ spec:
   - id: Ac06
     category: Recovery
     event: Fold Box to Clean Up
+    description: Fold the box back into the stock before the `bend flap` operation.
     version: v1.4.0
     ignore: false
   - id: Ac07
     category: Recovery
     event: Return Box
+    description: Put the folded box on the box stock.
     version: v1.4.0
     ignore: false
   - id: Ac08
     category: Recovery
     event: Talk to Staff
+    description: Correcting their mistakes while asking the staff what to do.
     version: v1.4.0
     ignore: false
   - id: Ac09
     category: Recovery
     event: Item Label
+    description: Correction of errors related to the attachment and removal of item
+      labels.
     version: v1.4.0
     ignore: false
   - id: Bx01
     category: Struggling
     event: Others
+    description: (no specific events)
     version: v1.4.0
     ignore: false
     tags:
@@ -187,11 +217,13 @@ spec:
   - id: Bx02
     category: Struggling
     event: Look for Items
+    description: Stopping in front of the back table and looking for items to pack.
     version: v1.4.0
     ignore: false
   - id: Bx03
     category: Struggling
     event: Label
+    description: Struggling to remove the labels.
     version: v1.4.0
     ignore: false
     tags:
@@ -201,6 +233,7 @@ spec:
   - id: Bx04
     category: Struggling
     event: Scan
+    description: Struggling to scan labels.
     version: v1.4.0
     ignore: false
     tags:
@@ -209,21 +242,26 @@ spec:
   - id: Bx05
     category: Struggling
     event: Air Cushion
+    description: Struggling to cut air cushion, or  struggling to put air cushions
+      into the box.
     version: v1.4.0
     ignore: false
   - id: Bx06
     category: Struggling
     event: Insert Items
+    description: Struggling to insert items into the box.
     version: v1.4.0
     ignore: false
   - id: Bx07
     category: Struggling
     event: Tape
+    description: Struggling to attach tape to the box.
     version: v1.4.0
     ignore: false
   - id: Cx01
     category: Confused
     event: Others
+    description: (no specific events)
     version: v1.4.0
     ignore: false
     tags:
@@ -232,26 +270,25 @@ spec:
   - id: Cx02
     category: Confused
     event: Box Size
-    version: v1.4.0
-    ignore: false
-  - id: Cx03
-    category: Confused
-    event: Air Cushion
+    description: Stop their movements and think about which box size to pick.
     version: v1.4.0
     ignore: false
   - id: Cx04
     category: Confused
     event: Process
+    description: Almost doing something else that is out of the expected work procedure.
     version: v1.4.0
     ignore: false
   - id: Cx05
     category: Confused
     event: Double Check
+    description: Double check by pointing items with their finger.
     version: v1.4.0
     ignore: false
   - id: Dx01
     category: Parallel
     event: Others
+    description: (no specific events)
     version: v1.4.0
     ignore: false
     tags:
@@ -260,6 +297,7 @@ spec:
   - id: Dx02
     category: Parallel
     event: Action&Action
+    description: Overlap of two `action` labels.
     version: v1.4.0
     ignore: false
     tags:
@@ -276,17 +314,8 @@ spec:
     - 1002*1003
   - id: Dx03
     category: Parallel
-    event: Left&Right
-    version: v1.0.0
-    ignore: false
-  - id: Dx04
-    category: Parallel
-    event: Holding
-    version: v1.0.0
-    ignore: false
-  - id: Dx03
-    category: Parallel
     event: Action&Additional
+    description: Overlap of an `action` label and an `outlier/additional` label.
     version: v1.4.0
     ignore: false
     tags:
@@ -320,6 +349,7 @@ spec:
   - id: Dx04
     category: Parallel
     event: Action&Others
+    description: Overlap of an `action` label and an `other` label in any category.
     version: v1.4.0
     ignore: false
     tags:
@@ -331,6 +361,7 @@ spec:
   - id: Dx05
     category: Parallel
     event: Additional&Additional
+    description: Overlap of two `outlier/additional` labels.
     version: v1.4.0
     ignore: false
     tags:
@@ -341,11 +372,13 @@ spec:
   - id: Dx06
     category: Parallel
     event: Additional&Others
+    description: Overlap of an `outlier/additional` label and an `other` label/s.
     version: v1.4.0
     ignore: false
   - id: Ex01
     category: Additional
     event: Others
+    description: (no specific events)
     version: v1.4.0
     ignore: false
     tags:
@@ -354,21 +387,19 @@ spec:
   - id: Ex02
     category: Additional
     event: Talk to Staff
+    description: Stopping their work and talking with staff.
     version: v1.4.0
     ignore: false
   - id: Ex03
     category: Additional
     event: Dispose
-    version: v1.4.0
-    ignore: false
-  - id: Ex04
-    category: Additional
-    event: Operation
+    description: Discarding the trash of box labels.
     version: v1.4.0
     ignore: false
   - id: Ex05
     category: Additional
     event: Refill Boxe Stock
+    description: Move additional box stock to the workbench.
     version: v1.4.0
     ignore: false
     tags:
@@ -380,24 +411,18 @@ spec:
   - id: Ex06
     category: Additional
     event: Clean Up the Workbench
+    description: Clean up the workbench. For example, organizing order sheets.
     version: v1.4.0
     ignore: false
   - id: Ex07
     category: Additional
     event: Lift Up Box
+    description: Lifting up the assembled box.
     version: v1.4.0
     ignore: false
   - id: Ex08
     category: Additional
     event: Move Box
+    description: Turning and moving the assembled box on the workbench.
     version: v1.4.0
     ignore: false
-  - id: Fx01
-    category: Fraction
-    event: Others
-    version: v1.4.0
-    ignore: false
-    tags:
-    - LOW
-    - MID
-    - HIGH

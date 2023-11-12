@@ -12,7 +12,7 @@
 ### 1-1: Activity Classes
 
 | ID | Operation | Description | ignore |
-|----|------|-------------|--------|
+|----|-----------|:------------|--------|
 | 100 | Picking | Check the order-sheet and go to the back table to pick up the items. |  |
 | 200 | Relocate Item Label | Peel off the label from the items and place it on the bottom margin of the order sheet. Check the item names and quantity on the list and label with a ballpoint pen. (When picking is done in one round trip, this action is set as the beginning of the box.) |  |
 | 300 | Assemble Box | Assemble cardboard boxes that match the size of the items. |  |
@@ -35,7 +35,7 @@
 ### 2-1: Activity Classes
 
 | ID | Operation | Action | Description | ignore |
-|----|-----------|------|-------------|--------|
+|----|-----------|--------|:------------|--------|
 | 101 | Picking | Pick Up Sheet | Pick up order sheet from the workbench. |  |
 | 103 | Picking | Pick Up Item from Box | Pick items out of a box that contains items picked in batches. |  |
 | 107 | Picking | Pick Up Box Sheet | Pick up an order sheet and packed boxes at the same time. (This label is used for moving packed boxes and picking items for the next box at the same time.) |  |
@@ -89,55 +89,50 @@
 
 ### 3-1: Activity Classes
 
-| ID | Category | Event | Tags | ignore | Note |
-|----|----------|-------|------|--------|------|
-| Aa01 | Incident | Others | LOW, HIGH, Single,  |  | |
-| Aa02 | Incident | Miss | LOW, HIGH, Single,  |  | |
-| Aa03 | Incident | Accident | LOW, HIGH, Single,  |  | |
-| Aa04 | Incident | System Error |  |  | |
-| Aa05 | Incident | Talk to Staff |  |  | |
-| Aa06 | Incident | Break Label |  |  | |
-| Aa07 | Incident | Wrong Choice of Box Size | S, M, L, LL,  |  | |
-| Ab01 | Investigation | Others | LOW, HIGH,  |  | |
-| Ab02 | Investigation | System Error |  |  | |
-| Ab03 | Investigation | Check Box Size | Item, Box-Close, Box-Open, Box-In,  |  | |
-| Ab04 | Investigation | Check Item Size |  |  | |
-| Ab05 | Investigation | Talk to Staff |  |  | |
-| Ac01 | Recovery | Others | LOW, HIGH,  |  | |
-| Ac02 | Recovery | System Error |  |  | |
-| Ac03 | Recovery | Take out Inserted Items from Box |  |  | |
-| Ac04 | Recovery | Put Away Box for Resizing | S, M, L, LL,  |  | |
-| Ac05 | Recovery | Disassemble Box for Resizing | S, M, L, LL,  |  | |
-| Ac06 | Recovery | Fold Box to Clean Up |  |  | |
-| Ac07 | Recovery | Return Box |  |  | |
-| Ac08 | Recovery | Talk to Staff |  |  | |
-| Ac09 | Recovery | Item Label |  |  | |
-| B01 | Struggling | Others | LOW, HIGH,  |  | |
-| B02 | Struggling | Look for Items |  |  | |
-| B03 | Struggling | Label | Item, Box, Shipping,  |  | |
-| B04 | Struggling | Scan | HT, LP,  |  | |
-| B05 | Struggling | Air Cushion |  |  | |
-| B06 | Struggling | Insert Items |  |  | |
-| B07 | Struggling | Tape |  |  | |
-| C01 | Confused | Others | LOW, HIGH,  |  | |
-| C02 | Confused | Box Size |  |  | |
-| C03 | Confused | Air Cushion |  |  | |
-| C04 | Confused | Process |  |  | |
-| C05 | Confused | Double Check |  |  | |
-| D01 | Parallel | Others | LOW, HIGH,  |  | |
-| D02 | Parallel | Action&Action | 0101*1003, 0108*0201, 0302*0303, 0303*0304, 0303*0401, 0303*0501, 0401*0403, 0706*1001, 0707*1001, 0801*1003, 1002*1003,  |  | |
-| D03 | Parallel | Left&Right |  |  | |
-| D04 | Parallel | Holding |  |  | |
-| D03 | Parallel | Action&Additional | 0101*G06, 0108*G06, 0301*B03, 0301*G05, 0301*G06, 0303*0304*G07, 0303*G06, 0304*G07, 0401*G07, 0401*G08, 0502*G07, 0502*G08, 0601*G03, 0601*G08, 0701*G06, 0701*G08, 0702*G06, 0703*G08, 0704*G08, 0707*G06, 0707*G08, 0801*G03, 0801*G06, 0801*G08, 0901*G06, 1001*G06, 1003*G06,  |  | |
-| D04 | Parallel | Action&Others | 107, 030, 109, 011, 001,  |  | |
-| D05 | Parallel | Additional&Additional | B01*G07, C03*C04, G06*G08, G03*G06,  |  | |
-| D06 | Parallel | Additional&Others |  |  | |
-| E01 | Additional | Others | LOW, HIGH,  |  | |
-| E02 | Additional | Talk to Staff |  |  | |
-| E03 | Additional | Dispose |  |  | |
-| E04 | Additional | Operation |  |  | |
-| E05 | Additional | Refill Boxe Stock | S-D, S, M, L, LL,  |  | |
-| E06 | Additional | Clean Up the Workbench |  |  | |
-| E07 | Additional | Lift Up Box |  |  | |
-| E08 | Additional | Move Box |  |  | |
-| F01 | Fraction | Others | LOW, MID, HIGH,  |  | |
+| ID | Category | Event | Description | Tags | ignore | Note |
+|----|----------|-------|:------------|:-----|--------|:-----|
+| Aa01 | Incident | Others | (no specific events) | LOW, HIGH, Single,  |  | |
+| Aa02 | Incident | Miss | A worker makes a mistake. | LOW, HIGH, Single,  |  | |
+| Aa03 | Incident | Accident | A worker suffers from an accident. | LOW, HIGH, Single,  |  | |
+| Aa04 | Incident | System Error | Problems occurred in the experimental environment or in the sensors device side. |  |  | |
+| Aa05 | Incident | Talk to Staff | Talking to staff to inform of problems they faced. For example, box stock is runnning out. |  |  | |
+| Aa06 | Incident | Break Label | The item label is broken when it is peeled off. |  |  | |
+| Aa07 | Incident | Wrong Choice of Box Size | A worker is picking up a box that is not sufficiently large to put all the items in it. | S, M, L, LL,  |  | |
+| Ab01 | Investigation | Others | (no specific events) | LOW, HIGH,  |  | |
+| Ab02 | Investigation | System Error | Checking sensor devices or tools such as handheld scanners. |  |  | |
+| Ab03 | Investigation | Check Box Size | Checking to see if all the items fit into the box by, for example, placing the item to the side of the box. | Item, Box-Close, Box-Open, Box-In,  |  | |
+| Ab04 | Investigation | Check Item Size | Holding items to see their sizes. |  |  | |
+| Ab05 | Investigation | Talk to Staff | Stopping their work and asking how they can recover from mistakes or accidents. |  |  | |
+| Ac01 | Recovery | Others | (no specific events) | LOW, HIGH,  |  | |
+| Ac02 | Recovery | System Error | Fixing device errors etc. |  |  | |
+| Ac03 | Recovery | Take out Inserted Items from Box | Taking out items from the box to change to a different size box. |  |  | |
+| Ac04 | Recovery | Put Away Box for Resizing | Moving the box to the side of the workbench to discard the box which is of the wrong size. | S, M, L, LL,  |  | |
+| Ac05 | Recovery | Disassemble Box for Resizing | Removing the attached tapes and disassembling box to use a different sized box | S, M, L, LL,  |  | |
+| Ac06 | Recovery | Fold Box to Clean Up | Fold the box back into the stock before the `bend flap` operation. |  |  | |
+| Ac07 | Recovery | Return Box | Put the folded box on the box stock. |  |  | |
+| Ac08 | Recovery | Talk to Staff | Correcting their mistakes while asking the staff what to do. |  |  | |
+| Ac09 | Recovery | Item Label | Correction of errors related to the attachment and removal of item labels. |  |  | |
+| B01 | Struggling | Others | (no specific events) | LOW, HIGH,  |  | |
+| B02 | Struggling | Look for Items | Stopping in front of the back table and looking for items to pack. |  |  | |
+| B03 | Struggling | Label | Struggling to remove the labels. | Item, Box, Shipping,  |  | |
+| B04 | Struggling | Scan | Struggling to scan labels. | HT, LP,  |  | |
+| B05 | Struggling | Air Cushion | Struggling to cut air cushion, or  struggling to put air cushions into the box. |  |  | |
+| B06 | Struggling | Insert Items | Struggling to insert items into the box. |  |  | |
+| B07 | Struggling | Tape | Struggling to attach tape to the box. |  |  | |
+| C01 | Confused | Others | (no specific events) | LOW, HIGH,  |  | |
+| C02 | Confused | Box Size | Stop their movements and think about which box size to pick. |  |  | |
+| C04 | Confused | Process | Almost doing something else that is out of the expected work procedure. |  |  | |
+| C05 | Confused | Double Check | Double check by pointing items with their finger. |  |  | |
+| D01 | Parallel | Others | (no specific events) | LOW, HIGH,  |  | |
+| D02 | Parallel | Action&Action | Overlap of two `action` labels. | 0101*1003, 0108*0201, 0302*0303, 0303*0304, 0303*0401, 0303*0501, 0401*0403, 0706*1001, 0707*1001, 0801*1003, 1002*1003,  |  | |
+| D03 | Parallel | Action&Additional | Overlap of an `action` label and an `outlier/additional` label. | 0101*G06, 0108*G06, 0301*B03, 0301*G05, 0301*G06, 0303*0304*G07, 0303*G06, 0304*G07, 0401*G07, 0401*G08, 0502*G07, 0502*G08, 0601*G03, 0601*G08, 0701*G06, 0701*G08, 0702*G06, 0703*G08, 0704*G08, 0707*G06, 0707*G08, 0801*G03, 0801*G06, 0801*G08, 0901*G06, 1001*G06, 1003*G06,  |  | |
+| D04 | Parallel | Action&Others | Overlap of an `action` label and an `other` label in any category. | 107, 030, 109, 011, 001,  |  | |
+| D05 | Parallel | Additional&Additional | Overlap of two `outlier/additional` labels. | B01*G07, C03*C04, G06*G08, G03*G06,  |  | |
+| D06 | Parallel | Additional&Others | Overlap of an `outlier/additional` label and an `other` label/s. |  |  | |
+| E01 | Additional | Others | (no specific events) | LOW, HIGH,  |  | |
+| E02 | Additional | Talk to Staff | Stopping their work and talking with staff. |  |  | |
+| E03 | Additional | Dispose | Discarding the trash of box labels. |  |  | |
+| E05 | Additional | Refill Boxe Stock | Move additional box stock to the workbench. | S-D, S, M, L, LL,  |  | |
+| E06 | Additional | Clean Up the Workbench | Clean up the workbench. For example, organizing order sheets. |  |  | |
+| E07 | Additional | Lift Up Box | Lifting up the assembled box. |  |  | |
+| E08 | Additional | Move Box | Turning and moving the assembled box on the workbench. |  |  | |
