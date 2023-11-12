@@ -13,11 +13,11 @@ from ..activity import ActSet
 logger = getLogger(__name__)
 
 
-def load_annotation(
+def load_and_resample_annotation(
     path: Path,
     unixtimes_ms: np.ndarray,
     classes: ActSet,
-    label_col: str = None,
+    label_col: str = "id",
 ) -> pd.DataFrame:
     """Load annotation data and resample them according to unixtime sequence ``T``.
     If there are no annotation records for the given timestamp, that records is treated
@@ -72,7 +72,8 @@ def load_and_resample_operation_labels(
     unixtimes_ms: np.ndarray,
     classes: ActSet,
 ) -> pd.DataFrame:
-    return load_annotation(path, unixtimes_ms, classes, label_col="operation")
+    return load_and_resample_annotation(
+        path, unixtimes_ms, classes, label_col="id")
 
 
 def load_keypoints(path: Path) -> Tuple[np.ndarray, np.ndarray]:

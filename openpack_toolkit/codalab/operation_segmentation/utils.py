@@ -64,6 +64,35 @@ def resample_prediction_1Hz(
     )
 
 
+def ffill_missing_elements(
+    unixtime_gt: np.ndarray,
+    unixtime_pred: np.ndarray,
+    prediction: np.ndarray,
+):
+    missing_timestep = sorted(
+        list(set(unixtime_gt.tolist()) - set(unixtime_pred.tolist())))
+    logger.warning(
+        f"{len(missing_timestep)} elements are missing from prediction.: {missing_timestep}")
+
+    for ts in missing_timestep:
+        ind = np.where(unixtime_gt == ts)[0][0]
+
+        val = prediction[ind - 1] if ind > 0 else -1
+        unixtime_pred = np.insert(unixtime_pred, ind, ts)
+        prediction = np.insert(prediction, ind, val)
+
+        logger.warning(
+            f"fill missing element at ts={ts} (ind={ind}) with {val}.")
+
+        # DEBUG: Remove before merge
+        delta = set(unixtime_gt[:ind]) - set(unixtime_pred[:ind])
+        assert len(delta) == 0, delta
+
+    assert len(unixtime_pred) == len(unixtime_gt)
+    assert len(prediction) == len(unixtime_gt)
+    return unixtime_pred, prediction
+
+
 def crop_prediction_sequence(
     unixtime_gt: np.ndarray,
     unixtime_pred: np.ndarray,
@@ -84,6 +113,12 @@ def crop_prediction_sequence(
 
     unixtime_pred = unixtime_pred[ind]
     prediction = prediction[ind]
+
+    unixtime_pred, prediction = ffill_missing_elements(
+        unixtime_gt,
+        unixtime_pred,
+        prediction,
+    )
 
     return unixtime_pred, prediction
 
@@ -106,9 +141,8 @@ def construct_submission_dict(
         Dict: submission dict
     """
     submission = dict()
-    
-    keys = list(outputs.keys())
-    keys.sort()
+
+    keys = sorted(outputs.keys())
     for key in keys:
         d = outputs[key]
         record = dict()
@@ -127,13 +161,13 @@ def construct_submission_dict(
 
             # TODO: Move to new function ( load_ground_truth() )
             path = Path(
-                cfg.dataset.annotation.path.dir,
-                cfg.dataset.annotation.path.fname
+                cfg.dataset.annotation.spec.path.dir,
+                cfg.dataset.annotation.spec.path.fname
             )
             df_label = pd.read_csv(path)
 
             unixtime_gt_sess = df_label["unixtime"].values
-            ground_truth_sess = df_label["operation"].values
+            ground_truth_sess = df_label["id"].values
 
             # check timestamp
             unixtime_pred_sess, prediction_sess = crop_prediction_sequence(
