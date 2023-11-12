@@ -4,22 +4,22 @@ from .._schema import DataSplitConfig
 {{key|replace("-", "_")|upper}}_SPLIT = DataSplitConfig(
     name="{{key}}",
     train=[
-{% for item in split.train %}
+{% for item in split.spec.train %}
         {{item}},
 {% endfor %}
     ],
     val=[
-{% for item in split.val %}
+{% for item in split.spec.val %}
         {{item}},
 {% endfor %}
     ],
     test=[
-{% for item in split.test %}
+{% for item in split.spec.test %}
         {{item}},
 {% endfor %}
     ],
     submission=[
-{% for item in split.submission %}
+{% for item in split.spec.submission %}
         {{item}},
 {% endfor %}
     ],

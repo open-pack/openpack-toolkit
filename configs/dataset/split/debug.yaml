@@ -1,13 +1,18 @@
+kind: dataset/split/fixed-set
 name: debug
-description: >-
-  This split is for debugging. The used sequence for each section is small.
-train:
-  - ["U0102", "S0100"]
-  - ["U0102", "S0200"]
-  - ["U0102", "S0300"]
-val:
-  - ["U0102", "S0400"]
-test:
-  - ["U0102", "S0500"]
-submission:
-  - ["U0102", "S0500"]
+metadata:
+  labels:
+    app: openpack-benchmarks
+    benchmarkType: benchmark1
+    version: 1.0.0
+spec:
+  train:
+    - ["U0102", "S0100"]
+    - ["U0102", "S0200"]
+    - ["U0102", "S0300"]
+  val:
+    - ["U0102", "S0400"]
+  test:
+    - ["U0102", "S0500"]
+  submission:
+    - ["U0102", "S0500"]
