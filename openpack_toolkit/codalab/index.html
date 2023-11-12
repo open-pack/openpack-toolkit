@@ -115,7 +115,7 @@ macro avg., weighted avg., and score for each class will be calculated.</dd>
 </details>
 </dd>
 <dt id="openpack_toolkit.codalab.eval_operation_segmentation_wrapper"><code class="name flex">
-<span>def <span class="ident">eval_operation_segmentation_wrapper</span></span>(<span>cfg: omegaconf.dictconfig.DictConfig, outputs: Dict[str, Dict[str, numpy.ndarray]], act_set: <a title="openpack_toolkit.activity.ActSet" href="../activity/index.html#openpack_toolkit.activity.ActSet">ActSet</a> = ActSet(classes=(ActClass(id=100, name='Picking', is_ignore=False), ActClass(id=200, name='Relocate Item Label', is_ignore=False), ActClass(id=300, name='Assemble Box', is_ignore=False), ActClass(id=400, name='Insert Items', is_ignore=False), ActClass(id=500, name='Close Box', is_ignore=False), ActClass(id=600, name='Attach Box Label', is_ignore=False), ActClass(id=700, name='Scan Label', is_ignore=False), ActClass(id=800, name='Attach Shipping Label', is_ignore=False), ActClass(id=900, name='Put on Back Table', is_ignore=False), ActClass(id=1000, name='Fill out Order', is_ignore=False), ActClass(id=8100, name='Null', is_ignore=True))), exclude_ignore_class=True) ‑> pandas.core.frame.DataFrame</span>
+<span>def <span class="ident">eval_operation_segmentation_wrapper</span></span>(<span>cfg: omegaconf.dictconfig.DictConfig, outputs: Dict[str, Dict[str, numpy.ndarray]], act_set: <a title="openpack_toolkit.activity.ActSet" href="../activity/index.html#openpack_toolkit.activity.ActSet">ActSet</a> = ActSet(classes=(Label(id=100, name='Picking', version='v3.0.0', is_ignore=False, category=None, event=None), Label(id=200, name='Relocate Item Label', version='v3.2.2', is_ignore=False, category=None, event=None), Label(id=300, name='Assemble Box', version='v3.2.2', is_ignore=False, category=None, event=None), Label(id=400, name='Insert Items', version='v3.2.2', is_ignore=False, category=None, event=None), Label(id=500, name='Close Box', version='v3.2.2', is_ignore=False, category=None, event=None), Label(id=600, name='Attach Box Label', version='v3.2.2', is_ignore=False, category=None, event=None), Label(id=700, name='Scan Label', version='v3.2.2', is_ignore=False, category=None, event=None), Label(id=800, name='Attach Shipping Label', version='v3.2.2', is_ignore=False, category=None, event=None), Label(id=900, name='Put on Back Table', version='v3.2.2', is_ignore=False, category=None, event=None), Label(id=1000, name='Fill out Order', version='v3.2.2', is_ignore=False, category=None, event=None), Label(id=8100, name='Null', version='v3.2.2', is_ignore=True, category=None, event=None))), exclude_ignore_class=True) ‑> pandas.core.frame.DataFrame</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Compute evaluation metrics from model outputs (predicted probability).</p>
@@ -141,7 +141,7 @@ y is a 3d array of predction probabilities with shape=(BATCH_SIZE, NUM_CLASSES, 
 <pre><code class="python">def eval_operation_segmentation_wrapper(
     cfg: DictConfig,
     outputs: Dict[str, Dict[str, np.ndarray]],
-    act_set: ActSet = OPENPACK_OPERATIONS,
+    act_set: ActSet = ActSet(OPENPACK_OPERATIONS),
     exclude_ignore_class=True,
 ) -&gt; pd.DataFrame:
     &#34;&#34;&#34; Compute evaluation metrics from model outputs (predicted probability).

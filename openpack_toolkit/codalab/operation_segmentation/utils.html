@@ -99,6 +99,41 @@ def resample_prediction_1Hz(
     )
 
 
+def ffill_missing_elements(
+    unixtime_gt: np.ndarray,
+    unixtime_pred: np.ndarray,
+    prediction: np.ndarray,
+):
+    missing_timestep = sorted(
+        list(set(unixtime_gt.tolist()) - set(unixtime_pred.tolist())))
+    if len(missing_timestep) == 0:
+        return unixtime_pred, prediction
+    logger.warning(
+        f&#34;{len(missing_timestep)} elements are missing from prediction.: {missing_timestep}&#34;)
+
+    for ts in missing_timestep:
+        ind = np.where(unixtime_gt == ts)[0][0]
+
+        val = prediction[ind - 1] if ind &gt; 0 else -1
+        unixtime_pred = np.insert(unixtime_pred, ind, ts)
+        prediction = np.insert(prediction, ind, val)
+
+        logger.warning(
+            f&#34;fill missing element at ts={ts} (ind={ind}) with {val}.&#34;)
+
+        # DEBUG: Remove before merge
+        delta = set(unixtime_gt[:ind]) - set(unixtime_pred[:ind])
+        assert len(delta) == 0, delta
+
+    assert len(unixtime_pred) == len(unixtime_gt), (
+        f&#34;unixtime_pred={unixtime_pred.shape}, unixtime_gt={unixtime_gt.shape}&#34;
+    )
+    assert len(prediction) == len(unixtime_gt), (
+        f&#34;prediction={prediction.shape}, unixtime_gt={unixtime_gt.shape}&#34;
+    )
+    return unixtime_pred, prediction
+
+
 def crop_prediction_sequence(
     unixtime_gt: np.ndarray,
     unixtime_pred: np.ndarray,
@@ -111,7 +146,9 @@ def crop_prediction_sequence(
         prediction (np.ndarray): -
     &#34;&#34;&#34;
     ts_head, ts_tail = unixtime_gt[0], unixtime_gt[-1]
-    logger.debug(f&#34;ts_head={ts_head}, ts_tail={ts_tail}&#34;)
+    logger.debug(f&#34;ground truth: ts_head={ts_head}, ts_tail={ts_tail}&#34;)
+    logger.debug(
+        f&#34;prediction  : ts_head={int(unixtime_pred[0])}, ts_tail={int(unixtime_pred[-1])}&#34;)
 
     ind = np.where((unixtime_pred &gt;= ts_head) &amp; (unixtime_pred &lt;= ts_tail))[0]
     logger.debug(
@@ -119,6 +156,12 @@ def crop_prediction_sequence(
 
     unixtime_pred = unixtime_pred[ind]
     prediction = prediction[ind]
+
+    unixtime_pred, prediction = ffill_missing_elements(
+        unixtime_gt,
+        unixtime_pred,
+        prediction,
+    )
 
     return unixtime_pred, prediction
 
@@ -141,11 +184,18 @@ def construct_submission_dict(
         Dict: submission dict
     &#34;&#34;&#34;
     submission = dict()
-    for key, d in outputs.items():
+
+    keys = sorted(outputs.keys())
+    for key in keys:
+        d = outputs[key]
         record = dict()
         user, session = key.split(&#34;-&#34;)
 
         assert d[&#34;y&#34;].ndim == 3
+        assert d[&#34;unixtime&#34;].dtype == np.int64, (
+            &#34;unixtime must be np.int64, but got {}&#34;.format(d[&#34;unixtime&#34;].dtype)
+        )
+
         prediction_sess = act_set.convert_index_to_id(
             np.argmax(d[&#34;y&#34;], axis=1).ravel())
         unixtime_pred_sess, prediction_sess = resample_prediction_1Hz(
@@ -157,14 +207,30 @@ def construct_submission_dict(
                 cfg.session = session
 
             # TODO: Move to new function ( load_ground_truth() )
-            path = Path(
-                cfg.dataset.annotation.path.dir,
-                cfg.dataset.annotation.path.fname
-            )
+            if hasattr(cfg.dataset.annotation, &#34;spec&#34;):
+                path = Path(
+                    cfg.dataset.annotation.spec.path.dir,
+                    cfg.dataset.annotation.spec.path.fname
+                )
+            else:
+                path = Path(
+                    cfg.dataset.annotation.path.dir,
+                    cfg.dataset.annotation.path.fname
+                )
             df_label = pd.read_csv(path)
 
+            label_format = cfg.dataset.annotation.metadata.labels.get(
+                &#34;label_format&#34;, &#34;&#34;)
+            if label_format == &#34;soft-target&#34;:
+                cols = [c for c in df_label.columns if c.startswith(&#34;ID&#34;)]
+                index_to_id = {i: int(c.replace(&#34;ID&#34;, &#34;&#34;))
+                               for i, c in enumerate(cols)}
+                df_label[&#34;index&#34;] = np.argmax(df_label[cols].values, axis=1)
+                df_label[&#34;id&#34;] = df_label[&#34;index&#34;].apply(
+                    lambda ind: index_to_id[ind])
+
             unixtime_gt_sess = df_label[&#34;unixtime&#34;].values
-            ground_truth_sess = df_label[&#34;operation&#34;].values
+            ground_truth_sess = df_label[&#34;id&#34;].values
 
             # check timestamp
             unixtime_pred_sess, prediction_sess = crop_prediction_sequence(
@@ -234,7 +300,7 @@ def make_submission_zipfile(
 def eval_operation_segmentation_wrapper(
     cfg: DictConfig,
     outputs: Dict[str, Dict[str, np.ndarray]],
-    act_set: ActSet = OPENPACK_OPERATIONS,
+    act_set: ActSet = ActSet(OPENPACK_OPERATIONS),
     exclude_ignore_class=True,
 ) -&gt; pd.DataFrame:
     &#34;&#34;&#34; Compute evaluation metrics from model outputs (predicted probability).
@@ -341,11 +407,18 @@ in the submission dict. Set True when you calculate scores.</dd>
         Dict: submission dict
     &#34;&#34;&#34;
     submission = dict()
-    for key, d in outputs.items():
+
+    keys = sorted(outputs.keys())
+    for key in keys:
+        d = outputs[key]
         record = dict()
         user, session = key.split(&#34;-&#34;)
 
         assert d[&#34;y&#34;].ndim == 3
+        assert d[&#34;unixtime&#34;].dtype == np.int64, (
+            &#34;unixtime must be np.int64, but got {}&#34;.format(d[&#34;unixtime&#34;].dtype)
+        )
+
         prediction_sess = act_set.convert_index_to_id(
             np.argmax(d[&#34;y&#34;], axis=1).ravel())
         unixtime_pred_sess, prediction_sess = resample_prediction_1Hz(
@@ -357,14 +430,30 @@ in the submission dict. Set True when you calculate scores.</dd>
                 cfg.session = session
 
             # TODO: Move to new function ( load_ground_truth() )
-            path = Path(
-                cfg.dataset.annotation.path.dir,
-                cfg.dataset.annotation.path.fname
-            )
+            if hasattr(cfg.dataset.annotation, &#34;spec&#34;):
+                path = Path(
+                    cfg.dataset.annotation.spec.path.dir,
+                    cfg.dataset.annotation.spec.path.fname
+                )
+            else:
+                path = Path(
+                    cfg.dataset.annotation.path.dir,
+                    cfg.dataset.annotation.path.fname
+                )
             df_label = pd.read_csv(path)
 
+            label_format = cfg.dataset.annotation.metadata.labels.get(
+                &#34;label_format&#34;, &#34;&#34;)
+            if label_format == &#34;soft-target&#34;:
+                cols = [c for c in df_label.columns if c.startswith(&#34;ID&#34;)]
+                index_to_id = {i: int(c.replace(&#34;ID&#34;, &#34;&#34;))
+                               for i, c in enumerate(cols)}
+                df_label[&#34;index&#34;] = np.argmax(df_label[cols].values, axis=1)
+                df_label[&#34;id&#34;] = df_label[&#34;index&#34;].apply(
+                    lambda ind: index_to_id[ind])
+
             unixtime_gt_sess = df_label[&#34;unixtime&#34;].values
-            ground_truth_sess = df_label[&#34;operation&#34;].values
+            ground_truth_sess = df_label[&#34;id&#34;].values
 
             # check timestamp
             unixtime_pred_sess, prediction_sess = crop_prediction_sequence(
@@ -410,7 +499,9 @@ in the submission dict. Set True when you calculate scores.</dd>
         prediction (np.ndarray): -
     &#34;&#34;&#34;
     ts_head, ts_tail = unixtime_gt[0], unixtime_gt[-1]
-    logger.debug(f&#34;ts_head={ts_head}, ts_tail={ts_tail}&#34;)
+    logger.debug(f&#34;ground truth: ts_head={ts_head}, ts_tail={ts_tail}&#34;)
+    logger.debug(
+        f&#34;prediction  : ts_head={int(unixtime_pred[0])}, ts_tail={int(unixtime_pred[-1])}&#34;)
 
     ind = np.where((unixtime_pred &gt;= ts_head) &amp; (unixtime_pred &lt;= ts_tail))[0]
     logger.debug(
@@ -419,11 +510,17 @@ in the submission dict. Set True when you calculate scores.</dd>
     unixtime_pred = unixtime_pred[ind]
     prediction = prediction[ind]
 
+    unixtime_pred, prediction = ffill_missing_elements(
+        unixtime_gt,
+        unixtime_pred,
+        prediction,
+    )
+
     return unixtime_pred, prediction</code></pre>
 </details>
 </dd>
 <dt id="openpack_toolkit.codalab.operation_segmentation.utils.eval_operation_segmentation_wrapper"><code class="name flex">
-<span>def <span class="ident">eval_operation_segmentation_wrapper</span></span>(<span>cfg: omegaconf.dictconfig.DictConfig, outputs: Dict[str, Dict[str, numpy.ndarray]], act_set: <a title="openpack_toolkit.activity.ActSet" href="../../activity/index.html#openpack_toolkit.activity.ActSet">ActSet</a> = ActSet(classes=(ActClass(id=100, name='Picking', is_ignore=False), ActClass(id=200, name='Relocate Item Label', is_ignore=False), ActClass(id=300, name='Assemble Box', is_ignore=False), ActClass(id=400, name='Insert Items', is_ignore=False), ActClass(id=500, name='Close Box', is_ignore=False), ActClass(id=600, name='Attach Box Label', is_ignore=False), ActClass(id=700, name='Scan Label', is_ignore=False), ActClass(id=800, name='Attach Shipping Label', is_ignore=False), ActClass(id=900, name='Put on Back Table', is_ignore=False), ActClass(id=1000, name='Fill out Order', is_ignore=False), ActClass(id=8100, name='Null', is_ignore=True))), exclude_ignore_class=True) ‑> pandas.core.frame.DataFrame</span>
+<span>def <span class="ident">eval_operation_segmentation_wrapper</span></span>(<span>cfg: omegaconf.dictconfig.DictConfig, outputs: Dict[str, Dict[str, numpy.ndarray]], act_set: <a title="openpack_toolkit.activity.ActSet" href="../../activity/index.html#openpack_toolkit.activity.ActSet">ActSet</a> = ActSet(classes=(Label(id=100, name='Picking', version='v3.0.0', is_ignore=False, category=None, event=None), Label(id=200, name='Relocate Item Label', version='v3.2.2', is_ignore=False, category=None, event=None), Label(id=300, name='Assemble Box', version='v3.2.2', is_ignore=False, category=None, event=None), Label(id=400, name='Insert Items', version='v3.2.2', is_ignore=False, category=None, event=None), Label(id=500, name='Close Box', version='v3.2.2', is_ignore=False, category=None, event=None), Label(id=600, name='Attach Box Label', version='v3.2.2', is_ignore=False, category=None, event=None), Label(id=700, name='Scan Label', version='v3.2.2', is_ignore=False, category=None, event=None), Label(id=800, name='Attach Shipping Label', version='v3.2.2', is_ignore=False, category=None, event=None), Label(id=900, name='Put on Back Table', version='v3.2.2', is_ignore=False, category=None, event=None), Label(id=1000, name='Fill out Order', version='v3.2.2', is_ignore=False, category=None, event=None), Label(id=8100, name='Null', version='v3.2.2', is_ignore=True, category=None, event=None))), exclude_ignore_class=True) ‑> pandas.core.frame.DataFrame</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Compute evaluation metrics from model outputs (predicted probability).</p>
@@ -449,7 +546,7 @@ y is a 3d array of predction probabilities with shape=(BATCH_SIZE, NUM_CLASSES, 
 <pre><code class="python">def eval_operation_segmentation_wrapper(
     cfg: DictConfig,
     outputs: Dict[str, Dict[str, np.ndarray]],
-    act_set: ActSet = OPENPACK_OPERATIONS,
+    act_set: ActSet = ActSet(OPENPACK_OPERATIONS),
     exclude_ignore_class=True,
 ) -&gt; pd.DataFrame:
     &#34;&#34;&#34; Compute evaluation metrics from model outputs (predicted probability).
@@ -502,6 +599,50 @@ y is a 3d array of predction probabilities with shape=(BATCH_SIZE, NUM_CLASSES, 
 
     df_scores = pd.concat(df_scores, axis=0, ignore_index=True)
     return df_scores</code></pre>
+</details>
+</dd>
+<dt id="openpack_toolkit.codalab.operation_segmentation.utils.ffill_missing_elements"><code class="name flex">
+<span>def <span class="ident">ffill_missing_elements</span></span>(<span>unixtime_gt: numpy.ndarray, unixtime_pred: numpy.ndarray, prediction: numpy.ndarray)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def ffill_missing_elements(
+    unixtime_gt: np.ndarray,
+    unixtime_pred: np.ndarray,
+    prediction: np.ndarray,
+):
+    missing_timestep = sorted(
+        list(set(unixtime_gt.tolist()) - set(unixtime_pred.tolist())))
+    if len(missing_timestep) == 0:
+        return unixtime_pred, prediction
+    logger.warning(
+        f&#34;{len(missing_timestep)} elements are missing from prediction.: {missing_timestep}&#34;)
+
+    for ts in missing_timestep:
+        ind = np.where(unixtime_gt == ts)[0][0]
+
+        val = prediction[ind - 1] if ind &gt; 0 else -1
+        unixtime_pred = np.insert(unixtime_pred, ind, ts)
+        prediction = np.insert(prediction, ind, val)
+
+        logger.warning(
+            f&#34;fill missing element at ts={ts} (ind={ind}) with {val}.&#34;)
+
+        # DEBUG: Remove before merge
+        delta = set(unixtime_gt[:ind]) - set(unixtime_pred[:ind])
+        assert len(delta) == 0, delta
+
+    assert len(unixtime_pred) == len(unixtime_gt), (
+        f&#34;unixtime_pred={unixtime_pred.shape}, unixtime_gt={unixtime_gt.shape}&#34;
+    )
+    assert len(prediction) == len(unixtime_gt), (
+        f&#34;prediction={prediction.shape}, unixtime_gt={unixtime_gt.shape}&#34;
+    )
+    return unixtime_pred, prediction</code></pre>
 </details>
 </dd>
 <dt id="openpack_toolkit.codalab.operation_segmentation.utils.make_submission_zipfile"><code class="name flex">
@@ -657,6 +798,7 @@ y is a 3d array of predction probabilities with shape=(BATCH_SIZE, NUM_CLASSES, 
 <li><code><a title="openpack_toolkit.codalab.operation_segmentation.utils.construct_submission_dict" href="#openpack_toolkit.codalab.operation_segmentation.utils.construct_submission_dict">construct_submission_dict</a></code></li>
 <li><code><a title="openpack_toolkit.codalab.operation_segmentation.utils.crop_prediction_sequence" href="#openpack_toolkit.codalab.operation_segmentation.utils.crop_prediction_sequence">crop_prediction_sequence</a></code></li>
 <li><code><a title="openpack_toolkit.codalab.operation_segmentation.utils.eval_operation_segmentation_wrapper" href="#openpack_toolkit.codalab.operation_segmentation.utils.eval_operation_segmentation_wrapper">eval_operation_segmentation_wrapper</a></code></li>
+<li><code><a title="openpack_toolkit.codalab.operation_segmentation.utils.ffill_missing_elements" href="#openpack_toolkit.codalab.operation_segmentation.utils.ffill_missing_elements">ffill_missing_elements</a></code></li>
 <li><code><a title="openpack_toolkit.codalab.operation_segmentation.utils.make_submission_zipfile" href="#openpack_toolkit.codalab.operation_segmentation.utils.make_submission_zipfile">make_submission_zipfile</a></code></li>
 <li><code><a title="openpack_toolkit.codalab.operation_segmentation.utils.resample_prediction_1Hz" href="#openpack_toolkit.codalab.operation_segmentation.utils.resample_prediction_1Hz">resample_prediction_1Hz</a></code></li>
 </ul>

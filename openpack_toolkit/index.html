@@ -29,14 +29,14 @@
 <p><a href="https://open-pack.github.io">"OpenPack Dataset"</a> is a new large-scale multi modal dataset of manual packing process.
 OpenPack is an open access logistics-dataset for human activity recognition, which contains human movement and package information from 16 distinct subjects.
 This repository provide utilities to explore our exciting dataset.</p>
-<h2 id="dataset">Dataset</h2>
+<h2 id="dataset-release-note">Dataset Release Note</h2>
 <ul>
-<li><a href="https://open-pack.github.io/release/v0-3-1">OpenPack Dataset (v0.3.1)</a></li>
+<li><a href="https://open-pack.github.io/release/v1-0-0">OpenPack Dataset (v1.0.0)</a></li>
 </ul>
-<p>NOTE: We added a "Tutorial Dataset" that include IMU data (acc, gyro, quaternion) and Operation labels in a single CSV file.
-For preliminary analysis, you can save the time of combining data and labels by using this dataset. (March 29, 2023)</p>
+<p>For preliminary analysis, please start from <code>preprocessed-IMU-with-operation-labels.zip</code> in <a href="https://zenodo.org/records/8145223">zenodo</a>.
+This preprocessed dataset include IMU data (acc, gyro, quaternion) assosiated with operatopn labels because you don't need to combine data and label.</p>
 <h2 id="docs">Docs</h2>
-<h3 id="dataset_1">Dataset</h3>
+<h3 id="dataset">Dataset</h3>
 <ul>
 <li><a href="./docs/USER.md">Subjects &amp; Recording Scenarios</a></li>
 <li><a href="./docs/ANNOTATION.md">Activity Class Definition</a></li>
@@ -51,7 +51,8 @@ For preliminary analysis, you can save the time of combining data and labels by 
 <h3 id="sample-data">Sample Data</h3>
 <p><a href="./samples/">Sample</a></p>
 <h2 id="install">Install</h2>
-<p>We provide some utility functions as python package. You can install via pip with the following command.</p>
+<p>We provide some utility functions as python package. You can install via pip with the following command.
+Note that the supported dataset version is <code>&gt;=1.0.0</code>.</p>
 <pre><code class="language-bash"># Pip
 pip install openpack-toolkit
 
@@ -66,26 +67,37 @@ poetry add  openpack-toolkit
 <h3 id="work-activity-recognition-pytorch">Work Activity Recognition (PyTorch)</h3>
 <p>PyTorch code samples for work operation prediction task is available.
 See <a href="https://github.com/open-pack/openpack-torch">openpack-torch</a> for more dietail.</p>
-<h2 id="download-dataset">Download Dataset</h2>
-<pre><code class="language-bash">optk-download -d ../data/datasets
+<h3 id="timestamp">Timestamp</h3>
+<p>Each data point is associated with a millisecond-precision unix timestamp.
+The following is a snippet that converts a timestamp (an <code>int</code> value) into a <code>datatime.datetime()</code> object with timezone.</p>
+<pre><code class="language-python">import datetime
 
-# If you are a user of poetry,
-poetry run optk-download -d ../data/datasets
+
+def timestamp_to_datetime(ts: int) -&gt; datetime.datetime:
+  &quot;&quot;&quot;Convert unix timestamp (milli-second precision) into datatime object. &quot;&quot;&quot;
+  timezone_jst = datetime.timezone(datetime.timedelta(hours=9))
+  dt = datetime.datetime.fromtimestamp(ts / 1000).replace(tzinfo=timezone_jst)
+  return dt
+
+def datetime_to_timestamp(dt: datetime.datetime) -&gt; int:
+  &quot;&quot;&quot;Convert a datetime object into a milli-second precision timestamp.&quot;&quot;&quot;
+  return int(dt.timestamp() * 1000)
+
+
+ts = 1634885786000
+
+dt_out =  timestamp_to_datetime(ts)
+ts_out = datetime_to_timestamp(dt_out)
+print(f&quot;datetime: {dt_out}&quot;)  # datetime: 2021-10-22 15:56:26+09:00
+print(f&quot;timestamp: {ts_out}&quot;)  # timestamp: 1634885786000
+assert ts_out == ts
 </code></pre>
-<p>Help:</p>
-<pre><code class="language-txt">$ poetry run optk-download -d ../data/datasets -h
-usage: optk-download [-h] -d DATASET_DIR [-v VERSION] [-s STREAMS]
+<h2 id="download-dataset">Download Dataset</h2>
+<h3 id="from-zenodo-wo-depth-images">From Zenodo (w/o Depth Images)</h3>
+<pre><code class="language-bash">bash tools/download/dl_from_zenodo.sh &lt;path to a dataset root directory&gt;
 
-optional arguments:
-  -h, --help            show this help message and exit
-  -d DATASET_DIR, --dataset-dir DATASET_DIR
-                        Path to dataset directory. Downloaded data will be stored under the directory
-  -v VERSION, --version VERSION
-                        Target dataset version. Default: v0.2.0
-  -s STREAMS, --streams STREAMS
-                        A list of data stream names that you want to download.
-                        Stream names must be separated by commas. If none, all
-                        data in zenodo will be downloaded. Defaul: none
+# Example:
+bash tools/download/dl_from_zenodo.sh ./data/datasets
 </code></pre>
 <h2 id="links">Links</h2>
 <ul>
@@ -99,7 +111,8 @@ optional arguments:
 <p><img alt="OpenPack Challenge Logo" src="./img/OpenPackCHALLENG-black.png"></p>
 <h2 id="license">License</h2>
 <p>openpack-toolkit has a MIT license, as found in the <a href="./LICENCE">LICENSE</a> file.</p>
-<p>NOTE: <a href="https://doi.org/10.5281/zenodo.5909086">OpenPack Dataset</a> itself is available under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode">Creative Commons Attribution Non Commercial Share Alike 4.0 International</a> license.</p>
+<p>NOTE: <a href="https://doi.org/10.5281/zenodo.5909086">OpenPack Dataset</a> itself is available under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode">Creative Commons Attribution Non Commercial Share Alike 4.0 International</a> license.
+However, <a href="./docs/OPENPACK_DATASET_RGB_LICENSE.md">OpenPack Dataset (+RGB) License</a> is applied to "OpenPack Dataset (+RGB)" which includs RGB data.</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -108,14 +121,14 @@ optional arguments:
 .. include:: ../README.md
 &#34;&#34;&#34;
 
-__version__ = &#39;0.6.3&#39;
-from . import codalab, configs, data, download, utils
+__version__ = &#39;1.0.0&#39;
+from . import codalab, configs, data, utils
 from .activity import ActClass, ActSet
 from .configs.datasets.annotations import OPENPACK_OPERATIONS
 
-DATASET_VERSION_LATEST = &#34;v0.3.1&#34;
+DATASET_VERSION_LATEST = &#34;v1.0.0&#34;
 DATASET_VERSION = DATASET_VERSION_LATEST
-SAMPLE_DATASET_VERSION = &#34;v0.3.0&#34;
+SAMPLE_DATASET_VERSION = &#34;v1.0.0&#34;
 
 
 __all__ = [
@@ -124,7 +137,6 @@ __all__ = [
     &#34;codalab&#34;,
     &#34;configs&#34;,
     &#34;data&#34;,
-    &#34;download&#34;,
     &#34;utils&#34;,
     &#34;DATASET_VERSION&#34;,
     &#34;OPENPACK_OPERATIONS&#34;,
@@ -138,10 +150,6 @@ __all__ = [
 <dd>
 <div class="desc"><p>Activity set definitions for OpenPack dataset.</p></div>
 </dd>
-<dt><code class="name"><a title="openpack_toolkit.bin" href="bin/index.html">openpack_toolkit.bin</a></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
 <dt><code class="name"><a title="openpack_toolkit.codalab" href="codalab/index.html">openpack_toolkit.codalab</a></code></dt>
 <dd>
 <div class="desc"></div>
@@ -153,10 +161,6 @@ __all__ = [
 <dt><code class="name"><a title="openpack_toolkit.data" href="data/index.html">openpack_toolkit.data</a></code></dt>
 <dd>
 <div class="desc"><p><code>optk.data</code> module provide easy access to our dataset.</p></div>
-</dd>
-<dt><code class="name"><a title="openpack_toolkit.download" href="download/index.html">openpack_toolkit.download</a></code></dt>
-<dd>
-<div class="desc"></div>
 </dd>
 <dt><code class="name"><a title="openpack_toolkit.utils" href="utils/index.html">openpack_toolkit.utils</a></code></dt>
 <dd>
@@ -171,43 +175,9 @@ __all__ = [
 <section>
 <h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
-<dt id="openpack_toolkit.ActClass"><code class="flex name class">
-<span>class <span class="ident">ActClass</span></span>
-<span>(</span><span>id: int, name: str, is_ignore: bool = False)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>dataclass that represent a single activity class.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@dataclass
-class ActClass():
-    &#34;&#34;&#34;dataclass that represent a single activity class.
-    &#34;&#34;&#34;
-    id: int
-    name: str
-    is_ignore: bool = False</code></pre>
-</details>
-<h3>Class variables</h3>
-<dl>
-<dt id="openpack_toolkit.ActClass.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt id="openpack_toolkit.ActClass.is_ignore"><code class="name">var <span class="ident">is_ignore</span> : bool</code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt id="openpack_toolkit.ActClass.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-</dl>
-</dd>
 <dt id="openpack_toolkit.ActSet"><code class="flex name class">
 <span>class <span class="ident">ActSet</span></span>
-<span>(</span><span>classes: Tuple[<a title="openpack_toolkit.activity.ActClass" href="activity/index.html#openpack_toolkit.activity.ActClass">ActClass</a>, ...])</span>
+<span>(</span><span>classes: Tuple[openpack_toolkit.configs._schema.Label, ...])</span>
 </code></dt>
 <dd>
 <div class="desc"><p>ActSet binds activity classes and proved methods that can be useful when you apply machine
@@ -340,7 +310,8 @@ class ActSet():
         &#34;&#34;&#34;
         assert min(self.get_ids()) &gt;= 0
         assert (index.min() &gt;= 0) and (index.max() &lt; len(self.classes)), (
-            &#34;given index have out of range value(s).&#34;
+            f&#34;given index have out of range value(s)([0, {len(self.classes)}]).&#34;
+            f&#34; index.min()={index.min()}, index.max={index.max()}&#34;
         )
 
         ids = np.full(index.shape, -1)
@@ -386,7 +357,7 @@ class ActSet():
 </details>
 <h3>Class variables</h3>
 <dl>
-<dt id="openpack_toolkit.ActSet.classes"><code class="name">var <span class="ident">classes</span> : Tuple[<a title="openpack_toolkit.activity.ActClass" href="activity/index.html#openpack_toolkit.activity.ActClass">ActClass</a>, ...]</code></dt>
+<dt id="openpack_toolkit.ActSet.classes"><code class="name">var <span class="ident">classes</span> : Tuple[openpack_toolkit.configs._schema.Label, ...]</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -464,7 +435,8 @@ class ActSet():
     &#34;&#34;&#34;
     assert min(self.get_ids()) &gt;= 0
     assert (index.min() &gt;= 0) and (index.max() &lt; len(self.classes)), (
-        &#34;given index have out of range value(s).&#34;
+        f&#34;given index have out of range value(s)([0, {len(self.classes)}]).&#34;
+        f&#34; index.min()={index.min()}, index.max={index.max()}&#34;
     )
 
     ids = np.full(index.shape, -1)
@@ -639,7 +611,7 @@ When there is no ignore classe, return None.</p>
 </details>
 </dd>
 <dt id="openpack_toolkit.ActSet.to_tuple"><code class="name flex">
-<span>def <span class="ident">to_tuple</span></span>(<span>self, keep_actclass: bool = False) ‑> Union[Tuple[Tuple[int, str], ...], Tuple[<a title="openpack_toolkit.activity.ActClass" href="activity/index.html#openpack_toolkit.activity.ActClass">ActClass</a>, ...]]</span>
+<span>def <span class="ident">to_tuple</span></span>(<span>self, keep_actclass: bool = False) ‑> Union[Tuple[Tuple[int, str], ...], Tuple[openpack_toolkit.configs._schema.Label, ...]]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Returns a activity classes as a tuple.</p>
@@ -678,6 +650,55 @@ Defaults to False.</dd>
 </dd>
 </dl>
 </dd>
+<dt id="openpack_toolkit.Label"><code class="flex name class">
+<span>class <span class="ident">ActClass</span></span>
+<span>(</span><span>id: Union[int, str] = '???', name: str = '???', version: str = '???', is_ignore: bool = False, category: Optional[str] = None, event: Optional[str] = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>dataclass that represent a single activity class.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@dataclass
+class Label():
+    &#34;&#34;&#34;dataclass that represent a single activity class.
+    &#34;&#34;&#34;
+    id: Union[int, str] = MISSING
+    name: str = MISSING
+    version: str = MISSING
+    is_ignore: bool = False
+    category: Optional[str] = None
+    event: Optional[str] = None</code></pre>
+</details>
+<h3>Class variables</h3>
+<dl>
+<dt id="openpack_toolkit.Label.category"><code class="name">var <span class="ident">category</span> : Optional[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="openpack_toolkit.Label.event"><code class="name">var <span class="ident">event</span> : Optional[str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="openpack_toolkit.Label.id"><code class="name">var <span class="ident">id</span> : Union[int, str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="openpack_toolkit.Label.is_ignore"><code class="name">var <span class="ident">is_ignore</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="openpack_toolkit.Label.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="openpack_toolkit.Label.version"><code class="name">var <span class="ident">version</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
 </dl>
 </section>
 </article>
@@ -686,9 +707,9 @@ Defaults to False.</dd>
 <div class="toc">
 <ul>
 <li><a href="#openpack-dataset-toolkit-optk">OpenPack Dataset Toolkit (optk)</a><ul>
-<li><a href="#dataset">Dataset</a></li>
+<li><a href="#dataset-release-note">Dataset Release Note</a></li>
 <li><a href="#docs">Docs</a><ul>
-<li><a href="#dataset_1">Dataset</a></li>
+<li><a href="#dataset">Dataset</a></li>
 <li><a href="#task-activity-recognition-challenge">Task &amp; Activity Recognition Challenge</a></li>
 <li><a href="#sample-data">Sample Data</a></li>
 </ul>
@@ -697,9 +718,13 @@ Defaults to False.</dd>
 <li><a href="#examples">Examples</a><ul>
 <li><a href="#tutorial">Tutorial</a></li>
 <li><a href="#work-activity-recognition-pytorch">Work Activity Recognition (PyTorch)</a></li>
+<li><a href="#timestamp">Timestamp</a></li>
 </ul>
 </li>
-<li><a href="#download-dataset">Download Dataset</a></li>
+<li><a href="#download-dataset">Download Dataset</a><ul>
+<li><a href="#from-zenodo-wo-depth-images">From Zenodo (w/o Depth Images)</a></li>
+</ul>
+</li>
 <li><a href="#links">Links</a></li>
 <li><a href="#license">License</a></li>
 </ul>
@@ -710,24 +735,14 @@ Defaults to False.</dd>
 <li><h3><a href="#header-submodules">Sub-modules</a></h3>
 <ul>
 <li><code><a title="openpack_toolkit.activity" href="activity/index.html">openpack_toolkit.activity</a></code></li>
-<li><code><a title="openpack_toolkit.bin" href="bin/index.html">openpack_toolkit.bin</a></code></li>
 <li><code><a title="openpack_toolkit.codalab" href="codalab/index.html">openpack_toolkit.codalab</a></code></li>
 <li><code><a title="openpack_toolkit.configs" href="configs/index.html">openpack_toolkit.configs</a></code></li>
 <li><code><a title="openpack_toolkit.data" href="data/index.html">openpack_toolkit.data</a></code></li>
-<li><code><a title="openpack_toolkit.download" href="download/index.html">openpack_toolkit.download</a></code></li>
 <li><code><a title="openpack_toolkit.utils" href="utils/index.html">openpack_toolkit.utils</a></code></li>
 </ul>
 </li>
 <li><h3><a href="#header-classes">Classes</a></h3>
 <ul>
-<li>
-<h4><code><a title="openpack_toolkit.ActClass" href="#openpack_toolkit.ActClass">ActClass</a></code></h4>
-<ul class="">
-<li><code><a title="openpack_toolkit.ActClass.id" href="#openpack_toolkit.ActClass.id">id</a></code></li>
-<li><code><a title="openpack_toolkit.ActClass.is_ignore" href="#openpack_toolkit.ActClass.is_ignore">is_ignore</a></code></li>
-<li><code><a title="openpack_toolkit.ActClass.name" href="#openpack_toolkit.ActClass.name">name</a></code></li>
-</ul>
-</li>
 <li>
 <h4><code><a title="openpack_toolkit.ActSet" href="#openpack_toolkit.ActSet">ActSet</a></code></h4>
 <ul class="">
@@ -740,6 +755,17 @@ Defaults to False.</dd>
 <li><code><a title="openpack_toolkit.ActSet.id_to_name" href="#openpack_toolkit.ActSet.id_to_name">id_to_name</a></code></li>
 <li><code><a title="openpack_toolkit.ActSet.name_to_id" href="#openpack_toolkit.ActSet.name_to_id">name_to_id</a></code></li>
 <li><code><a title="openpack_toolkit.ActSet.to_tuple" href="#openpack_toolkit.ActSet.to_tuple">to_tuple</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="openpack_toolkit.Label" href="#openpack_toolkit.Label">Label</a></code></h4>
+<ul class="two-column">
+<li><code><a title="openpack_toolkit.Label.category" href="#openpack_toolkit.Label.category">category</a></code></li>
+<li><code><a title="openpack_toolkit.Label.event" href="#openpack_toolkit.Label.event">event</a></code></li>
+<li><code><a title="openpack_toolkit.Label.id" href="#openpack_toolkit.Label.id">id</a></code></li>
+<li><code><a title="openpack_toolkit.Label.is_ignore" href="#openpack_toolkit.Label.is_ignore">is_ignore</a></code></li>
+<li><code><a title="openpack_toolkit.Label.name" href="#openpack_toolkit.Label.name">name</a></code></li>
+<li><code><a title="openpack_toolkit.Label.version" href="#openpack_toolkit.Label.version">version</a></code></li>
 </ul>
 </li>
 </ul>

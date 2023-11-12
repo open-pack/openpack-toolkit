@@ -42,11 +42,11 @@ from ..activity import ActSet
 logger = getLogger(__name__)
 
 
-def load_annotation(
+def load_and_resample_annotation(
     path: Path,
     unixtimes_ms: np.ndarray,
     classes: ActSet,
-    label_col: str = None,
+    label_col: str = &#34;id&#34;,
 ) -&gt; pd.DataFrame:
     &#34;&#34;&#34;Load annotation data and resample them according to unixtime sequence ``T``.
     If there are no annotation records for the given timestamp, that records is treated
@@ -101,7 +101,8 @@ def load_and_resample_operation_labels(
     unixtimes_ms: np.ndarray,
     classes: ActSet,
 ) -&gt; pd.DataFrame:
-    return load_annotation(path, unixtimes_ms, classes, label_col=&#34;operation&#34;)
+    return load_and_resample_annotation(
+        path, unixtimes_ms, classes, label_col=&#34;id&#34;)
 
 
 def load_keypoints(path: Path) -&gt; Tuple[np.ndarray, np.ndarray]:
@@ -247,6 +248,83 @@ def load_and_resample_scan_log(
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
+<dt id="openpack_toolkit.data.dataloader.load_and_resample_annotation"><code class="name flex">
+<span>def <span class="ident">load_and_resample_annotation</span></span>(<span>path: pathlib.Path, unixtimes_ms: numpy.ndarray, classes: <a title="openpack_toolkit.activity.ActSet" href="../activity/index.html#openpack_toolkit.activity.ActSet">ActSet</a>, label_col: str = 'id') ‑> pandas.core.frame.DataFrame</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Load annotation data and resample them according to unixtime sequence <code>T</code>.
+If there are no annotation records for the given timestamp, that records is treated
+as NULL class.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>path</code></strong> :&ensp;<code>Path</code></dt>
+<dd>path to annotation CSV file.</dd>
+<dt><strong><code>unixitmes</code></strong> :&ensp;<code>np.ndarray</code></dt>
+<dd>unixtime seqeuence (milli-scond precision).</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>pd.DataFrame</code></dt>
+<dd>-</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def load_and_resample_annotation(
+    path: Path,
+    unixtimes_ms: np.ndarray,
+    classes: ActSet,
+    label_col: str = &#34;id&#34;,
+) -&gt; pd.DataFrame:
+    &#34;&#34;&#34;Load annotation data and resample them according to unixtime sequence ``T``.
+    If there are no annotation records for the given timestamp, that records is treated
+    as NULL class.
+
+    Args:
+        path (Path): path to annotation CSV file.
+        unixitmes (np.ndarray): unixtime seqeuence (milli-scond precision).
+    Returns:
+        pd.DataFrame: -
+    &#34;&#34;&#34;
+    null_class_id = classes.get_ignore_class_id()
+    if isinstance(null_class_id, tuple):
+        null_class_id = null_class_id[-1]
+
+    df = pd.read_csv(path)
+    logger.debug(f&#34;load annotation data from {path} -&gt; df={df.shape}&#34;)
+    ut_min, ut_max = df[&#34;unixtime&#34;].min(), df[&#34;unixtime&#34;].max()
+
+    null_record = df.head(1).copy()
+    null_record[&#34;unixtime&#34;] = 0
+    null_record[&#34;box&#34;] = 0
+    null_record[label_col] = null_class_id
+    df = pd.concat([df, null_record], axis=0, ignore_index=True)
+
+    # unixtime with second precision.
+    unixtimes_sec = unixtimes_ms - (unixtimes_ms % 1000)
+    # Assing 0 to non-annotated sequence.
+    unixtimes_sec[unixtimes_sec &lt; ut_min] = 0
+    unixtimes_sec[unixtimes_sec &gt; ut_max] = 0
+
+    df = df.rename(columns={&#34;unixtime&#34;: &#34;annot_time&#34;}).set_index(&#34;annot_time&#34;)
+    df = df.loc[unixtimes_sec, :].reset_index(drop=False)
+    df[&#34;unixtime&#34;] = unixtimes_ms
+
+    df[&#34;act_id&#34;] = df[label_col]
+    df[&#34;act_idx&#34;] = classes.convert_id_to_index(df[&#34;act_id&#34;].values)
+
+    cols = [
+        &#34;unixtime&#34;,
+        &#34;annot_time&#34;,
+        &#34;user&#34;,
+        &#34;session&#34;,
+        &#34;box&#34;,
+        &#34;act_id&#34;,
+        &#34;act_idx&#34;]
+    return df[cols]</code></pre>
+</details>
+</dd>
 <dt id="openpack_toolkit.data.dataloader.load_and_resample_operation_labels"><code class="name flex">
 <span>def <span class="ident">load_and_resample_operation_labels</span></span>(<span>path: pathlib.Path, unixtimes_ms: numpy.ndarray, classes: <a title="openpack_toolkit.activity.ActSet" href="../activity/index.html#openpack_toolkit.activity.ActSet">ActSet</a>) ‑> pandas.core.frame.DataFrame</span>
 </code></dt>
@@ -261,7 +339,8 @@ def load_and_resample_scan_log(
     unixtimes_ms: np.ndarray,
     classes: ActSet,
 ) -&gt; pd.DataFrame:
-    return load_annotation(path, unixtimes_ms, classes, label_col=&#34;operation&#34;)</code></pre>
+    return load_and_resample_annotation(
+        path, unixtimes_ms, classes, label_col=&#34;id&#34;)</code></pre>
 </details>
 </dd>
 <dt id="openpack_toolkit.data.dataloader.load_and_resample_scan_log"><code class="name flex">
@@ -317,83 +396,6 @@ shape=(T,).</dd>
         X_log[ind] = 1
 
     return X_log</code></pre>
-</details>
-</dd>
-<dt id="openpack_toolkit.data.dataloader.load_annotation"><code class="name flex">
-<span>def <span class="ident">load_annotation</span></span>(<span>path: pathlib.Path, unixtimes_ms: numpy.ndarray, classes: <a title="openpack_toolkit.activity.ActSet" href="../activity/index.html#openpack_toolkit.activity.ActSet">ActSet</a>, label_col: str = None) ‑> pandas.core.frame.DataFrame</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Load annotation data and resample them according to unixtime sequence <code>T</code>.
-If there are no annotation records for the given timestamp, that records is treated
-as NULL class.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>path</code></strong> :&ensp;<code>Path</code></dt>
-<dd>path to annotation CSV file.</dd>
-<dt><strong><code>unixitmes</code></strong> :&ensp;<code>np.ndarray</code></dt>
-<dd>unixtime seqeuence (milli-scond precision).</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>pd.DataFrame</code></dt>
-<dd>-</dd>
-</dl></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def load_annotation(
-    path: Path,
-    unixtimes_ms: np.ndarray,
-    classes: ActSet,
-    label_col: str = None,
-) -&gt; pd.DataFrame:
-    &#34;&#34;&#34;Load annotation data and resample them according to unixtime sequence ``T``.
-    If there are no annotation records for the given timestamp, that records is treated
-    as NULL class.
-
-    Args:
-        path (Path): path to annotation CSV file.
-        unixitmes (np.ndarray): unixtime seqeuence (milli-scond precision).
-    Returns:
-        pd.DataFrame: -
-    &#34;&#34;&#34;
-    null_class_id = classes.get_ignore_class_id()
-    if isinstance(null_class_id, tuple):
-        null_class_id = null_class_id[-1]
-
-    df = pd.read_csv(path)
-    logger.debug(f&#34;load annotation data from {path} -&gt; df={df.shape}&#34;)
-    ut_min, ut_max = df[&#34;unixtime&#34;].min(), df[&#34;unixtime&#34;].max()
-
-    null_record = df.head(1).copy()
-    null_record[&#34;unixtime&#34;] = 0
-    null_record[&#34;box&#34;] = 0
-    null_record[label_col] = null_class_id
-    df = pd.concat([df, null_record], axis=0, ignore_index=True)
-
-    # unixtime with second precision.
-    unixtimes_sec = unixtimes_ms - (unixtimes_ms % 1000)
-    # Assing 0 to non-annotated sequence.
-    unixtimes_sec[unixtimes_sec &lt; ut_min] = 0
-    unixtimes_sec[unixtimes_sec &gt; ut_max] = 0
-
-    df = df.rename(columns={&#34;unixtime&#34;: &#34;annot_time&#34;}).set_index(&#34;annot_time&#34;)
-    df = df.loc[unixtimes_sec, :].reset_index(drop=False)
-    df[&#34;unixtime&#34;] = unixtimes_ms
-
-    df[&#34;act_id&#34;] = df[label_col]
-    df[&#34;act_idx&#34;] = classes.convert_id_to_index(df[&#34;act_id&#34;].values)
-
-    cols = [
-        &#34;unixtime&#34;,
-        &#34;annot_time&#34;,
-        &#34;user&#34;,
-        &#34;session&#34;,
-        &#34;box&#34;,
-        &#34;act_id&#34;,
-        &#34;act_idx&#34;]
-    return df[cols]</code></pre>
 </details>
 </dd>
 <dt id="openpack_toolkit.data.dataloader.load_imu"><code class="name flex">
@@ -575,9 +577,9 @@ prediction. shape=(3, FRAMES, NODE). The first dim is corresponding to
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
+<li><code><a title="openpack_toolkit.data.dataloader.load_and_resample_annotation" href="#openpack_toolkit.data.dataloader.load_and_resample_annotation">load_and_resample_annotation</a></code></li>
 <li><code><a title="openpack_toolkit.data.dataloader.load_and_resample_operation_labels" href="#openpack_toolkit.data.dataloader.load_and_resample_operation_labels">load_and_resample_operation_labels</a></code></li>
 <li><code><a title="openpack_toolkit.data.dataloader.load_and_resample_scan_log" href="#openpack_toolkit.data.dataloader.load_and_resample_scan_log">load_and_resample_scan_log</a></code></li>
-<li><code><a title="openpack_toolkit.data.dataloader.load_annotation" href="#openpack_toolkit.data.dataloader.load_annotation">load_annotation</a></code></li>
 <li><code><a title="openpack_toolkit.data.dataloader.load_imu" href="#openpack_toolkit.data.dataloader.load_imu">load_imu</a></code></li>
 <li><code><a title="openpack_toolkit.data.dataloader.load_keypoints" href="#openpack_toolkit.data.dataloader.load_keypoints">load_keypoints</a></code></li>
 </ul>

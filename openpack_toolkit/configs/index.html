@@ -31,12 +31,11 @@ from ._schema import (
     AnnotConfig,
     DatasetConfig,
     DataStreamConfig,
-    ImuConfig,
-    KeypointConfig,
+    Label,
+    Metadata,
     OpenPackConfig,
     ReleaseConfig,
     SessionConfig,
-    SystemDataConfig,
     UserConfig,
 )
 
@@ -44,8 +43,9 @@ __all__ = [
     &#34;datasets&#34;, &#34;users&#34;, &#34;releases&#34;,
     # Schema
     &#34;AnnotConfig&#34;, &#34;DatasetConfig&#34;, &#34;DataStreamConfig&#34;,
-    &#34;ImuConfig&#34;, &#34;KeypointConfig&#34;, &#34;OpenPackConfig&#34;,
-    &#34;ReleaseConfig&#34;, &#34;SessionConfig&#34;, &#34;SystemDataConfig&#34;, &#34;UserConfig&#34;,
+    &#34;Label&#34;, &#34;Metadata&#34;,
+    &#34;OpenPackConfig&#34;,
+    &#34;ReleaseConfig&#34;, &#34;SessionConfig&#34;, &#34;UserConfig&#34;,
 ]</code></pre>
 </details>
 </section>
@@ -75,51 +75,30 @@ __all__ = [
 <dl>
 <dt id="openpack_toolkit.configs.AnnotConfig"><code class="flex name class">
 <span>class <span class="ident">AnnotConfig</span></span>
-<span>(</span><span>conf_type: str = '???', name: str = '???', version: str = '???', path: Optional[Dict[str, str]] = '???', file_format: Optional[Dict[str, str]] = None, classes: Optional[<a title="openpack_toolkit.activity.ActSet" href="../activity/index.html#openpack_toolkit.activity.ActSet">ActSet</a>] = '???', activity_sets: Optional[Dict] = None)</span>
+<span>(</span><span>kind: str = '???', name: str = '???', metadata: openpack_toolkit.configs._schema.Metadata = '???', path: openpack_toolkit.configs._schema.DataLocation = '???', classes: List[openpack_toolkit.configs._schema.Label] = '???')</span>
 </code></dt>
 <dd>
-<div class="desc"><p>AnnotConfig(conf_type: str = '???', name: str = '???', version: str = '???', path: Optional[Dict[str, str]] = '???', file_format: Optional[Dict[str, str]] = None, classes: Optional[openpack_toolkit.activity.ActSet] = '???', activity_sets: Optional[Dict] = None)</p></div>
+<div class="desc"><p>AnnotConfig(kind: str = '???', name: str = '???', metadata: openpack_toolkit.configs._schema.Metadata = '???', path: openpack_toolkit.configs._schema.DataLocation = '???', classes: List[openpack_toolkit.configs._schema.Label] = '???')</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@dataclass
-class AnnotConfig:
-    conf_type: str = MISSING
-    name: str = MISSING
-    version: str = MISSING
-    path: Optional[Dict[str, str]] = MISSING
-    file_format: Optional[Dict[str, str]] = None
-    classes: Optional[ActSet] = MISSING
-    activity_sets: Optional[Dict] = None</code></pre>
+class AnnotConfig(BaseConfig):
+    path: DataLocation = MISSING
+    classes: List[Label] = MISSING</code></pre>
 </details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>openpack_toolkit.configs._schema.BaseConfig</li>
+</ul>
 <h3>Class variables</h3>
 <dl>
-<dt id="openpack_toolkit.configs.AnnotConfig.activity_sets"><code class="name">var <span class="ident">activity_sets</span> : Optional[Dict]</code></dt>
+<dt id="openpack_toolkit.configs.AnnotConfig.classes"><code class="name">var <span class="ident">classes</span> : List[openpack_toolkit.configs._schema.Label]</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
-<dt id="openpack_toolkit.configs.AnnotConfig.classes"><code class="name">var <span class="ident">classes</span> : Optional[<a title="openpack_toolkit.activity.ActSet" href="../activity/index.html#openpack_toolkit.activity.ActSet">ActSet</a>]</code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt id="openpack_toolkit.configs.AnnotConfig.conf_type"><code class="name">var <span class="ident">conf_type</span> : str</code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt id="openpack_toolkit.configs.AnnotConfig.file_format"><code class="name">var <span class="ident">file_format</span> : Optional[Dict[str, str]]</code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt id="openpack_toolkit.configs.AnnotConfig.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt id="openpack_toolkit.configs.AnnotConfig.path"><code class="name">var <span class="ident">path</span> : Optional[Dict[str, str]]</code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt id="openpack_toolkit.configs.AnnotConfig.version"><code class="name">var <span class="ident">version</span> : str</code></dt>
+<dt id="openpack_toolkit.configs.AnnotConfig.path"><code class="name">var <span class="ident">path</span> : openpack_toolkit.configs._schema.DataLocation</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -127,92 +106,59 @@ class AnnotConfig:
 </dd>
 <dt id="openpack_toolkit.configs.DataStreamConfig"><code class="flex name class">
 <span>class <span class="ident">DataStreamConfig</span></span>
-<span>(</span><span>schema: str = '???', name: str = '???', description: Optional[str] = None, super_stream: Optional[str] = None, path: openpack_toolkit.configs._schema.DataStreamConfig.Paths = '???', file_format: Optional[Dict] = None, frame_rate: int = '???')</span>
+<span>(</span><span>kind: str = '???', name: str = '???', metadata: openpack_toolkit.configs._schema.Metadata = '???', path: openpack_toolkit.configs._schema.DataLocation = '???', frameRate: int = '???', devices: Optional[List[str]] = None, acc: Optional[bool] = None, gyro: Optional[bool] = None, quat: Optional[bool] = None, nodes: Optional[Dict[int, str]] = '???')</span>
 </code></dt>
 <dd>
-<div class="desc"><h2 id="attributes">Attributes</h2>
-<dl>
-<dt><strong><code>schema</code></strong> :&ensp;<code>str</code></dt>
-<dd>-</dd>
-<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
-<dd>-</dd>
-<dt><strong><code>description</code></strong> :&ensp;<code>str</code></dt>
-<dd>-</dd>
-<dt><strong><code>super_stream</code></strong> :&ensp;<code>str</code></dt>
-<dd>Parent Class. Inherited from.</dd>
-<dt><strong><code>path</code></strong> :&ensp;<code>DatasetStream.Path</code></dt>
-<dd>-</dd>
-<dt><strong><code>frame_rate</code></strong> :&ensp;<code>int</code></dt>
-<dd>-</dd>
-</dl></div>
+<div class="desc"><p>DataStreamConfig(kind: str = '???', name: str = '???', metadata: openpack_toolkit.configs._schema.Metadata = '???', path: openpack_toolkit.configs._schema.DataLocation = '???', frameRate: int = '???', devices: Optional[List[str]] = None, acc: Optional[bool] = None, gyro: Optional[bool] = None, quat: Optional[bool] = None, nodes: Optional[Dict[int, str]] = '???')</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@dataclass
-class DataStreamConfig:
-    &#34;&#34;&#34;
-    Attributes:
-        schema (str): -
-        name (str): -
-        description (str): -
-        super_stream (str): Parent Class. Inherited from.
-        path (DatasetStream.Path): -
-        frame_rate (int): -
-    &#34;&#34;&#34;
+class DataStreamConfig(BaseConfig):
+    path: DataLocation = MISSING
+    frameRate: int = MISSING  # [Hz, fps]
 
-    @dataclass
-    class Paths:
-        # path to the root directory of this stream.
-        dir: Optional[str] = None
-        fname: Optional[str] = None
+    # for IMU/E4
+    devices: Optional[List[str]] = None
+    acc: Optional[bool] = None
+    gyro: Optional[bool] = None
+    quat: Optional[bool] = None
 
-    schema: str = MISSING
-    name: str = MISSING
-    description: Optional[str] = None
-    super_stream: Optional[str] = None
-    path: Paths = MISSING
-    file_format: Optional[Dict] = None
-    frame_rate: int = MISSING  # [Hz, fps]</code></pre>
+    # for keypoints
+    nodes: Optional[Dict[int, str]] = MISSING</code></pre>
 </details>
-<h3>Subclasses</h3>
+<h3>Ancestors</h3>
 <ul class="hlist">
-<li>openpack_toolkit.configs._schema.E4Config</li>
-<li>openpack_toolkit.configs._schema.ImuConfig</li>
-<li>openpack_toolkit.configs._schema.KeypointConfig</li>
-<li>openpack_toolkit.configs._schema.SystemDataConfig</li>
+<li>openpack_toolkit.configs._schema.BaseConfig</li>
 </ul>
 <h3>Class variables</h3>
 <dl>
-<dt id="openpack_toolkit.configs.DataStreamConfig.Paths"><code class="name">var <span class="ident">Paths</span></code></dt>
+<dt id="openpack_toolkit.configs.DataStreamConfig.acc"><code class="name">var <span class="ident">acc</span> : Optional[bool]</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
-<dt id="openpack_toolkit.configs.DataStreamConfig.description"><code class="name">var <span class="ident">description</span> : Optional[str]</code></dt>
+<dt id="openpack_toolkit.configs.DataStreamConfig.devices"><code class="name">var <span class="ident">devices</span> : Optional[List[str]]</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
-<dt id="openpack_toolkit.configs.DataStreamConfig.file_format"><code class="name">var <span class="ident">file_format</span> : Optional[Dict]</code></dt>
+<dt id="openpack_toolkit.configs.DataStreamConfig.frameRate"><code class="name">var <span class="ident">frameRate</span> : int</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
-<dt id="openpack_toolkit.configs.DataStreamConfig.frame_rate"><code class="name">var <span class="ident">frame_rate</span> : int</code></dt>
+<dt id="openpack_toolkit.configs.DataStreamConfig.gyro"><code class="name">var <span class="ident">gyro</span> : Optional[bool]</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
-<dt id="openpack_toolkit.configs.DataStreamConfig.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dt id="openpack_toolkit.configs.DataStreamConfig.nodes"><code class="name">var <span class="ident">nodes</span> : Optional[Dict[int, str]]</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
-<dt id="openpack_toolkit.configs.DataStreamConfig.path"><code class="name">var <span class="ident">path</span> : openpack_toolkit.configs._schema.DataStreamConfig.Paths</code></dt>
+<dt id="openpack_toolkit.configs.DataStreamConfig.path"><code class="name">var <span class="ident">path</span> : openpack_toolkit.configs._schema.DataLocation</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
-<dt id="openpack_toolkit.configs.DataStreamConfig.schema"><code class="name">var <span class="ident">schema</span> : str</code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt id="openpack_toolkit.configs.DataStreamConfig.super_stream"><code class="name">var <span class="ident">super_stream</span> : Optional[str]</code></dt>
+<dt id="openpack_toolkit.configs.DataStreamConfig.quat"><code class="name">var <span class="ident">quat</span> : Optional[bool]</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -220,10 +166,10 @@ class DataStreamConfig:
 </dd>
 <dt id="openpack_toolkit.configs.DatasetConfig"><code class="flex name class">
 <span>class <span class="ident">DatasetConfig</span></span>
-<span>(</span><span>name: str = '???', streams: Optional[Dict[str, openpack_toolkit.configs._schema.DataStreamConfig]] = None, stream: Optional[openpack_toolkit.configs._schema.DataStreamConfig] = None, split: openpack_toolkit.configs._schema.DataSplitConfig = '???', annotation: openpack_toolkit.configs._schema.AnnotConfig = '???', classes: Optional[<a title="openpack_toolkit.activity.ActSet" href="../activity/index.html#openpack_toolkit.activity.ActSet">ActSet</a>] = '???')</span>
+<span>(</span><span>name: str = '???', streams: Optional[Dict[str, openpack_toolkit.configs._schema.DataStreamConfig]] = None, stream: Optional[openpack_toolkit.configs._schema.DataStreamConfig] = None, split: openpack_toolkit.configs._schema.DataSplitConfig = '???', annotation: openpack_toolkit.configs._schema.AnnotConfig = '???', classes: Optional[openpack_toolkit.configs._schema.Label] = '???')</span>
 </code></dt>
 <dd>
-<div class="desc"><p>DatasetConfig(name: str = '???', streams: Optional[Dict[str, openpack_toolkit.configs._schema.DataStreamConfig]] = None, stream: Optional[openpack_toolkit.configs._schema.DataStreamConfig] = None, split: openpack_toolkit.configs._schema.DataSplitConfig = '???', annotation: openpack_toolkit.configs._schema.AnnotConfig = '???', classes: Optional[openpack_toolkit.activity.ActSet] = '???')</p></div>
+<div class="desc"><p>DatasetConfig(name: str = '???', streams: Optional[Dict[str, openpack_toolkit.configs._schema.DataStreamConfig]] = None, stream: Optional[openpack_toolkit.configs._schema.DataStreamConfig] = None, split: openpack_toolkit.configs._schema.DataSplitConfig = '???', annotation: openpack_toolkit.configs._schema.AnnotConfig = '???', classes: Optional[openpack_toolkit.configs._schema.Label] = '???')</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -235,7 +181,7 @@ class DatasetConfig:
     stream: Optional[DataStreamConfig] = None
     split: DataSplitConfig = MISSING
     annotation: AnnotConfig = MISSING
-    classes: Optional[ActSet] = MISSING</code></pre>
+    classes: Optional[Label] = MISSING</code></pre>
 </details>
 <h3>Class variables</h3>
 <dl>
@@ -243,7 +189,7 @@ class DatasetConfig:
 <dd>
 <div class="desc"></div>
 </dd>
-<dt id="openpack_toolkit.configs.DatasetConfig.classes"><code class="name">var <span class="ident">classes</span> : Optional[<a title="openpack_toolkit.activity.ActSet" href="../activity/index.html#openpack_toolkit.activity.ActSet">ActSet</a>]</code></dt>
+<dt id="openpack_toolkit.configs.DatasetConfig.classes"><code class="name">var <span class="ident">classes</span> : Optional[openpack_toolkit.configs._schema.Label]</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -265,88 +211,72 @@ class DatasetConfig:
 </dd>
 </dl>
 </dd>
-<dt id="openpack_toolkit.configs.ImuConfig"><code class="flex name class">
-<span>class <span class="ident">ImuConfig</span></span>
-<span>(</span><span>schema: str = 'ImuConfig', name: str = '???', description: Optional[str] = None, super_stream: Optional[str] = None, path: openpack_toolkit.configs._schema.DataStreamConfig.Paths = '???', file_format: Optional[Dict] = None, frame_rate: int = '???', devices: List[str] = '???', acc: bool = True, gyro: bool = True, quat: bool = True)</span>
+<dt id="openpack_toolkit.configs.Label"><code class="flex name class">
+<span>class <span class="ident">Label</span></span>
+<span>(</span><span>id: Union[int, str] = '???', name: str = '???', version: str = '???', is_ignore: bool = False, category: Optional[str] = None, event: Optional[str] = None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>ImuConfig(schema: str = 'ImuConfig', name: str = '???', description: Optional[str] = None, super_stream: Optional[str] = None, path: openpack_toolkit.configs._schema.DataStreamConfig.Paths = '???', file_format: Optional[Dict] = None, frame_rate: int = '???', devices: List[str] = '???', acc: bool = True, gyro: bool = True, quat: bool = True)</p></div>
+<div class="desc"><p>dataclass that represent a single activity class.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@dataclass
-class ImuConfig(DataStreamConfig):
-    schema: str = &#34;ImuConfig&#34;
-    devices: List[str] = MISSING
-    acc: bool = True
-    gyro: bool = True
-    quat: bool = True</code></pre>
+class Label():
+    &#34;&#34;&#34;dataclass that represent a single activity class.
+    &#34;&#34;&#34;
+    id: Union[int, str] = MISSING
+    name: str = MISSING
+    version: str = MISSING
+    is_ignore: bool = False
+    category: Optional[str] = None
+    event: Optional[str] = None</code></pre>
 </details>
-<h3>Ancestors</h3>
-<ul class="hlist">
-<li>openpack_toolkit.configs._schema.DataStreamConfig</li>
-</ul>
 <h3>Class variables</h3>
 <dl>
-<dt id="openpack_toolkit.configs.ImuConfig.acc"><code class="name">var <span class="ident">acc</span> : bool</code></dt>
+<dt id="openpack_toolkit.configs.Label.category"><code class="name">var <span class="ident">category</span> : Optional[str]</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
-<dt id="openpack_toolkit.configs.ImuConfig.devices"><code class="name">var <span class="ident">devices</span> : List[str]</code></dt>
+<dt id="openpack_toolkit.configs.Label.event"><code class="name">var <span class="ident">event</span> : Optional[str]</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
-<dt id="openpack_toolkit.configs.ImuConfig.gyro"><code class="name">var <span class="ident">gyro</span> : bool</code></dt>
+<dt id="openpack_toolkit.configs.Label.id"><code class="name">var <span class="ident">id</span> : Union[int, str]</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
-<dt id="openpack_toolkit.configs.ImuConfig.quat"><code class="name">var <span class="ident">quat</span> : bool</code></dt>
+<dt id="openpack_toolkit.configs.Label.is_ignore"><code class="name">var <span class="ident">is_ignore</span> : bool</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
-<dt id="openpack_toolkit.configs.ImuConfig.schema"><code class="name">var <span class="ident">schema</span> : str</code></dt>
+<dt id="openpack_toolkit.configs.Label.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="openpack_toolkit.configs.Label.version"><code class="name">var <span class="ident">version</span> : str</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
 </dl>
 </dd>
-<dt id="openpack_toolkit.configs.KeypointConfig"><code class="flex name class">
-<span>class <span class="ident">KeypointConfig</span></span>
-<span>(</span><span>schema: str = 'KeypointConfig', name: str = '???', description: Optional[str] = None, super_stream: Optional[str] = None, path: openpack_toolkit.configs._schema.DataStreamConfig.Paths = '???', file_format: Optional[Dict] = None, frame_rate: int = '???', category: str = '???', model: str = '???', nodes: Dict[int, str] = '???')</span>
+<dt id="openpack_toolkit.configs.Metadata"><code class="flex name class">
+<span>class <span class="ident">Metadata</span></span>
+<span>(</span><span>labels: Optional[Dict[str, str]] = None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>KeypointConfig(schema: str = 'KeypointConfig', name: str = '???', description: Optional[str] = None, super_stream: Optional[str] = None, path: openpack_toolkit.configs._schema.DataStreamConfig.Paths = '???', file_format: Optional[Dict] = None, frame_rate: int = '???', category: str = '???', model: str = '???', nodes: Dict[int, str] = '???')</p></div>
+<div class="desc"><p>Metadata(labels: Optional[Dict[str, str]] = None)</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@dataclass
-class KeypointConfig(DataStreamConfig):
-    schema: str = &#34;KeypointConfig&#34;
-    category: str = MISSING
-    model: str = MISSING
-    nodes: Dict[int, str] = MISSING</code></pre>
+class Metadata:
+    labels: Optional[Dict[str, str]] = None</code></pre>
 </details>
-<h3>Ancestors</h3>
-<ul class="hlist">
-<li>openpack_toolkit.configs._schema.DataStreamConfig</li>
-</ul>
 <h3>Class variables</h3>
 <dl>
-<dt id="openpack_toolkit.configs.KeypointConfig.category"><code class="name">var <span class="ident">category</span> : str</code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt id="openpack_toolkit.configs.KeypointConfig.model"><code class="name">var <span class="ident">model</span> : str</code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt id="openpack_toolkit.configs.KeypointConfig.nodes"><code class="name">var <span class="ident">nodes</span> : Dict[int, str]</code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt id="openpack_toolkit.configs.KeypointConfig.schema"><code class="name">var <span class="ident">schema</span> : str</code></dt>
+<dt id="openpack_toolkit.configs.Metadata.labels"><code class="name">var <span class="ident">labels</span> : Optional[Dict[str, str]]</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -386,41 +316,35 @@ class OpenPackConfig:
 </dd>
 <dt id="openpack_toolkit.configs.ReleaseConfig"><code class="flex name class">
 <span>class <span class="ident">ReleaseConfig</span></span>
-<span>(</span><span>version: str = '???', url: str = '???', users: Dict[str, openpack_toolkit.configs._schema.ReleaseConfig._User] = '???', streams: Dict[str, Dict] = '???')</span>
+<span>(</span><span>kind: str = '???', name: str = '???', metadata: openpack_toolkit.configs._schema.Metadata = '???', users: Dict[str, openpack_toolkit.configs._schema.ReleaseConfig._User] = '???', streams: Dict[str, List[str]] = '???')</span>
 </code></dt>
 <dd>
-<div class="desc"><p>ReleaseConfig(version: str = '???', url: str = '???', users: Dict[str, openpack_toolkit.configs._schema.ReleaseConfig._User] = '???', streams: Dict[str, Dict] = '???')</p></div>
+<div class="desc"><p>ReleaseConfig(kind: str = '???', name: str = '???', metadata: openpack_toolkit.configs._schema.Metadata = '???', users: Dict[str, openpack_toolkit.configs._schema.ReleaseConfig._User] = '???', streams: Dict[str, List[str]] = '???')</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@dataclass
-class ReleaseConfig:
+class ReleaseConfig(BaseConfig):
     @dataclass
     class _User:
         sessions: List[str] = MISSING
         exclude: Optional[List[str]] = MISSING
 
-    version: str = MISSING
-    url: str = MISSING
     users: Dict[str, _User] = MISSING
-    streams: Dict[str, Dict] = MISSING</code></pre>
+    streams: Dict[str, List[str]] = MISSING</code></pre>
 </details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>openpack_toolkit.configs._schema.BaseConfig</li>
+</ul>
 <h3>Class variables</h3>
 <dl>
-<dt id="openpack_toolkit.configs.ReleaseConfig.streams"><code class="name">var <span class="ident">streams</span> : Dict[str, Dict]</code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt id="openpack_toolkit.configs.ReleaseConfig.url"><code class="name">var <span class="ident">url</span> : str</code></dt>
+<dt id="openpack_toolkit.configs.ReleaseConfig.streams"><code class="name">var <span class="ident">streams</span> : Dict[str, List[str]]</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
 <dt id="openpack_toolkit.configs.ReleaseConfig.users"><code class="name">var <span class="ident">users</span> : Dict[str, openpack_toolkit.configs._schema.ReleaseConfig._User]</code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt id="openpack_toolkit.configs.ReleaseConfig.version"><code class="name">var <span class="ident">version</span> : str</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -467,32 +391,6 @@ class SessionConfig:
 <div class="desc"></div>
 </dd>
 <dt id="openpack_toolkit.configs.SessionConfig.start"><code class="name">var <span class="ident">start</span> : str</code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-</dl>
-</dd>
-<dt id="openpack_toolkit.configs.SystemDataConfig"><code class="flex name class">
-<span>class <span class="ident">SystemDataConfig</span></span>
-<span>(</span><span>schema: str = 'SystemDataConfig', name: str = '???', description: Optional[str] = None, super_stream: Optional[str] = None, path: openpack_toolkit.configs._schema.DataStreamConfig.Paths = '???', file_format: Optional[Dict] = None, frame_rate: int = '???')</span>
-</code></dt>
-<dd>
-<div class="desc"><p>SystemDataConfig(schema: str = 'SystemDataConfig', name: str = '???', description: Optional[str] = None, super_stream: Optional[str] = None, path: openpack_toolkit.configs._schema.DataStreamConfig.Paths = '???', file_format: Optional[Dict] = None, frame_rate: int = '???')</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@dataclass
-class SystemDataConfig(DataStreamConfig):
-    schema: str = &#34;SystemDataConfig&#34;</code></pre>
-</details>
-<h3>Ancestors</h3>
-<ul class="hlist">
-<li>openpack_toolkit.configs._schema.DataStreamConfig</li>
-</ul>
-<h3>Class variables</h3>
-<dl>
-<dt id="openpack_toolkit.configs.SystemDataConfig.schema"><code class="name">var <span class="ident">schema</span> : str</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -555,27 +453,21 @@ class UserConfig:
 <ul>
 <li>
 <h4><code><a title="openpack_toolkit.configs.AnnotConfig" href="#openpack_toolkit.configs.AnnotConfig">AnnotConfig</a></code></h4>
-<ul class="two-column">
-<li><code><a title="openpack_toolkit.configs.AnnotConfig.activity_sets" href="#openpack_toolkit.configs.AnnotConfig.activity_sets">activity_sets</a></code></li>
+<ul class="">
 <li><code><a title="openpack_toolkit.configs.AnnotConfig.classes" href="#openpack_toolkit.configs.AnnotConfig.classes">classes</a></code></li>
-<li><code><a title="openpack_toolkit.configs.AnnotConfig.conf_type" href="#openpack_toolkit.configs.AnnotConfig.conf_type">conf_type</a></code></li>
-<li><code><a title="openpack_toolkit.configs.AnnotConfig.file_format" href="#openpack_toolkit.configs.AnnotConfig.file_format">file_format</a></code></li>
-<li><code><a title="openpack_toolkit.configs.AnnotConfig.name" href="#openpack_toolkit.configs.AnnotConfig.name">name</a></code></li>
 <li><code><a title="openpack_toolkit.configs.AnnotConfig.path" href="#openpack_toolkit.configs.AnnotConfig.path">path</a></code></li>
-<li><code><a title="openpack_toolkit.configs.AnnotConfig.version" href="#openpack_toolkit.configs.AnnotConfig.version">version</a></code></li>
 </ul>
 </li>
 <li>
 <h4><code><a title="openpack_toolkit.configs.DataStreamConfig" href="#openpack_toolkit.configs.DataStreamConfig">DataStreamConfig</a></code></h4>
 <ul class="two-column">
-<li><code><a title="openpack_toolkit.configs.DataStreamConfig.Paths" href="#openpack_toolkit.configs.DataStreamConfig.Paths">Paths</a></code></li>
-<li><code><a title="openpack_toolkit.configs.DataStreamConfig.description" href="#openpack_toolkit.configs.DataStreamConfig.description">description</a></code></li>
-<li><code><a title="openpack_toolkit.configs.DataStreamConfig.file_format" href="#openpack_toolkit.configs.DataStreamConfig.file_format">file_format</a></code></li>
-<li><code><a title="openpack_toolkit.configs.DataStreamConfig.frame_rate" href="#openpack_toolkit.configs.DataStreamConfig.frame_rate">frame_rate</a></code></li>
-<li><code><a title="openpack_toolkit.configs.DataStreamConfig.name" href="#openpack_toolkit.configs.DataStreamConfig.name">name</a></code></li>
+<li><code><a title="openpack_toolkit.configs.DataStreamConfig.acc" href="#openpack_toolkit.configs.DataStreamConfig.acc">acc</a></code></li>
+<li><code><a title="openpack_toolkit.configs.DataStreamConfig.devices" href="#openpack_toolkit.configs.DataStreamConfig.devices">devices</a></code></li>
+<li><code><a title="openpack_toolkit.configs.DataStreamConfig.frameRate" href="#openpack_toolkit.configs.DataStreamConfig.frameRate">frameRate</a></code></li>
+<li><code><a title="openpack_toolkit.configs.DataStreamConfig.gyro" href="#openpack_toolkit.configs.DataStreamConfig.gyro">gyro</a></code></li>
+<li><code><a title="openpack_toolkit.configs.DataStreamConfig.nodes" href="#openpack_toolkit.configs.DataStreamConfig.nodes">nodes</a></code></li>
 <li><code><a title="openpack_toolkit.configs.DataStreamConfig.path" href="#openpack_toolkit.configs.DataStreamConfig.path">path</a></code></li>
-<li><code><a title="openpack_toolkit.configs.DataStreamConfig.schema" href="#openpack_toolkit.configs.DataStreamConfig.schema">schema</a></code></li>
-<li><code><a title="openpack_toolkit.configs.DataStreamConfig.super_stream" href="#openpack_toolkit.configs.DataStreamConfig.super_stream">super_stream</a></code></li>
+<li><code><a title="openpack_toolkit.configs.DataStreamConfig.quat" href="#openpack_toolkit.configs.DataStreamConfig.quat">quat</a></code></li>
 </ul>
 </li>
 <li>
@@ -590,22 +482,20 @@ class UserConfig:
 </ul>
 </li>
 <li>
-<h4><code><a title="openpack_toolkit.configs.ImuConfig" href="#openpack_toolkit.configs.ImuConfig">ImuConfig</a></code></h4>
-<ul class="">
-<li><code><a title="openpack_toolkit.configs.ImuConfig.acc" href="#openpack_toolkit.configs.ImuConfig.acc">acc</a></code></li>
-<li><code><a title="openpack_toolkit.configs.ImuConfig.devices" href="#openpack_toolkit.configs.ImuConfig.devices">devices</a></code></li>
-<li><code><a title="openpack_toolkit.configs.ImuConfig.gyro" href="#openpack_toolkit.configs.ImuConfig.gyro">gyro</a></code></li>
-<li><code><a title="openpack_toolkit.configs.ImuConfig.quat" href="#openpack_toolkit.configs.ImuConfig.quat">quat</a></code></li>
-<li><code><a title="openpack_toolkit.configs.ImuConfig.schema" href="#openpack_toolkit.configs.ImuConfig.schema">schema</a></code></li>
+<h4><code><a title="openpack_toolkit.configs.Label" href="#openpack_toolkit.configs.Label">Label</a></code></h4>
+<ul class="two-column">
+<li><code><a title="openpack_toolkit.configs.Label.category" href="#openpack_toolkit.configs.Label.category">category</a></code></li>
+<li><code><a title="openpack_toolkit.configs.Label.event" href="#openpack_toolkit.configs.Label.event">event</a></code></li>
+<li><code><a title="openpack_toolkit.configs.Label.id" href="#openpack_toolkit.configs.Label.id">id</a></code></li>
+<li><code><a title="openpack_toolkit.configs.Label.is_ignore" href="#openpack_toolkit.configs.Label.is_ignore">is_ignore</a></code></li>
+<li><code><a title="openpack_toolkit.configs.Label.name" href="#openpack_toolkit.configs.Label.name">name</a></code></li>
+<li><code><a title="openpack_toolkit.configs.Label.version" href="#openpack_toolkit.configs.Label.version">version</a></code></li>
 </ul>
 </li>
 <li>
-<h4><code><a title="openpack_toolkit.configs.KeypointConfig" href="#openpack_toolkit.configs.KeypointConfig">KeypointConfig</a></code></h4>
+<h4><code><a title="openpack_toolkit.configs.Metadata" href="#openpack_toolkit.configs.Metadata">Metadata</a></code></h4>
 <ul class="">
-<li><code><a title="openpack_toolkit.configs.KeypointConfig.category" href="#openpack_toolkit.configs.KeypointConfig.category">category</a></code></li>
-<li><code><a title="openpack_toolkit.configs.KeypointConfig.model" href="#openpack_toolkit.configs.KeypointConfig.model">model</a></code></li>
-<li><code><a title="openpack_toolkit.configs.KeypointConfig.nodes" href="#openpack_toolkit.configs.KeypointConfig.nodes">nodes</a></code></li>
-<li><code><a title="openpack_toolkit.configs.KeypointConfig.schema" href="#openpack_toolkit.configs.KeypointConfig.schema">schema</a></code></li>
+<li><code><a title="openpack_toolkit.configs.Metadata.labels" href="#openpack_toolkit.configs.Metadata.labels">labels</a></code></li>
 </ul>
 </li>
 <li>
@@ -620,9 +510,7 @@ class UserConfig:
 <h4><code><a title="openpack_toolkit.configs.ReleaseConfig" href="#openpack_toolkit.configs.ReleaseConfig">ReleaseConfig</a></code></h4>
 <ul class="">
 <li><code><a title="openpack_toolkit.configs.ReleaseConfig.streams" href="#openpack_toolkit.configs.ReleaseConfig.streams">streams</a></code></li>
-<li><code><a title="openpack_toolkit.configs.ReleaseConfig.url" href="#openpack_toolkit.configs.ReleaseConfig.url">url</a></code></li>
 <li><code><a title="openpack_toolkit.configs.ReleaseConfig.users" href="#openpack_toolkit.configs.ReleaseConfig.users">users</a></code></li>
-<li><code><a title="openpack_toolkit.configs.ReleaseConfig.version" href="#openpack_toolkit.configs.ReleaseConfig.version">version</a></code></li>
 </ul>
 </li>
 <li>
@@ -631,12 +519,6 @@ class UserConfig:
 <li><code><a title="openpack_toolkit.configs.SessionConfig.duration" href="#openpack_toolkit.configs.SessionConfig.duration">duration</a></code></li>
 <li><code><a title="openpack_toolkit.configs.SessionConfig.end" href="#openpack_toolkit.configs.SessionConfig.end">end</a></code></li>
 <li><code><a title="openpack_toolkit.configs.SessionConfig.start" href="#openpack_toolkit.configs.SessionConfig.start">start</a></code></li>
-</ul>
-</li>
-<li>
-<h4><code><a title="openpack_toolkit.configs.SystemDataConfig" href="#openpack_toolkit.configs.SystemDataConfig">SystemDataConfig</a></code></h4>
-<ul class="">
-<li><code><a title="openpack_toolkit.configs.SystemDataConfig.schema" href="#openpack_toolkit.configs.SystemDataConfig.schema">schema</a></code></li>
 </ul>
 </li>
 <li>
