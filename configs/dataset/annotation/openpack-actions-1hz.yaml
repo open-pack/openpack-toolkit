@@ -1,39 +1,103 @@
-kind: dataset/annotation/csv
-name: openpack-actions
+kind: dataset/annotation/csv/sequence
+name: openpack-actions-1hz
 metadata:
   labels:
     type: annotation/action
     version: v3.5.0
-    dependency: null
-    resolution: original
+    dependency: openpack-actions
+    resolution: 1Hz
+    label_format: soft-target
 spec:
   path:
-    dir: ${path.openpack.rootdir}/${user.name}/annotation/openpack-actions
+    dir: ${path.openpack.rootdir}/${user.name}/annotation/openpack-actions-1hz
     fname: ${session}.csv
   file:
     columns:
-    - uuid: UUID
-      dtype: str
+    - uuid: unixtime
+      dtype: int
+      unit: milli second
     - name: user
       dtype: str
     - name: session
       dtype: str
     - name: box
       dtype: int
-    - name: id
-      dtype: int
-    - name: operation
-      dtype: str
-    - name: action
-      dtype: str
-    - name: start
-      dtype: datetime
-    - name: end
-      dtype: datetime
-    - name: box_size
-      dtype: str
-    - name: work_position
-      dtype: str
+    - name: ID101
+      dtype: float
+    - name: ID103
+      dtype: float
+    - name: ID107
+      dtype: float
+    - name: ID108
+      dtype: float
+    - name: ID109
+      dtype: float
+    - name: ID201
+      dtype: float
+    - name: ID202
+      dtype: float
+    - name: ID203
+      dtype: float
+    - name: ID204
+      dtype: float
+    - name: ID205
+      dtype: float
+    - name: ID301
+      dtype: float
+    - name: ID302
+      dtype: float
+    - name: ID303
+      dtype: float
+    - name: ID304
+      dtype: float
+    - name: ID305
+      dtype: float
+    - name: ID401
+      dtype: float
+    - name: ID402
+      dtype: float
+    - name: ID403
+      dtype: float
+    - name: ID404
+      dtype: float
+    - name: ID501
+      dtype: float
+    - name: ID502
+      dtype: float
+    - name: ID601
+      dtype: float
+    - name: ID701
+      dtype: float
+    - name: ID702
+      dtype: float
+    - name: ID703
+      dtype: float
+    - name: ID704
+      dtype: float
+    - name: ID705
+      dtype: float
+    - name: ID706
+      dtype: float
+    - name: ID707
+      dtype: float
+    - name: ID801
+      dtype: float
+    - name: ID802
+      dtype: float
+    - name: ID901
+      dtype: float
+    - name: ID902
+      dtype: float
+    - name: ID1001
+      dtype: float
+    - name: ID1002
+      dtype: float
+    - name: ID1003
+      dtype: float
+    - name: ID8105
+      dtype: float
+    - name: ID8106
+      dtype: float
   classes:
   - id: 101
     operation: Picking
@@ -260,30 +324,6 @@ spec:
     description: Insert order sheet into the tray for completed order sheets.
     version: v3.2.2
     ignore: false
-  - id: 8101
-    operation: 'Null'
-    name: Others
-    description: ''
-    version: v3.2.2
-    ignore: true
-  - id: 8102
-    operation: 'Null'
-    name: System Error
-    description: ''
-    version: v3.2.2
-    ignore: true
-  - id: 8103
-    operation: 'Null'
-    name: Ignore
-    description: ''
-    version: v3.2.2
-    ignore: true
-  - id: 8104
-    operation: 'Null'
-    name: Unknown
-    description: ''
-    version: v3.2.2
-    ignore: true
   - id: 8105
     operation: 'Null'
     name: 'Null'
@@ -297,10 +337,4 @@ spec:
     description: Segments with this label should be excluded from evaluation. This
       class is prepared for action detection.
     version: v3.5.0
-    ignore: true
-  - id: 8201
-    operation: System Error
-    name: System Error
-    description: ''
-    version: v3.2.2
     ignore: true

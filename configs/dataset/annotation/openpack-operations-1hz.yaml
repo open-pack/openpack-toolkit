@@ -1,19 +1,20 @@
-kind: dataset/annotation/csv
-name: openpack-operations
+kind: dataset/annotation/csv/sequence
+name: openpack-operations-1hz
 metadata:
   labels:
     type: annotation/operation
     version: v3.5.0
-    dependency: openpack-actions
-    resolution: original
+    dependency: openpack-operations
+    resolution: 1Hz
 spec:
   path:
-    dir: ${path.openpack.rootdir}/${user.name}/annotation/openpack-operations
+    dir: ${path.openpack.rootdir}/${user.name}/annotation/openpack-operations-1hz
     fname: ${session}.csv
   file:
     columns:
-    - uuid: UUID
-      dtype: str
+    - uuid: unixtime
+      dtype: int
+      unit: milli second
     - name: user
       dtype: str
     - name: session
@@ -22,14 +23,6 @@ spec:
       dtype: int
     - name: id
       dtype: int
-    - name: operation
-      dtype: str
-    - name: start
-      dtype: datetime
-    - name: end
-      dtype: datetime
-    - name: actions
-      dtype: List[str]
   classes:
   - id: 100
     name: Picking

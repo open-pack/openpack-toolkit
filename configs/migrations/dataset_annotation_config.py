@@ -9,9 +9,10 @@ basicConfig(level=DEBUG)
 logger = getLogger(__name__)
 
 TARGET_ANNOTATIONS = [
-    "openpack-operations",
     "openpack-actions",
-    "activity-1s",
+    "openpack-actions-1hz",
+    "openpack-operations",
+    "openpack-operations-1hz",
 ]
 
 
