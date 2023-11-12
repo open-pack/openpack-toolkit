@@ -90,8 +90,12 @@ def ffill_missing_elements(
         delta = set(unixtime_gt[:ind]) - set(unixtime_pred[:ind])
         assert len(delta) == 0, delta
 
-    assert len(unixtime_pred) == len(unixtime_gt)
-    assert len(prediction) == len(unixtime_gt)
+    assert len(unixtime_pred) == len(unixtime_gt), (
+        f"unixtime_pred={unixtime_pred.shape}, unixtime_gt={unixtime_gt.shape}"
+    )
+    assert len(prediction) == len(unixtime_gt), (
+        f"prediction={prediction.shape}, unixtime_gt={unixtime_gt.shape}"
+    )
     return unixtime_pred, prediction
 
 
@@ -107,7 +111,9 @@ def crop_prediction_sequence(
         prediction (np.ndarray): -
     """
     ts_head, ts_tail = unixtime_gt[0], unixtime_gt[-1]
-    logger.debug(f"ts_head={ts_head}, ts_tail={ts_tail}")
+    logger.debug(f"ground truth: ts_head={ts_head}, ts_tail={ts_tail}")
+    logger.debug(
+        f"prediction  : ts_head={int(unixtime_pred[0])}, ts_tail={int(unixtime_pred[-1])}")
 
     ind = np.where((unixtime_pred >= ts_head) & (unixtime_pred <= ts_tail))[0]
     logger.debug(
@@ -151,6 +157,10 @@ def construct_submission_dict(
         user, session = key.split("-")
 
         assert d["y"].ndim == 3
+        assert d["unixtime"].dtype == np.int64, (
+            "unixtime must be np.int64, but got {}".format(d["unixtime"].dtype)
+        )
+
         prediction_sess = act_set.convert_index_to_id(
             np.argmax(d["y"], axis=1).ravel())
         unixtime_pred_sess, prediction_sess = resample_prediction_1Hz(
@@ -168,11 +178,15 @@ def construct_submission_dict(
             )
             df_label = pd.read_csv(path)
 
-            if cfg.dataset.annotation.metadata.labels.get("label_format", "") == "soft-target":
+            label_format = cfg.dataset.annotation.metadata.labels.get(
+                "label_format", "")
+            if label_format == "soft-target":
                 cols = [c for c in df_label.columns if c.startswith("ID")]
-                index_to_id = {i : int(c.replace("ID", "")) for i, c in enumerate(cols)}
+                index_to_id = {i: int(c.replace("ID", ""))
+                               for i, c in enumerate(cols)}
                 df_label["index"] = np.argmax(df_label[cols].values, axis=1)
-                df_label["id"] = df_label["index"].apply(lambda ind: index_to_id[ind])
+                df_label["id"] = df_label["index"].apply(
+                    lambda ind: index_to_id[ind])
 
             unixtime_gt_sess = df_label["unixtime"].values
             ground_truth_sess = df_label["id"].values
