@@ -112,32 +112,32 @@
 | Ac07 | Recovery | Return Box |  |  | |
 | Ac08 | Recovery | Talk to Staff |  |  | |
 | Ac09 | Recovery | Item Label |  |  | |
-| Bx01 | Struggling | Others | LOW, HIGH,  |  | |
-| Bx02 | Struggling | Look for Items |  |  | |
-| Bx03 | Struggling | Label | Item, Box, Shipping,  |  | |
-| Bx04 | Struggling | Scan | HT, LP,  |  | |
-| Bx05 | Struggling | Air Cushion |  |  | |
-| Bx06 | Struggling | Insert Items |  |  | |
-| Bx07 | Struggling | Tape |  |  | |
-| Cx01 | Confused | Others | LOW, HIGH,  |  | |
-| Cx02 | Confused | Box Size |  |  | |
-| Cx03 | Confused | Air Cushion |  |  | |
-| Cx04 | Confused | Process |  |  | |
-| Cx05 | Confused | Double Check |  |  | |
-| Dx01 | Parallel | Others | LOW, HIGH,  |  | |
-| Dx02 | Parallel | Action&Action | 0101*1003, 0108*0201, 0302*0303, 0303*0304, 0303*0401, 0303*0501, 0401*0403, 0706*1001, 0707*1001, 0801*1003, 1002*1003,  |  | |
-| Dx03 | Parallel | Left&Right |  |  | |
-| Dx04 | Parallel | Holding |  |  | |
-| Dx03 | Parallel | Action&Additional | 0101*G06, 0108*G06, 0301*B03, 0301*G05, 0301*G06, 0303*0304*G07, 0303*G06, 0304*G07, 0401*G07, 0401*G08, 0502*G07, 0502*G08, 0601*G03, 0601*G08, 0701*G06, 0701*G08, 0702*G06, 0703*G08, 0704*G08, 0707*G06, 0707*G08, 0801*G03, 0801*G06, 0801*G08, 0901*G06, 1001*G06, 1003*G06,  |  | |
-| Dx04 | Parallel | Action&Others | 107, 030, 109, 011, 001,  |  | |
-| Dx05 | Parallel | Additional&Additional | B01*G07, C03*C04, G06*G08, G03*G06,  |  | |
-| Dx06 | Parallel | Additional&Others |  |  | |
-| Ex01 | Additional | Others | LOW, HIGH,  |  | |
-| Ex02 | Additional | Talk to Staff |  |  | |
-| Ex03 | Additional | Dispose |  |  | |
-| Ex04 | Additional | Operation |  |  | |
-| Ex05 | Additional | Refill Boxe Stock | S-D, S, M, L, LL,  |  | |
-| Ex06 | Additional | Clean Up the Workbench |  |  | |
-| Ex07 | Additional | Lift Up Box |  |  | |
-| Ex08 | Additional | Move Box |  |  | |
-| Fx01 | Fraction | Others | LOW, MID, HIGH,  |  | |
+| B01 | Struggling | Others | LOW, HIGH,  |  | |
+| B02 | Struggling | Look for Items |  |  | |
+| B03 | Struggling | Label | Item, Box, Shipping,  |  | |
+| B04 | Struggling | Scan | HT, LP,  |  | |
+| B05 | Struggling | Air Cushion |  |  | |
+| B06 | Struggling | Insert Items |  |  | |
+| B07 | Struggling | Tape |  |  | |
+| C01 | Confused | Others | LOW, HIGH,  |  | |
+| C02 | Confused | Box Size |  |  | |
+| C03 | Confused | Air Cushion |  |  | |
+| C04 | Confused | Process |  |  | |
+| C05 | Confused | Double Check |  |  | |
+| D01 | Parallel | Others | LOW, HIGH,  |  | |
+| D02 | Parallel | Action&Action | 0101*1003, 0108*0201, 0302*0303, 0303*0304, 0303*0401, 0303*0501, 0401*0403, 0706*1001, 0707*1001, 0801*1003, 1002*1003,  |  | |
+| D03 | Parallel | Left&Right |  |  | |
+| D04 | Parallel | Holding |  |  | |
+| D03 | Parallel | Action&Additional | 0101*G06, 0108*G06, 0301*B03, 0301*G05, 0301*G06, 0303*0304*G07, 0303*G06, 0304*G07, 0401*G07, 0401*G08, 0502*G07, 0502*G08, 0601*G03, 0601*G08, 0701*G06, 0701*G08, 0702*G06, 0703*G08, 0704*G08, 0707*G06, 0707*G08, 0801*G03, 0801*G06, 0801*G08, 0901*G06, 1001*G06, 1003*G06,  |  | |
+| D04 | Parallel | Action&Others | 107, 030, 109, 011, 001,  |  | |
+| D05 | Parallel | Additional&Additional | B01*G07, C03*C04, G06*G08, G03*G06,  |  | |
+| D06 | Parallel | Additional&Others |  |  | |
+| E01 | Additional | Others | LOW, HIGH,  |  | |
+| E02 | Additional | Talk to Staff |  |  | |
+| E03 | Additional | Dispose |  |  | |
+| E04 | Additional | Operation |  |  | |
+| E05 | Additional | Refill Boxe Stock | S-D, S, M, L, LL,  |  | |
+| E06 | Additional | Clean Up the Workbench |  |  | |
+| E07 | Additional | Lift Up Box |  |  | |
+| E08 | Additional | Move Box |  |  | |
+| F01 | Fraction | Others | LOW, MID, HIGH,  |  | |

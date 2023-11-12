@@ -49,6 +49,6 @@
 | ID | Category | Event | Tags | ignore | Note |
 |----|----------|-------|------|--------|------|
 {% for cls in annot.spec.classes %}
-| {{cls.id}} | {{cls.category}} | {{cls.event}} | {% for t in cls.tags%}{{t}}, {% endfor %} | {% if cls.ignore %}{{cls.ignore}}{% endif %} | |
+| {{cls.id|replace("x", "")}} | {{cls.category}} | {{cls.event}} | {% for t in cls.tags%}{{t}}, {% endfor %} | {% if cls.ignore %}{{cls.ignore}}{% endif %} | |
 {% endfor %}
 
