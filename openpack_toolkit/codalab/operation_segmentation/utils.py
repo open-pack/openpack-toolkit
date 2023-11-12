@@ -106,7 +106,11 @@ def construct_submission_dict(
         Dict: submission dict
     """
     submission = dict()
-    for key, d in outputs.items():
+    
+    keys = list(outputs.keys())
+    keys.sort()
+    for key in keys:
+        d = outputs[key]
         record = dict()
         user, session = key.split("-")
 
