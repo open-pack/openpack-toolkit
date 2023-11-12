@@ -149,7 +149,7 @@ KINECT_2D_KPT_STREAM = DataStreamConfig(
         }
     ),
     path=DataLocation(
-        dir="${path.openpack.rootdir}/${user.name}/kinect/2d-kpt/${...metadata.labels.poseEstimationModel}/single",
+        dir="${path.openpack.rootdir}/${user.name}/kinect/2d-kpt/mmpose-hrnet-w48-posetrack18-384x288-posewarper-stage2/single",
         fname="${session}.json",
     ),
     frameRate=15,
@@ -190,7 +190,7 @@ KINECT_3D_KPT_STREAM = DataStreamConfig(
         }
     ),
     path=DataLocation(
-        dir="${path.openpack.rootdir}/${user.name}/kinect/3d-kpt/${...metadata.labels.poseEstimationModel}/${preprocessing}",
+        dir="${path.openpack.rootdir}/${user.name}/kinect/3d-kpt/k4abt/${preprocessing}",
         fname="${session}.json",
     ),
     frameRate=15,

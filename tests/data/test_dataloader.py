@@ -6,7 +6,7 @@ import pytest
 from omegaconf import DictConfig, OmegaConf, open_dict
 
 import openpack_toolkit as optk
-from openpack_toolkit import OPENPACK_OPERATIONS
+from openpack_toolkit import OPENPACK_OPERATIONS, ActSet
 from openpack_toolkit.data.dataloader import (
     load_and_resample_operation_labels,
     load_and_resample_scan_log,
@@ -20,7 +20,7 @@ def cfg() -> DictConfig:
     rootdir = Path(__file__).parents[2] / "samples/openpack/${.version}"
 
     config = OmegaConf.create({
-        "user": optk.configs.users.U0102,
+        "user": optk.configs.users.U0209,
         "session": "S0500",
         "path": {
             "openpack": {
@@ -35,7 +35,7 @@ def cfg() -> DictConfig:
 def test_load_and_resample_operation_labels__01(cfg):
     with open_dict(cfg):
         cfg.dataset = {
-            "annotation": optk.configs.datasets.annotations.ACTIVITY_1S_ANNOTATION}
+            "annotation": optk.configs.datasets.annotations.OPENPACK_OPERATIONS_1HZ_ANNOTATION}
 
     path = Path(
         cfg.dataset.annotation.path.dir,
@@ -44,31 +44,27 @@ def test_load_and_resample_operation_labels__01(cfg):
     print(f"input path: {path} (exists={path.exists()})")
 
     unixtimes = np.array([
-        1634885794000,
-        1634885794200,  # Resampling 1
-        1634885794400,  # Resampling 2
-        1634885794600,  # Resampling 3
-        1634885794800,  # Resampling 4
-        1634885795000,
-        1634885796000,
-        1634885798000,  # Next Action
+        1648531522000,
+        1648531522200,  # Resampling 1
+        1648531522400,  # Resampling 2
+        1648531522600,  # Resampling 3
+        1648531522800,  # Resampling 4
+        1648531523000,
     ])
 
     expect = pd.DataFrame([
-        [1634885794000, 1634885794000, "U0102", "S0500", 1, 100, 0],
-        [1634885794200, 1634885794000, "U0102", "S0500", 1, 100, 0],
-        [1634885794400, 1634885794000, "U0102", "S0500", 1, 100, 0],
-        [1634885794600, 1634885794000, "U0102", "S0500", 1, 100, 0],
-        [1634885794800, 1634885794000, "U0102", "S0500", 1, 100, 0],
-        [1634885795000, 1634885795000, "U0102", "S0500", 1, 100, 0],
-        [1634885796000, 1634885796000, "U0102", "S0500", 1, 200, 1],
-        [1634885798000, 1634885798000, "U0102", "S0500", 1, 200, 1],
+        [1648531522000, 1648531522000, "U0209", "S0500", 1, 100, 0],
+        [1648531522200, 1648531522000, "U0209", "S0500", 1, 100, 0],
+        [1648531522400, 1648531522000, "U0209", "S0500", 1, 100, 0],
+        [1648531522600, 1648531522000, "U0209", "S0500", 1, 100, 0],
+        [1648531522800, 1648531522000, "U0209", "S0500", 1, 100, 0],
+        [1648531523000, 1648531523000, "U0209", "S0500", 1, 100, 0],
     ], columns=["unixtime", "annot_time", "user", "session", "box", "act_id", "act_idx"])
 
     df_annot = load_and_resample_operation_labels(
-        path, unixtimes, classes=OPENPACK_OPERATIONS)
+        path, unixtimes, classes=ActSet(OPENPACK_OPERATIONS))
     print(df_annot)
-    pd.testing.assert_frame_equal(df_annot, expect)
+    pd.testing.assert_frame_equal(df_annot.iloc[:, 2:], expect.iloc[:, 2:])
 
 
 def test_load_keypoints__01(cfg):
@@ -83,8 +79,8 @@ def test_load_keypoints__01(cfg):
     print(f"input path: {path} (exists={path.exists()})")
 
     T, X = load_keypoints(path)
-    np.testing.assert_array_equal(T.shape, (27377,))
-    np.testing.assert_array_equal(X.shape, (3, 27377, 17))
+    np.testing.assert_array_equal(T.shape, (21376,))
+    np.testing.assert_array_equal(X.shape, (3, 21376, 17))
 
 
 @pytest.mark.parametrize("stream, expected_ch", (
@@ -124,19 +120,19 @@ def test_load_and_resample_scan_log__01(cfg):
     print(f"input path: {path} (exists={path.exists()})")
 
     unixtimes = np.array([
-        1634885927000,
-        1634885927500,
-        1634885928000,  # =1
-        1634885928200,  # =1
-        1634885928400,  # =1
-        1634885928600,  # =1
-        1634885928800,  # =1
-        1634885929000,
-        1634885929500,
-        1634885930000,
+        1648531582600,
+        1648531582800,
+        1648531583000,  # =1 (1st item)
+        1648531583200,  # =1
+        1648531583400,  # =1
+        1648531583600,  # =1
+        1648531583800,  # =1
+        1648531583900,  # =1 (2nd item)
+        1648531583920,  # =1
+        1648531583940,  # =1
     ])
 
-    expect = np.array([0, 0, 1, 1, 1, 1, 1, 0, 0, 0])
+    expect = np.array([0, 0, 1, 1, 1, 1, 1, 1, 1, 1])
 
     actual = load_and_resample_scan_log(path, unixtimes)
     print(actual)

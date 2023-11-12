@@ -172,10 +172,16 @@ def construct_submission_dict(
                 cfg.session = session
 
             # TODO: Move to new function ( load_ground_truth() )
-            path = Path(
-                cfg.dataset.annotation.spec.path.dir,
-                cfg.dataset.annotation.spec.path.fname
-            )
+            if hasattr(cfg.dataset.annotation, "spec"):
+                path = Path(
+                    cfg.dataset.annotation.spec.path.dir,
+                    cfg.dataset.annotation.spec.path.fname
+                )
+            else:
+                path = Path(
+                    cfg.dataset.annotation.path.dir,
+                    cfg.dataset.annotation.path.fname
+                )
             df_label = pd.read_csv(path)
 
             label_format = cfg.dataset.annotation.metadata.labels.get(
@@ -259,7 +265,7 @@ def make_submission_zipfile(
 def eval_operation_segmentation_wrapper(
     cfg: DictConfig,
     outputs: Dict[str, Dict[str, np.ndarray]],
-    act_set: ActSet = OPENPACK_OPERATIONS,
+    act_set: ActSet = ActSet(OPENPACK_OPERATIONS),
     exclude_ignore_class=True,
 ) -> pd.DataFrame:
     """ Compute evaluation metrics from model outputs (predicted probability).

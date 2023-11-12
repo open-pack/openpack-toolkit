@@ -11,7 +11,7 @@ metadata:
     mmposeUrl: https://github.com/open-mmlab/mmpose/blob/master/configs/body/2d_kpt_sview_rgb_vid/posewarper/posetrack18/hrnet_w48_posetrack18_384x288_posewarper_stage2.py
 spec:
   path:
-    dir: ${path.openpack.rootdir}/${user.name}/kinect/2d-kpt/${...metadata.labels.poseEstimationModel}/single
+    dir: ${path.openpack.rootdir}/${user.name}/kinect/2d-kpt/mmpose-hrnet-w48-posetrack18-384x288-posewarper-stage2/single
     fname: ${session}.json
   fileFormat:
     file_type: json

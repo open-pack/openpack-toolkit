@@ -11,7 +11,7 @@ import pytest
 from omegaconf import OmegaConf
 
 import openpack_toolkit as optk
-from openpack_toolkit import OPENPACK_OPERATIONS, ActClass
+from openpack_toolkit import OPENPACK_OPERATIONS, ActSet
 from openpack_toolkit.codalab.operation_segmentation.eval import (
     calc_avg_metrics,
     calc_class_metrics,
@@ -221,13 +221,14 @@ def test_resample_prediction_1Hz__02():
 def test_eval_operation_segmentation_wrapper__01(mode):
     T = int(30 * 60 * 50)
     W = 30 * 60
-    class_ids = ActClass(OPENPACK_OPERATIONS).get_ids()
+    print(ActSet(OPENPACK_OPERATIONS))
+    class_ids = ActSet(OPENPACK_OPERATIONS).get_ids()
     print(class_ids)
 
     rootdir = Path(__file__).parents[2] / "samples/openpack/${.version}"
     cfg = OmegaConf.create({
         "mode": mode,
-        "user": optk.configs.users.U0102,
+        "user": optk.configs.users.U0209,
         "session": "S0500",
         "path": {
             "openpack": {
@@ -243,12 +244,12 @@ def test_eval_operation_segmentation_wrapper__01(mode):
 
     t_idx = np.random.choice(len(class_ids), size=T).reshape(T // W, W)
     y = np.random.uniform(size=(T // W, len(class_ids) - 1, W))
-    ts_unix = np.arange(0, T) * 100 + 1634885786000
+    ts_unix = np.arange(0, T) * 100 + 1648531521000
     print(f"t_idx={t_idx.shape}, y={y.shape}")
     print("ts_unix:", ts_unix[:100])
 
     outputs = {
-        "U0102-S0500": {
+        "U0209-S0500": {
             "ground_truth": t_idx, "y": y, "unixtime": ts_unix,
         }
     }

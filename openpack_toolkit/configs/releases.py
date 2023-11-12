@@ -104,7 +104,7 @@ RELEASE_CONFIG_V1_0_0 = ReleaseConfig(
             "annotation/openpack-actions-1hz",
             "annotation/openpack-operations",
             "annotation/openpack-operations-1hz",
-            "annotation/openpack-outlier-events",
+            "annotation/openpack-outliers",
             "atr/atr01",
             "atr/atr02",
             "atr/atr03",

@@ -11,7 +11,7 @@ metadata:
     sdkUrl: https://learn.microsoft.com/ja-jp/azure/kinect-dk/build-first-body-app
 spec:
   path:
-    dir: ${path.openpack.rootdir}/${user.name}/kinect/3d-kpt/${...metadata.labels.poseEstimationModel}/${preprocessing}
+    dir: ${path.openpack.rootdir}/${user.name}/kinect/3d-kpt/k4abt/${preprocessing}
     fname: ${session}.json
   preprocessings:
   - none

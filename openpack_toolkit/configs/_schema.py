@@ -18,6 +18,7 @@ class DataLocation:
     dir: str = MISSING
     fname: str = MISSING
 
+
 @dataclass
 class BaseConfig:
     kind: str = MISSING
@@ -78,8 +79,6 @@ class DataStreamConfig(BaseConfig):
     nodes: Optional[Dict[int, str]] = MISSING
 
 
-
-
 @dataclass
 class Label():
     """dataclass that represent a single activity class.
@@ -117,7 +116,7 @@ class ReleaseConfig(BaseConfig):
     class _User:
         sessions: List[str] = MISSING
         exclude: Optional[List[str]] = MISSING
-    
+
     users: Dict[str, _User] = MISSING
     streams: Dict[str, List[str]] = MISSING
 
