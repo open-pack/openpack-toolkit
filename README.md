@@ -84,7 +84,6 @@ optional arguments:
                         data in zenodo will be downloaded. Defaul: none
 ```
 
-
 ## Links
 
 - [Homepage](https://open-pack.github.io/) (External Site)
@@ -101,3 +100,4 @@ optional arguments:
 openpack-toolkit has a MIT license, as found in the [LICENSE](./LICENCE) file.
 
 NOTE: [OpenPack Dataset](https://doi.org/10.5281/zenodo.5909086) itself is available under [Creative Commons Attribution Non Commercial Share Alike 4.0 International](https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode) license.
+However, [OpenPack Dataset (+RGB) License](./docs/OPENPACK_DATASET_RGB_LICENSE.md) is applied to "OpenPack Dataset (+RGB)" which includs RGB data.
