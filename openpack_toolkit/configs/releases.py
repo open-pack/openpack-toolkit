@@ -1,17 +1,17 @@
-from ._schema import ReleaseConfig
+from ._schema import ReleaseConfig, Metadata, DataLocation
 
 RELEASE_CONFIG_V1_0_0 = ReleaseConfig(
     kind="openpack/release",
     name="${.metadata.labels.version}",
-    metadata={
-        "labels": {
+    metadata=Metadata(
+        labels={
             "version": "v1.0.0",
             "release": "None",
             "urlZenodo": "None",
             "urlGoogleDrive": "None",
             "urlGoogleDriveRGB": "None",
         }
-    },
+    ),
     users={
         "U0101": ReleaseConfig._User(
             sessions=['S0100', 'S0200', 'S0300', 'S0400', 'S0500'],

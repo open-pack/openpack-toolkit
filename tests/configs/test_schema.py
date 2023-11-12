@@ -4,9 +4,12 @@ from omegaconf import DictConfig, OmegaConf
 from openpack_toolkit import ActClass, ActSet
 from openpack_toolkit.configs._schema import (
     AnnotConfig,
+    DataLocation,
     DatasetConfig,
     DataSplitConfig,
     DataStreamConfig,
+    Label,
+    Metadata,
     OpenPackConfig,
     ReleaseConfig,
     SessionConfig,
@@ -55,10 +58,15 @@ def split_conf():
 @pytest.fixture()
 def annot_conf():
     conf = AnnotConfig(
+        kind="dataset/annotation",
         name="test",
-        version="v0.0.0",
-        path={"dir": "test"},
-        classes=ActSet((ActClass(99, "Test1"),)),
+        metadata=Metadata(
+            labels={
+                "version": "v0.0.0",
+            }
+        ),
+        path=DataLocation(dir="test", fname="test-file.csv"),
+        classes=[Label(99, "Test1")],
     )
     return conf
 
@@ -121,8 +129,12 @@ def test_OpenPackConfig__01(split_conf, annot_conf):
 
 def test_ReleaseConfig__01():
     conf = ReleaseConfig(
-        version="v0.0.0",
-        url="https://xxxx",
+        metadata=Metadata(
+            labels={
+                "version": "v0.0.0",
+                "url": "https://xxxx",
+            },
+        ),
         users={
             "U0101": ReleaseConfig._User(
                 sessions=["S0100", "S0200", "S0300", "S0400", "S0500"],
@@ -130,10 +142,7 @@ def test_ReleaseConfig__01():
             )
         },
         streams={
-            "annotation": {
-                "repository": "zenodo",
-                "subdirs": ["openpack-operations"],
-            },
+            "zenodo": ["openpack-operations"],
         }
     )
 

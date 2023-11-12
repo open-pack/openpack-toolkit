@@ -1,16 +1,16 @@
-from ._schema import ReleaseConfig
+from ._schema import ReleaseConfig, Metadata, DataLocation
 
 {% for release in releases %}
 RELEASE_CONFIG_{{release.metadata.labels.version|replace(".", "_")|upper}} = ReleaseConfig(
     kind="{{release.kind}}",
     name="{{release.name}}",
-    metadata={
-        "labels": {
+    metadata=Metadata(
+        labels={
 {% for key, val in release.metadata.labels.items() %}
         "{{key}}": "{{val}}",
 {% endfor %}
         }
-    },    
+    ),
     users={
 {% for user, data in release.spec.users.items() %}
         "{{user}}": ReleaseConfig._User(
