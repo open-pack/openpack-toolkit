@@ -12,10 +12,10 @@ def test_download_openpack_from_zenodo__01(tmpdir):
     print("path:", path, list(path.iterdir()))
 
     streams = [
-        # "atr-qags",
+        "atr-qags",
         # "e4-all",
         # "kinect-2d-kpt",
-        "activity-1s",
+        # "activity-1s",
     ]
     version = optk.DATASET_VERSION_LATEST
 

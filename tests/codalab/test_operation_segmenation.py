@@ -11,7 +11,7 @@ import pytest
 from omegaconf import OmegaConf
 
 import openpack_toolkit as optk
-from openpack_toolkit import OPENPACK_OPERATIONS
+from openpack_toolkit import OPENPACK_OPERATIONS, ActClass
 from openpack_toolkit.codalab.operation_segmentation.eval import (
     calc_avg_metrics,
     calc_class_metrics,
@@ -221,7 +221,7 @@ def test_resample_prediction_1Hz__02():
 def test_eval_operation_segmentation_wrapper__01(mode):
     T = int(30 * 60 * 50)
     W = 30 * 60
-    class_ids = OPENPACK_OPERATIONS.get_ids()
+    class_ids = ActClass(OPENPACK_OPERATIONS).get_ids()
     print(class_ids)
 
     rootdir = Path(__file__).parents[2] / "samples/openpack/${.version}"
@@ -237,7 +237,7 @@ def test_eval_operation_segmentation_wrapper__01(mode):
         },
         "dataset": {
             "stream": None,
-            "annotation": optk.configs.datasets.annotations.ACTIVITY_1S_ANNOTATION,
+            "annotation": optk.configs.datasets.annotations.OPENPACK_OPERATIONS_1HZ_ANNOTATION,
         }
     })
 

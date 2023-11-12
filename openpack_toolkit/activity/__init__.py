@@ -6,17 +6,12 @@ from typing import Tuple, Union
 
 import numpy as np
 
+from ..configs import Label
+
 logger = getLogger(__name__)
 
 
-@dataclass
-class ActClass():
-    """dataclass that represent a single activity class.
-    """
-    id: int
-    name: str
-    is_ignore: bool = False
-
+ActClass = Label
 
 @dataclass
 class ActSet():

@@ -3,8 +3,6 @@ from typing import Dict, List, Optional, Union
 
 from omegaconf import MISSING
 
-from ..activity import ActSet
-
 # ======
 #  Core
 # ======
@@ -96,15 +94,8 @@ class Label():
 
 @dataclass
 class AnnotConfig(BaseConfig):
-    # conf_type: str = MISSING
-    # name: str = MISSING
-    # version: str = MISSING
-    # path: Optional[Dict[str, str]] = MISSING
-    # file_format: Optional[Dict[str, str]] = None
-
     path: DataLocation = MISSING
     classes: List[Label] = MISSING
-    # activity_sets: Optional[Dict] = None
 
 
 @dataclass
@@ -114,7 +105,7 @@ class DatasetConfig:
     stream: Optional[DataStreamConfig] = None
     split: DataSplitConfig = MISSING
     annotation: AnnotConfig = MISSING
-    classes: Optional[ActSet] = MISSING
+    classes: Optional[Label] = MISSING
 
 
 # =========

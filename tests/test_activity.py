@@ -202,7 +202,7 @@ def test_ActSet__name_to_id__01(act_set):
 
 
 def test_OPENPACK_OPERATIONS__01():
-    act_set = OPENPACK_OPERATIONS
+    act_set = ActSet(OPENPACK_OPERATIONS)
 
     # check datatype
     assert isinstance(act_set, ActSet)
