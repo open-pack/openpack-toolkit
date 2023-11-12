@@ -9,7 +9,7 @@ readme = "README.md"
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = ">=3.8,<3.11"
+python = "^3.8"
 numpy = "^1.22.3"
 pandas = "^1.5.2"
 omegaconf = "^2.2.2"
