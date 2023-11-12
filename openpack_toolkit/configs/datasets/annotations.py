@@ -515,12 +515,6 @@ OPENPACK_OUTLIERS = (
         is_ignore=False,
     ),
     Label(
-        id="Cx03",
-        name="Confused / Air Cushion",
-        version="v1.4.0",
-        is_ignore=False,
-    ),
-    Label(
         id="Cx04",
         name="Confused / Process",
         version="v1.4.0",
@@ -542,18 +536,6 @@ OPENPACK_OUTLIERS = (
         id="Dx02",
         name="Parallel / Action&Action",
         version="v1.4.0",
-        is_ignore=False,
-    ),
-    Label(
-        id="Dx03",
-        name="Parallel / Left&Right",
-        version="v1.0.0",
-        is_ignore=False,
-    ),
-    Label(
-        id="Dx04",
-        name="Parallel / Holding",
-        version="v1.0.0",
         is_ignore=False,
     ),
     Label(
@@ -599,12 +581,6 @@ OPENPACK_OUTLIERS = (
         is_ignore=False,
     ),
     Label(
-        id="Ex04",
-        name="Additional / Operation",
-        version="v1.4.0",
-        is_ignore=False,
-    ),
-    Label(
         id="Ex05",
         name="Additional / Refill Boxe Stock",
         version="v1.4.0",
@@ -625,12 +601,6 @@ OPENPACK_OUTLIERS = (
     Label(
         id="Ex08",
         name="Additional / Move Box",
-        version="v1.4.0",
-        is_ignore=False,
-    ),
-    Label(
-        id="Fx01",
-        name="Fraction / Others",
         version="v1.4.0",
         is_ignore=False,
     ),

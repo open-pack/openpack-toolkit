@@ -1,8 +1,7 @@
-"""Generate ./docs/DATA_SPLIT.md
-"""
 from logging import DEBUG, basicConfig, getLogger
 from pathlib import Path
 
+import autopep8
 import yaml
 from jinja2 import Environment, FileSystemLoader
 from omegaconf import OmegaConf
@@ -10,7 +9,7 @@ from omegaconf import OmegaConf
 basicConfig(level=DEBUG)
 logger = getLogger(__name__)
 
-TARGET_DATA_SPLIT = [
+TARGET_SPLITS = [
     "debug",
     "pilot-challenge",
     "openpack-challenge-2022",
@@ -18,14 +17,14 @@ TARGET_DATA_SPLIT = [
 
 
 def main():
-
-    splits = []
-    for split_name in TARGET_DATA_SPLIT:
-        path = Path(f"../dataset/split/{split_name}.yaml")
-        logger.info(f"load DataSplitConfig from {path}")
+    # load configs
+    params = dict(splits=dict())
+    for split in TARGET_SPLITS:
+        path = Path("../../configs/dataset/split", f"{split}.yaml")
+        logger.info(f"load dataset/split config from {path}")
         with open(path, "r") as f:
             data = OmegaConf.create(yaml.safe_load(f))
-        splits.append(data)
+        params["splits"][split] = data
 
     # build python script with jinja2
     env = Environment(
@@ -33,12 +32,17 @@ def main():
         trim_blocks=True
     )
 
-    template = env.get_template("DATA_SPLIT.md.jinja")
-    code = template.render(splits=splits)
+    template = env.get_template("dataset.split.py.jinja")
+    code = template.render(**params)
+    code = autopep8.fix_code(
+        code,
+        options={"max_line_length": 100}
+    )
+    print(code)
 
     # write a python script
-    path = Path("../../docs/DATA_SPLIT.md")
-    logger.info(f"write docs/DATA_SPLIT.md to {path}")
+    path = Path("../../openpack_toolkit/configs/datasets/splits.py")
+    logger.info(f"write configs/dataset/splits.py to {path}")
     with open(path, "w") as f:
         f.write(code)
 

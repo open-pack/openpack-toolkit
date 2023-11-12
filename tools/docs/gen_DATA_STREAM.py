@@ -30,7 +30,7 @@ def main():
 
     streams = []
     for stream_name in TARGET_DATA_STREAM:
-        path = Path(f"../dataset/stream/{stream_name}.yaml")
+        path = Path(f"../../configs/dataset/stream/{stream_name}.yaml")
         logger.info(f"load DataStreamConfig from {path}")
         with open(path, "r") as f:
             data = yaml.safe_load(f)

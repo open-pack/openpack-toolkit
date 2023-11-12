@@ -21,7 +21,7 @@ def main():
     # load configs
     params = dict(annotations=dict())
     for annot in TARGET_ANNOTATIONS:
-        path = Path("../dataset/annotation", f"{annot}.yaml")
+        path = Path("../../configs/dataset/annotation", f"{annot}.yaml")
         logger.info(f"load dataset/annotation config from {path}")
         with open(path, "r") as f:
             data = yaml.safe_load(f)

@@ -33,7 +33,7 @@ def main():
     # load configs
     params = dict(streams=[])
     for stream in TARGET_STREAM:
-        path = Path("../dataset/stream", f"{stream}.yaml")
+        path = Path("../../configs/dataset/stream", f"{stream}.yaml")
         logger.info(f"load dataset/stream config from {path}")
         with open(path, "r") as f:
             data = yaml.safe_load(f)

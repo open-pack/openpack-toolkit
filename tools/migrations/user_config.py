@@ -37,7 +37,7 @@ def main():
     # load configs
     params = dict(users=[])
     for user in TARGET_USERS:
-        path = Path("../user", f"{user}.yaml")
+        path = Path("../../configs/user", f"{user}.yaml")
         logger.info(f"load user config from {path}")
         with open(path, "r") as f:
             data = yaml.safe_load(f)

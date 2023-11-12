@@ -11,7 +11,7 @@ logger = getLogger(__name__)
 
 
 def main():
-    files = sorted(Path("../user").iterdir())
+    files = sorted(Path("../../configs/user").iterdir())
 
     users = []
     for path in files:

@@ -20,7 +20,7 @@ def main():
 
     annotations = dict()
     for annot_name in TARGET_ANNOTATIONS:
-        path = Path(f"../dataset/annotation/{annot_name}.yaml")
+        path = Path(f"../../configs/dataset/annotation/{annot_name}.yaml")
         logger.info(f"load DataStreamConfig from {path}")
         with open(path, "r") as f:
             data = yaml.safe_load(f)

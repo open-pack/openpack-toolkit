@@ -23,7 +23,7 @@ def main():
     # load configs
     releases = []
     for release in TARGET_RELEASE_VERSIONS:
-        path = Path("../release", f"{release}.yaml")
+        path = Path("../../configs/release", f"{release}.yaml")
         logger.info(f"load release config from {path}")
         with open(path, "r") as f:
             data = OmegaConf.to_container(OmegaConf.create(yaml.safe_load(f)))
