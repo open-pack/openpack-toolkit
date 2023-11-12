@@ -63,7 +63,7 @@ This split is for OpenPack Pilot Challenge (private competition).
 ## [3] Openpack Challenge 2022
 
 Train/val/test/submission Split for OpenPack Challenge. Train/val/test data is set for convenience; feel free to change the entries among them. Challengers should submit predictions for submission set.
-For more information, please go to [OpenPacl Challenge](./OPENPACK_CHALLENGE/).
+For more information, please go to [OpenPack Challenge](./OPENPACK_CHALLENGE/).
 
 - Config File: [openpack-challenge-2022.yaml](../configs/dataset/split/openpack-challenge-2022.yaml)
 - Python Class: [`openpack_toolkit.configs.datasets.splits.OPENPACK_CHALLENGE_2022_SPLIT`](../openpack_toolkit/configs/datasets/splits.py)
