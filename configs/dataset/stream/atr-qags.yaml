@@ -1,53 +1,43 @@
-schema: ImuConfig
+kind: dataset/stream/imu
 name: atr-qags
-description: Acceleration, gyro, and quaternion data captured by ATR IMU sensors.
-super_stream: null
-path:
-  dir: ${path.openpack.rootdir}/${user.name}/atr/${device}
-  fname: ${session}.csv
-file_format:
-  file_type: csv
-  columns:
-  - name: unixtime
-    unit: milli second
-  - name: acc_x
-    unit: G
-  - name: acc_y
-    unit: G
-  - name: acc_z
-    unit: G
-  - name: gyro_x
-    unit: dps
-  - name: gyro_y
-    unit: dps
-  - name: gyro_z
-    unit: dps
-  - name: quat_w
-  - name: quat_x
-  - name: quat_y
-  - name: quat_z
-frame_rate: 30
-meta:
-  tables:
-  - name: Device List
-    note: We attached 4 IMU sensors to subjects. IMU = [ATR TSND151](http://www.atr-p.com/products/TSND121_151.html).
-    headers:
-    - Device Name
-    - Location
-    body:
-    - - atr01
-      - Right Wrist
-    - - atr02
-      - Left Wrist
-    - - atr03
-      - Right Upper Arm
-    - - atr04
-      - Left Upper Arm
-devices:
-- atr01
-- atr02
-- atr03
-- atr04
-acc: true
-gyro: true
-quat: true
+mdetadata:
+  labels:
+    app: openpack
+    version: 1.0.0
+    sensorType: IMU
+    sensorProductName: ATR TSND151
+    sensorProdcutReference: http://www.atr-p.com/products/TSND121_151.html
+spec:
+  path:
+    dir: ${path.openpack.rootdir}/${user.name}/atr
+    fname: ${device}/${session}.csv
+  devices:
+  - atr01
+  - atr02
+  - atr03
+  - atr04
+  acc: true
+  gyro: true
+  quat: true
+  frameRate: 30
+  fileFormat:
+    fileType: csv
+    columns:
+    - name: unixtime
+      unit: milli second
+    - name: acc_x
+      unit: G
+    - name: acc_y
+      unit: G
+    - name: acc_z
+      unit: G
+    - name: gyro_x
+      unit: dps
+    - name: gyro_y
+      unit: dps
+    - name: gyro_z
+      unit: dps
+    - name: quat_w
+    - name: quat_x
+    - name: quat_y
+    - name: quat_z

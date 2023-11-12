@@ -1,120 +1,63 @@
-schema: SystemDataConfig
+kind: dataset/stream/system
 name: system-order-sheet
-description: Master data of order sheets.
-super_stream: null
-path:
-  dir: ${path.openpack.rootdir}/${user.name}/system/order-sheet/
-  fname: ${session}.csv
-file_format:
-  file_type: csv
-  columns:
-  - name: sheet_no
-    unit: null
-    dtype: str
-    note: format = DEN{session_no:0=4}{box_no:0=2}
-  - name: session
-    unit: null
-    dtype: str
-  - name: box
-    unit: null
-    dtype: str
-  - name: pattern
-    unit: null
-    dtype: str
-  - name: total_amount
-    unit: null
-    dtype: str
-  - name: item1
-    unit: null
-    dtype: str
-  - name: item2
-    unit: null
-    dtype: str
-  - name: item3
-    unit: null
-    dtype: str
-  - name: item4
-    unit: null
-    dtype: str
-  - name: item5
-    unit: null
-    dtype: str
-  - name: amount1
-    unit: null
-    dtype: str
-  - name: amount2
-    unit: null
-    dtype: str
-  - name: amount3
-    unit: null
-    dtype: str
-  - name: amount4
-    unit: null
-    dtype: str
-  - name: amount5
-    unit: null
-    dtype: str
-frame_rate: 30
-meta:
-  tables:
-  - name: Combination Patterns of Items
-    note: '-'
-    headers:
-    - Key
-    - Amount
-    - Size Category
-    body:
-    - - S1
-      - ''
-      - ''
-    - - S2
-      - ''
-      - ''
-    - - S3
-      - ''
-      - ''
-    - - S4
-      - ''
-      - ''
-    - - S5
-      - ''
-      - ''
-    - - M1
-      - ''
-      - ''
-    - - M2
-      - ''
-      - ''
-    - - M3
-      - ''
-      - ''
-    - - M4
-      - ''
-      - ''
-    - - M5
-      - ''
-      - ''
-    - - L1
-      - ''
-      - ''
-    - - L2
-      - ''
-      - ''
-    - - L3
-      - ''
-      - ''
-    - - L4
-      - ''
-      - ''
-    - - L5
-      - ''
-      - ''
-    - - MIX2
-      - ''
-      - ''
-    - - MIX3
-      - ''
-      - ''
-    - - MIX4
-      - ''
-      - ''
+metadata:
+  labels:
+    app: openpack
+    version: 1.0.0
+    sensorType: system/order-sheet
+    sensorProductName: null
+    sensorProdcutReference: null
+spec:
+  path:
+    dir: ${path.openpack.rootdir}/${user.name}/system/order-sheet/
+    fname: ${session}.csv
+  fileFormat:
+    fileType: csv
+    columns:
+    - name: sheet_no
+      unit: null
+      dtype: str
+      note: format = DEN{session_no:0=4}{box_no:0=2}
+    - name: session
+      unit: null
+      dtype: str
+    - name: box
+      unit: null
+      dtype: str
+    - name: pattern
+      unit: null
+      dtype: str
+    - name: total_amount
+      unit: null
+      dtype: str
+    - name: item1
+      unit: null
+      dtype: str
+    - name: item2
+      unit: null
+      dtype: str
+    - name: item3
+      unit: null
+      dtype: str
+    - name: item4
+      unit: null
+      dtype: str
+    - name: item5
+      unit: null
+      dtype: str
+    - name: amount1
+      unit: null
+      dtype: str
+    - name: amount2
+      unit: null
+      dtype: str
+    - name: amount3
+      unit: null
+      dtype: str
+    - name: amount4
+      unit: null
+      dtype: str
+    - name: amount5
+      unit: null
+      dtype: str
+  frameRate: 30

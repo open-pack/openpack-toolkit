@@ -1,20 +1,25 @@
 kind: dataset/stream/keypoint
-name: kinect-2d-kpt
+name: kinect-3d-kpt
 metadata:
   labels:
     app: openpack
     version: 1.0.0
     sensorProdcutName: Azure Kinect DK
     sensorProdcutReference: https://azure.microsoft.com/ja-jp/products/kinect-dk/
-    keypointType: 2d
-    poseEstimationModel: mmpose-hrnet-w48-posetrack18-384x288-posewarper-stage2
-    mmposeUrl: https://github.com/open-mmlab/mmpose/blob/master/configs/body/2d_kpt_sview_rgb_vid/posewarper/posetrack18/hrnet_w48_posetrack18_384x288_posewarper_stage2.py
+    keypointType: 3d
+    poseEstimationModel: k4abt
+    sdkUrl: https://learn.microsoft.com/ja-jp/azure/kinect-dk/build-first-body-app
 spec:
   path:
-    dir: ${path.openpack.rootdir}/${user.name}/kinect/2d-kpt/${...metadata.labels.poseEstimationModel}/single
+    dir: ${path.openpack.rootdir}/${user.name}/kinect/3d-kpt/${...metadata.labels.poseEstimationModel}/${preprocessing}
     fname: ${session}.json
+  preprocessings:
+  - none
+  - single-ffill
+  - single-ffill-flip-fixed
+  - unity
   fileFormat:
-    file_type: json
+    fileType: json
     note: MS COCO format
     columns:
     - name: info

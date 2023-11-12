@@ -1,0 +1,23 @@
+kind: dataset/stream/image
+name: rs02-depth
+metadata:
+  labels:
+    app: openpack
+    version: 1.0.0
+    sensor: rs02
+    sensorProdcutName: Realsense
+    sensorProdcutReference: https://www.intel.com/content/www/us/en/products/sku/190004/intel-realsense-depth-camera-d435i/specifications.html
+    imageType: depth
+    preprocessing: null
+    view: top-view
+spec:
+  path:
+    dir: ${path.openpack.rootdir}/${user.name}/rs02/depth/frames
+    fname: ${session}
+  fileFormat:
+    fileType: 16bit Grayscal PNG
+    pathFormat: '%Y/%m/%d/%H/%M/%Y%m%d_%H%M%S_%f.png'
+    imageSize:
+      width: 640
+      height: 480
+  frameRate: 15

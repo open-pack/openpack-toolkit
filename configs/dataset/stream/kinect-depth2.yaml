@@ -1,0 +1,24 @@
+kind: dataset/stream/image
+name: kinect-depth
+metadata:
+  labels:
+    app: openpack
+    version: 1.0.0
+    sensor: kinect
+    sensorProdcutName: Azure Kinect DK
+    sensorProdcutReference: https://azure.microsoft.com/ja-jp/products/kinect-dk/
+    imageType: depth
+    preprocessing: k4a_transformation_depth_image_to_color_camera()
+    preprocessingReference: https://microsoft.github.io/Azure-Kinect-Sensor-SDK/master/group___functions_gafacffb5f781a9c2df30d4a16241cd514.html
+    view: front-view
+spec:
+  path:
+    dir: ${path.openpack.rootdir}/${user.name}/kinect/depth/frames
+    fname: ${session}
+  fileFormat:
+    fileType: 16bit Grayscal PNG
+    pathFormat: '%Y/%m/%d/%H/%M/%Y%m%d_%H%M%S_%f.png'
+    imageSize:
+      width: 640
+      height: 576
+  frameRate: 15

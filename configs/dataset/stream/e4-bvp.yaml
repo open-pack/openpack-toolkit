@@ -1,31 +1,26 @@
-schema: E4Config
+kind: dataset/stream
 name: e4-bvp
-description: BVP (Blood Volume Pulse) data from Empatica E4 sensors
-path:
-  dir: ${path.openpack.rootdir}/${user.name}/e4/${device}/bvp
-  fname: ${session}.csv
-  template: ${.dir}/${.fname}
-file_format:
-  file_type: csv
-  columns:
-  - name: time
-    unit: milli second
-  - name: bvp
-    unit: mmHg
-frame_rate: 64
-meta:
-  tables:
-  - name: Device List
-    note: We attached 2 [Empatica E4](https://www.empatica.com/en-int/research/e4/)
-      sensors to subjects.
-    headers:
-    - Device Name
-    - Location
-    body:
-    - - e401
-      - Right Wrist
-    - - e402
-      - Left Wrist
-devices:
-- e401
-- e402
+metadata:
+  labels:
+    app: openpack
+    version: 1.0.0
+    sensor: e4
+    sensorType: Blood Volume Pulse (BVP)
+    sensorProductName: Empatica E4
+    sensorProdcutReference: https://www.empatica.com/en-int/research/e4/
+spec:
+  path:
+    dir: ${path.openpack.rootdir}/${user.name}/e4/${device}/bvp
+    fname: ${session}.csv
+    template: ${.dir}/${.fname}
+  devices:
+  - e401
+  - e402
+  frameRate: 64
+  fileFormat:
+    fileType: csv
+    columns:
+    - name: time
+      unit: milli second
+    - name: bvp
+      unit: mmHg
