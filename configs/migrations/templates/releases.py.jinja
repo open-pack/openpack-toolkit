@@ -1,7 +1,7 @@
 from ._schema import ReleaseConfig
 
 {% for release in releases %}
-RELEASE_CONFIG_{{release.version|replace(".", "_")|upper}} = ReleaseConfig(
+RELEASE_CONFIG_{{release.metadata.labels.version|replace(".", "_")|upper}} = ReleaseConfig(
     kind="{{release.kind}}",
     name="{{release.name}}",
     metadata={

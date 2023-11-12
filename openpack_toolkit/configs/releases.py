@@ -1,6 +1,6 @@
 from ._schema import ReleaseConfig
 
-RELEASE_CONFIG_ = ReleaseConfig(
+RELEASE_CONFIG_V1_0_0 = ReleaseConfig(
     kind="openpack/release",
     name="${.metadata.labels.version}",
     metadata={

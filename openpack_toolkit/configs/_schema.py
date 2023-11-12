@@ -80,33 +80,7 @@ class DataStreamConfig(BaseConfig):
     nodes: Optional[Dict[int, str]] = MISSING
 
 
-# @dataclass
-# class ImuConfig(DataStreamConfig):
-#     schema: str = "ImuConfig"
-#     devices: List[str] = MISSING
-#     acc: bool = True
-#     gyro: bool = True
-#     quat: bool = True
 
-
-# @dataclass
-# class E4Config(DataStreamConfig):
-#     schema: str = "E4Config"
-#     devices: List[str] = MISSING
-#     sensor: str = MISSING
-
-
-# @dataclass
-# class KeypointConfig(DataStreamConfig):
-#     schema: str = "KeypointConfig"
-#     category: str = MISSING
-#     model: str = MISSING
-#     nodes: Dict[int, str] = MISSING
-
-
-# @dataclass
-# class SystemDataConfig(DataStreamConfig):
-#     schema: str = "SystemDataConfig"
 
 @dataclass
 class Label():
