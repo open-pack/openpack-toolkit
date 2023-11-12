@@ -1,3 +1,15 @@
+errors:
+- note: '`rs02/S0100.bag` and `rs02/S0200.bag` is not able to load because of `Bag
+    unindexed` error.'
+  segments:
+    boxes: -1
+    sessions:
+    - S0100
+    - S0200
+    streams:
+    - rs02
+  status: NO_FIX_AVAILABLE
+  title: Original bag file of rs02 is borken and unable to read.
 id: 101
 meta:
   age_group: '-'

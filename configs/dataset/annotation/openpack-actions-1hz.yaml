@@ -330,7 +330,7 @@ spec:
     description: Segment without any specific actions. This class is prepared for
       action detection.
     version: v3.5.0
-    ignore: true
+    ignore: false
   - id: 8106
     operation: 'Null'
     name: Exclude
