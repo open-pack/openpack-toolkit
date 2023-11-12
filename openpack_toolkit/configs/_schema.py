@@ -1,9 +1,30 @@
 from dataclasses import dataclass
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Union
 
 from omegaconf import MISSING
 
 from ..activity import ActSet
+
+# ======
+#  Core
+# ======
+
+
+@dataclass
+class Metadata:
+    labels: Optional[Dict[str, str]] = None
+
+
+@dataclass
+class DataLocation:
+    dir: str = MISSING
+    fname: str = MISSING
+
+@dataclass
+class BaseConfig:
+    kind: str = MISSING
+    name: str = MISSING
+    metadata: Metadata = MISSING
 
 # ======
 #  User
@@ -45,70 +66,71 @@ class DataSplitConfig:
 
 
 @dataclass
-class DataStreamConfig:
+class DataStreamConfig(BaseConfig):
+    path: DataLocation = MISSING
+    frameRate: int = MISSING  # [Hz, fps]
+
+    # for IMU/E4
+    devices: Optional[List[str]] = None
+    acc: Optional[bool] = None
+    gyro: Optional[bool] = None
+    quat: Optional[bool] = None
+
+    # for keypoints
+    nodes: Optional[Dict[int, str]] = MISSING
+
+
+# @dataclass
+# class ImuConfig(DataStreamConfig):
+#     schema: str = "ImuConfig"
+#     devices: List[str] = MISSING
+#     acc: bool = True
+#     gyro: bool = True
+#     quat: bool = True
+
+
+# @dataclass
+# class E4Config(DataStreamConfig):
+#     schema: str = "E4Config"
+#     devices: List[str] = MISSING
+#     sensor: str = MISSING
+
+
+# @dataclass
+# class KeypointConfig(DataStreamConfig):
+#     schema: str = "KeypointConfig"
+#     category: str = MISSING
+#     model: str = MISSING
+#     nodes: Dict[int, str] = MISSING
+
+
+# @dataclass
+# class SystemDataConfig(DataStreamConfig):
+#     schema: str = "SystemDataConfig"
+
+@dataclass
+class Label():
+    """dataclass that represent a single activity class.
     """
-    Attributes:
-        schema (str): -
-        name (str): -
-        description (str): -
-        super_stream (str): Parent Class. Inherited from.
-        path (DatasetStream.Path): -
-        frame_rate (int): -
-    """
-
-    @dataclass
-    class Paths:
-        # path to the root directory of this stream.
-        dir: Optional[str] = None
-        fname: Optional[str] = None
-
-    schema: str = MISSING
-    name: str = MISSING
-    description: Optional[str] = None
-    super_stream: Optional[str] = None
-    path: Paths = MISSING
-    file_format: Optional[Dict] = None
-    frame_rate: int = MISSING  # [Hz, fps]
-
-
-@dataclass
-class ImuConfig(DataStreamConfig):
-    schema: str = "ImuConfig"
-    devices: List[str] = MISSING
-    acc: bool = True
-    gyro: bool = True
-    quat: bool = True
-
-
-@dataclass
-class E4Config(DataStreamConfig):
-    schema: str = "E4Config"
-    devices: List[str] = MISSING
-    sensor: str = MISSING
-
-
-@dataclass
-class KeypointConfig(DataStreamConfig):
-    schema: str = "KeypointConfig"
-    category: str = MISSING
-    model: str = MISSING
-    nodes: Dict[int, str] = MISSING
-
-
-@dataclass
-class SystemDataConfig(DataStreamConfig):
-    schema: str = "SystemDataConfig"
-
-
-@dataclass
-class AnnotConfig:
-    conf_type: str = MISSING
+    id: Union[int, str] = MISSING
     name: str = MISSING
     version: str = MISSING
-    path: Optional[Dict[str, str]] = MISSING
-    file_format: Optional[Dict[str, str]] = None
-    classes: Optional[ActSet] = MISSING
-    activity_sets: Optional[Dict] = None
+    is_ignore: bool = False
+    category: Optional[str] = None
+    event: Optional[str] = None
+
+
+@dataclass
+class AnnotConfig(BaseConfig):
+    # conf_type: str = MISSING
+    # name: str = MISSING
+    # version: str = MISSING
+    # path: Optional[Dict[str, str]] = MISSING
+    # file_format: Optional[Dict[str, str]] = None
+
+    path: DataLocation = MISSING
+    classes: List[Label] = MISSING
+    # activity_sets: Optional[Dict] = None
 
 
 @dataclass
@@ -125,16 +147,14 @@ class DatasetConfig:
 #  Release
 # =========
 @dataclass
-class ReleaseConfig:
+class ReleaseConfig(BaseConfig):
     @dataclass
     class _User:
         sessions: List[str] = MISSING
         exclude: Optional[List[str]] = MISSING
-
-    version: str = MISSING
-    url: str = MISSING
+    
     users: Dict[str, _User] = MISSING
-    streams: Dict[str, Dict] = MISSING
+    streams: Dict[str, List[str]] = MISSING
 
 
 # =======================

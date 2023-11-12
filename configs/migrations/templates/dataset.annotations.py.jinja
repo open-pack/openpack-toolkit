@@ -1,23 +1,43 @@
-from .._schema import AnnotConfig
-from ...activity import ActSet, ActClass
+from .._schema import AnnotConfig, Label
+
 
 {% for key, annot in annotations.items() %}
-{{key|replace("-", "_")|upper}} = ActSet((
+{% if annot.kind == "dataset/annotation/csv" %}
+{{key|replace("-", "_")|upper}} = (
 {% for act in annot.spec.classes %}
-        ActClass({{act.id}}, "{{act.name}}", is_ignore={{act.ignore}}),
+    Label(
+{% if annot.name == "openpack-outliers" %}
+        id="{{act.id}}",
+        name="{{act.category}} / {{act.event}}",
+{% else %}
+        id={{act.id}},
+        name="{{act.name}}",
+{% endif %}
+        version="{{act.version}}",
+        is_ignore={{act.ignore}},
+    ),
 {% endfor %}
-))
+)
+{% endif %}
 
+
+{% endfor %}
+
+{% for key, annot in annotations.items() %}
 {{key|replace("-", "_")|upper}}_ANNOTATION = AnnotConfig(
-    conf_type="{{annot.kind}}",
+    kind="{{annot.kind}}",
     name="{{annot.name}}",
-    version="{{annot.metadata.labels.version}}",
+    metadata={
+        "labels": {
+{% for key, val in annot.metadata.labels.items() %}
+        "{{key}}": "{{val}}",
+{% endfor %}
+        }
+    },
     path={
         "dir": "{{annot.spec.path.dir}}",
         "fname": "{{annot.spec.path.fname}}",
     },
-    classes={{key|replace("-", "_")|upper}},
+    classes={{key|replace("-1hz", "")|replace("-", "_")|upper}},
 )
-
-
 {% endfor %}

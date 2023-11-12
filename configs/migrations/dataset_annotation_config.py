@@ -13,6 +13,7 @@ TARGET_ANNOTATIONS = [
     "openpack-actions-1hz",
     "openpack-operations",
     "openpack-operations-1hz",
+    "openpack-outliers",
 ]
 
 
