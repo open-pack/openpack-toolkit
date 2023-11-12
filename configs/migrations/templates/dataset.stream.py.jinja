@@ -1,20 +1,20 @@
-from .._schema import DataStreamConfig
+from .._schema import DataStreamConfig, Metadata, DataLocation
 
 {% for stream in streams %}
 {{stream.name|replace("-", "_")|upper}}_STREAM = DataStreamConfig(
     kind="{{stream.kind}}",
     name="{{stream.name}}",
-    metadata={
-        "labels": {
+    metadata=Metadata(
+        labels={
 {% for key, val in stream.metadata.labels.items() %}
         "{{key}}": "{{val}}",
 {% endfor %}
         }
-    },
-    path={
-        "dir": "{{stream.spec.path.dir}}",
-        "fname": "{{stream.spec.path.fname}}",
-    },
+    ),
+    path=DataLocation(
+        dir="{{stream.spec.path.dir}}",
+        fname="{{stream.spec.path.fname}}",
+    ),
     frameRate={{stream.spec.frameRate}},
 {% if stream.kind == "dataset/stream/imu" %}
     devices={{stream.spec.devices}},
