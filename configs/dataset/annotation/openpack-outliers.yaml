@@ -1,0 +1,403 @@
+kind: dataset/annotation/csv
+name: openpack-outliers
+metadata:
+  labels:
+    type: annotation/outlier
+    version: v1.4.0
+    dependency: null
+    resolution: original
+spec:
+  path:
+    dir: ${path.openpack.rootdir}/${user.name}/annotation/openpack-outliers
+    fname: ${session}.csv
+  file:
+    columns:
+    - uuid: UUID
+      dtype: str
+    - name: user
+      dtype: str
+    - name: session
+      dtype: str
+    - name: box
+      dtype: int
+    - name: id
+      dtype: str
+    - name: category
+      dtype: str
+    - name: event
+      dtype: str
+    - name: start
+      dtype: datetime
+    - name: end
+      dtype: datetime
+    - name: tags
+      dtype: List[str]
+  classes:
+  - id: Aa01
+    category: Incident
+    event: Others
+    version: v1.4.0
+    ignore: false
+    tags:
+    - LOW
+    - HIGH
+    - Single
+  - id: Aa02
+    category: Incident
+    event: Miss
+    version: v1.4.0
+    ignore: false
+    tags:
+    - LOW
+    - HIGH
+    - Single
+  - id: Aa03
+    category: Incident
+    event: Accident
+    version: v1.4.0
+    ignore: false
+    tags:
+    - LOW
+    - HIGH
+    - Single
+  - id: Aa04
+    category: Incident
+    event: System Error
+    version: v1.4.0
+    ignore: false
+  - id: Aa05
+    category: Incident
+    event: Talk to Staff
+    version: v1.4.0
+    ignore: false
+  - id: Aa06
+    category: Incident
+    event: Break Label
+    version: v1.4.0
+    ignore: false
+  - id: Aa07
+    category: Incident
+    event: Wrong Choice of Box Size
+    version: v1.4.0
+    ignore: false
+    tags:
+    - S
+    - M
+    - L
+    - LL
+  - id: Ab01
+    category: Investigation
+    event: Others
+    version: v1.4.0
+    ignore: false
+    tags:
+    - LOW
+    - HIGH
+  - id: Ab02
+    category: Investigation
+    event: System Error
+    version: v1.4.0
+    ignore: false
+  - id: Ab03
+    category: Investigation
+    event: Check Box Size
+    version: v1.4.0
+    ignore: false
+    tags:
+    - Item
+    - Box-Close
+    - Box-Open
+    - Box-In
+  - id: Ab04
+    category: Investigation
+    event: Check Item Size
+    version: v1.4.0
+    ignore: false
+  - id: Ab05
+    category: Investigation
+    event: Talk to Staff
+    version: v1.4.0
+    ignore: false
+  - id: Ac01
+    category: Recovery
+    event: Others
+    version: v1.4.0
+    ignore: false
+    tags:
+    - LOW
+    - HIGH
+  - id: Ac02
+    category: Recovery
+    event: System Error
+    version: v1.4.0
+    ignore: false
+  - id: Ac03
+    category: Recovery
+    event: Take out Inserted Items from Box
+    version: v1.4.0
+    ignore: false
+  - id: Ac04
+    category: Recovery
+    event: Put Away Box for Resizing
+    version: v1.4.0
+    ignore: false
+    tags:
+    - S
+    - M
+    - L
+    - LL
+  - id: Ac05
+    category: Recovery
+    event: Disassemble Box for Resizing
+    version: v1.4.0
+    ignore: false
+    tags:
+    - S
+    - M
+    - L
+    - LL
+  - id: Ac06
+    category: Recovery
+    event: Fold Box to Clean Up
+    version: v1.4.0
+    ignore: false
+  - id: Ac07
+    category: Recovery
+    event: Return Box
+    version: v1.4.0
+    ignore: false
+  - id: Ac08
+    category: Recovery
+    event: Talk to Staff
+    version: v1.4.0
+    ignore: false
+  - id: Ac09
+    category: Recovery
+    event: Item Label
+    version: v1.4.0
+    ignore: false
+  - id: Bx01
+    category: Struggling
+    event: Others
+    version: v1.4.0
+    ignore: false
+    tags:
+    - LOW
+    - HIGH
+  - id: Bx02
+    category: Struggling
+    event: Look for Items
+    version: v1.4.0
+    ignore: false
+  - id: Bx03
+    category: Struggling
+    event: Label
+    version: v1.4.0
+    ignore: false
+    tags:
+    - Item
+    - Box
+    - Shipping
+  - id: Bx04
+    category: Struggling
+    event: Scan
+    version: v1.4.0
+    ignore: false
+    tags:
+    - HT
+    - LP
+  - id: Bx05
+    category: Struggling
+    event: Air Cushion
+    version: v1.4.0
+    ignore: false
+  - id: Bx06
+    category: Struggling
+    event: Insert Items
+    version: v1.4.0
+    ignore: false
+  - id: Bx07
+    category: Struggling
+    event: Tape
+    version: v1.4.0
+    ignore: false
+  - id: Cx01
+    category: Confused
+    event: Others
+    version: v1.4.0
+    ignore: false
+    tags:
+    - LOW
+    - HIGH
+  - id: Cx02
+    category: Confused
+    event: Box Size
+    version: v1.4.0
+    ignore: false
+  - id: Cx03
+    category: Confused
+    event: Air Cushion
+    version: v1.4.0
+    ignore: false
+  - id: Cx04
+    category: Confused
+    event: Process
+    version: v1.4.0
+    ignore: false
+  - id: Cx05
+    category: Confused
+    event: Double Check
+    version: v1.4.0
+    ignore: false
+  - id: Dx01
+    category: Parallel
+    event: Others
+    version: v1.4.0
+    ignore: false
+    tags:
+    - LOW
+    - HIGH
+  - id: Dx02
+    category: Parallel
+    event: Action&Action
+    version: v1.4.0
+    ignore: false
+    tags:
+    - 0101*1003
+    - 0108*0201
+    - 0302*0303
+    - 0303*0304
+    - 0303*0401
+    - 0303*0501
+    - 0401*0403
+    - 0706*1001
+    - 0707*1001
+    - 0801*1003
+    - 1002*1003
+  - id: Dx03
+    category: Parallel
+    event: Left&Right
+    version: v1.0.0
+    ignore: false
+  - id: Dx04
+    category: Parallel
+    event: Holding
+    version: v1.0.0
+    ignore: false
+  - id: Dx03
+    category: Parallel
+    event: Action&Additional
+    version: v1.4.0
+    ignore: false
+    tags:
+    - 0101*G06
+    - 0108*G06
+    - 0301*B03
+    - 0301*G05
+    - 0301*G06
+    - 0303*0304*G07
+    - 0303*G06
+    - 0304*G07
+    - 0401*G07
+    - 0401*G08
+    - 0502*G07
+    - 0502*G08
+    - 0601*G03
+    - 0601*G08
+    - 0701*G06
+    - 0701*G08
+    - 0702*G06
+    - 0703*G08
+    - 0704*G08
+    - 0707*G06
+    - 0707*G08
+    - 0801*G03
+    - 0801*G06
+    - 0801*G08
+    - 0901*G06
+    - 1001*G06
+    - 1003*G06
+  - id: Dx04
+    category: Parallel
+    event: Action&Others
+    version: v1.4.0
+    ignore: false
+    tags:
+    - '107'
+    - '030'
+    - '109'
+    - '011'
+    - '001'
+  - id: Dx05
+    category: Parallel
+    event: Additional&Additional
+    version: v1.4.0
+    ignore: false
+    tags:
+    - B01*G07
+    - C03*C04
+    - G06*G08
+    - G03*G06
+  - id: Dx06
+    category: Parallel
+    event: Additional&Others
+    version: v1.4.0
+    ignore: false
+  - id: Ex01
+    category: Additional
+    event: Others
+    version: v1.4.0
+    ignore: false
+    tags:
+    - LOW
+    - HIGH
+  - id: Ex02
+    category: Additional
+    event: Talk to Staff
+    version: v1.4.0
+    ignore: false
+  - id: Ex03
+    category: Additional
+    event: Dispose
+    version: v1.4.0
+    ignore: false
+  - id: Ex04
+    category: Additional
+    event: Operation
+    version: v1.4.0
+    ignore: false
+  - id: Ex05
+    category: Additional
+    event: Refill Boxe Stock
+    version: v1.4.0
+    ignore: false
+    tags:
+    - S-D
+    - S
+    - M
+    - L
+    - LL
+  - id: Ex06
+    category: Additional
+    event: Clean Up the Workbench
+    version: v1.4.0
+    ignore: false
+  - id: Ex07
+    category: Additional
+    event: Lift Up Box
+    version: v1.4.0
+    ignore: false
+  - id: Ex08
+    category: Additional
+    event: Move Box
+    version: v1.4.0
+    ignore: false
+  - id: Fx01
+    category: Fraction
+    event: Others
+    version: v1.4.0
+    ignore: false
+    tags:
+    - LOW
+    - MID
+    - HIGH
