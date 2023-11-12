@@ -347,6 +347,38 @@ U0111 = UserConfig(
     },
 )
 
+U0201 = UserConfig(
+    id=201,
+    name="U0201",
+    sessions={
+        "S0100": SessionConfig(
+            duration="39m33s",
+            end="2022-03-01T12:30:44+09:00",
+            start="2022-03-01T11:51:11+09:00",
+        ),
+        "S0200": SessionConfig(
+            duration="22m26s",
+            end="2022-03-01T14:40:25+09:00",
+            start="2022-03-01T14:17:59+09:00",
+        ),
+        "S0300": SessionConfig(
+            duration="36m14s",
+            end="2022-03-01T16:03:26+09:00",
+            start="2022-03-01T15:27:12+09:00",
+        ),
+        "S0400": SessionConfig(
+            duration="28m18s",
+            end="2022-03-15T15:54:20+09:00",
+            start="2022-03-15T15:26:02+09:00",
+        ),
+        "S0500": SessionConfig(
+            duration="25m27s",
+            end="2022-03-22T15:37:15+09:00",
+            start="2022-03-22T15:11:48+09:00",
+        ),
+    },
+)
+
 U0202 = UserConfig(
     id=202,
     name="U0202",
@@ -475,6 +507,38 @@ U0205 = UserConfig(
     },
 )
 
+U0206 = UserConfig(
+    id=206,
+    name="U0206",
+    sessions={
+        "S0100": SessionConfig(
+            duration="34m33s",
+            end="2022-03-18T10:25:48+09:00",
+            start="2022-03-18T09:51:15+09:00",
+        ),
+        "S0200": SessionConfig(
+            duration="29m45s",
+            end="2022-03-18T11:19:00+09:00",
+            start="2022-03-18T10:49:15+09:00",
+        ),
+        "S0300": SessionConfig(
+            duration="24m12s",
+            end="2022-03-18T12:06:11+09:00",
+            start="2022-03-18T11:41:59+09:00",
+        ),
+        "S0400": SessionConfig(
+            duration="26m29s",
+            end="2022-03-18T13:46:50+09:00",
+            start="2022-03-18T13:20:21+09:00",
+        ),
+        "S0500": SessionConfig(
+            duration="28m15s",
+            end="2022-03-18T14:39:17+09:00",
+            start="2022-03-18T14:11:02+09:00",
+        ),
+    },
+)
+
 U0207 = UserConfig(
     id=207,
     name="U0207",
@@ -503,6 +567,70 @@ U0207 = UserConfig(
             duration="20m41s",
             end="2022-03-22T14:48:20+09:00",
             start="2022-03-22T14:27:39+09:00",
+        ),
+    },
+)
+
+U0208 = UserConfig(
+    id=208,
+    name="U0208",
+    sessions={
+        "S0100": SessionConfig(
+            duration="31m52s",
+            end="2022-03-25T10:30:13+09:00",
+            start="2022-03-25T09:58:21+09:00",
+        ),
+        "S0200": SessionConfig(
+            duration="27m37s",
+            end="2022-03-25T11:21:38+09:00",
+            start="2022-03-25T10:54:01+09:00",
+        ),
+        "S0300": SessionConfig(
+            duration="26m59s",
+            end="2022-03-25T12:14:08+09:00",
+            start="2022-03-25T11:47:09+09:00",
+        ),
+        "S0400": SessionConfig(
+            duration="27m10s",
+            end="2022-03-25T14:04:08+09:00",
+            start="2022-03-25T13:36:58+09:00",
+        ),
+        "S0500": SessionConfig(
+            duration="20m21s",
+            end="2022-03-25T14:48:45+09:00",
+            start="2022-03-25T14:28:24+09:00",
+        ),
+    },
+)
+
+U0209 = UserConfig(
+    id=209,
+    name="U0209",
+    sessions={
+        "S0100": SessionConfig(
+            duration="36m54s",
+            end="2022-03-29T10:30:53+09:00",
+            start="2022-03-29T09:53:59+09:00",
+        ),
+        "S0200": SessionConfig(
+            duration="29m33s",
+            end="2022-03-29T11:24:53+09:00",
+            start="2022-03-29T10:55:20+09:00",
+        ),
+        "S0300": SessionConfig(
+            duration="28m52s",
+            end="2022-03-29T12:21:31+09:00",
+            start="2022-03-29T11:52:39+09:00",
+        ),
+        "S0400": SessionConfig(
+            duration="29m29s",
+            end="2022-03-29T14:01:17+09:00",
+            start="2022-03-29T13:31:48+09:00",
+        ),
+        "S0500": SessionConfig(
+            duration="23m22s",
+            end="2022-03-29T14:48:44+09:00",
+            start="2022-03-29T14:25:22+09:00",
         ),
     },
 )
