@@ -4,7 +4,7 @@
 1. `{{annot.act_set_name}}`
 {% endfor %}
 
-## [1] `OPENPACK_OPERATIONS` (Activity Class Definition)
+## [1] `OPENPACK_OPERATIONS`
 {% set annot = annotations["openpack-operations"] %}
 
 - Class Name: `openpack_toolkit.OPENPACK_OPERATIONS`
@@ -12,17 +12,17 @@
 
 ### 1-1: Activity Classes
 
-{% if annot.classes %}
+{% if annot.spec.classes %}
 | ID | Operation | Description | ignore |
 |----|------|-------------|--------|
-{% for cls in annot.classes %}
+{% for cls in annot.spec.classes %}
 | {{cls.id}} | {{cls.name}} | {{cls.description}} | {% if cls.ignore %}{{cls.ignore}}{% endif %} |
 {% endfor %}
 {% endif %}
 
 ---
 
-## [2] `OPENPACK_ACTIONS` (Activity Class Definition)
+## [2] `OPENPACK_ACTIONS`
 {% set annot = annotations["openpack-actions"] %}
 
 - Class Name: `openpack_toolkit.configs.dataset.annotation.OPENPACK_ACTIONS`
@@ -32,31 +32,23 @@
 
 | ID | Operation | Action | Description | ignore |
 |----|-----------|------|-------------|--------|
-{% for cls in annot.classes %}
+{% for cls in annot.spec.classes %}
 | {{cls.id}} | {{cls.operation}} | {{cls.name}} | {{cls.description}} | {% if cls.ignore %}{{cls.ignore}}{% endif %} |
 {% endfor %}
 
 ---
 
-## [3] `ACTIVITY_1S` (File)
-{% set annot = annotations["activity-1s"] %}
+## [3] `OPENPACK_OUTLIERS` (Outlier Event Definition)
+{% set annot = annotations["openpack-outliers"] %}
 
-This is resampled annotation data. The sampling frequency is 1 second.
-
-- Class Name: `openpack_toolkit.configs.dataset.annotation.ACTIVITY_1S`
-- Config (YAML): [configs/dataset/annotation/openpack-actions.yaml](../configs/dataset/annotation/activity-1s.yaml)
+- Class Name: `openpack_toolkit.configs.dataset.annotation.OPENPACK_OUTLIERS`
+- Config (YAML): [configs/dataset/annotation/openpack-outliers.yaml](../configs/dataset/annotation/openpack-outliers.yaml)
 
 ### 3-1: Activity Classes
 
-- `OPENPACK_OPERATIONS`
-- `OPENPACK_ACTIONS`
-
-### 3-2: File Format
-
-Format: CSV
-
-| # | Column Name | Description |
-|---|-------------|-------------|
-{% for col in annot.file_format.columns %}
-| {{loop.index}} | {{col.name}} | {{col.description}} |
+| ID | Category | Event | Tags | ignore | Note |
+|----|----------|-------|------|--------|------|
+{% for cls in annot.spec.classes %}
+| {{cls.id}} | {{cls.category}} | {{cls.event}} | {% for t in cls.tags%}{{t}}, {% endfor %} | {% if cls.ignore %}{{cls.ignore}}{% endif %} | |
 {% endfor %}
+

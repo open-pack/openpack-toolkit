@@ -9,11 +9,6 @@ from jinja2 import Environment, FileSystemLoader
 basicConfig(level=DEBUG)
 logger = getLogger(__name__)
 
-TARGET_USERS = [
-    "debug",
-    "pilot-challenge",
-]
-
 
 def main():
     files = sorted(Path("../user").iterdir())

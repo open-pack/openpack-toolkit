@@ -1,0 +1,21 @@
+kind: dataset/stream/pointcloud
+name: lidar-depth
+metadata:
+  labels:
+    app: openpack
+    version: 1.0.0
+    sensor: lidar
+    sensorProdcutName: ULTRA PACK(VLP-32C)-Veloidne
+    sensorProdcutReference: https://velodynelidar.com/products/ultra-puck/
+    imageType: depth
+    preprocessing: null
+    view: front-view
+spec:
+  path:
+    dir: ${path.openpack.rootdir}/${user.name}/lidar/frames
+    fname: ${session}
+  fileFormat:
+    fileType: Point Cloud
+    pathFormat: '%Y/%m/%d/%H/%M/%Y%m%d_%H%M%S_%f.pcd'
+  frameRate: -1
+  rpm: 900

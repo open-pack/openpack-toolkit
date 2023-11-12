@@ -2,9 +2,9 @@
 
 1. `OPENPACK_OPERATIONS`
 1. `OPENPACK_ACTIONS`
-1. `ACTIVITY_1S`
+1. `OPENPACK_OUTLIERS`
 
-## [1] `OPENPACK_OPERATIONS` (Activity Class Definition)
+## [1] `OPENPACK_OPERATIONS`
 
 - Class Name: `openpack_toolkit.OPENPACK_OPERATIONS`
 - Config (YAML): [configs/dataset/annotation/openpack-operations.yaml](../configs/dataset/annotation/openpack-operations.yaml)
@@ -27,7 +27,7 @@
 
 ---
 
-## [2] `OPENPACK_ACTIONS` (Activity Class Definition)
+## [2] `OPENPACK_ACTIONS`
 
 - Class Name: `openpack_toolkit.configs.dataset.annotation.OPENPACK_ACTIONS`
 - Config (YAML): [configs/dataset/annotation/openpack-actions.yaml](../configs/dataset/annotation/openpack-actions.yaml)
@@ -76,31 +76,68 @@
 | 8102 | Null | System Error |  | True |
 | 8103 | Null | Ignore |  | True |
 | 8104 | Null | Unknown |  | True |
+| 8105 | Null | Null | Segment without any specific actions. This class is prepared for action detection. |  |
+| 8106 | Null | Exclude | Segments with this label should be excluded from evaluation. This class is prepared for action detection. | True |
 | 8201 | System Error | System Error |  | True |
 
 ---
 
-## [3] `ACTIVITY_1S` (File)
+## [3] `OPENPACK_OUTLIERS` (Outlier Event Definition)
 
-This is resampled annotation data. The sampling frequency is 1 second.
-
-- Class Name: `openpack_toolkit.configs.dataset.annotation.ACTIVITY_1S`
-- Config (YAML): [configs/dataset/annotation/openpack-actions.yaml](../configs/dataset/annotation/activity-1s.yaml)
+- Class Name: `openpack_toolkit.configs.dataset.annotation.OPENPACK_OUTLIERS`
+- Config (YAML): [configs/dataset/annotation/openpack-outliers.yaml](../configs/dataset/annotation/openpack-outliers.yaml)
 
 ### 3-1: Activity Classes
 
-- `OPENPACK_OPERATIONS`
-- `OPENPACK_ACTIONS`
-
-### 3-2: File Format
-
-Format: CSV
-
-| # | Column Name | Description |
-|---|-------------|-------------|
-| 1 | unixtime |  |
-| 2 | user |  |
-| 3 | session |  |
-| 4 | box |  |
-| 5 | operation |  |
-| 6 | action |  |
+| ID | Category | Event | Tags | ignore | Note |
+|----|----------|-------|------|--------|------|
+| Aa01 | Incident | Others | LOW, HIGH, Single,  |  | |
+| Aa02 | Incident | Miss | LOW, HIGH, Single,  |  | |
+| Aa03 | Incident | Accident | LOW, HIGH, Single,  |  | |
+| Aa04 | Incident | System Error |  |  | |
+| Aa05 | Incident | Talk to Staff |  |  | |
+| Aa06 | Incident | Break Label |  |  | |
+| Aa07 | Incident | Wrong Choice of Box Size | S, M, L, LL,  |  | |
+| Ab01 | Investigation | Others | LOW, HIGH,  |  | |
+| Ab02 | Investigation | System Error |  |  | |
+| Ab03 | Investigation | Check Box Size | Item, Box-Close, Box-Open, Box-In,  |  | |
+| Ab04 | Investigation | Check Item Size |  |  | |
+| Ab05 | Investigation | Talk to Staff |  |  | |
+| Ac01 | Recovery | Others | LOW, HIGH,  |  | |
+| Ac02 | Recovery | System Error |  |  | |
+| Ac03 | Recovery | Take out Inserted Items from Box |  |  | |
+| Ac04 | Recovery | Put Away Box for Resizing | S, M, L, LL,  |  | |
+| Ac05 | Recovery | Disassemble Box for Resizing | S, M, L, LL,  |  | |
+| Ac06 | Recovery | Fold Box to Clean Up |  |  | |
+| Ac07 | Recovery | Return Box |  |  | |
+| Ac08 | Recovery | Talk to Staff |  |  | |
+| Ac09 | Recovery | Item Label |  |  | |
+| Bx01 | Struggling | Others | LOW, HIGH,  |  | |
+| Bx02 | Struggling | Look for Items |  |  | |
+| Bx03 | Struggling | Label | Item, Box, Shipping,  |  | |
+| Bx04 | Struggling | Scan | HT, LP,  |  | |
+| Bx05 | Struggling | Air Cushion |  |  | |
+| Bx06 | Struggling | Insert Items |  |  | |
+| Bx07 | Struggling | Tape |  |  | |
+| Cx01 | Confused | Others | LOW, HIGH,  |  | |
+| Cx02 | Confused | Box Size |  |  | |
+| Cx03 | Confused | Air Cushion |  |  | |
+| Cx04 | Confused | Process |  |  | |
+| Cx05 | Confused | Double Check |  |  | |
+| Dx01 | Parallel | Others | LOW, HIGH,  |  | |
+| Dx02 | Parallel | Action&Action | 0101*1003, 0108*0201, 0302*0303, 0303*0304, 0303*0401, 0303*0501, 0401*0403, 0706*1001, 0707*1001, 0801*1003, 1002*1003,  |  | |
+| Dx03 | Parallel | Left&Right |  |  | |
+| Dx04 | Parallel | Holding |  |  | |
+| Dx03 | Parallel | Action&Additional | 0101*G06, 0108*G06, 0301*B03, 0301*G05, 0301*G06, 0303*0304*G07, 0303*G06, 0304*G07, 0401*G07, 0401*G08, 0502*G07, 0502*G08, 0601*G03, 0601*G08, 0701*G06, 0701*G08, 0702*G06, 0703*G08, 0704*G08, 0707*G06, 0707*G08, 0801*G03, 0801*G06, 0801*G08, 0901*G06, 1001*G06, 1003*G06,  |  | |
+| Dx04 | Parallel | Action&Others | 107, 030, 109, 011, 001,  |  | |
+| Dx05 | Parallel | Additional&Additional | B01*G07, C03*C04, G06*G08, G03*G06,  |  | |
+| Dx06 | Parallel | Additional&Others |  |  | |
+| Ex01 | Additional | Others | LOW, HIGH,  |  | |
+| Ex02 | Additional | Talk to Staff |  |  | |
+| Ex03 | Additional | Dispose |  |  | |
+| Ex04 | Additional | Operation |  |  | |
+| Ex05 | Additional | Refill Boxe Stock | S-D, S, M, L, LL,  |  | |
+| Ex06 | Additional | Clean Up the Workbench |  |  | |
+| Ex07 | Additional | Lift Up Box |  |  | |
+| Ex08 | Additional | Move Box |  |  | |
+| Fx01 | Fraction | Others | LOW, MID, HIGH,  |  | |
