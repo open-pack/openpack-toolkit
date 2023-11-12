@@ -10,7 +10,7 @@
 
 - Config File: [{{stream.name}}.yaml](../configs/dataset/stream/{{stream.name}}.yaml)
 - Python Module: [`openpack_toolkit.configs.datasets.streams.{{stream.name|replace("-", "_")|upper}}_STREAM`](../openpack_toolkit/configs/datasets/streams.py)
-- Frame Rate: {{stream.frame_rate}} Hz
+- Frame Rate: {{stream.spec.frameRate}} Hz
 
 ### {{loop.index}}-1: Metadata
 
@@ -18,6 +18,10 @@
 |:------|:------|
 {% for key, val in stream.metadata.labels.items() %}
 | {{key}} | {{val}} |
+{% endfor %}
+| Sensor | [{{stream.spec.sensorProduct.name}}]({{stream.spec.sensorProduct.uri}}) |
+{% for preproc in stream.spec.get("preprocessing", []) %}
+| Prepricessing | {{preproc.name}}, [{{preproc.model}}]({{preproc.uri}}) |
 {% endfor %}
 
 ### {{loop.index}}-2: Path

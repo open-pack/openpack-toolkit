@@ -10,8 +10,8 @@ logger = getLogger(__name__)
 
 TARGET_STREAM = [
     # -- IMU --
-    "atr-acc",
     "atr-qags",
+    "atr-acc",
     "e4-acc",
     "e4-bvp",
     "e4-eda",
@@ -19,9 +19,11 @@ TARGET_STREAM = [
     # -- Keypoint --
     "kinect-2d-kpt",
     "kinect-3d-kpt",
-    "kinect-depth2",
+    "kinect-depth",
     # -- RS02 --
     "rs02-depth",
+    # -- LiDAR --
+    "lidar-depth",
     # -- System --
     "system-ht-original",
     "system-order-sheet",

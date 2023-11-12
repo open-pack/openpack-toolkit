@@ -4,11 +4,7 @@ metadata:
   labels:
     app: openpack
     version: 1.0.0
-    sensorProdcutName: Azure Kinect DK
-    sensorProdcutReference: https://azure.microsoft.com/ja-jp/products/kinect-dk/
-    keypointType: 3d
-    poseEstimationModel: k4abt
-    sdkUrl: https://learn.microsoft.com/ja-jp/azure/kinect-dk/build-first-body-app
+    sensorType: keypoint/3d
 spec:
   path:
     dir: ${path.openpack.rootdir}/${user.name}/kinect/3d-kpt/k4abt/${preprocessing}
@@ -88,3 +84,10 @@ spec:
     14: right_knee
     15: left_ankle
     16: right_ankle
+  sensorProduct:
+    name: Azure Kinect DK
+    uri: https://azure.microsoft.com/ja-jp/products/kinect-dk/
+  preprocessing:
+    - name: 3D Pose Estimation
+      model: k4abt
+      uri: https://learn.microsoft.com/ja-jp/azure/kinect-dk/build-first-body-app

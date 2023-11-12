@@ -2,17 +2,20 @@ kind: dataset/stream/keypoint
 name: kinect-2d-kpt
 metadata:
   labels:
-    app: openpack
+    app: openpack-benchmarks
     version: 1.0.0
-    sensorProdcutName: Azure Kinect DK
-    sensorProdcutReference: https://azure.microsoft.com/ja-jp/products/kinect-dk/
-    keypointType: 2d
-    poseEstimationModel: mmpose-hrnet-w48-posetrack18-384x288-posewarper-stage2
-    mmposeUrl: https://github.com/open-mmlab/mmpose/blob/master/configs/body/2d_kpt_sview_rgb_vid/posewarper/posetrack18/hrnet_w48_posetrack18_384x288_posewarper_stage2.py
+    sensorType: keypoint/2d
 spec:
   path:
     dir: ${path.openpack.rootdir}/${user.name}/kinect/2d-kpt/mmpose-hrnet-w48-posetrack18-384x288-posewarper-stage2/single
     fname: ${session}.json
+  stats:
+    mean:
+      x: 631.23
+      y: 523.68
+    std:
+      x: 100.98
+      y: 111.06
   fileFormat:
     file_type: json
     note: MS COCO format
@@ -83,3 +86,10 @@ spec:
     14: right_knee
     15: left_ankle
     16: right_ankle
+  sensorProduct:
+    name: Azure Kinect DK
+    uri: https://azure.microsoft.com/ja-jp/products/kinect-dk/
+  preprocessing:
+    - name: 3D Pose Estimation
+      model: mmpose-hrnet-w48-posetrack18-384x288-posewarper-stage2
+      uri: https://github.com/open-mmlab/mmpose/blob/master/configs/body/2d_kpt_sview_rgb_vid/posewarper/posetrack18/hrnet_w48_posetrack18_384x288_posewarper_stage2.py

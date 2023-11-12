@@ -5,8 +5,6 @@ metadata:
     app: openpack
     version: 1.0.0
     sensorType: IMU
-    sensorProductName: ATR TSND151
-    sensorProdcutReference: http://www.atr-p.com/products/TSND121_151.html
 spec:
   path:
     dir: ${path.openpack.rootdir}/${user.name}/atr
@@ -41,3 +39,6 @@ spec:
     - name: quat_x
     - name: quat_y
     - name: quat_z
+  sensorProduct:
+    name: ATR TSND151
+    uri: http://www.atr-p.com/products/TSND121_151.html

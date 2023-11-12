@@ -4,10 +4,7 @@ metadata:
   labels:
     app: openpack
     version: 1.0.0
-    sensor: e4
-    sensorType: acceleration
-    sensorProductName: Empatica E4
-    sensorProdcutReference: https://www.empatica.com/en-int/research/e4/
+    sensorType: ACC
 spec:
   path:
     dir: ${path.openpack.rootdir}/${user.name}/e4/${device}/acc
@@ -28,3 +25,7 @@ spec:
       unit: G
     - name: acc_z
       unit: G
+  sensor: e4
+  sensorProduct:
+    name: Empatica E4
+    uri: https://www.empatica.com/en-int/research/e4/

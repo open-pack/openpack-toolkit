@@ -19,7 +19,7 @@
 
 - Config File: [atr-qags.yaml](../configs/dataset/stream/atr-qags.yaml)
 - Python Module: [`openpack_toolkit.configs.datasets.streams.ATR_QAGS_STREAM`](../openpack_toolkit/configs/datasets/streams.py)
-- Frame Rate:  Hz
+- Frame Rate: 30 Hz
 
 ### 1-1: Metadata
 
@@ -28,8 +28,7 @@
 | app | openpack |
 | version | 1.0.0 |
 | sensorType | IMU |
-| sensorProductName | ATR TSND151 |
-| sensorProdcutReference | http://www.atr-p.com/products/TSND121_151.html |
+| Sensor | [ATR TSND151](http://www.atr-p.com/products/TSND121_151.html) |
 
 ### 1-2: Path
 
@@ -59,7 +58,7 @@ ${path.openpack.rootdir}/${user.name}/atr/${device}/${session}.csv
 
 - Config File: [e4-acc.yaml](../configs/dataset/stream/e4-acc.yaml)
 - Python Module: [`openpack_toolkit.configs.datasets.streams.E4_ACC_STREAM`](../openpack_toolkit/configs/datasets/streams.py)
-- Frame Rate:  Hz
+- Frame Rate: 32 Hz
 
 ### 2-1: Metadata
 
@@ -67,10 +66,8 @@ ${path.openpack.rootdir}/${user.name}/atr/${device}/${session}.csv
 |:------|:------|
 | app | openpack |
 | version | 1.0.0 |
-| sensor | e4 |
-| sensorType | acceleration |
-| sensorProductName | Empatica E4 |
-| sensorProdcutReference | https://www.empatica.com/en-int/research/e4/ |
+| sensorType | ACC |
+| Sensor | [Empatica E4](https://www.empatica.com/en-int/research/e4/) |
 
 ### 2-2: Path
 
@@ -93,7 +90,7 @@ ${path.openpack.rootdir}/${user.name}/e4/${device}/acc/${session}.csv
 
 - Config File: [e4-bvp.yaml](../configs/dataset/stream/e4-bvp.yaml)
 - Python Module: [`openpack_toolkit.configs.datasets.streams.E4_BVP_STREAM`](../openpack_toolkit/configs/datasets/streams.py)
-- Frame Rate:  Hz
+- Frame Rate: 64 Hz
 
 ### 3-1: Metadata
 
@@ -101,10 +98,8 @@ ${path.openpack.rootdir}/${user.name}/e4/${device}/acc/${session}.csv
 |:------|:------|
 | app | openpack |
 | version | 1.0.0 |
-| sensor | e4 |
 | sensorType | Blood Volume Pulse (BVP) |
-| sensorProductName | Empatica E4 |
-| sensorProdcutReference | https://www.empatica.com/en-int/research/e4/ |
+| Sensor | [Empatica E4](https://www.empatica.com/en-int/research/e4/) |
 
 ### 3-2: Path
 
@@ -125,7 +120,7 @@ ${path.openpack.rootdir}/${user.name}/e4/${device}/bvp/${session}.csv
 
 - Config File: [e4-eda.yaml](../configs/dataset/stream/e4-eda.yaml)
 - Python Module: [`openpack_toolkit.configs.datasets.streams.E4_EDA_STREAM`](../openpack_toolkit/configs/datasets/streams.py)
-- Frame Rate:  Hz
+- Frame Rate: 4 Hz
 
 ### 4-1: Metadata
 
@@ -133,10 +128,8 @@ ${path.openpack.rootdir}/${user.name}/e4/${device}/bvp/${session}.csv
 |:------|:------|
 | app | openpack |
 | version | 1.0.0 |
-| sensor | e4 |
 | sensorType | EDA |
-| sensorProductName | Empatica E4 |
-| sensorProdcutReference | https://www.empatica.com/en-int/research/e4/ |
+| Sensor | [Empatica E4](https://www.empatica.com/en-int/research/e4/) |
 
 ### 4-2: Path
 
@@ -157,7 +150,7 @@ ${path.openpack.rootdir}/${user.name}/e4/${device}/eda/${session}.csv
 
 - Config File: [e4-temp.yaml](../configs/dataset/stream/e4-temp.yaml)
 - Python Module: [`openpack_toolkit.configs.datasets.streams.E4_TEMP_STREAM`](../openpack_toolkit/configs/datasets/streams.py)
-- Frame Rate:  Hz
+- Frame Rate: 4 Hz
 
 ### 5-1: Metadata
 
@@ -165,10 +158,8 @@ ${path.openpack.rootdir}/${user.name}/e4/${device}/eda/${session}.csv
 |:------|:------|
 | app | openpack |
 | version | 1.0.0 |
-| sensor | e4 |
 | sensorType | temperature |
-| sensorProductName | Empatica E4 |
-| sensorProdcutReference | https://www.empatica.com/en-int/research/e4/ |
+| Sensor | [Empatica E4](https://www.empatica.com/en-int/research/e4/) |
 
 ### 5-2: Path
 
@@ -189,19 +180,17 @@ ${path.openpack.rootdir}/${user.name}/e4/${device}/temp/${session}.csv
 
 - Config File: [kinect-2d-kpt.yaml](../configs/dataset/stream/kinect-2d-kpt.yaml)
 - Python Module: [`openpack_toolkit.configs.datasets.streams.KINECT_2D_KPT_STREAM`](../openpack_toolkit/configs/datasets/streams.py)
-- Frame Rate:  Hz
+- Frame Rate: 15 Hz
 
 ### 6-1: Metadata
 
 | Key | Value |
 |:------|:------|
-| app | openpack |
+| app | openpack-benchmarks |
 | version | 1.0.0 |
-| sensorProdcutName | Azure Kinect DK |
-| sensorProdcutReference | https://azure.microsoft.com/ja-jp/products/kinect-dk/ |
-| keypointType | 2d |
-| poseEstimationModel | mmpose-hrnet-w48-posetrack18-384x288-posewarper-stage2 |
-| mmposeUrl | https://github.com/open-mmlab/mmpose/blob/master/configs/body/2d_kpt_sview_rgb_vid/posewarper/posetrack18/hrnet_w48_posetrack18_384x288_posewarper_stage2.py |
+| sensorType | keypoint/2d |
+| Sensor | [Azure Kinect DK](https://azure.microsoft.com/ja-jp/products/kinect-dk/) |
+| Prepricessing | 3D Pose Estimation, [mmpose-hrnet-w48-posetrack18-384x288-posewarper-stage2](https://github.com/open-mmlab/mmpose/blob/master/configs/body/2d_kpt_sview_rgb_vid/posewarper/posetrack18/hrnet_w48_posetrack18_384x288_posewarper_stage2.py) |
 
 ### 6-2: Path
 
@@ -234,7 +223,7 @@ ${path.openpack.rootdir}/${user.name}/kinect/2d-kpt/mmpose-hrnet-w48-posetrack18
 
 - Config File: [kinect-3d-kpt.yaml](../configs/dataset/stream/kinect-3d-kpt.yaml)
 - Python Module: [`openpack_toolkit.configs.datasets.streams.KINECT_3D_KPT_STREAM`](../openpack_toolkit/configs/datasets/streams.py)
-- Frame Rate:  Hz
+- Frame Rate: 15 Hz
 
 ### 7-1: Metadata
 
@@ -242,11 +231,9 @@ ${path.openpack.rootdir}/${user.name}/kinect/2d-kpt/mmpose-hrnet-w48-posetrack18
 |:------|:------|
 | app | openpack |
 | version | 1.0.0 |
-| sensorProdcutName | Azure Kinect DK |
-| sensorProdcutReference | https://azure.microsoft.com/ja-jp/products/kinect-dk/ |
-| keypointType | 3d |
-| poseEstimationModel | k4abt |
-| sdkUrl | https://learn.microsoft.com/ja-jp/azure/kinect-dk/build-first-body-app |
+| sensorType | keypoint/3d |
+| Sensor | [Azure Kinect DK](https://azure.microsoft.com/ja-jp/products/kinect-dk/) |
+| Prepricessing | 3D Pose Estimation, [k4abt](https://learn.microsoft.com/ja-jp/azure/kinect-dk/build-first-body-app) |
 
 ### 7-2: Path
 
@@ -279,7 +266,7 @@ ${path.openpack.rootdir}/${user.name}/kinect/3d-kpt/k4abt/${preprocessing}/${ses
 
 - Config File: [kinect-depth.yaml](../configs/dataset/stream/kinect-depth.yaml)
 - Python Module: [`openpack_toolkit.configs.datasets.streams.KINECT_DEPTH_STREAM`](../openpack_toolkit/configs/datasets/streams.py)
-- Frame Rate:  Hz
+- Frame Rate: 15 Hz
 
 ### 8-1: Metadata
 
@@ -287,13 +274,10 @@ ${path.openpack.rootdir}/${user.name}/kinect/3d-kpt/k4abt/${preprocessing}/${ses
 |:------|:------|
 | app | openpack |
 | version | 1.0.0 |
-| sensor | kinect |
-| sensorProdcutName | Azure Kinect DK |
-| sensorProdcutReference | https://azure.microsoft.com/ja-jp/products/kinect-dk/ |
-| imageType | depth |
-| preprocessing | k4a_transformation_depth_image_to_color_camera() |
-| preprocessingReference | https://microsoft.github.io/Azure-Kinect-Sensor-SDK/master/group___functions_gafacffb5f781a9c2df30d4a16241cd514.html |
+| sensorType | depth/16bit-png |
 | view | front-view |
+| Sensor | [Azure Kinect DK](https://azure.microsoft.com/ja-jp/products/kinect-dk/) |
+| Prepricessing | Coordinate Transoformation, [k4a_transformation_depth_image_to_color_camera()](https://microsoft.github.io/Azure-Kinect-Sensor-SDK/master/group___functions_gafacffb5f781a9c2df30d4a16241cd514.html) |
 
 ### 8-2: Path
 
@@ -310,7 +294,7 @@ ${path.openpack.rootdir}/${user.name}/kinect/depth/frames/${session}
 
 - Config File: [rs02-depth.yaml](../configs/dataset/stream/rs02-depth.yaml)
 - Python Module: [`openpack_toolkit.configs.datasets.streams.RS02_DEPTH_STREAM`](../openpack_toolkit/configs/datasets/streams.py)
-- Frame Rate:  Hz
+- Frame Rate: 15 Hz
 
 ### 9-1: Metadata
 
@@ -318,12 +302,9 @@ ${path.openpack.rootdir}/${user.name}/kinect/depth/frames/${session}
 |:------|:------|
 | app | openpack |
 | version | 1.0.0 |
-| sensor | rs02 |
-| sensorProdcutName | Realsense |
-| sensorProdcutReference | https://www.intel.com/content/www/us/en/products/sku/190004/intel-realsense-depth-camera-d435i/specifications.html |
-| imageType | depth |
-| preprocessing | None |
+| sensorType | depth/16bit-png |
 | view | top-view |
+| Sensor | [Realsense](https://www.intel.com/content/www/us/en/products/sku/190004/intel-realsense-depth-camera-d435i/specifications.html) |
 
 ### 9-2: Path
 
@@ -340,7 +321,7 @@ ${path.openpack.rootdir}/${user.name}/rs02/depth/frames/${session}
 
 - Config File: [lidar-depth.yaml](../configs/dataset/stream/lidar-depth.yaml)
 - Python Module: [`openpack_toolkit.configs.datasets.streams.LIDAR_DEPTH_STREAM`](../openpack_toolkit/configs/datasets/streams.py)
-- Frame Rate:  Hz
+- Frame Rate: -1 Hz
 
 ### 10-1: Metadata
 
@@ -348,12 +329,9 @@ ${path.openpack.rootdir}/${user.name}/rs02/depth/frames/${session}
 |:------|:------|
 | app | openpack |
 | version | 1.0.0 |
-| sensor | lidar |
-| sensorProdcutName | ULTRA PACK(VLP-32C)-Veloidne |
-| sensorProdcutReference | https://velodynelidar.com/products/ultra-puck/ |
-| imageType | depth |
-| preprocessing | None |
+| sensorType | lidar/point-cloud |
 | view | front-view |
+| Sensor | [ULTRA PACK(VLP-32C)-Veloidne](https://velodynelidar.com/products/ultra-puck/) |
 
 ### 10-2: Path
 
@@ -370,7 +348,7 @@ ${path.openpack.rootdir}/${user.name}/lidar/frames/${session}
 
 - Config File: [system-ht-original.yaml](../configs/dataset/stream/system-ht-original.yaml)
 - Python Module: [`openpack_toolkit.configs.datasets.streams.SYSTEM_HT_ORIGINAL_STREAM`](../openpack_toolkit/configs/datasets/streams.py)
-- Frame Rate:  Hz
+- Frame Rate: -1 Hz
 
 ### 11-1: Metadata
 
@@ -379,8 +357,7 @@ ${path.openpack.rootdir}/${user.name}/lidar/frames/${session}
 | app | openpack |
 | version | 1.0.0 |
 | sensorType | IoT/handheld-scanner |
-| sensorProductName | None |
-| sensorProdcutReference | None |
+| Sensor | [None](None) |
 
 ### 11-2: Path
 
@@ -404,7 +381,7 @@ ${path.openpack.rootdir}/${user.name}/system/ht/${session}.csv
 
 - Config File: [system-order-sheet.yaml](../configs/dataset/stream/system-order-sheet.yaml)
 - Python Module: [`openpack_toolkit.configs.datasets.streams.SYSTEM_ORDER_SHEET_STREAM`](../openpack_toolkit/configs/datasets/streams.py)
-- Frame Rate:  Hz
+- Frame Rate: -1 Hz
 
 ### 12-1: Metadata
 
@@ -413,8 +390,7 @@ ${path.openpack.rootdir}/${user.name}/system/ht/${session}.csv
 | app | openpack |
 | version | 1.0.0 |
 | sensorType | system/order-sheet |
-| sensorProductName | None |
-| sensorProdcutReference | None |
+| Sensor | [None](None) |
 
 ### 12-2: Path
 
@@ -448,7 +424,7 @@ ${path.openpack.rootdir}/${user.name}/system/order-sheet//${session}.csv
 
 - Config File: [system-printer.yaml](../configs/dataset/stream/system-printer.yaml)
 - Python Module: [`openpack_toolkit.configs.datasets.streams.SYSTEM_PRINTER_STREAM`](../openpack_toolkit/configs/datasets/streams.py)
-- Frame Rate:  Hz
+- Frame Rate: -1 Hz
 
 ### 13-1: Metadata
 
@@ -456,9 +432,8 @@ ${path.openpack.rootdir}/${user.name}/system/order-sheet//${session}.csv
 |:------|:------|
 | app | openpack |
 | version | 1.0.0 |
-| sensorType | IoT/printer (pseudo data) |
-| sensorProductName | None |
-| sensorProdcutReference | None |
+| sensorType | IoT/printer/pseudo-data |
+| Sensor | [None](None) |
 
 ### 13-2: Path
 

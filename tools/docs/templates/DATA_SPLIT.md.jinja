@@ -15,7 +15,7 @@
 | # | Usage |User | Session | 
 |---|-------|------|---------|
 {% for section in ["train", "val", "test", "submission"]%}
-{% for row in split[section]%}
+{% for row in split.spec[section]%}
 | {{loop.index}} | {{section|upper}} | {{row[0]}} | {{row[1]}} |
 {% endfor%}
 {% if section != "submission"%}

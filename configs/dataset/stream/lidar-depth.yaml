@@ -4,11 +4,7 @@ metadata:
   labels:
     app: openpack
     version: 1.0.0
-    sensor: lidar
-    sensorProdcutName: ULTRA PACK(VLP-32C)-Veloidne
-    sensorProdcutReference: https://velodynelidar.com/products/ultra-puck/
-    imageType: depth
-    preprocessing: null
+    sensorType: lidar/point-cloud
     view: front-view
 spec:
   path:
@@ -19,3 +15,7 @@ spec:
     pathFormat: '%Y/%m/%d/%H/%M/%Y%m%d_%H%M%S_%f.pcd'
   frameRate: -1
   rpm: 900
+  sensor: lidar
+  sensorProduct:
+    name: ULTRA PACK(VLP-32C)-Veloidne
+    uri: https://velodynelidar.com/products/ultra-puck/

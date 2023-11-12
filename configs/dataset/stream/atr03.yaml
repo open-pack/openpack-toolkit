@@ -1,0 +1,20 @@
+kind: dataset/stream/multimodal
+name: atr03
+mdetadata:
+  labels:
+    app: openpack-benchmarks
+    version: 0.1.0
+    multimodal: true
+spec:
+  imu:
+    kind: dataset/stream/imu
+    spec:
+      path:
+        dir: ${path.openpack.rootdir}/${user.name}/atr/${device}
+        fname: ${session}.csv
+        full_path: ${.dir}/${.fname}
+      devices:
+        - "atr03"
+      acc: true
+      gyro: false
+      quat: false

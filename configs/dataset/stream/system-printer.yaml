@@ -4,9 +4,7 @@ metadata:
   labels:
     app: openpack
     version: 1.0.0
-    sensorType: IoT/printer (pseudo data)
-    sensorProductName: null
-    sensorProdcutReference: null
+    sensorType: IoT/printer/pseudo-data
 spec:
   path:
     dir: ${path.openpack.rootdir}/${user.name}/system/printer
@@ -24,3 +22,6 @@ spec:
       unit: null
       dtype: str
   frameRate: -1
+  sensorProduct:
+    name: null
+    uri: null

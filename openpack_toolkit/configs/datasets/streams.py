@@ -1,5 +1,27 @@
 from .._schema import DataStreamConfig, Metadata, DataLocation
 
+ATR_QAGS_STREAM = DataStreamConfig(
+    kind="dataset/stream/imu",
+    name="atr-qags",
+    metadata=Metadata(
+        labels={
+            "app": "openpack",
+            "version": "1.0.0",
+            "sensorType": "IMU",
+        }
+    ),
+    path=DataLocation(
+        dir="${path.openpack.rootdir}/${user.name}/atr",
+        fname="${device}/${session}.csv",
+    ),
+    frameRate=30,
+    devices=['atr01', 'atr02', 'atr03', 'atr04'],
+    acc=True,
+    gyro=True,
+    quat=True,
+)
+
+
 ATR_ACC_STREAM = DataStreamConfig(
     kind="dataset/stream/imu",
     name="atr-acc",
@@ -22,30 +44,6 @@ ATR_ACC_STREAM = DataStreamConfig(
 )
 
 
-ATR_QAGS_STREAM = DataStreamConfig(
-    kind="dataset/stream/imu",
-    name="atr-qags",
-    metadata=Metadata(
-        labels={
-            "app": "openpack",
-            "version": "1.0.0",
-            "sensorType": "IMU",
-            "sensorProductName": "ATR TSND151",
-            "sensorProdcutReference": "http://www.atr-p.com/products/TSND121_151.html",
-        }
-    ),
-    path=DataLocation(
-        dir="${path.openpack.rootdir}/${user.name}/atr",
-        fname="${device}/${session}.csv",
-    ),
-    frameRate=30,
-    devices=['atr01', 'atr02', 'atr03', 'atr04'],
-    acc=True,
-    gyro=True,
-    quat=True,
-)
-
-
 E4_ACC_STREAM = DataStreamConfig(
     kind="dataset/stream/e4",
     name="e4-acc",
@@ -53,10 +51,7 @@ E4_ACC_STREAM = DataStreamConfig(
         labels={
             "app": "openpack",
             "version": "1.0.0",
-            "sensor": "e4",
-            "sensorType": "acceleration",
-            "sensorProductName": "Empatica E4",
-            "sensorProdcutReference": "https://www.empatica.com/en-int/research/e4/",
+            "sensorType": "ACC",
         }
     ),
     path=DataLocation(
@@ -75,10 +70,7 @@ E4_BVP_STREAM = DataStreamConfig(
         labels={
             "app": "openpack",
             "version": "1.0.0",
-            "sensor": "e4",
             "sensorType": "Blood Volume Pulse (BVP)",
-            "sensorProductName": "Empatica E4",
-            "sensorProdcutReference": "https://www.empatica.com/en-int/research/e4/",
         }
     ),
     path=DataLocation(
@@ -97,10 +89,7 @@ E4_EDA_STREAM = DataStreamConfig(
         labels={
             "app": "openpack",
             "version": "1.0.0",
-            "sensor": "e4",
             "sensorType": "EDA",
-            "sensorProductName": "Empatica E4",
-            "sensorProdcutReference": "https://www.empatica.com/en-int/research/e4/",
         }
     ),
     path=DataLocation(
@@ -119,10 +108,7 @@ E4_TEMP_STREAM = DataStreamConfig(
         labels={
             "app": "openpack",
             "version": "1.0.0",
-            "sensor": "e4",
             "sensorType": "temperature",
-            "sensorProductName": "Empatica E4",
-            "sensorProdcutReference": "https://www.empatica.com/en-int/research/e4/",
         }
     ),
     path=DataLocation(
@@ -139,13 +125,9 @@ KINECT_2D_KPT_STREAM = DataStreamConfig(
     name="kinect-2d-kpt",
     metadata=Metadata(
         labels={
-            "app": "openpack",
+            "app": "openpack-benchmarks",
             "version": "1.0.0",
-            "sensorProdcutName": "Azure Kinect DK",
-            "sensorProdcutReference": "https://azure.microsoft.com/ja-jp/products/kinect-dk/",
-            "keypointType": "2d",
-            "poseEstimationModel": "mmpose-hrnet-w48-posetrack18-384x288-posewarper-stage2",
-            "mmposeUrl": "https://github.com/open-mmlab/mmpose/blob/master/configs/body/2d_kpt_sview_rgb_vid/posewarper/posetrack18/hrnet_w48_posetrack18_384x288_posewarper_stage2.py",
+            "sensorType": "keypoint/2d",
         }
     ),
     path=DataLocation(
@@ -182,11 +164,7 @@ KINECT_3D_KPT_STREAM = DataStreamConfig(
         labels={
             "app": "openpack",
             "version": "1.0.0",
-            "sensorProdcutName": "Azure Kinect DK",
-            "sensorProdcutReference": "https://azure.microsoft.com/ja-jp/products/kinect-dk/",
-            "keypointType": "3d",
-            "poseEstimationModel": "k4abt",
-            "sdkUrl": "https://learn.microsoft.com/ja-jp/azure/kinect-dk/build-first-body-app",
+            "sensorType": "keypoint/3d",
         }
     ),
     path=DataLocation(
@@ -223,12 +201,7 @@ KINECT_DEPTH_STREAM = DataStreamConfig(
         labels={
             "app": "openpack",
             "version": "1.0.0",
-            "sensor": "kinect",
-            "sensorProdcutName": "Azure Kinect DK",
-            "sensorProdcutReference": "https://azure.microsoft.com/ja-jp/products/kinect-dk/",
-            "imageType": "depth",
-            "preprocessing": "k4a_transformation_depth_image_to_color_camera()",
-            "preprocessingReference": "https://microsoft.github.io/Azure-Kinect-Sensor-SDK/master/group___functions_gafacffb5f781a9c2df30d4a16241cd514.html",
+            "sensorType": "depth/16bit-png",
             "view": "front-view",
         }
     ),
@@ -247,11 +220,7 @@ RS02_DEPTH_STREAM = DataStreamConfig(
         labels={
             "app": "openpack",
             "version": "1.0.0",
-            "sensor": "rs02",
-            "sensorProdcutName": "Realsense",
-            "sensorProdcutReference": "https://www.intel.com/content/www/us/en/products/sku/190004/intel-realsense-depth-camera-d435i/specifications.html",
-            "imageType": "depth",
-            "preprocessing": "None",
+            "sensorType": "depth/16bit-png",
             "view": "top-view",
         }
     ),
@@ -263,6 +232,25 @@ RS02_DEPTH_STREAM = DataStreamConfig(
 )
 
 
+LIDAR_DEPTH_STREAM = DataStreamConfig(
+    kind="dataset/stream/pointcloud",
+    name="lidar-depth",
+    metadata=Metadata(
+        labels={
+            "app": "openpack",
+            "version": "1.0.0",
+            "sensorType": "lidar/point-cloud",
+            "view": "front-view",
+        }
+    ),
+    path=DataLocation(
+        dir="${path.openpack.rootdir}/${user.name}/lidar/frames",
+        fname="${session}",
+    ),
+    frameRate=-1,
+)
+
+
 SYSTEM_HT_ORIGINAL_STREAM = DataStreamConfig(
     kind="dataset/stream/system/ht",
     name="system-ht-original",
@@ -271,8 +259,6 @@ SYSTEM_HT_ORIGINAL_STREAM = DataStreamConfig(
             "app": "openpack",
             "version": "1.0.0",
             "sensorType": "IoT/handheld-scanner",
-            "sensorProductName": "None",
-            "sensorProdcutReference": "None",
         }
     ),
     path=DataLocation(
@@ -291,8 +277,6 @@ SYSTEM_ORDER_SHEET_STREAM = DataStreamConfig(
             "app": "openpack",
             "version": "1.0.0",
             "sensorType": "system/order-sheet",
-            "sensorProductName": "None",
-            "sensorProdcutReference": "None",
         }
     ),
     path=DataLocation(
@@ -310,9 +294,7 @@ SYSTEM_PRINTER_STREAM = DataStreamConfig(
         labels={
             "app": "openpack",
             "version": "1.0.0",
-            "sensorType": "IoT/printer (pseudo data)",
-            "sensorProductName": "None",
-            "sensorProdcutReference": "None",
+            "sensorType": "IoT/printer/pseudo-data",
         }
     ),
     path=DataLocation(

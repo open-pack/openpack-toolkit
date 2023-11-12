@@ -17,7 +17,7 @@ TARGET_DATA_STREAM = [
     "e4-temp",
     "kinect-2d-kpt",
     "kinect-3d-kpt",
-    "kinect-depth2",
+    "kinect-depth",
     "rs02-depth",
     "lidar-depth",
     "system-ht-original",

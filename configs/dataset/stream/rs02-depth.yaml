@@ -4,11 +4,7 @@ metadata:
   labels:
     app: openpack
     version: 1.0.0
-    sensor: rs02
-    sensorProdcutName: Realsense
-    sensorProdcutReference: https://www.intel.com/content/www/us/en/products/sku/190004/intel-realsense-depth-camera-d435i/specifications.html
-    imageType: depth
-    preprocessing: null
+    sensorType: depth/16bit-png
     view: top-view
 spec:
   path:
@@ -21,3 +17,7 @@ spec:
       width: 640
       height: 480
   frameRate: 15
+  sensor: rs02
+  sensorProduct:
+    name: Realsense
+    uri: https://www.intel.com/content/www/us/en/products/sku/190004/intel-realsense-depth-camera-d435i/specifications.html

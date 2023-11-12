@@ -4,12 +4,7 @@ metadata:
   labels:
     app: openpack
     version: 1.0.0
-    sensor: kinect
-    sensorProdcutName: Azure Kinect DK
-    sensorProdcutReference: https://azure.microsoft.com/ja-jp/products/kinect-dk/
-    imageType: depth
-    preprocessing: k4a_transformation_depth_image_to_color_camera()
-    preprocessingReference: https://microsoft.github.io/Azure-Kinect-Sensor-SDK/master/group___functions_gafacffb5f781a9c2df30d4a16241cd514.html
+    sensorType: depth/16bit-png
     view: front-view
 spec:
   path:
@@ -22,3 +17,10 @@ spec:
       width: 640
       height: 576
   frameRate: 15
+  sensorProduct:
+    name: Azure Kinect DK
+    uri: https://azure.microsoft.com/ja-jp/products/kinect-dk/
+  preprocessing:
+    - name: Coordinate Transoformation
+      model: k4a_transformation_depth_image_to_color_camera()
+      uri: https://microsoft.github.io/Azure-Kinect-Sensor-SDK/master/group___functions_gafacffb5f781a9c2df30d4a16241cd514.html

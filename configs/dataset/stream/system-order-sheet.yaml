@@ -5,8 +5,6 @@ metadata:
     app: openpack
     version: 1.0.0
     sensorType: system/order-sheet
-    sensorProductName: null
-    sensorProdcutReference: null
 spec:
   path:
     dir: ${path.openpack.rootdir}/${user.name}/system/order-sheet/
@@ -61,3 +59,6 @@ spec:
       unit: null
       dtype: str
   frameRate: -1
+  sensorProduct:
+    name: null
+    uri: null

@@ -4,10 +4,7 @@ metadata:
   labels:
     app: openpack
     version: 1.0.0
-    sensor: e4
     sensorType: EDA
-    sensorProductName: Empatica E4
-    sensorProdcutReference: https://www.empatica.com/en-int/research/e4/
 spec:
   path:
     dir: ${path.openpack.rootdir}/${user.name}/e4/${device}/eda
@@ -24,3 +21,7 @@ spec:
     - name: eda
       unit: microsiemens
   frameRate: 4
+  sensor: e4
+  sensorProduct:
+    name: Empatica E4
+    uri: https://www.empatica.com/en-int/research/e4/

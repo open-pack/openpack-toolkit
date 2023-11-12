@@ -6,7 +6,7 @@
 
 ## [1] Debug
 
-This split is for debugging. The used sequence for each section is small.
+
 
 - Config File: [debug.yaml](../configs/dataset/split/debug.yaml)
 - Python Class: [`openpack_toolkit.configs.datasets.splits.DEBUG_SPLIT`](../openpack_toolkit/configs/datasets/splits.py)
@@ -25,7 +25,7 @@ This split is for debugging. The used sequence for each section is small.
 
 ## [2] Pilot Challenge
 
-This split is for OpenPack Pilot Challenge (private competition).
+
 
 - Config File: [pilot-challenge.yaml](../configs/dataset/split/pilot-challenge.yaml)
 - Python Class: [`openpack_toolkit.configs.datasets.splits.PILOT_CHALLENGE_SPLIT`](../openpack_toolkit/configs/datasets/splits.py)
@@ -62,7 +62,7 @@ This split is for OpenPack Pilot Challenge (private competition).
 
 ## [3] Openpack Challenge 2022
 
-Train/val/test/submission Split for OpenPack Challenge. Train/val/test data is set for convenience; feel free to change the entries among them. Challengers should submit predictions for submission set.
+
 
 - Config File: [openpack-challenge-2022.yaml](../configs/dataset/split/openpack-challenge-2022.yaml)
 - Python Class: [`openpack_toolkit.configs.datasets.splits.OPENPACK_CHALLENGE_2022_SPLIT`](../openpack_toolkit/configs/datasets/splits.py)
