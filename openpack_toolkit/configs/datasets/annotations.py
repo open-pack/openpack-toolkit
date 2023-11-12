@@ -1,4 +1,4 @@
-from .._schema import AnnotConfig, Label
+from .._schema import AnnotConfig, Label, Metadata, DataLocation
 
 
 OPENPACK_ACTIONS = (
@@ -640,86 +640,90 @@ OPENPACK_OUTLIERS = (
 OPENPACK_ACTIONS_ANNOTATION = AnnotConfig(
     kind="dataset/annotation/csv",
     name="openpack-actions",
-    metadata={
-        "labels": {
+    metadata=Metadata(
+        labels={
             "type": "annotation/action",
             "version": "v3.5.0",
             "dependency": "None",
             "resolution": "original",
         }
-    },
-    path={
-        "dir": "${path.openpack.rootdir}/${user.name}/annotation/openpack-actions",
-        "fname": "${session}.csv",
-    },
+    ),
+    path=DataLocation(
+        dir="${path.openpack.rootdir}/${user.name}/annotation/openpack-actions",
+        fname="${session}.csv",
+    ),
     classes=OPENPACK_ACTIONS,
 )
+
 OPENPACK_ACTIONS_1HZ_ANNOTATION = AnnotConfig(
     kind="dataset/annotation/csv/sequence",
     name="openpack-actions-1hz",
-    metadata={
-        "labels": {
+    metadata=Metadata(
+        labels={
             "type": "annotation/action",
             "version": "v3.5.0",
             "dependency": "openpack-actions",
             "resolution": "1Hz",
             "label_format": "soft-target",
         }
-    },
-    path={
-        "dir": "${path.openpack.rootdir}/${user.name}/annotation/openpack-actions-1hz",
-        "fname": "${session}.csv",
-    },
+    ),
+    path=DataLocation(
+        dir="${path.openpack.rootdir}/${user.name}/annotation/openpack-actions-1hz",
+        fname="${session}.csv",
+    ),
     classes=OPENPACK_ACTIONS,
 )
+
 OPENPACK_OPERATIONS_ANNOTATION = AnnotConfig(
     kind="dataset/annotation/csv",
     name="openpack-operations",
-    metadata={
-        "labels": {
+    metadata=Metadata(
+        labels={
             "type": "annotation/operation",
             "version": "v3.5.0",
             "dependency": "openpack-actions",
             "resolution": "original",
         }
-    },
-    path={
-        "dir": "${path.openpack.rootdir}/${user.name}/annotation/openpack-operations",
-        "fname": "${session}.csv",
-    },
+    ),
+    path=DataLocation(
+        dir="${path.openpack.rootdir}/${user.name}/annotation/openpack-operations",
+        fname="${session}.csv",
+    ),
     classes=OPENPACK_OPERATIONS,
 )
+
 OPENPACK_OPERATIONS_1HZ_ANNOTATION = AnnotConfig(
     kind="dataset/annotation/csv/sequence",
     name="openpack-operations-1hz",
-    metadata={
-        "labels": {
+    metadata=Metadata(
+        labels={
             "type": "annotation/operation",
             "version": "v3.5.0",
             "dependency": "openpack-operations",
             "resolution": "1Hz",
         }
-    },
-    path={
-        "dir": "${path.openpack.rootdir}/${user.name}/annotation/openpack-operations-1hz",
-        "fname": "${session}.csv",
-    },
+    ),
+    path=DataLocation(
+        dir="${path.openpack.rootdir}/${user.name}/annotation/openpack-operations-1hz",
+        fname="${session}.csv",
+    ),
     classes=OPENPACK_OPERATIONS,
 )
+
 OPENPACK_OUTLIERS_ANNOTATION = AnnotConfig(
     kind="dataset/annotation/csv",
     name="openpack-outliers",
-    metadata={
-        "labels": {
+    metadata=Metadata(
+        labels={
             "type": "annotation/outlier",
             "version": "v1.4.0",
             "dependency": "None",
             "resolution": "original",
         }
-    },
-    path={
-        "dir": "${path.openpack.rootdir}/${user.name}/annotation/openpack-outliers",
-        "fname": "${session}.csv",
-    },
+    ),
+    path=DataLocation(
+        dir="${path.openpack.rootdir}/${user.name}/annotation/openpack-outliers",
+        fname="${session}.csv",
+    ),
     classes=OPENPACK_OUTLIERS,
 )

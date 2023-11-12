@@ -7,12 +7,9 @@ from openpack_toolkit.configs._schema import (
     DatasetConfig,
     DataSplitConfig,
     DataStreamConfig,
-    ImuConfig,
-    KeypointConfig,
     OpenPackConfig,
     ReleaseConfig,
     SessionConfig,
-    SystemDataConfig,
     UserConfig,
 )
 
@@ -93,64 +90,6 @@ def test_DataSplitConfig__01(split_conf):
 
     assert conf.train[0][0] == "U0102"
     assert conf.train[0][1] == "S0100"
-
-
-def test_ImuConfig__01():
-    conf = ImuConfig(
-        name="atr-acc",
-        description="hoge hoge hoge",
-        super_stream="atr-qags",
-        path=DataStreamConfig.Paths(
-            dir="/foo/subdir",
-            fname="huga.csv",
-        ),
-        frame_rate=30,
-        devices=["atr01", "atr02", "atr03", "atr04"],
-        acc=True,
-        gyro=False,
-        quat=False,
-    )
-
-    conf = OmegaConf.structured(conf)
-    print(OmegaConf.to_yaml(conf))
-    assert isinstance(conf, DictConfig)
-
-
-def test_KeypointConfig__01():
-    conf = KeypointConfig(
-        name="atr-acc",
-        description="hoge hoge hoge",
-        super_stream=None,
-        path=DataStreamConfig.Paths(
-            dir="/foo/subdir",
-            fname="huga.csv",
-        ),
-        frame_rate=30,
-        category="2d-kpt",
-        model="foo-hrnet",
-        nodes={0: "node0", 1: "node1"},
-    )
-
-    conf = OmegaConf.structured(conf)
-    print(OmegaConf.to_yaml(conf))
-    assert isinstance(conf, DictConfig)
-
-
-def test_SystemDataConfig__01():
-    conf = SystemDataConfig(
-        name="system-ht-original",
-        description="hoge hoge hoge",
-        super_stream=None,
-        path=DataStreamConfig.Paths(
-            dir="/foo/subdir",
-            fname="huga.csv",
-        ),
-        frame_rate=-1,
-    )
-
-    conf = OmegaConf.structured(conf)
-    print(OmegaConf.to_yaml(conf))
-    assert isinstance(conf, DictConfig)
 
 # =======================
 #  OpenPack Root Config

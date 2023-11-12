@@ -1,4 +1,4 @@
-from .._schema import AnnotConfig, Label
+from .._schema import AnnotConfig, Label, Metadata, DataLocation
 
 
 {% for key, annot in annotations.items() %}
@@ -27,17 +27,18 @@ from .._schema import AnnotConfig, Label
 {{key|replace("-", "_")|upper}}_ANNOTATION = AnnotConfig(
     kind="{{annot.kind}}",
     name="{{annot.name}}",
-    metadata={
-        "labels": {
+    metadata=Metadata(
+        labels={
 {% for key, val in annot.metadata.labels.items() %}
         "{{key}}": "{{val}}",
 {% endfor %}
         }
-    },
-    path={
-        "dir": "{{annot.spec.path.dir}}",
-        "fname": "{{annot.spec.path.fname}}",
-    },
+    ),
+    path=DataLocation(
+        dir="{{annot.spec.path.dir}}",
+        fname="{{annot.spec.path.fname}}",
+    ),
     classes={{key|replace("-1hz", "")|replace("-", "_")|upper}},
 )
+
 {% endfor %}
