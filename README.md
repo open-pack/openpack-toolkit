@@ -9,12 +9,12 @@
 OpenPack is an open access logistics-dataset for human activity recognition, which contains human movement and package information from 16 distinct subjects.
 This repository provide utilities to explore our exciting dataset.
 
-## Dataset
+## Dataset Release Note
 
-- [OpenPack Dataset (v0.3.1)](https://open-pack.github.io/release/v0-3-1)
+- [OpenPack Dataset (v1.0.0)](https://open-pack.github.io/release/v1-0-0)
 
-NOTE: We added a "Tutorial Dataset" that include IMU data (acc, gyro, quaternion) and Operation labels in a single CSV file.
-For preliminary analysis, you can save the time of combining data and labels by using this dataset. (March 29, 2023)
+For preliminary analysis, please start from `preprocessed-IMU-with-operation-labels.zip` in [zenodo](https://zenodo.org/records/8145223).
+This preprocessed dataset include IMU data (acc, gyro, quaternion) assosiated with operatopn labels because you don't need to combine data and label.
 
 ## Docs
 
@@ -56,6 +56,35 @@ poetry add  openpack-toolkit
 
 PyTorch code samples for work operation prediction task is available.
 See [openpack-torch](https://github.com/open-pack/openpack-torch) for more dietail.
+
+### Timestamp
+
+Each data point is associated with a millisecond-precision unix timestamp.
+The following is a snippet that converts a timestamp (an `int` value) into a `datatime.datetime()` object with timezone.
+
+```python
+import datetime
+
+
+def timestamp_to_datetime(ts: int) -> datetime.datetime:
+  """Convert unix timestamp (milli-second precision) into datatime object. """
+  timezone_jst = datetime.timezone(datetime.timedelta(hours=9))
+  dt = datetime.datetime.fromtimestamp(ts / 1000).replace(tzinfo=timezone_jst)
+  return dt
+  
+def datetime_to_timestamp(dt: datetime.datetime) -> int:
+  """Convert a datetime object into a milli-second precision timestamp."""
+  return int(dt.timestamp() * 1000)
+
+
+ts = 1634885786000
+
+dt_out =  timestamp_to_datetime(ts)
+ts_out = datetime_to_timestamp(dt_out)
+print(f"datetime: {dt_out}")  # datetime: 2021-10-22 15:56:26+09:00
+print(f"timestamp: {ts_out}")  # timestamp: 1634885786000
+assert ts_out == ts
+```
 
 ## Download Dataset
 
