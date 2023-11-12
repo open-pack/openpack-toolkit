@@ -1,5 +1,5 @@
-from ...activity import ActClass, ActSet
 from .._schema import AnnotConfig
+from ...activity import ActSet, ActClass
 
 OPENPACK_ACTIONS = ActSet((
     ActClass(101, "Pick Up Sheet", is_ignore=False),
@@ -96,7 +96,7 @@ OPENPACK_ACTIONS_1HZ = ActSet((
     ActClass(1001, "Pick Up Pen", is_ignore=False),
     ActClass(1002, "Write Sign", is_ignore=False),
     ActClass(1003, "Push Order Sheet into Tray", is_ignore=False),
-    ActClass(8105, "Null", is_ignore=True),
+    ActClass(8105, "Null", is_ignore=False),
     ActClass(8106, "Exclude", is_ignore=True),
 ))
 

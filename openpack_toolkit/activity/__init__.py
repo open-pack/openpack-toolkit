@@ -141,7 +141,8 @@ class ActSet():
         """
         assert min(self.get_ids()) >= 0
         assert (index.min() >= 0) and (index.max() < len(self.classes)), (
-            "given index have out of range value(s)."
+            f"given index have out of range value(s)([0, {len(self.classes)}])."
+            f" index.min()={index.min()}, index.max={index.max()}"
         )
 
         ids = np.full(index.shape, -1)

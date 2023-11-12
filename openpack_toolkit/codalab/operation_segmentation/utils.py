@@ -71,6 +71,8 @@ def ffill_missing_elements(
 ):
     missing_timestep = sorted(
         list(set(unixtime_gt.tolist()) - set(unixtime_pred.tolist())))
+    if len(missing_timestep) == 0:
+        return unixtime_pred, prediction
     logger.warning(
         f"{len(missing_timestep)} elements are missing from prediction.: {missing_timestep}")
 
@@ -165,6 +167,12 @@ def construct_submission_dict(
                 cfg.dataset.annotation.spec.path.fname
             )
             df_label = pd.read_csv(path)
+
+            if cfg.dataset.annotation.metadata.labels.get("label_format", "") == "soft-target":
+                cols = [c for c in df_label.columns if c.startswith("ID")]
+                index_to_id = {i : int(c.replace("ID", "")) for i, c in enumerate(cols)}
+                df_label["index"] = np.argmax(df_label[cols].values, axis=1)
+                df_label["id"] = df_label["index"].apply(lambda ind: index_to_id[ind])
 
             unixtime_gt_sess = df_label["unixtime"].values
             ground_truth_sess = df_label["id"].values
