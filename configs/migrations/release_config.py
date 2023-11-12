@@ -11,10 +11,11 @@ basicConfig(level=DEBUG)
 logger = getLogger(__name__)
 
 TARGET_RELEASE_VERSIONS = [
-    "v0-2-0",
-    "v0-2-1",
-    "v0-3-0",
-    "v0-3-1",
+    # "v0-2-0",
+    # "v0-2-1",
+    # "v0-3-0",
+    # "v0-3-1",
+    "v1-0-0",
 ]
 
 
@@ -26,8 +27,6 @@ def main():
         logger.info(f"load release config from {path}")
         with open(path, "r") as f:
             data = OmegaConf.to_container(OmegaConf.create(yaml.safe_load(f)))
-
-        data["streams_str"] = json.dumps(data["streams"], indent=4)
         releases.append(data)
 
     # build python script with jinja2

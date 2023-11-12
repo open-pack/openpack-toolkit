@@ -2,17 +2,32 @@ from ._schema import ReleaseConfig
 
 {% for release in releases %}
 RELEASE_CONFIG_{{release.version|replace(".", "_")|upper}} = ReleaseConfig(
-    version="{{release.version}}",
-    url="{{release.url}}",
+    kind="{{release.kind}}",
+    name="{{release.name}}",
+    metadata={
+        "labels": {
+{% for key, val in release.metadata.labels.items() %}
+        "{{key}}": "{{val}}",
+{% endfor %}
+        }
+    },    
     users={
-{% for user, data in release.users.items() %}
+{% for user, data in release.spec.users.items() %}
         "{{user}}": ReleaseConfig._User(
             sessions={{data.sessions}},
             exclude={% if data.exclude %}{{data.exclude}}{% else %}None{% endif %},
         ),
 {% endfor %}
     },
-    streams={{release.streams_str|replace("true", "True")|replace("null", "None")}},
+    streams={
+{% for repo, streams in release.spec.streams.items() %}
+        "{{repo}}": [
+{% for stream in streams %}
+            "{{stream}}",
+{% endfor %}
+        ],
+{% endfor %}
+    },
 )
 
 
