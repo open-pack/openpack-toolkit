@@ -15,7 +15,12 @@ from openpack_toolkit.configs._schema import (
     SessionConfig,
     UserConfig,
 )
-from openpack_toolkit.configs.datasets.annotations import OPENPACK_OPERATIONS
+from openpack_toolkit.configs.datasets.annotations import (
+    OPENPACK_OPERATIONS,
+    OPENPACK_OPERATIONS_1HZ_ANNOTATION,
+)
+from openpack_toolkit.configs.datasets.splits import PILOT_CHALLENGE_SPLIT
+from openpack_toolkit.configs.datasets.streams import ATR_ACC_STREAM
 
 
 @pytest.fixture()
@@ -109,9 +114,9 @@ def test_OpenPackConfig__01(split_conf, annot_conf):
     dataset_conf = DatasetConfig(
         name="test",
         streams=None,
-        stream=None,
-        split=split_conf,
-        annotation=annot_conf,
+        stream=ATR_ACC_STREAM,
+        split=PILOT_CHALLENGE_SPLIT,
+        annotation=OPENPACK_OPERATIONS_1HZ_ANNOTATION,
         classes=OPENPACK_OPERATIONS,
     )
 
