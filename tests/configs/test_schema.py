@@ -15,6 +15,7 @@ from openpack_toolkit.configs._schema import (
     SessionConfig,
     UserConfig,
 )
+from openpack_toolkit.configs.datasets.annotations import OPENPACK_OPERATIONS
 
 
 @pytest.fixture()
@@ -111,6 +112,7 @@ def test_OpenPackConfig__01(split_conf, annot_conf):
         stream=None,
         split=split_conf,
         annotation=annot_conf,
+        classes=OPENPACK_OPERATIONS,
     )
 
     conf = OpenPackConfig(
