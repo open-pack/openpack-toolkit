@@ -166,10 +166,10 @@ class DataStreamConfig(BaseConfig):
 </dd>
 <dt id="openpack_toolkit.configs.DatasetConfig"><code class="flex name class">
 <span>class <span class="ident">DatasetConfig</span></span>
-<span>(</span><span>name: str = '???', streams: Optional[Dict[str, openpack_toolkit.configs._schema.DataStreamConfig]] = None, stream: Optional[openpack_toolkit.configs._schema.DataStreamConfig] = None, split: openpack_toolkit.configs._schema.DataSplitConfig = '???', annotation: openpack_toolkit.configs._schema.AnnotConfig = '???', classes: Optional[openpack_toolkit.configs._schema.Label] = '???')</span>
+<span>(</span><span>name: str = '???', streams: Optional[Dict[str, openpack_toolkit.configs._schema.DataStreamConfig]] = None, stream: Optional[openpack_toolkit.configs._schema.DataStreamConfig] = None, split: openpack_toolkit.configs._schema.DataSplitConfig = '???', annotation: openpack_toolkit.configs._schema.AnnotConfig = '???', classes: Optional[List[openpack_toolkit.configs._schema.Label]] = '???')</span>
 </code></dt>
 <dd>
-<div class="desc"><p>DatasetConfig(name: str = '???', streams: Optional[Dict[str, openpack_toolkit.configs._schema.DataStreamConfig]] = None, stream: Optional[openpack_toolkit.configs._schema.DataStreamConfig] = None, split: openpack_toolkit.configs._schema.DataSplitConfig = '???', annotation: openpack_toolkit.configs._schema.AnnotConfig = '???', classes: Optional[openpack_toolkit.configs._schema.Label] = '???')</p></div>
+<div class="desc"><p>DatasetConfig(name: str = '???', streams: Optional[Dict[str, openpack_toolkit.configs._schema.DataStreamConfig]] = None, stream: Optional[openpack_toolkit.configs._schema.DataStreamConfig] = None, split: openpack_toolkit.configs._schema.DataSplitConfig = '???', annotation: openpack_toolkit.configs._schema.AnnotConfig = '???', classes: Optional[List[openpack_toolkit.configs._schema.Label]] = '???')</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -181,7 +181,7 @@ class DatasetConfig:
     stream: Optional[DataStreamConfig] = None
     split: DataSplitConfig = MISSING
     annotation: AnnotConfig = MISSING
-    classes: Optional[Label] = MISSING</code></pre>
+    classes: Optional[List[Label]] = MISSING</code></pre>
 </details>
 <h3>Class variables</h3>
 <dl>
@@ -189,7 +189,7 @@ class DatasetConfig:
 <dd>
 <div class="desc"></div>
 </dd>
-<dt id="openpack_toolkit.configs.DatasetConfig.classes"><code class="name">var <span class="ident">classes</span> : Optional[openpack_toolkit.configs._schema.Label]</code></dt>
+<dt id="openpack_toolkit.configs.DatasetConfig.classes"><code class="name">var <span class="ident">classes</span> : Optional[List[openpack_toolkit.configs._schema.Label]]</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
