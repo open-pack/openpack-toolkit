@@ -104,7 +104,7 @@ class DatasetConfig:
     stream: Optional[DataStreamConfig] = None
     split: DataSplitConfig = MISSING
     annotation: AnnotConfig = MISSING
-    classes: Optional[Label] = MISSING
+    classes: Optional[List[Label]] = MISSING
 
 
 # =========

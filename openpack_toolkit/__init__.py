@@ -2,7 +2,7 @@
 .. include:: ../README.md
 """
 
-__version__ = '1.0.0'
+__version__ = '1.0.1'
 from . import codalab, configs, data, utils
 from .activity import ActClass, ActSet
 from .configs.datasets.annotations import OPENPACK_OPERATIONS
