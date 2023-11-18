@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "openpack-toolkit"
-version = "1.0.0"
+version = "1.0.1"
 description = "Toolkit for OpenPack Dataset"
 authors = ["Yoshimura Naoya"]
 homepage = "https://open-pack.github.io"
