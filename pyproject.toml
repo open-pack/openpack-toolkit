@@ -24,7 +24,7 @@ Jinja2 = "^3.1.2"
 autopep8 = "^1.6.0"
 
 [tool.poetry.scripts]
-optk-file = "openpack_toolkit.bin.make_file_index:entry_func"
+optk-file = "openpack_toolkit.bin.file:entry_func"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

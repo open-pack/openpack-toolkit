@@ -23,7 +23,7 @@ def make_parser():
 
     # == Make File Index ==
     parser_make_index = subparsers.add_parser(
-        "make-index", help="Make file index of the OpenPack dataset. see `add -h`"
+        "make-index", help="Make file index of the OpenPack dataset. See `make-index -h`"
     )
     parser_make_index.set_defaults(handler=entry_func_make_index)
     parser_make_index.add_argument(
