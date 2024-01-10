@@ -4,7 +4,7 @@ version = "1.0.1"
 description = "Toolkit for OpenPack Dataset"
 authors = ["Yoshimura Naoya"]
 homepage = "https://open-pack.github.io"
-repository = "https://github.com/open-pack/open-pack-toolkit"
+repository = "https://github.com/open-pack/openpack-toolkit"
 readme = "README.md" 
 license = "MIT"
 
