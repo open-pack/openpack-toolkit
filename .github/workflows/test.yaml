@@ -3,7 +3,8 @@ on:
   push:
     branches:
       - main
-      - openpack-team-dev
+  pull_request:
+    types: [opened, reopened]
 jobs:
   ci:
     runs-on: ${{ matrix.os }}
