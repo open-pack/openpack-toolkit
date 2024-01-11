@@ -3,17 +3,15 @@ on:
   push:
     branches:
       - main
-      - openpack-team-dev
+  pull_request:
+    types: [opened, synchronize, reopened]
 jobs:
   ci:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os:
-          - macos-11.0
           - macos-latest
-          # - windows-latest
-          - ubuntu-20.04
           - ubuntu-latest
         python-version: [3.8, 3.9]
         poetry-version: ["1.2.0"]
