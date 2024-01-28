@@ -21,16 +21,17 @@ poetry add  openpack-toolkit
 
 Note that the supported dataset version is `>=1.0.0`.
 
-## OpenPack Dataset
-
-See [OpenPack Dataset Homepage](https://open-pack.github.io/) or [GitHub: openpack-dataset](https://github.com/open-pack/openpack-dataset) for the details.
-
 ## Docs
 
 - Work Operation Recognition
   - [OpenPack Challenge 2022](./docs/OPENPACK_CHALLENGE/)
 
 Note: Technical documents of the OpenPack dataset are available at [GitHub: openpack-dataset/docs](https://github.com/open-pack/openpack-dataset/tree/main/docs).
+
+## OpenPack Dataset
+
+See [OpenPack Dataset Homepage](https://open-pack.github.io/) or [GitHub: openpack-dataset](https://github.com/open-pack/openpack-dataset) for the details of our dataset.
+To download our dataset, visit [this download instruction page](https://github.com/open-pack/openpack-dataset/blob/main/docs/DOWNLOAD.md).
 
 ## Examples
 
@@ -81,8 +82,6 @@ assert ts_out == ts
 - [PyPI](https://pypi.org/project/openpack-toolkit/)
 - [openpack-dataset](https://github.com/open-pack/openpack-dataset)
 - [openpack-torch](https://github.com/open-pack/openpack-torch)
-
-![OpenPack Challenge Logo](./img/OpenPackCHALLENG-black.png)
 
 ## License
 
