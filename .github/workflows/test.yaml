@@ -36,5 +36,5 @@ jobs:
       - name: Install Dependencis and Run Tests
         run: |
           poetry install
-          poetry run pytest --cov
+          poetry run pytest --cov -v
         shell: bash
