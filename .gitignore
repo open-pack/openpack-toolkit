@@ -348,4 +348,6 @@ $RECYCLE.BIN/
 #  Custom Setting 
 # ================
 data/
+!openpack_toolkit/data/
+!tests/data/
 *.csv

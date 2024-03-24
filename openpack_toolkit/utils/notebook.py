@@ -2,6 +2,7 @@
 Reference:
     * https://github.com/K-PTL/noglobal-python
 """
+
 import inspect
 import logging
 from functools import partial
@@ -45,7 +46,7 @@ def _globals_with_module_and_callable(
     """
 
     def need(name, attr) -> bool:
-        """ if attr is need or name is in excepts, then return True, otherwise return False. """
+        """if attr is need or name is in excepts, then return True, otherwise return False."""
         if name in excepts:
             return True
         if inspect.ismodule(attr):
@@ -59,9 +60,7 @@ def _globals_with_module_and_callable(
     if excepts is None:
         excepts = []
 
-    filtered_globals = {
-        name: attr for name, attr in globals_.items() if need(name, attr)
-    }
+    filtered_globals = {name: attr for name, attr in globals_.items() if need(name, attr)}
 
     # If __name__ == "__main__", then we do not have to consider the dealing of builtins
     # (globals()["__builtins__"] is <module 'builtins' (built-in)>).
@@ -100,7 +99,7 @@ def _bind_globals(globals_: Dict[str, Any]) -> Callable:
 
 
 def _no_global_variable_decorator(globals_: Optional[Dict[str, Any]] = None):
-    """ Providing the decorator of inhibiting the use of global variables """
+    """Providing the decorator of inhibiting the use of global variables"""
     partialled = partial(_globals_with_module_and_callable, globals_=globals_)
 
     def _no_global_variable(excepts: Optional[List[str]] = None):
