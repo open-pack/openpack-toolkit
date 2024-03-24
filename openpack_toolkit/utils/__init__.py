@@ -1,5 +1,7 @@
-from . import io, notebook
+from . import io, notebook, time
 
 __all__ = [
-    "io", "notebook",
+    "io",
+    "notebook",
+    "time",
 ]
