@@ -4,9 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
-<title>openpack_toolkit.utils.notebook API documentation</title>
-<meta name="description" content="Reference:
-* https://github.com/K-PTL/noglobal-python" />
+<title>openpack_toolkit.utils.time API documentation</title>
+<meta name="description" content="" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
 <link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
@@ -20,140 +19,21 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>openpack_toolkit.utils.notebook</code></h1>
+<h1 class="title">Module <code>openpack_toolkit.utils.time</code></h1>
 </header>
 <section id="section-intro">
-<h2 id="reference">Reference</h2>
-<ul>
-<li><a href="https://github.com/K-PTL/noglobal-python">https://github.com/K-PTL/noglobal-python</a></li>
-</ul>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">&#34;&#34;&#34;
-Reference:
-    * https://github.com/K-PTL/noglobal-python
-&#34;&#34;&#34;
-
-import inspect
-import logging
-from functools import partial
-from types import FunctionType
-from typing import Any, Callable, Dict, List, Optional
+<pre><code class="python">import datetime
 
 
-def setup_root_logger(log_level=logging.INFO):
-    log_format = &#34;%(asctime)s | %(levelname)s | %(name)s | %(message)s&#34;
-    logger = logging.getLogger()
-
-    # add the handlers to the logger
-    sh = logging.StreamHandler()
-    sh.setLevel(log_level)
-    sh_formatter = logging.Formatter(log_format, &#34;%Y-%m-%d %H:%M:%S&#34;)
-    sh.setFormatter(sh_formatter)
-    logger.addHandler(sh)
-
-    logger.setLevel(log_level)
-    return logger
-
-
-# -----------------------------------------------------------------------------
-# Function prototype
-# this is not necessary, just my pray for.
-global noglobal
-
-
-# https://gist.github.com/momijiame/bebf8d4c16fc0916fd80530ebe961525
-def _globals_with_module_and_callable(
-    globals_: Optional[Dict[str, Any]] = None, excepts: Optional[List[str]] = None
-) -&gt; Dict[str, Any]:
+def convert_iso_timestamp_to_unixttime(timestamp_iso: str) -&gt; int:
+    &#34;&#34;&#34;Convert a timestamp (ISO format; string) into a unix time with millisecond precision.
+    For example, `2021-10-14 11:25:35.437000+09:00` will be `1634178335437`.
     &#34;&#34;&#34;
-    Args:
-        globals_ (Optional[Dict[str, Any]]): base global symbol table
-        excepts (Optional[List[str]]): involve the names of variables which is expected to be
-            included into global symbol table
-
-    Returns:
-        Dict[str, Any]: global symbol table
-    &#34;&#34;&#34;
-
-    def need(name, attr) -&gt; bool:
-        &#34;&#34;&#34;if attr is need or name is in excepts, then return True, otherwise return False.&#34;&#34;&#34;
-        if name in excepts:
-            return True
-        if inspect.ismodule(attr):
-            return True
-        if callable(attr):
-            return True
-        return False
-
-    if globals_ is None:
-        globals_ = globals()
-    if excepts is None:
-        excepts = []
-
-    filtered_globals = {name: attr for name, attr in globals_.items() if need(name, attr)}
-
-    # If __name__ == &#34;__main__&#34;, then we do not have to consider the dealing of builtins
-    # (globals()[&#34;__builtins__&#34;] is &lt;module &#39;builtins&#39; (built-in)&gt;).
-    # However, if __name__ != &#34;__main__&#34;, then globals()[&#34;__builtins__&#34;] has
-    # the builtins in similar with global variables (not module).
-    if not inspect.ismodule(globals_[&#34;__builtins__&#34;]):
-        for name, attr in globals_[&#34;__builtins__&#34;].items():
-            if need(name, attr):
-                filtered_globals[name] = attr
-
-    return filtered_globals
-
-
-def _bind_globals(globals_: Dict[str, Any]) -&gt; Callable:
-    &#34;&#34;&#34;decorator returning functional object for wrapping, which run the callable object on the
-    specified global symbol table.
-
-    Args:
-        globals_ (Dict[str, Any]): global symbol table
-
-    Returns:
-        functional object for wrapping
-    &#34;&#34;&#34;
-
-    def _bind_globals_func(func: FunctionType) -&gt; FunctionType:
-        bound_func = FunctionType(
-            code=func.__code__,
-            globals=globals_,
-            name=func.__name__,
-            argdefs=func.__defaults__,
-            closure=func.__closure__,
-        )
-        return bound_func
-
-    return _bind_globals_func
-
-
-def _no_global_variable_decorator(globals_: Optional[Dict[str, Any]] = None):
-    &#34;&#34;&#34;Providing the decorator of inhibiting the use of global variables&#34;&#34;&#34;
-    partialled = partial(_globals_with_module_and_callable, globals_=globals_)
-
-    def _no_global_variable(excepts: Optional[List[str]] = None):
-        partialled_globals_ = partialled(excepts=excepts)
-        bound_func = _bind_globals(globals_=partialled_globals_)
-        return bound_func
-
-    return _no_global_variable
-
-
-# substance of noglobal function
-class noglobal:
-    def __init__(self, excepts=None):
-        self.excepts = excepts
-
-    def __call__(self, _func):
-        return _no_global_variable_decorator(globals_=_func.__globals__)(
-            excepts=self.excepts  # arg of _no_global_variable
-        )(
-            func=_func
-        )  # arg of _bind_globals</code></pre>
+    return int(datetime.datetime.fromisoformat(timestamp_iso).timestamp() * 1e3)</code></pre>
 </details>
 </section>
 <section>
@@ -163,58 +43,26 @@ class noglobal:
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
-<dt id="openpack_toolkit.utils.notebook.setup_root_logger"><code class="name flex">
-<span>def <span class="ident">setup_root_logger</span></span>(<span>log_level=20)</span>
+<dt id="openpack_toolkit.utils.time.convert_iso_timestamp_to_unixttime"><code class="name flex">
+<span>def <span class="ident">convert_iso_timestamp_to_unixttime</span></span>(<span>timestamp_iso: str) ‑> int</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Convert a timestamp (ISO format; string) into a unix time with millisecond precision.
+For example, <code>2021-10-14 11:25:35.437000+09:00</code> will be <code>1634178335437</code>.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def setup_root_logger(log_level=logging.INFO):
-    log_format = &#34;%(asctime)s | %(levelname)s | %(name)s | %(message)s&#34;
-    logger = logging.getLogger()
-
-    # add the handlers to the logger
-    sh = logging.StreamHandler()
-    sh.setLevel(log_level)
-    sh_formatter = logging.Formatter(log_format, &#34;%Y-%m-%d %H:%M:%S&#34;)
-    sh.setFormatter(sh_formatter)
-    logger.addHandler(sh)
-
-    logger.setLevel(log_level)
-    return logger</code></pre>
+<pre><code class="python">def convert_iso_timestamp_to_unixttime(timestamp_iso: str) -&gt; int:
+    &#34;&#34;&#34;Convert a timestamp (ISO format; string) into a unix time with millisecond precision.
+    For example, `2021-10-14 11:25:35.437000+09:00` will be `1634178335437`.
+    &#34;&#34;&#34;
+    return int(datetime.datetime.fromisoformat(timestamp_iso).timestamp() * 1e3)</code></pre>
 </details>
 </dd>
 </dl>
 </section>
 <section>
-<h2 class="section-title" id="header-classes">Classes</h2>
-<dl>
-<dt id="openpack_toolkit.utils.notebook.noglobal"><code class="flex name class">
-<span>class <span class="ident">noglobal</span></span>
-<span>(</span><span>excepts=None)</span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">class noglobal:
-    def __init__(self, excepts=None):
-        self.excepts = excepts
-
-    def __call__(self, _func):
-        return _no_global_variable_decorator(globals_=_func.__globals__)(
-            excepts=self.excepts  # arg of _no_global_variable
-        )(
-            func=_func
-        )  # arg of _bind_globals</code></pre>
-</details>
-</dd>
-</dl>
 </section>
 </article>
 <nav id="sidebar">
@@ -230,14 +78,7 @@ class noglobal:
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
-<li><code><a title="openpack_toolkit.utils.notebook.setup_root_logger" href="#openpack_toolkit.utils.notebook.setup_root_logger">setup_root_logger</a></code></li>
-</ul>
-</li>
-<li><h3><a href="#header-classes">Classes</a></h3>
-<ul>
-<li>
-<h4><code><a title="openpack_toolkit.utils.notebook.noglobal" href="#openpack_toolkit.utils.notebook.noglobal">noglobal</a></code></h4>
-</li>
+<li><code><a title="openpack_toolkit.utils.time.convert_iso_timestamp_to_unixttime" href="#openpack_toolkit.utils.time.convert_iso_timestamp_to_unixttime">convert_iso_timestamp_to_unixttime</a></code></li>
 </ul>
 </li>
 </ul>

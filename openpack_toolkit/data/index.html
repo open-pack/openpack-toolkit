@@ -29,6 +29,7 @@
 </summary>
 <pre><code class="python">&#34;&#34;&#34; ``optk.data`` module provide easy access to our dataset.
 &#34;&#34;&#34;
+
 from .dataloader import (
     load_and_resample_annotation,
     load_and_resample_operation_labels,
@@ -49,9 +50,13 @@ __all__ = [
 <section>
 <h2 class="section-title" id="header-submodules">Sub-modules</h2>
 <dl>
-<dt><code class="name"><a title="openpack_toolkit.data.dataloader" href="dataloader.html">openpack_toolkit.data.dataloader</a></code></dt>
+<dt><code class="name"><a title="openpack_toolkit.data.const" href="const.html">openpack_toolkit.data.const</a></code></dt>
 <dd>
-<div class="desc"><p><code><a title="openpack_toolkit.data.dataloader" href="dataloader.html">openpack_toolkit.data.dataloader</a></code> provide utility function to load files saved in OpenPack dataset format.</p></div>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="openpack_toolkit.data.dataloader" href="dataloader/index.html">openpack_toolkit.data.dataloader</a></code></dt>
+<dd>
+<div class="desc"><p><code><a title="openpack_toolkit.data.dataloader" href="dataloader/index.html">openpack_toolkit.data.dataloader</a></code> provide utility function to load files saved in OpenPack dataset format.</p></div>
 </dd>
 </dl>
 </section>
@@ -126,14 +131,7 @@ as NULL class.</p>
     df[&#34;act_id&#34;] = df[label_col]
     df[&#34;act_idx&#34;] = classes.convert_id_to_index(df[&#34;act_id&#34;].values)
 
-    cols = [
-        &#34;unixtime&#34;,
-        &#34;annot_time&#34;,
-        &#34;user&#34;,
-        &#34;session&#34;,
-        &#34;box&#34;,
-        &#34;act_id&#34;,
-        &#34;act_idx&#34;]
+    cols = [&#34;unixtime&#34;, &#34;annot_time&#34;, &#34;user&#34;, &#34;session&#34;, &#34;box&#34;, &#34;act_id&#34;, &#34;act_idx&#34;]
     return df[cols]</code></pre>
 </details>
 </dd>
@@ -151,8 +149,7 @@ as NULL class.</p>
     unixtimes_ms: np.ndarray,
     classes: ActSet,
 ) -&gt; pd.DataFrame:
-    return load_and_resample_annotation(
-        path, unixtimes_ms, classes, label_col=&#34;id&#34;)</code></pre>
+    return load_and_resample_annotation(path, unixtimes_ms, classes, label_col=&#34;id&#34;)</code></pre>
 </details>
 </dd>
 <dt id="openpack_toolkit.data.load_and_resample_scan_log"><code class="name flex">
@@ -265,9 +262,9 @@ Default. 30 [ms] (&lt;= 1 sample)</dd>
     Returns:
         Tuple[np.ndarray, np.ndarray]: unixtime and loaded sensor data.
     &#34;&#34;&#34;
-    assert isinstance(paths, (tuple, list)), (
-        f&#34;the first argument `paths` expects tuple of Path, not {type(paths)}.&#34;
-    )
+    assert isinstance(
+        paths, (tuple, list)
+    ), f&#34;the first argument `paths` expects tuple of Path, not {type(paths)}.&#34;
 
     channels = []
     if use_acc:
@@ -389,7 +386,8 @@ prediction. shape=(3, FRAMES, NODE). The first dim is corresponding to
 </li>
 <li><h3><a href="#header-submodules">Sub-modules</a></h3>
 <ul>
-<li><code><a title="openpack_toolkit.data.dataloader" href="dataloader.html">openpack_toolkit.data.dataloader</a></code></li>
+<li><code><a title="openpack_toolkit.data.const" href="const.html">openpack_toolkit.data.const</a></code></li>
+<li><code><a title="openpack_toolkit.data.dataloader" href="dataloader/index.html">openpack_toolkit.data.dataloader</a></code></li>
 </ul>
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
