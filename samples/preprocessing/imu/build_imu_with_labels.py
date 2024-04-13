@@ -1,6 +1,7 @@
 import argparse
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 from loguru import logger
 
@@ -9,6 +10,7 @@ from openpack_toolkit.data.dataloader.annotation import (
     add_label_cols_to_dataframe,
     load_annotation_csv,
 )
+from openpack_toolkit.data.dataloader.imu import load_imu
 
 OPERATION_LABEL_KEY_NAME = "operation"
 ACTION_LABEL_KEY_NAME = "action"
@@ -18,8 +20,18 @@ UNIXTIME_KEY_NAME = "unixtime"
 def make_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Merge 3D keypoints with operation labels")
     parser.add_argument(
-        "--kinect-3d-keypoints-path", type=Path, required=True, help="Path to the 3D keypoints"
+        "--atr-root-dir",
+        type=Path,
+        required=True,
+        help="Path to a root directory of atr. (e.g., `openpack/v1.0.0/U0209/atr/`)",
     )
+    parser.add_argument(
+        "--device",
+        nargs="*",
+        default=["atr01", "atr02", "atr03", "atr04"],
+        help="Device name (e.g., atr01)",
+    )
+    parser.add_argument("--session", type=str, required=True, help="session ID (e.g., S0100)")
     parser.add_argument(
         "--operation-labels-path", type=Path, required=True, help="Path to the operation labels"
     )
@@ -30,10 +42,43 @@ def make_parser() -> argparse.ArgumentParser:
     return parser
 
 
+def load_imu_data(atr_root_dir: Path, devices: list[str], session_id: str) -> pd.DataFrame:
+    """Load IMU data from CSVs and concatenate data from 4 devices into a single dataframe."""
+    df_data = None
+    paths = [atr_root_dir / device / f"{session_id}.csv" for device in devices]
+    timestamps, data = load_imu(paths, use_acc=True, use_gyro=True, use_quat=True)
+
+    # Make DataFrame
+    df_data = pd.concat(
+        [
+            pd.DataFrame(np.expand_dims(timestamps, axis=1)),
+            pd.DataFrame(data.T),
+        ],
+        ignore_index=True,
+        axis=1,
+    )
+
+    # add columns
+    axis_list = [
+        "acc_x",
+        "acc_y",
+        "acc_z",
+        "gyro_x",
+        "gyro_y",
+        "gyro_z",
+        "quat_w",
+        "quat_x",
+        "quat_y",
+        "quat_z",
+    ]
+    cols = [TIMESTAMP_KEY_NAME] + [f"{device}/{axis}" for device in devices for axis in axis_list]
+    df_data.columns = cols
+    return df_data
+
+
 def main(args: argparse.Namespace):
     # Load input data
-    df_data = pd.read_csv(args.kinect_3d_keypoints_path)
-    df_data.rename(columns={UNIXTIME_KEY_NAME: TIMESTAMP_KEY_NAME}, inplace=True)
+    df_data = load_imu_data(args.atr_root_dir, args.device, args.session)
     df_operation_label = load_annotation_csv(args.operation_labels_path)
     df_action_label = load_annotation_csv(args.action_labels_path)
 
