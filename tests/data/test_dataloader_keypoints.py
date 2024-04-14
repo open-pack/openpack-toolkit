@@ -1,9 +1,7 @@
 import numpy as np
 
-from samples.preprocessing.keypoints.build_kinect_2d_kpt_with_labels import (
-    TIMESTAMP_KEY_NAME,
-    convert_keypoints_array_to_dataframe,
-)
+from openpack_toolkit.data.const import TIMESTAMP_KEY_NAME
+from openpack_toolkit.data.dataloader.keypoint import convert_keypoints_array_to_dataframe
 
 
 def test_convert_keypoints_array_to_dataframe():

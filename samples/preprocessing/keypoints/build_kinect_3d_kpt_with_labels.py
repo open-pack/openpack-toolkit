@@ -1,24 +1,24 @@
 import argparse
 from pathlib import Path
 
+import pandas as pd
 from loguru import logger
 
-from openpack_toolkit.data.const import CLASS_ID_KEY_NAME, NULL_ACTION_CLASS_ID
-from openpack_toolkit.data.dataloader import load_keypoints
+from openpack_toolkit.data.const import CLASS_ID_KEY_NAME, NULL_ACTION_CLASS_ID, TIMESTAMP_KEY_NAME
 from openpack_toolkit.data.dataloader.annotation import (
     add_label_cols_to_dataframe,
     load_annotation_csv,
 )
-from openpack_toolkit.data.dataloader.keypoint import convert_keypoints_array_to_dataframe
 
 OPERATION_LABEL_KEY_NAME = "operation"
 ACTION_LABEL_KEY_NAME = "action"
+UNIXTIME_KEY_NAME = "unixtime"
 
 
 def make_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="Merge 2D keypoints with operation labels")
+    parser = argparse.ArgumentParser(description="Merge 3D keypoints with operation labels")
     parser.add_argument(
-        "--kinect-2d-keypoints-path", type=Path, required=True, help="Path to the 2D keypoints"
+        "--kinect-3d-keypoints-path", type=Path, required=True, help="Path to the 3D keypoints"
     )
     parser.add_argument(
         "--operation-labels-path", type=Path, required=True, help="Path to the operation labels"
@@ -32,8 +32,8 @@ def make_parser() -> argparse.ArgumentParser:
 
 def main(args: argparse.Namespace):
     # Load input data
-    timestamps, keypoints = load_keypoints(args.kinect_2d_keypoints_path)
-    df_data = convert_keypoints_array_to_dataframe(timestamps=timestamps, keypoints=keypoints)
+    df_data = pd.read_csv(args.kinect_3d_keypoints_path)
+    df_data.rename(columns={UNIXTIME_KEY_NAME: TIMESTAMP_KEY_NAME}, inplace=True)
     df_operation_label = load_annotation_csv(args.operation_labels_path)
     df_action_label = load_annotation_csv(args.action_labels_path)
 

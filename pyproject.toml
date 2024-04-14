@@ -23,6 +23,8 @@ pytest-cov = "^3.0.0"
 pdoc3 = "^0.10.0"
 Jinja2 = "^3.1.2"
 autopep8 = "^1.6.0"
+matplotlib = "^3.7"
+seaborn = "^0.13.2"
 
 [tool.poetry.scripts]
 optk-file = "openpack_toolkit.bin.file:entry_func"
