@@ -5,7 +5,7 @@ description = "Toolkit for OpenPack Dataset"
 authors = ["Yoshimura Naoya"]
 homepage = "https://open-pack.github.io"
 repository = "https://github.com/open-pack/openpack-toolkit"
-readme = "README.md" 
+readme = "README.md"
 license = "MIT"
 
 [tool.poetry.dependencies]
@@ -16,6 +16,9 @@ omegaconf = "^2.2.2"
 scipy = "^1.7.3"
 scikit-learn = "^1.2.0"
 loguru = "^0.7.2"
+click = "^8.1.7"
+requests = "^2.32.3"
+tqdm = "^4.66.4"
 
 [tool.poetry.dev-dependencies]
 pytest = ">=6.2.4"
