@@ -42,8 +42,9 @@ def test_extract_zip(mock_zipfile: MagicMock):
 
 @patch("tools.download.download.download_file_with_progress_bar")
 @patch("tools.download.download.extract_zip")
+@patch("wandb.Artifact.add_reference")
 def test_smoke_download_and_extract_single_user_from_zenodo(
-    mock_download: MagicMock, mock_extract: MagicMock
+    mock_download: MagicMock, mock_extract: MagicMock, mock_add_reference: MagicMock
 ):
     openpack_dir = Path("openpack")
     version = "v1.0.0"

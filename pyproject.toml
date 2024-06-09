@@ -32,6 +32,9 @@ seaborn = "^0.13.2"
 [tool.poetry.scripts]
 optk-file = "openpack_toolkit.bin.file:entry_func"
 
+[tool.poetry.group.dev.dependencies]
+wandb = "^0.17.1"
+
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"

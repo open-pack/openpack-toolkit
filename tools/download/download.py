@@ -3,8 +3,16 @@ from pathlib import Path
 
 import click
 import requests
+import wandb
 from loguru import logger
 from tqdm import tqdm
+
+from tools.download.const import (
+    OPENPACK_DATASET_NAME_ON_ZENODO_TEMPLATE,
+    WANDB_ARTIFACT_TYPE_DATASET,
+    WANDB_JOB_TYPE_DOWNLOAD_DATASET,
+    WANDB_PROJECT_NAME,
+)
 
 # TODO: Import metadta from configs.
 ZENODO_URLS = {
@@ -46,7 +54,9 @@ def extract_zip(zip_file_path: Path, extract_path: Path):
     return extract_path
 
 
-def download_and_extract_single_user_from_zenodo(openpack_dir: Path, version: str, user_id: str):
+def download_and_extract_single_user_from_zenodo(
+    openpack_dir: Path, version: str, user_id: str, wandb_artifact: wandb.Artifact = None
+):
     logger.info(f"Download and extract data of {user_id} from Zenodo.")
     # Prepare a download URI
     base_uri = ZENODO_URLS[version]
@@ -57,6 +67,10 @@ def download_and_extract_single_user_from_zenodo(openpack_dir: Path, version: st
     zip_path.parent.mkdir(parents=True, exist_ok=True)
     user_dir = openpack_dir / version / user_id
     user_dir.mkdir(parents=True, exist_ok=True)
+
+    # Log original dataset
+    if wandb_artifact is not None:
+        wandb_artifact.add_reference(uri, name=zip_path.name)
 
     # Download and extract a zip file
     download_file_with_progress_bar(uri, zip_path)
@@ -80,9 +94,20 @@ def download_and_extract_single_user_from_zenodo(openpack_dir: Path, version: st
 )
 def main(version: str, openpack_dir: Path):
     print(openpack_dir)
+    wandb_run = wandb.init(project=WANDB_PROJECT_NAME, job_type=WANDB_JOB_TYPE_DOWNLOAD_DATASET)
+    artifact = wandb.Artifact(
+        name=OPENPACK_DATASET_NAME_ON_ZENODO_TEMPLATE.format(version=version),
+        type=WANDB_ARTIFACT_TYPE_DATASET,
+    )
 
     for user_id in USERS:
-        download_and_extract_single_user_from_zenodo(Path(openpack_dir), version, user_id)
+        download_and_extract_single_user_from_zenodo(
+            Path(openpack_dir), version, user_id, wandb_artifact=artifact
+        )
+
+    # Save the artifact to W&B
+    wandb_run.log_artifact(artifact)
+    wandb_run.finish()
 
 
 if __name__ == "__main__":

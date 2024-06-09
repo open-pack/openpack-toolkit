@@ -351,3 +351,4 @@ data/
 !openpack_toolkit/data/
 !tests/data/
 *.csv
+wandb/
