@@ -1,9 +1,10 @@
-WANDB_PROJECT_NAME = "openpack-dataset-test"
+WANDB_PROJECT_NAME_PUBLIC = "openpack-dataset"
+WANDB_PROJECT_NAME_LOCAL = "openpack-dataset-local"
 WANDB_JOB_TYPE_DOWNLOAD_DATASET = "download-dataset"
 WANDB_ARTIFACT_TYPE_DATASET = "dataset"
 
 OPENPACK_DATASET_NAME_ON_ZENODO_TEMPLATE = "openpack-{version}-zenodo"
-LOCAL_OPENPACK_DATASET_NAME_TEMPLATE = "openpack-{version}-local"
+OPENPACK_DATASET_NAME_ON_LOCAL_TEMPLATE = "openpack-{version}-local-{hostname}"
 
 
 ZENODO_URLS = {

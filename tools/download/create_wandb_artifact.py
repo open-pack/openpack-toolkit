@@ -9,7 +9,7 @@ from tools.download.const import (
     OPENPACK_USERS,
     WANDB_ARTIFACT_TYPE_DATASET,
     WANDB_JOB_TYPE_DOWNLOAD_DATASET,
-    WANDB_PROJECT_NAME,
+    WANDB_PROJECT_NAME_PUBLIC,
     ZENODO_URLS,
 )
 
@@ -20,10 +20,24 @@ def cli():
 
 
 def create_wandb_artifacts_zenodo(version: str):
-    wandb_run = wandb.init(project=WANDB_PROJECT_NAME, job_type=WANDB_JOB_TYPE_DOWNLOAD_DATASET)
+    wandb_run = wandb.init(
+        project=WANDB_PROJECT_NAME_PUBLIC, job_type=WANDB_JOB_TYPE_DOWNLOAD_DATASET
+    )
     artifact = wandb.Artifact(
         name=OPENPACK_DATASET_NAME_ON_ZENODO_TEMPLATE.format(version=version),
         type=WANDB_ARTIFACT_TYPE_DATASET,
+        description=(
+            f"OpenPack Dataset ({version}) on zenodo. "
+            "Visit https://open-pack.github.io/ for more details."
+        ),
+        metadata={
+            "website": "https://open-pack.github.io/",
+            "GitHub": "https://github.com/open-pack/openpack-dataset",
+            "version": version,
+            "release_note": f"https://github.com/open-pack/openpack-dataset/tree/main/release/{version}",
+            "repository": "zenodo",
+            "repository_url": ZENODO_URLS[version],
+        },
     )
 
     # Add files to the artifact
