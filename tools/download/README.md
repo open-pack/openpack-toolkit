@@ -10,7 +10,7 @@ This download tool provides another option to set up datasets in your environmen
 poetry run python download.py
 ```
 
-### Tracke data lineage with Weight and Biases
+### Track data lineage with Weight and Biases
 
 (Optional) Create an artifact of the OpenPack Dataset on the cloud repository.
 
@@ -23,4 +23,19 @@ Download the dataset into your local using WandB.
 ```bash
 wandb login
 poetry run python download_local.py --use-wandb
+```
+
+### Workflow
+
+```mermaid
+graph LR
+    RepoZ[(Zenodo)]
+    RepoG[(GoogleDrive)]
+    LocalZipFolder[(`openpack/v.X.X.X/zip/`)]
+    LocalDsFolder[(`openpack/v.X.X.X/`)]
+    ProcDownload(Download)
+    ProcExtract(Extract)
+    RepoZ --> ProcDownload --> LocalZipFolder
+    RepoG --> ProcDownload --> LocalZipFolder
+    LocalZipFolder --> ProcExtract --> LocalDsFolder
 ```
