@@ -352,3 +352,4 @@ data/
 !tests/data/
 *.csv
 wandb/
+outputs/
