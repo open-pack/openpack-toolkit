@@ -1,3 +1,5 @@
+from pathlib import Path
+
 WANDB_PROJECT_NAME_PUBLIC = "openpack-dataset"
 WANDB_PROJECT_NAME_LOCAL = "openpack-dataset-local"
 WANDB_JOB_TYPE_DOWNLOAD_DATASET = "download-dataset"
@@ -6,6 +8,7 @@ WANDB_ARTIFACT_TYPE_DATASET = "dataset"
 OPENPACK_DATASET_NAME_ON_ZENODO_TEMPLATE = "openpack-{version}-zenodo"
 OPENPACK_DATASET_NAME_ON_LOCAL_TEMPLATE = "openpack-{version}-local-{hostname}"
 
+OPENAPCK_ROOT_PATH_STR = "./openpack/v{version}"
 
 ZENODO_URLS = {
     "v1.1.0": "https://zenodo.org/records/11059235",
