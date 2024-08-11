@@ -1,4 +1,4 @@
-"""Create wandb artifact of the original OenPack dataset.
+"""[Admin Command]  Generate metadata for the OpenPack dataset and create a W&B artifact.
 """
 
 from __future__ import annotations
@@ -8,10 +8,11 @@ from pathlib import Path
 import attrs
 import cattrs
 import click
-import wandb
 from loguru import logger
 from omegaconf import OmegaConf
+from tqdm import tqdm
 
+import wandb
 from openpack_toolkit.download.const import (
     OPENPACK_DATASET_NAME_ON_ZENODO_TEMPLATE,
     OPENPACK_USERS,
@@ -44,7 +45,7 @@ class DatasetObjectMetadata:
     file_name: str
     file_type: str
     parent_dir: Path
-    source: str | None = None  # URI of the object that contains this object.
+    uri: str | None = None  # URI of the object that contains this object.
     subject: str | None = None
     session: str | None = None
 
@@ -64,7 +65,7 @@ class DatasetMetadata:
 
 def get_converter() -> cattrs.Converter:
     converter = cattrs.Converter()
-    converter.register_structure_hook(Path, Path)
+    converter.register_structure_hook(Path, lambda path_str, _: Path(path_str))
     converter.register_unstructure_hook(Path, str)
     return converter
 
@@ -90,40 +91,35 @@ def create_metadata_zenodo(version: str) -> DatasetMetadata:
             file_name=f"{user_id}.zip",
             file_type="zip",
             parent_dir=OPERNPACK_ZIP_DIR_ZENODO,
-            source=uri,
+            uri=uri,
         )
         metadata.objects.append(obj_metadata)
 
     return metadata
 
 
-def create_wandb_artifacts_zenodo(version: str):
+def create_wandb_artifacts_from_metadata(metadata: DatasetMetadata):
+    logger.info(f"Create a WandB artifact for {metadata.name}.")
+    metadata_dict = get_converter().unstructure(metadata)
+    version = metadata.version
+
+    # Create a W&B artifact
     wandb_run = wandb.init(
-        project=WANDB_PROJECT_NAME_PUBLIC, job_type=WANDB_JOB_TYPE_DOWNLOAD_DATASET
+        project=WANDB_PROJECT_NAME_PUBLIC, job_type=WANDB_JOB_TYPE_DOWNLOAD_DATASET, mode="offline"
     )
     artifact = wandb.Artifact(
-        name=OPENPACK_DATASET_NAME_ON_ZENODO_TEMPLATE.format(version=version),
+        name=metadata.name,
         type=WANDB_ARTIFACT_TYPE_DATASET,
         description=(
             f"OpenPack Dataset ({version}) on zenodo. "
             "Visit https://open-pack.github.io/ for more details."
         ),
-        metadata={
-            "website": "https://open-pack.github.io/",
-            "GitHub": "https://github.com/open-pack/openpack-dataset",
-            "version": version,
-            "release_note": f"https://github.com/open-pack/openpack-dataset/tree/main/release/{version}",
-            "repository": "zenodo",
-            "repository_url": ZENODO_URLS[version],
-        },
+        metadata=metadata_dict,
     )
-
-    # Add files to the artifact
-    base_uri = ZENODO_URLS[version]
-    for user_id in OPENPACK_USERS:
-        uri = f"{base_uri}/files/{user_id}.zip?download=1"
-        artifact.add_reference(uri, name=f"{user_id}.zip")
-
+    objects = sorted(list(metadata.objects), key=lambda x: x.file_name)
+    logger.info(f"Add {len(objects)} objects to the artifact.")
+    for obj_metadata in tqdm(objects):
+        artifact.add_reference(obj_metadata.uri, name=obj_metadata.file_name)
     # Save the artifact to W&B
     wandb_run.log_artifact(artifact)
     wandb_run.finish()
@@ -155,15 +151,13 @@ def cli():
     show_default=True,
     help="output file path.",
 )
-def zenodo(version: str, output_path: Path):
-    click.echo(f"Create a WandB artifact for zenodo ({version}).")
-    # create_wandb_artifacts_zenodo(version)
+def zenodo(
+    version: str,
+    output_path: Path,
+):
+    """Create metadata of a data on zenodo."""
     metadata = create_metadata_zenodo(version)
-
-    converter = get_converter()
-    metadata_dict = converter.unstructure(metadata)
-    print(OmegaConf.to_yaml(metadata_dict))
-
+    metadata_dict = get_converter().unstructure(metadata)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     with output_path.open("w") as f:
         OmegaConf.save(metadata_dict, f)
@@ -180,6 +174,23 @@ def zenodo(version: str, output_path: Path):
 )
 def gdrive(version: str):
     click.echo(f"Create a WandB artifact for Google Drive ({version}).")
+
+
+@cli.command()
+@click.option(
+    "-i",
+    "--input-path",
+    type=click.Path(exists=True, file_okay=True, path_type=Path),
+    default=_DEFAULT_OUTPUT_PATH_ZENODO,
+    show_default=True,
+    help="output file path.",
+)
+def artifact(input_path: Path):
+    """Log the dataset as a WandB artifact."""
+    with input_path.open("r") as f:
+        metadata_dict = OmegaConf.load(f)
+    metadata = get_converter().structure(metadata_dict, DatasetMetadata)
+    create_wandb_artifacts_from_metadata(metadata)
 
 
 def main():

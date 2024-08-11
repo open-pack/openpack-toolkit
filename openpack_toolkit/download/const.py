@@ -1,5 +1,3 @@
-from pathlib import Path
-
 WANDB_PROJECT_NAME_PUBLIC = "openpack-dataset"
 WANDB_PROJECT_NAME_LOCAL = "openpack-dataset-local"
 WANDB_JOB_TYPE_DOWNLOAD_DATASET = "download-dataset"
