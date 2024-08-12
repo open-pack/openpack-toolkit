@@ -5,7 +5,7 @@ description = "Toolkit for OpenPack Dataset"
 authors = ["Yoshimura Naoya"]
 homepage = "https://open-pack.github.io"
 repository = "https://github.com/open-pack/openpack-toolkit"
-readme = "README.md" 
+readme = "README.md"
 license = "MIT"
 
 [tool.poetry.dependencies]
@@ -16,6 +16,11 @@ omegaconf = "^2.2.2"
 scipy = "^1.7.3"
 scikit-learn = "^1.2.0"
 loguru = "^0.7.2"
+click = "^8.1.7"
+requests = "^2.32.3"
+tqdm = "^4.66.4"
+attrs = "^24.2.0"
+cattrs = "^23.2.3"
 
 [tool.poetry.dev-dependencies]
 pytest = ">=6.2.4"
@@ -28,6 +33,13 @@ seaborn = "^0.13.2"
 
 [tool.poetry.scripts]
 optk-file = "openpack_toolkit.bin.file:entry_func"
+
+[tool.poetry.group.dev.dependencies]
+wandb = "^0.17.1"
+google-auth = "^2.33.0"
+google-auth-oauthlib = "^1.2.1"
+google-auth-httplib2 = "^0.2.0"
+google-api-python-client = "^2.140.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
