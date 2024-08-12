@@ -36,6 +36,10 @@ optk-file = "openpack_toolkit.bin.file:entry_func"
 
 [tool.poetry.group.dev.dependencies]
 wandb = "^0.17.1"
+google-auth = "^2.33.0"
+google-auth-oauthlib = "^1.2.1"
+google-auth-httplib2 = "^0.2.0"
+google-api-python-client = "^2.140.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
