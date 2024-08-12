@@ -4,6 +4,7 @@ WANDB_JOB_TYPE_DOWNLOAD_DATASET = "download-dataset"
 WANDB_ARTIFACT_TYPE_DATASET = "dataset"
 
 OPENPACK_DATASET_NAME_ON_ZENODO_TEMPLATE = "openpack-{version}-zenodo"
+OPENPACK_DATASET_NAME_ON_GRDIVE_TEMPLATE = "openpack-{version}-gdrive"
 OPENPACK_DATASET_NAME_ON_LOCAL_TEMPLATE = "openpack-{version}-local-{hostname}"
 
 OPENAPCK_ROOT_PATH_STR = "./openpack/v{version}"
@@ -11,6 +12,10 @@ OPENAPCK_ROOT_PATH_STR = "./openpack/v{version}"
 ZENODO_URLS = {
     "v1.1.0": "https://zenodo.org/records/11059235",
     "v1.0.0": "https://zenodo.org/records/8145223",
+}
+
+GDRIVE_URLS = {
+    "v1.0.0": "https://drive.google.com/drive/folders/10hYJYkhPRgf-uTToUm5KR99EHkH2v9GB",
 }
 
 

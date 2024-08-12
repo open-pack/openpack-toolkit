@@ -3,17 +3,24 @@
 
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 import attrs
 import cattrs
 import click
+import google.auth.transport.requests
+from google.auth.transport.requests import Request
+from google.oauth2 import service_account
+from google_auth_oauthlib.flow import InstalledAppFlow
+from googleapiclient.discovery import build
 from loguru import logger
 from omegaconf import OmegaConf
 from tqdm import tqdm
 
 import wandb
 from openpack_toolkit.download.const import (
+    GDRIVE_URLS,
     OPENPACK_DATASET_NAME_ON_ZENODO_TEMPLATE,
     OPENPACK_USERS,
     WANDB_ARTIFACT_TYPE_DATASET,
@@ -24,9 +31,11 @@ from openpack_toolkit.download.const import (
 
 OPENPACK_CACHE_DIR = Path(".cache/")
 OPERNPACK_ZIP_DIR_ZENODO = OPENPACK_CACHE_DIR / "zenodo"
+OPERNPACK_ZIP_DIR_GDRIVE = OPENPACK_CACHE_DIR / "zenodo"
 
 _DEFAULT_OUTPUT_DIR = Path("./outputs")
 _DEFAULT_OUTPUT_PATH_ZENODO = _DEFAULT_OUTPUT_DIR / "dataset_metadata_zenodo.yaml"
+_DEFAULT_OUTPUT_PATH_GDRIVE = _DEFAULT_OUTPUT_DIR / "dataset_metadata_gdrive.yaml"
 
 # =============
 #  Data Models
@@ -94,6 +103,83 @@ def create_metadata_zenodo(version: str) -> DatasetMetadata:
             uri=uri,
         )
         metadata.objects.append(obj_metadata)
+
+    return metadata
+
+
+# 認証とトークンの保存
+def authenticate(service_account_file_path: Path):
+    creds = None
+    token_file = Path(".secrets/gcp_token.json")
+
+    # 以前に保存したトークンがある場合、それをロードする
+    if token_file.exists(token_file):
+        with open(token_file, "r") as f:
+            creds = json.load(f)
+
+    # トークンが有効でないか、存在しない場合、新しいトークンを取得する
+    if not creds or not creds.valid:
+        if creds and creds.expired and creds.refresh_token:
+            creds.refresh(Request())
+        else:
+            flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRET_FILE, SCOPES)
+            creds = flow.run_local_server(port=0)
+
+        # 新しいトークンを保存する
+        with open(token_file, "w") as f:
+            json.dump(creds, f)
+
+    return creds
+
+
+def create_metadata_gdrive(version: str, service_account_file_path: Path) -> DatasetMetadata:
+    """Create metadata of a data on Google Drive."""
+    metadata = DatasetMetadata(
+        name=OPENPACK_DATASET_NAME_ON_ZENODO_TEMPLATE.format(version=version),
+        version=version,
+        repository="google-drive",
+        repository_url=GDRIVE_URLS[version],
+    )
+
+    # Authentication
+    logger.info(
+        f"Authenticate with Google Drive using a service account from {service_account_file_path}."
+    )
+    creds = service_account.Credentials.from_service_account_file(
+        service_account_file_path, scopes=["https://www.googleapis.com/auth/drive.readonly"]
+    )
+    service = build("drive", "v3", credentials=creds)
+
+    # List Items in the folder
+    folder_id = GDRIVE_URLS[version].split("/")[-1]
+    results = (
+        service.files()
+        .list(
+            q=f"'{folder_id}' in parents and trashed = false",
+            fields="nextPageToken, files(id, name)",
+        )
+        .execute()
+    )
+    items = results.get("files", [])
+    logger.info(f"Found {len(items)} files in the folder.")
+
+    if not items:
+        raise ValueError("No files found in the folder.")
+    else:
+        logger.info("Add files in the folder to the metadata.")
+        for item in items:
+            file_id = item["id"]
+            file_name = item["name"]
+            file_uri = f"https://drive.google.com/file/d/{file_id}/view"
+            # print(f"Name: {file_name}, URI: {file_uri}")
+            obj_metadata = DatasetObjectMetadata(
+                file_name=file_name,
+                file_type="file",
+                parent_dir=OPERNPACK_ZIP_DIR_GDRIVE,
+                uri=file_uri,
+            )
+            metadata.objects.append(obj_metadata)
+            logger.info(f"Add {file_name} to the metadata.")
 
     return metadata
 
@@ -169,11 +255,31 @@ def zenodo(
     "-v",
     "--version",
     type=click.Choice(ZENODO_URLS.keys()),
-    default="v1.1.0",
+    default="v1.0.0",
     help="Version of the dataset to download.",
 )
-def gdrive(version: str):
+@click.option(
+    "-o",
+    "--output-path",
+    type=click.Path(file_okay=True, path_type=Path),
+    default=_DEFAULT_OUTPUT_PATH_ZENODO,
+    show_default=True,
+    help="output file path.",
+)
+@click.option(
+    "-s",
+    "--service-account-file-path",
+    type=click.Path(exists=True, file_okay=True, path_type=Path),
+    help="Path to a service account file for Google Drive.",
+)
+def gdrive(version: str, output_path: Path, service_account_file_path: Path):
     click.echo(f"Create a WandB artifact for Google Drive ({version}).")
+    metadata = create_metadata_gdrive(version, service_account_file_path)
+    metadata_dict = get_converter().unstructure(metadata)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    with output_path.open("w") as f:
+        OmegaConf.save(metadata_dict, f)
+    logger.info(f"Saved metadata to {output_path}")
 
 
 @cli.command()
